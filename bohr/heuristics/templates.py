@@ -1,4 +1,6 @@
+import json
 import re
+from json.decoder import JSONDecodeError
 from typing import List, Optional, Callable
 
 from snorkel.labeling import labeling_function, LabelingFunction
@@ -92,4 +94,15 @@ def bug_bugless__for_commit_message(x):
         else:
             return BUG
     return ABSTAIN
+
+
+@labeling_function()
+def no_files_have_modified_status(x) -> bool:
+    try:
+        for file in json.loads(x.file_details):
+            if file['status'] == 'modified':
+                return ABSTAIN
+        return BUGLESS
+    except JSONDecodeError:
+        return ABSTAIN
 

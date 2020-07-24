@@ -1,8 +1,9 @@
 from bohr.heuristics.templates import bug_bugless__for_commit_message, fix_bugless__for_commit_message, \
-    regex_version__for_commit_message, keyword_lookup_template, COMMIT_MESSAGE, ISSUE_CONTENTS, ISSUE_LABELS
+    regex_version__for_commit_message, keyword_lookup_template, COMMIT_MESSAGE, ISSUE_CONTENTS, ISSUE_LABELS, \
+    no_files_have_modified_status
 from bohr.snorkel_utils import BUGLESS
 
-heuristics = [bug_bugless__for_commit_message, fix_bugless__for_commit_message, regex_version__for_commit_message] \
+heuristics = [bug_bugless__for_commit_message, fix_bugless__for_commit_message, regex_version__for_commit_message, no_files_have_modified_status] \
 + keyword_lookup_template(label=BUGLESS, terms=[
     'ad',
     'add',

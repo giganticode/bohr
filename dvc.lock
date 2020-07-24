@@ -1,0 +1,43 @@
+apply_heuristics:
+  cmd: python bohr/pipeline/apply_heuristics.py --dataset-path-train data/combination/Training_Dataset.csv
+    --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
+    5000 --save-heuristics-matrix-train-to generated/heuristic_matrix_train.pkl --save-heuristics-matrix-test-to
+    generated/heuristic_matrix_test.pkl --save-metrics-to heuristic_metrics.json
+  deps:
+  - path: bohr/heuristics
+    md5: 6855c566cc4df102ae9b5d0f7e8c9b40.dir
+  - path: bohr/pipeline/apply_heuristics.py
+    md5: 7f6b67d3aa917429b4be5b9a852459db
+  - path: data/combination/Test_Dataset.csv
+    md5: 3d2a49cd24dc34ef9a1698af2c1d82ae
+  - path: data/combination/Training_Dataset.csv
+    md5: 945bffaf7ac8ad7fdbd59c55b0e9f8db
+  outs:
+  - path: generated/heuristic_matrix_test.pkl
+    md5: 43828336f5eb6b3f14e1a0064841050f
+  - path: generated/heuristic_matrix_train.pkl
+    md5: 839be9b0e5d82d2f1cf542c374c4c696
+  - path: heuristic_metrics.json
+    md5: e17aeb09c7d96ae23a447a0ce81c39de
+train_label_model:
+  cmd: python bohr/pipeline/train_label_model.py --dataset-path-train data/combination/Training_Dataset.csv
+    --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
+    5000 --path-to-heuristics-matrix-train generated/heuristic_matrix_train.pkl --path-to-heuristics-matrix-test
+    generated/heuristic_matrix_test.pkl --save-label-model-to generated/label_model.pkl
+    --save-metrics-to label_model_metrics.json
+  deps:
+  - path: bohr/pipeline/train_label_model.py
+    md5: 0c1a2ac63dbde5a63605367d8fdb17b2
+  - path: data/combination/Test_Dataset.csv
+    md5: 3d2a49cd24dc34ef9a1698af2c1d82ae
+  - path: data/combination/Training_Dataset.csv
+    md5: 945bffaf7ac8ad7fdbd59c55b0e9f8db
+  - path: generated/heuristic_matrix_test.pkl
+    md5: 43828336f5eb6b3f14e1a0064841050f
+  - path: generated/heuristic_matrix_train.pkl
+    md5: 839be9b0e5d82d2f1cf542c374c4c696
+  outs:
+  - path: generated/label_model.pkl
+    md5: b0750114eec2668996c486377c4f0c9c
+  - path: label_model_metrics.json
+    md5: 66cdd5d5f7db8c009ab848fae06d0379

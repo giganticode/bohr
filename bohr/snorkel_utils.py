@@ -1,4 +1,4 @@
-LABEL = int
+Label = int
 
 BUG = 1
 BUGLESS = 0

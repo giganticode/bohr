@@ -6,7 +6,7 @@ from typing import List, Optional, Callable
 from snorkel.labeling import labeling_function, LabelingFunction
 import pandas as pd
 
-from bohr.snorkel_utils import ABSTAIN, BUG, BUGLESS, LABEL
+from bohr.snorkel_utils import ABSTAIN, BUG, BUGLESS, Label
 
 COMMIT_MESSAGE = 'commit_message'
 ISSUE_CONTENTS = 'issue_contents'
@@ -28,7 +28,7 @@ def is_word_in_text(word, text) -> bool:
     return bool(matches)
 
 
-def keyword_lookup(x: pd.DataFrame, keyword: str, field: str, label: LABEL, only_full_word=True) -> LABEL:
+def keyword_lookup(x: pd.DataFrame, keyword: str, field: str, label: Label, only_full_word=True) -> Label:
     """
     Examples:
     ---------

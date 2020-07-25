@@ -2,6 +2,12 @@ BOHR
 ----------------------------------
 Big Old Heuristic Repository
 
+Getting started
+===========================================
+
+#. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
+#. Create a virtual environment and run ``pip install -r requirements.txt`` (Python 3.7 or higher is required)
+
 Running the code and reproducing the models
 ===========================================
 
@@ -9,8 +15,6 @@ Using DVC (Data Version Control) - preferred
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Install dvc_
-
-#. Create a virtual environment and run ``pip install -r requirements.txt`` (Python 3.7 or higher is required)
 
 #. Setting up datasource. Ironspeed users should create a file ``.dvc/config.local``. Dvc will check this file to know where datasets should be fetched from on the next step. It contains sensitive data, must not be committed, and is gitignored by default. The contents of the file should be the following::
 

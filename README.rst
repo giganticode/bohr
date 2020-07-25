@@ -34,6 +34,21 @@ Without DVC
 ~~~~~~~~~~~
 TBA
 
+Contribute to the project by adding your first heuristic:
+===========================================================
+
+#. Define a function inside the ``bohr/heuristics/templates.py`` file and label it with @labeling_function() decorator. This heuristic can be reused later for different tasks.
+
+#. To use the newly created function to label commits for a specific task, add it to the ``heuristics`` list defined in ``bohr/heuristics/<task>/<label>.py`` (e.g., for the task of classification of bugfix commit for a bugfix commit, the file is ``bohr/heuristics/bugs/bugs.py``)
+
+#. Run ``dvc repro`` to recalculate the metrics or (if not using DVC) rerun the scripts in ``bohr/pipeline`` package manually
+
+#. Commit and push the changes together with the changed metric files.
+
+See this commit_ as an example of how a heuristic can be added.
+
+.. _commit : https://github.com/giganticode/bohr/commit/6928dfd750d304ca4610dbba4216f6e94375e4a7
+
 Credits
 =======
 

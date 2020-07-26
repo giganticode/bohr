@@ -21,7 +21,7 @@ Using DVC (Data Version Control) - preferred
     [core]
         remote = ironspeed
     ['remote "ironspeed"']
-        url = ssh://10.199.39.232/home/<username>/.dvcstorage
+        url = ssh://10.199.39.232/home/hbabii/.dvcstorage
         password = <username>
         user = <password>
 

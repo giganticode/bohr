@@ -20,9 +20,6 @@ from snorkel.labeling.model import MajorityLabelVoter
 from bohr.heuristics.bugs import bugs, nonbugs
 from bohr.snorkel_utils import BUG, BUGLESS
 
-import nltk
-nltk.download('punkt')
-
 
 def clean_text_columns(df: pd.DataFrame):
     for column in ["commit_message_stemmed", "issue_contents_stemmed"]:

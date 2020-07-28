@@ -1,9 +1,5 @@
 from pathlib import Path
-import os, sys
-
-SCRIPT_PATH = Path(os.path.realpath(__file__))
-PROJECT_DIR = Path(os.path.dirname(os.path.dirname(os.path.dirname(SCRIPT_PATH))))
-sys.path.append(str(PROJECT_DIR))
+import os
 
 import argparse
 import json
@@ -12,6 +8,7 @@ from typing import Any, Dict
 import pandas as pd
 import numpy as np
 
+from bohr import PROJECT_DIR
 
 from snorkel.labeling.model import LabelModel
 

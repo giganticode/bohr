@@ -1,6 +1,6 @@
 [core]
     remote = ironspeed
 ['remote "gdrive"']
-    url = gdrive://1qS0Jbv2tmlJL90aSjR-naBJXrERVp9YL
+    url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G
 ['remote "ironspeed"']
     url = ssh://10.199.39.232/home/hbabii/.dvcstorage

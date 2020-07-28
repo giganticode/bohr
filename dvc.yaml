@@ -13,6 +13,7 @@ stages:
     outs:
     - generated/heuristic_matrix_test.pkl
     - generated/heuristic_matrix_train.pkl
+    metrics:
     - heuristic_metrics.json:
         cache: false
   train_label_model:
@@ -29,5 +30,6 @@ stages:
     - generated/heuristic_matrix_train.pkl
     outs:
     - generated/label_model.pkl
+    metrics:
     - label_model_metrics.json:
         cache: false

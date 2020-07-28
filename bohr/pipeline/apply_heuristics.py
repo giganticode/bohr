@@ -1,10 +1,6 @@
 
-import sys, os
+import os
 from pathlib import Path
-
-SCRIPT_PATH = Path(os.path.realpath(__file__))
-PROJECT_DIR = Path(os.path.dirname(os.path.dirname(os.path.dirname(SCRIPT_PATH))))
-sys.path.append(str(PROJECT_DIR))
 
 import argparse
 import json
@@ -19,7 +15,7 @@ from snorkel.labeling.model import MajorityLabelVoter
 
 from bohr.heuristics.bugs import bugs, nonbugs
 from bohr.snorkel_utils import BUG, BUGLESS
-
+from bohr import PROJECT_DIR
 
 def clean_text_columns(df: pd.DataFrame):
     for column in ["commit_message_stemmed", "issue_contents_stemmed"]:

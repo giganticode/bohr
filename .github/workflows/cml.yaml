@@ -1,0 +1,21 @@
+name: calculate-metrics
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+
+          pip install -r requirements.txt
+          dvc pull -r gdrive data/combination/Test_Dataset.csv data/combination/Training_Dataset.csv
+          dvc repro
+
+          git fetch --prune 
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md

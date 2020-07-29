@@ -3,7 +3,7 @@ from bohr.snorkel_utils import BUG
 
 heuristics = [regex_git2__for_commit_message] + \
              [keyword_lookup(k, field=COMMIT_MESSAGE_STEMMED, label=BUG) for k in [
-                 'bad', 'broken', 'bug', 'bugg', 'concurr', 'correct', 'correctli', 'corrupt', 'crash', 'dead lock',
+                 'bad', 'broken', 'bugg', 'concurr', 'correct', 'correctli', 'corrupt', 'crash', 'dead lock',
                  'deadlock', 'defect', 'endless', 'ensur', 'error', 'fail', 'failur', 'fix', 'fix and test', 'garbag',
                  'hotfix', 'incomplet', 'inconsist', 'incorrect', 'infinit', 'invalid', 'issue', 'leak', 'loop',
                  'mistak', 'not return', 'not work', 'prevent', 'problem', 'properli', 'quickfix', 'race condit',

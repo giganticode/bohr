@@ -1,2 +1,4 @@
 /heuristic_matrix_train.pkl
 /heuristic_matrix_test.pkl
+
+__pycache__/

@@ -13,7 +13,11 @@ from typing import Any, Dict
 
 import numpy as np
 import pandas as pd
+import dask.dataframe as dd
+import csv
+
 from snorkel.labeling import PandasLFApplier
+from snorkel.labeling.apply.dask import DaskLFApplier
 
 from snorkel.labeling.model import MajorityLabelVoter
 
@@ -21,7 +25,7 @@ from bohr.heuristics.bugs import bugs, nonbugs
 from bohr.snorkel_utils import BUG, BUGLESS
 
 
-def clean_text_columns(df: pd.DataFrame):
+def clean_text_columns(df: dd.DataFrame):
     for column in ["commit_message_stemmed", "issue_contents_stemmed"]:
         df[column].replace({'\n': ' '}, inplace=True, regex=True)
         df[column].replace({'\r': ' '}, inplace=True, regex=True)
@@ -39,7 +43,7 @@ def clean_text_columns(df: pd.DataFrame):
         df.replace(np.nan, '', inplace=True, regex=True)
 
 
-def majority_acc(L: np.ndarray, df: pd.DataFrame) -> float:
+def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
     majority_model = MajorityLabelVoter()
     maj_model_train_acc = majority_model.score(L=L, Y=df.label, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
@@ -50,8 +54,16 @@ def apply_heuristics(args) -> Dict[str, Any]:
     train_filename = PROJECT_DIR / args.dataset_path_train
     test_filename = PROJECT_DIR / args.dataset_path_test
 
-    df_train = pd.read_csv(train_filename, sep=';', index_col=0, nrows=args.rows_train)
-    df_test = pd.read_csv(test_filename, sep=';', index_col=0, nrows=args.rows_test)
+    text_cols = ['Unnamed: 0', 'dataset', 'owner', 'repository', 'commit_id',
+            'commit_message', 'commit_message_stemmed', 'issue_identifiers',
+            'issue_contents', 'issue_contents_stemmed', 'issue_labels',
+            'issue_labels_stemmed', 'code_changes', 'file_details']
+
+    dtype = {c: 'object' for c in text_cols}
+    dtype.update({'label': 'float64'})
+
+    df_train = dd.read_csv(train_filename, dtype=dtype).set_index('Unnamed: 0').head(args.rows_train)
+    df_test = dd.read_csv(test_filename, dtype=dtype,quoting=csv.QUOTE_MINIMAL ).set_index('Unnamed: 0').head(args.rows_test)
 
     stats['commits_train'] = len(df_train.index)
     stats['bugs_fraction'] = (df_train.label.values == BUG).mean()
@@ -64,11 +76,11 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['n_labeling_functions'] = len(lfs)
 
-    applier = PandasLFApplier(lfs=lfs)
+    applier = DaskLFApplier(lfs=lfs)
     L_dev = applier.apply(df=df_train)
     L_dev.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
 
-    applier = PandasLFApplier(lfs=lfs)
+    applier = DaskLFApplier(lfs=lfs)
     L_test = applier.apply(df=df_test)
     L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
 

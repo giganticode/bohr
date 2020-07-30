@@ -24,9 +24,9 @@ heuristics = [regex_git2__for_commit_message] + \
                  'small fix', 'solv', 'threw', 'throw', 'timeout', 'unabl', 'unclos', 'unexpect', 'unknown',
                  'unsynchron', 'wrong']] + \
              [keyword_lookup(k, field=COMMIT_MESSAGE_STEMMED, label=BUG, only_full_word=False) for k in [
-                 'except', 'nullpointer', 'null pointer', 'outofbound', 'out of bound']
+                 'except', 'nullpointer', 'null pointer', 'outofbound', 'out of bound', 'npe']
               ] + \
              [keyword_lookup(k, field=ISSUE_LABELS_STEMMED, label=BUG, only_full_word=False) for k in ['except']] + \
              [keyword_lookup(k, field=ISSUE_CONTENTS_STEMMED, label=BUG, only_full_word=False) for k in [
-                 'except', 'nullpointer', 'null pointer', 'outofbound', 'out of bound']
+                 'except', 'nullpointer', 'null pointer', 'outofbound', 'out of bound', 'npe']
               ]

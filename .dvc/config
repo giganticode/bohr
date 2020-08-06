@@ -3,4 +3,9 @@
 ['remote "gdrive"']
     url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G
 ['remote "ironspeed"']
-    url = ssh://10.199.39.232/home/hbabii/.dvcstorage
+    url = ssh://ironspeed.inf.unibz.it/home/hbabii/.dvcstorage
+['remote "gdrive-ci"']
+    url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G
+    gdrive_service_account_p12_file_path = /Users/hlib/.gcloud/bohr-284821-3f6fec0cb74a.json
+    gdrive_service_account_email = bohr-dvc@bohr-284821.iam.gserviceaccount.com
+    gdrive_use_service_account = true

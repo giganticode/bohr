@@ -1,0 +1,1 @@
+{"commits_train": 50000, "bugs_fraction": 0.5941, "nonbugs_fraction": 0.4059, "n_labeling_functions": 352, "coverage_train": 0.99416, "coverage_test": 0.7426, "majority_accuracy_train": 0.827, "majority_accuracy_test": 0.7204}

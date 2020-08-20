@@ -40,11 +40,11 @@ def apply_heuristics(args) -> Dict[str, Any]:
     stats['n_labeling_functions'] = len(lfs)
 
     applier = PandasParallelLFApplier(lfs=lfs)
-    L_dev = applier.apply(df=df_train, n_parallel=4)
+    L_dev = applier.apply(df=df_train, n_parallel=6)
     L_dev.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
 
     applier = PandasParallelLFApplier(lfs=lfs)
-    L_test = applier.apply(df=df_test, n_parallel=4)
+    L_test = applier.apply(df=df_test, n_parallel=6)
     L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
 
     stats['coverage_train'] = sum((L_dev != -1).any(axis=1)) / len(L_dev)

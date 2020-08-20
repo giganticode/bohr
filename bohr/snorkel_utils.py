@@ -1,10 +1,11 @@
 from functools import wraps, cached_property, lru_cache
-from typing import Optional, List, Set, Mapping, Any
+from typing import Optional, List, Set, Mapping, Any, Tuple
 from snorkel.types import DataPoint
 
 from bohr import TEST_DIR, TRAIN_DIR
 
 from dataclasses import dataclass, field
+from cachetools import LRUCache
 
 import pandas as pd
 
@@ -16,6 +17,7 @@ from snorkel.map.core import MapFunction
 
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer 
+from nltk import bigrams
 
 Label = int
 
@@ -25,7 +27,9 @@ ABSTAIN = -1
 
 def safe_word_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
-    return word_tokenize(str(text))
+    if pd.isna(text): return set()
+
+    return word_tokenize(str(text).lower())
 
 
 @dataclass
@@ -49,43 +53,55 @@ class Issue:
         stemmer = PorterStemmer()
         return set([stemmer.stem(w) for w in self.tokens])
 
+    @cached_property
+    def stem_bigrams(self) -> Set[Tuple[str, str]]:
+        return set(bigrams(self.stems))
+
+
 
 class Issues:
     def __init__(self, issues):
         self.__issues = issues
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.__issues)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> Issue:
         return self.__issues[idx]
 
-    def contains_any_label(self, stemmed_labels: Set[str]) -> bool:
+    def match_label(self, stemmed_labels: Set[str]) -> bool:
         for issue in self.__issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
         return False            
 
-    def contains_any(self, stemmed_keywords: Set[str]) -> bool:
+    def match(self, stemmed_keywords: Set[str]) -> bool:
         for issue in self.__issues:
-            if not issue.stems.isdisjoint(BUG_ISSUE_BODY_KEYWORDS): return True
+            if not issue.stems.isdisjoint(stemmed_keywords): return True
         return False
+
+    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
+        for issue in self.__issues:
+            if not issue.stem_bigrams.isdisjoint(stemmed_bigrams): return True
+        return False
+
+
 
 @dataclass
 class CommitFile:
     filename: str
     status: str
-    patch: str
-    changes: str
+    patch: Optional[str]
+    changes: Optional[str]
 
 
 class CommitFiles:
     def __init__(self, files):
         self.__files = files
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.__files)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> CommitFile:
         return self.__files[idx]
 
 @dataclass
@@ -102,8 +118,16 @@ class CommitMessage:
         stemmer = PorterStemmer()
         return set([stemmer.stem(w) for w in self.tokens])
 
-    def contains_any(self, stemmed_keywords: Set[str]) -> bool:
+    @cached_property
+    def stem_bigrams(self) -> Set[Tuple[str, str]]:
+        return set(bigrams(self.stems))
+
+    def match(self, stemmed_keywords: Set[str]) -> bool:
         return not self.stems.isdisjoint(stemmed_keywords)
+
+    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
+        return not self.stems.isdisjoint(stemmed_bigrams)
+
 
 
 @dataclass
@@ -118,7 +142,7 @@ class Commit:
     def __post_init__(self):
         self.message = CommitMessage(self.raw_message)
 
-    @lru_cache
+    @lru_cache(maxsize=4)
     def __load_df(self, type: str, owner: str, repository: str):
         path = TRAIN_DIR / type  / owner / f"{repository}.csv"
         if path.is_file():
@@ -135,12 +159,12 @@ class Commit:
         files = []
 
         if df is not None:
-            df = df.loc[[self.sha]]
-            for sha, file in df.iterrows():
-                # TODO
-                #change = file.change
-                change = None
-                files.append(CommitFile(file.filename, file.status, file.patch, None))
+            try:
+                df = df.loc[[self.sha]]
+                for sha, file in df.iterrows():
+                    files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
+            except KeyError as e:
+                pass
 
         return CommitFiles(files)
 
@@ -160,10 +184,17 @@ class Commit:
 class CommitMapper(BaseMapper):
 
     def __init__(self) -> None:
-        super().__init__('CommitMapper', [], True)
+        super().__init__('CommitMapper', [], memoize=False)
+        self.__cache = LRUCache(64)
 
     def _generate_mapped_data_point(self, x: DataPoint) -> Optional[DataPoint]:
-        return Commit(x.owner, x.repository, x.sha, x.message)
+        key = (x.owner, x.repository, x.sha)
+        if key in self.__cache: return self.__cache[key]
+
+        commit = Commit(x.owner, x.repository, x.sha, x.message)
+        self.__cache[key] = commit
+
+        return commit
 
 class commit_lf(labeling_function):
     def __init__(

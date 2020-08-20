@@ -4,14 +4,24 @@ import re
 from bohr.snorkel_utils import Commit
 
 BUG_MESSAGE_KEYWORDS = set([
-    'bad', 'broken', 'bug', 'bugg', 'concurr', 'correct', 'correctli', 'corrupt', 'crash', 'dead', 'lock',
-   'deadlock', 'defect', 'endless', 'ensur', 'error', 'fail', 'failur', 'fix', 'fix and test', 'garbag',
+    'bad', 'broken', 'bug', 'bugg', 'concurr', 'correct', 'correctli', 'corrupt', 'crash', 
+   'deadlock', 'defect', 'endless', 'ensur', 'error', 'fail', 'failur', 'fix', 'garbag',
    'hotfix', 'incomplet', 'inconsist', 'incorrect', 'infinit', 'invalid', 'issue', 'leak', 'loop',
-   'mistak', 'not return', 'not work', 'prevent', 'problem', 'properli', 'quickfix', 'race', 'condit',
-   'repair', 'small fix', 'solv', 'threw', 'throw', 'timeout', 'unabl', 'unclos', 'unexpect', 'unknown',
-   'unsynchron', 'wrong', 'except', 'nullpointer', 'null', 'pointer', 'outofbound', 'bound', 'npe'
+   'mistak', 'prevent', 'problem', 'properli', 'quickfix', 
+   'repair', 'solv', 'threw', 'throw', 'timeout', 'unabl', 'unclos', 'unexpect', 'unknown',
+   'unsynchron', 'wrong', 'except', 'nullpointer', 'outofbound', 'npe'
 ])
 
+BUG_BIGRAMS = set([
+    ('dead', 'lock'),
+    ('not', 'work'),
+    ('not', 'return'),
+    ('small', 'fix'),
+    ('race', 'condit'),
+    ('of', 'bound'),
+    ('null', 'pointer'),
+
+])
 
 BUG_ISSUE_LABEL_KEYWORDS = set([
     'bad', 'broken', 'bug', 'bugg', 'close', 'concurr', 'correct', 'crash', 'defect', 'error', 'fail',
@@ -22,10 +32,11 @@ BUG_ISSUE_BODY_KEYWORDS = set([
     'bad', 'broken', 'bug', 'bugg', 'close', 'concurr', 'correct', 'correctli', 'corrupt', 'crash',
     'dead lock', 'deadlock', 'defect', 'disabl', 'endless', 'ensur', 'error', 'fail', 'failur',
     'fault', 'fix', 'garbag', 'handl', 'hotfix', 'incomplet', 'inconsist',
-    'incorrect', 'infinit', 'invalid', 'issue', 'leak', 'loop', 'minor', 'mistak', 'return',
-    'not work', 'patch', 'prevent', 'problem', 'properli', 'quickfix', 'race', 'condit', 'repair', 'resolv',
+    'incorrect', 'infinit', 'invalid', 'issue', 'leak', 'loop', 'minor', 'mistak',
+    'patch', 'prevent', 'problem', 'properli', 'quickfix', 'repair', 'resolv',
     'solv', 'threw', 'throw', 'timeout', 'unabl', 'unclos', 'unexpect', 'unknown',
-    'unsynchron', 'wrong', 'except', 'nullpointer', 'null', 'pointer', 'outofbound', 'bound', 'npe'])
+    'unsynchron', 'wrong', 'except', 'nullpointer', 'outofbound', 'npe'])
+
 
 BOGUS_FIX_KEYWORDS = set(["ad", "add", "build", "chang", "doc", "document",
                           "javadoc", "junit", "messag", "report", "test", "typo", "unit", "warn"])
@@ -51,15 +62,21 @@ NO_BUG_ISSUE_LABEL_KEYWORDS = set([
 
 NO_BUG_ISSUE_BODY_KEYWORDS = set([
     'abil', 'ad', 'add', 'addit', 'allow', 'analysi', 'avoid', 'baselin', 'benchmark', 'better', 'bump',
-    'chang log', 'cleanup', 'consolid', 'convert', 'create', 'deprec', 'develop', 'doc', 'document',
+    'cleanup', 'consolid', 'convert', 'create', 'deprec', 'develop', 'doc', 'document',
     'drop', 'enhanc', 'exclud', 'expand', 'extendgener', 'forget', 'format', 'gitignor', 'idea',
     'implement', 'improv', 'includ', 'intorduc', 'javadoc', 'limit', 'modif', 'move', 'new', 'note',
     'opinion', 'optim', 'optimis', 'perform', 'plugin', 'polish', 'possibl', 'prepar', 'propos', 'provid',
-    'publish', 'readm', 'reduc', 'refactor', 'refin', 'regress test', 'reimplement', 'remov', 'renam',
-    'reorgan', 'replac', 'restrict', 'restructur', 'review', 'rewrit', 'rid', 'set up', 'simplif',
-    'simplifi', 'speed up', 'speedup', 'statist', 'support', 'test', 'coverag', 'todo', 'tweak', 'unit',
+    'publish', 'readm', 'reduc', 'refactor', 'refin', 'reimplement', 'remov', 'renam',
+    'reorgan', 'replac', 'restrict', 'restructur', 'review', 'rewrit', 'rid', 'simplif',
+    'simplifi', 'speedup', 'statist', 'support', 'test', 'coverag', 'todo', 'tweak', 'unit',
     'unnecessari', 'updat', 'upgrad', 'use', 'featur'])
 
+NO_BUG_BIGRAMS = set([
+    ('regress', 'test'),
+    ('set', 'up'),
+    ('chang', 'log'),
+    ('speed', 'up'),
+])
 
 GITHUB_REF_RE = re.compile(r"gh(-|\s)\d+", flags=re.I)
 VERSION_RE = re.compile(r"v\d+.*", flags=re.I)
@@ -69,50 +86,58 @@ VERSION_RE = re.compile(r"v\d+.*", flags=re.I)
 def github_ref_in_message(commit):
     return BUG if GITHUB_REF_RE.search(commit.message.raw) else ABSTAIN
 
-
 @commit_lf()
 def version_in_message(commit):
     return BUGLESS if VERSION_RE.search(commit.message.raw) else ABSTAIN
 
-
 @commit_lf()
 def bogus_fix_keyword_in_message(commit: Commit):
     if 'fix' in commit.message.stems or 'bug' in commit.message.stems:
-        if commit.message.contains_any(BOGUS_FIX_KEYWORDS):
+        if commit.message.match(BOGUS_FIX_KEYWORDS):
             return BUGLESS
         else:
             return BUG
     return ABSTAIN
 
 
+
 @commit_lf()
 def bug_keyword_in_message(commit):
-    return BUG if not commit.message.contains_any(BUG_MESSAGE_KEYWORDS) else ABSTAIN
-
+    if commit.message.match(BUG_MESSAGE_KEYWORDS): return BUG
+    if commit.message.match_bigram(BUG_BIGRAMS): return BUG
+    return ABSTAIN
 
 @commit_lf()
 def no_bug_keyword_in_message(commit):
-    return BUGLESS if not commit.message.contains_any(NO_BUG_MESSAGE_KEYWORDS) else ABSTAIN
+    return BUGLESS if commit.message.match(NO_BUG_MESSAGE_KEYWORDS) else ABSTAIN
 
-
-@commit_lf()
-def bug_keyword_in_issue_labels(commit):
-    return BUG if commit.issues.contains_any_label(BUG_ISSUE_LABEL_KEYWORDS) else ABSTAIN
-
-
-@commit_lf()
-def no_bug_keyword_in_issue_labels(commit):
-    return BUGLESS if commit.issues.contains_any_label(NO_BUG_ISSUE_LABEL_KEYWORDS) else ABSTAIN
 
 
 @commit_lf()
 def bug_keyword_in_issue_labels(commit):
-    return BUG if commit.issues.contains_any(BUG_ISSUE_BODY_KEYWORDS) else ABSTAIN
-
+    return BUG if commit.issues.match_label(BUG_ISSUE_LABEL_KEYWORDS) else ABSTAIN
 
 @commit_lf()
 def no_bug_keyword_in_issue_labels(commit):
-    return BUGLESS if commit.issues.contains_any(NO_BUG_ISSUE_BODY_KEYWORDS) else ABSTAIN
+    return BUGLESS if commit.issues.match_label(NO_BUG_ISSUE_LABEL_KEYWORDS) else ABSTAIN
+
+
+
+@commit_lf()
+def bug_keyword_in_issues(commit: Commit):
+    if commit.issues.match(BUG_ISSUE_BODY_KEYWORDS): return BUG
+    if commit.issues.match_bigram(BUG_BIGRAMS): return BUG
+
+    return ABSTAIN
+
+@commit_lf()
+def no_bug_keyword_in_issues(commit: Commit):
+    if commit.issues.match(NO_BUG_ISSUE_BODY_KEYWORDS): return BUGLESS
+    if commit.issues.match_bigram(NO_BUG_BIGRAMS): return BUGLESS
+
+    return ABSTAIN
+
+
 
 @commit_lf()
 def no_files_have_modified_status(commit: Commit):

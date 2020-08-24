@@ -1,5 +1,5 @@
 from functools import wraps, cached_property, lru_cache
-from typing import Optional, List, Set, Mapping, Any, Tuple
+from typing import Optional, List, Set, Mapping, Any, Tuple, Callable
 from snorkel.types import DataPoint
 
 from bohr import TEST_DIR, TRAIN_DIR
@@ -11,7 +11,7 @@ import pandas as pd
 
 import snorkel
 from snorkel.labeling import labeling_function, LabelingFunction
-from snorkel.preprocess import preprocessor
+from snorkel.preprocess import preprocessor, BasePreprocessor
 from snorkel.map import BaseMapper, LambdaMapper
 from snorkel.map.core import MapFunction
 
@@ -24,6 +24,11 @@ Label = int
 BUG = 1
 BUGLESS = 0
 ABSTAIN = -1
+
+LABEL_NAMES = {
+    BUG: 'bug',
+    BUGLESS: 'bugless',
+}
 
 def safe_word_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
@@ -183,23 +188,92 @@ class Commit:
 
 class CommitMapper(BaseMapper):
 
+    cache = LRUCache(64)
+
     def __init__(self) -> None:
         super().__init__('CommitMapper', [], memoize=False)
-        self.__cache = LRUCache(64)
 
-    def _generate_mapped_data_point(self, x: DataPoint) -> Optional[DataPoint]:
+    def __call__(self, x: DataPoint) -> Optional[DataPoint]:
         key = (x.owner, x.repository, x.sha)
-        if key in self.__cache: return self.__cache[key]
+        if key in self.cache:
+            return self.cache[key]
 
         commit = Commit(x.owner, x.repository, x.sha, x.message)
-        self.__cache[key] = commit
+        self.cache[key] = commit
 
         return commit
 
-class commit_lf(labeling_function):
+
+class CommitLabelingFunction(LabelingFunction):
     def __init__(
         self,
-        name: Optional[str] = None,
+        name: str,
+        f: Callable[..., int],
         resources: Optional[Mapping[str, Any]] = None,
+        pre: Optional[List[BasePreprocessor]] = None,
     ) -> None:
-        super().__init__(name, resources, pre=[CommitMapper()])
+        if pre is None:
+            pre = []
+        pre.insert(0, CommitMapper())            
+        super().__init__(name, f, resources, pre=pre)
+
+
+class commit_lf(labeling_function):
+    def __call__(self, f: Callable[..., int]) -> LabelingFunction:
+        name = self.name or f.__name__
+        return CommitLabelingFunction(name=name, f=f, resources=self.resources, pre=self.pre)
+
+
+def keyword_lookup_in_message(commit: Commit, keywords, bigrams, label):
+    if keywords and commit.message.match(keywords): return label
+    if bigrams and commit.message.match_bigram(bigrams): return label
+    return ABSTAIN
+
+def keyword_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
+    if keywords and commit.issues.match_label(keywords): return label
+    return ABSTAIN
+
+def keyword_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
+    if commit.issues.match(keywords): return label
+    if commit.issues.match_bigram(bigrams): return label
+    return ABSTAIN
+
+def keyword_lf(where, keywords, label, bigrams=None):
+    if keywords:
+        name = f"{LABEL_NAMES[label]}_{where}_keyword_{next(iter(keywords))}"
+    elif bigrams:
+        name = f"{LABEL_NAMES[label]}_{where}_bigram_{' '.join(next(iter(bigrams)))}"
+    return CommitLabelingFunction(
+        name=name,
+        f=globals()[f"keyword_lookup_in_{where}"],
+        resources=dict(keywords=keywords, bigrams=bigrams, label=label)
+    )
+
+def keyword_lfs(keywords: List[str], where: str, label: Label):
+    lfs = []
+    for elem in keywords:
+        if isinstance(elem, str):
+            if ' ' in elem:
+                lfs.append(keyword_lf(where, keywords=None, bigrams=set([tuple(elem.split(' '))]), label=label))
+            else:
+                lfs.append(keyword_lf(where, set([elem]), label))
+        elif isinstance(elem, list):
+            keywords = []
+            bigrams = []
+
+            for kw in elem:
+                if ' ' in kw:
+                    bigrams.append(tuple(kw.split(' ')))
+                else:
+                    keywords.append(kw)                    
+
+            if not bigrams:
+               lfs.append(keyword_lf(where, set(elem), label))
+            elif not keywords:
+                lfs.append(keyword_lf(where, keywords=None, bigrams=set(elem), label=label))
+            else:
+                lfs.append(keyword_lf(where, keywords=keywords, bigrams=bigrams, label=label))
+        else:
+            raise ValueError()                
+
+    return lfs

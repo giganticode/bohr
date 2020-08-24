@@ -1,1 +1,1 @@
-{"n_labeling_functions": 10, "coverage_train": 0.99746, "coverage_test": 1.0, "majority_accuracy_test": 0.6624629080118695}
+{"n_labeling_functions": 302, "coverage_train": 0.61431, "coverage_test": 0.7126112759643917, "majority_accuracy_test": 0.7094955489614243}

@@ -12,7 +12,7 @@ import pandas as pd
 import dask.dataframe as dd
 import csv
 
-from snorkel.labeling import PandasLFApplier
+from snorkel.labeling import PandasLFApplier, LFAnalysis
 from snorkel.labeling.apply.dask import DaskLFApplier, PandasParallelLFApplier
 
 from snorkel.labeling.model import MajorityLabelVoter
@@ -39,12 +39,18 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['n_labeling_functions'] = len(lfs)
 
+    print("Number of lfs ", len(lfs))
+
+    #applier = PandasLFApplier(lfs=lfs)
     applier = PandasParallelLFApplier(lfs=lfs)
     L_dev = applier.apply(df=df_train, n_parallel=6)
     L_dev.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
 
-    applier = PandasParallelLFApplier(lfs=lfs)
-    L_test = applier.apply(df=df_test, n_parallel=6)
+    LFAnalysis(L_dev, lfs).lf_summary().to_csv(PROJECT_DIR / 'generated' / 'analysis.csv')
+
+    # applier = PandasParallelLFApplier(lfs=lfs)
+    applier = PandasLFApplier(lfs=lfs)
+    L_test = applier.apply(df=df_test)
     L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
 
     stats['coverage_train'] = sum((L_dev != -1).any(axis=1)) / len(L_dev)
@@ -57,14 +63,25 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rows-train', type=int, default=50000)
+    parser.add_argument('--rows-train', type=int, default=100000)
     parser.add_argument('--rows-test', type=int, default=5000)
     parser.add_argument('--save-heuristics-matrix-train-to', default='generated/heuristic_matrix_train.pkl')
     parser.add_argument('--save-heuristics-matrix-test-to', default='generated/heuristic_matrix_test.pkl')
     parser.add_argument('--save-metrics-to', default='heuristic_metrics.json')
+    parser.add_argument('--profile', action='store_true', default=False)
     args = parser.parse_args()
 
-    stats = apply_heuristics(args)
+    if args.profile:
+        import cProfile
+        pr = cProfile.Profile()
+
+    try:
+        if args.profile: pr.enable()
+        stats = apply_heuristics(args)
+    finally:
+        if args.profile:
+            pr.disable()
+            pr.print_stats(sort='cumtime')
 
     with open(PROJECT_DIR / Path(args.save_metrics_to), 'w') as f:
         json.dump(stats, f)

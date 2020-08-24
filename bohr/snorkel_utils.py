@@ -1,5 +1,5 @@
 from functools import wraps, cached_property, lru_cache
-from typing import Optional, List, Set, Mapping, Any, Tuple, Callable
+from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 from snorkel.types import DataPoint
 
 from bohr import TEST_DIR, TRAIN_DIR
@@ -77,16 +77,31 @@ class Issues:
     def match_label(self, stemmed_labels: Set[str]) -> bool:
         for issue in self.__issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
-        return False            
+        return False
+
+    def contains_label(self, stemmed_label: str) -> bool:
+        for issue in self.__issues:
+            if stemmed_label in issue.stemmed_labels: return True
+        return False
 
     def match(self, stemmed_keywords: Set[str]) -> bool:
         for issue in self.__issues:
             if not issue.stems.isdisjoint(stemmed_keywords): return True
         return False
 
+    def contains(self, stemmed_keyword: str) -> bool:
+        for issue in self.__issues:
+            if stemmed_keyword in issue.stems: return True
+        return False
+
     def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
         for issue in self.__issues:
             if not issue.stem_bigrams.isdisjoint(stemmed_bigrams): return True
+        return False
+
+    def contains_bigram(self, stemmed_bigram: Tuple[str, str]) -> bool:
+        for issue in self.__issues:
+            if stemmed_bigram in issue.stem_bigrams: return True
         return False
 
 
@@ -188,7 +203,7 @@ class Commit:
 
 class CommitMapper(BaseMapper):
 
-    cache = LRUCache(64)
+    cache = LRUCache(512)
 
     def __init__(self) -> None:
         super().__init__('CommitMapper', [], memoize=False)
@@ -224,29 +239,65 @@ class commit_lf(labeling_function):
         return CommitLabelingFunction(name=name, f=f, resources=self.resources, pre=self.pre)
 
 
-def keyword_lookup_in_message(commit: Commit, keywords, bigrams, label):
+def keywords_lookup_in_message(commit: Commit, keywords, bigrams, label):
     if keywords and commit.message.match(keywords): return label
     if bigrams and commit.message.match_bigram(bigrams): return label
     return ABSTAIN
 
-def keyword_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
+def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
     if keywords and commit.issues.match_label(keywords): return label
     return ABSTAIN
 
-def keyword_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
+def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
     if commit.issues.match(keywords): return label
     if commit.issues.match_bigram(bigrams): return label
     return ABSTAIN
 
-def keyword_lf(where, keywords, label, bigrams=None):
-    if keywords:
-        name = f"{LABEL_NAMES[label]}_{where}_keyword_{next(iter(keywords))}"
-    elif bigrams:
-        name = f"{LABEL_NAMES[label]}_{where}_bigram_{' '.join(next(iter(bigrams)))}"
+def keyword_lookup_in_message(commit: Commit, keyword, bigram, label):
+    if keyword in commit.message.stems: return label
+    if bigram in commit.message.stem_bigrams: return label
+    return ABSTAIN
+
+def keyword_lookup_in_issue_label(commit: Commit, keyword, bigram, label):
+    if keyword and commit.issues.contains_label(keyword): return label
+    return ABSTAIN
+
+def keyword_lookup_in_issue_body(commit: Commit, keyword, bigram, label):
+    if commit.issues.contains(keyword): return label
+    if commit.issues.contains_bigram(bigram): return label
+    return ABSTAIN
+
+def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams: Union[Tuple[str, str], Set[Tuple[str, str]]] = None):
+
+    name_elem = None
+    label_name = LABEL_NAMES[label]
+    multi = False
+    
+    if isinstance(keywords, str):
+        name_elem = keywords
+    elif isinstance(keywords, set):
+        name_elem = next(iter(keywords))
+        multi = multi or True
+
+    if isinstance(bigrams, tuple):
+        name_elem = name_elem or ' '.join(bigrams)
+    if isinstance(bigrams, set):
+        name_elem = name_elem or ' '.join(next(iter(bigrams)))
+        multi = multi or True
+
+    keyword_or_bigram_str = f"{'keyword' if keywords is not None else 'bigram'}{'s' if multi else ''}"
+
+    name = f"{label_name}_{where}_{keyword_or_bigram_str}_{name_elem}"
+
+    if multi:
+        resources = dict(keywords=keywords, bigrams=bigrams, label=label)
+    else:
+        resources = dict(keyword=keywords, bigram=bigrams, label=label)
+
     return CommitLabelingFunction(
         name=name,
-        f=globals()[f"keyword_lookup_in_{where}"],
-        resources=dict(keywords=keywords, bigrams=bigrams, label=label)
+        f=globals()[f"keyword{'s' if multi else ''}_lookup_in_{where}"],
+        resources=resources
     )
 
 def keyword_lfs(keywords: List[str], where: str, label: Label):
@@ -254,9 +305,9 @@ def keyword_lfs(keywords: List[str], where: str, label: Label):
     for elem in keywords:
         if isinstance(elem, str):
             if ' ' in elem:
-                lfs.append(keyword_lf(where, keywords=None, bigrams=set([tuple(elem.split(' '))]), label=label))
+                lfs.append(keyword_lf(where, keywords=None, bigrams=tuple(elem.split(' ')), label=label))
             else:
-                lfs.append(keyword_lf(where, set([elem]), label))
+                lfs.append(keyword_lf(where, elem, label))
         elif isinstance(elem, list):
             keywords = []
             bigrams = []
@@ -267,12 +318,8 @@ def keyword_lfs(keywords: List[str], where: str, label: Label):
                 else:
                     keywords.append(kw)                    
 
-            if not bigrams:
-               lfs.append(keyword_lf(where, set(elem), label))
-            elif not keywords:
-                lfs.append(keyword_lf(where, keywords=None, bigrams=set(elem), label=label))
-            else:
-                lfs.append(keyword_lf(where, keywords=keywords, bigrams=bigrams, label=label))
+            lfs.append(keyword_lf(where, keywords=set(keywords) if keywords else None,
+                                         bigrams=set(bigrams) if bigrams else None, label=label))
         else:
             raise ValueError()                
 

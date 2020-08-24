@@ -54,13 +54,17 @@ class Issue:
         return safe_word_tokenize(self.body)
 
     @cached_property
-    def stems(self) -> Set[str]:
+    def ordered_stems(self) -> List[str]:
         stemmer = PorterStemmer()
-        return set([stemmer.stem(w) for w in self.tokens])
+        return [stemmer.stem(w) for w in self.tokens]
+
+    @cached_property
+    def stems(self) -> Set[str]:
+        return set(self.ordered_stems)
 
     @cached_property
     def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.stems))
+        return set(bigrams(self.ordered_stems))
 
 
 
@@ -134,13 +138,17 @@ class CommitMessage:
         return safe_word_tokenize(self.raw)
 
     @cached_property
-    def stems(self) -> Set[str]:
+    def ordered_stems(self) -> List[str]:
         stemmer = PorterStemmer()
-        return set([stemmer.stem(w) for w in self.tokens])
+        return [stemmer.stem(w) for w in self.tokens]
+
+    @cached_property
+    def stems(self) -> Set[str]:
+        return set(self.ordered_stems)
 
     @cached_property
     def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.stems))
+        return set(bigrams(self.ordered_stems))
 
     def match(self, stemmed_keywords: Set[str]) -> bool:
         return not self.stems.isdisjoint(stemmed_keywords)

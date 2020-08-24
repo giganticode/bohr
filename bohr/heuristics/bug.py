@@ -29,13 +29,13 @@ BUG_MESSAGE_KEYWORDS = [
    'loop',
    'mistak',
    ['nullpointer', 'npe', 'null pointer'],
-   ['not work'],
-   ['not return'],
+   'not work',
+   'not return',
    ['outofbound', 'of bound'],
    'prevent',
    'problem',
    'properli',
-   ['race condit'],
+   'race condit',
    'repair',
    'solv',
    ['threw', 'throw'],
@@ -113,7 +113,7 @@ BUG_ISSUE_BODY_KEYWORDS = [
     'unsynchron',
     'wrong',
     'except',
-    ['nullpointer', 'npe'],
+    ['nullpointer', 'npe', 'null pointer'],
     ['outofbound', 'of bound']
 ]
 

@@ -10,6 +10,7 @@ from typing import Any, Dict
 import numpy as np
 import pandas as pd
 import dask.dataframe as dd
+from dask.diagnostics import ProgressBar
 import csv
 
 from snorkel.labeling import PandasLFApplier, LFAnalysis
@@ -35,13 +36,15 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=args.rows_train)
     df_test = pd.concat([pd.read_csv(p)
-                         for p in TEST_DIR.glob('*.csv')], ignore_index=True)
+                         for p in TEST_DIR.glob('*.csv')], ignore_index=True, sort=True)
 
     df_train.message = df_train.message.astype(str)
 
     lfs = all_lfs(bug_heuristics)
 
     stats['n_labeling_functions'] = len(lfs)
+
+    ProgressBar().register()
 
     if args.n_parallel <= 1:
         applier = PandasLFApplier(lfs=lfs)

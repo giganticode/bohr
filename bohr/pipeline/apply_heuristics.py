@@ -44,12 +44,12 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['n_labeling_functions'] = len(lfs)
 
-    ProgressBar().register()
 
     if args.n_parallel <= 1:
         applier = PandasLFApplier(lfs=lfs)
         L_train = applier.apply(df=df_train)
     else:
+        ProgressBar().register()
         applier = PandasParallelLFApplier(lfs=lfs)
         L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
 

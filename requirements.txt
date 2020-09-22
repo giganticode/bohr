@@ -40,4 +40,4 @@ whatthepatch==1.0.0
 wordcloud==1.7.0
 wrapt==1.12.1
 zipp==3.1.0
-cachetools=4.1.1
+cachetools==4.1.1

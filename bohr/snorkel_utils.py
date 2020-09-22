@@ -154,7 +154,7 @@ class CommitMessage:
         return not self.stems.isdisjoint(stemmed_keywords)
 
     def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
-        return not self.stems.isdisjoint(stemmed_bigrams)
+        return not self.stem_bigrams.isdisjoint(stemmed_bigrams)
 
 
 
@@ -285,13 +285,13 @@ def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams
         name_elem = keywords
     elif isinstance(keywords, set):
         name_elem = next(iter(keywords))
-        multi = multi or True
+        multi = True
 
     if isinstance(bigrams, tuple):
         name_elem = name_elem or ' '.join(bigrams)
     if isinstance(bigrams, set):
         name_elem = name_elem or ' '.join(next(iter(bigrams)))
-        multi = multi or True
+        multi = True
 
     keyword_or_bigram_str = f"{'keyword' if keywords is not None else 'bigram'}{'s' if multi else ''}"
 

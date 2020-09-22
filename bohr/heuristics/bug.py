@@ -362,4 +362,4 @@ def no_files_have_modified_status(commit: Commit):
     for file in commit.files:
         if file.status == 'modified': return ABSTAIN
         if file.status == 'added': return ABSTAIN
-    return BUGLESS        
+    return BUGLESS

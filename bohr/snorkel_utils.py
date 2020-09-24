@@ -202,10 +202,18 @@ class Commit:
         issues = []
 
         if df is not None:
-            df = df.loc[[self.sha]]
-            for sha, issue in df.iterrows():
-                labels = issue.labels.split(', ')
-                issues.append(Issue(issue.title, issue.body, labels))
+            try:
+                df = df.loc[[self.sha]]
+                for sha, issue in df.iterrows():
+                    labels = issue.labels
+                    if pd.isna(labels):
+                        labels = []
+                    else:
+                        labels = labels.split(', ')
+
+                    issues.append(Issue(issue.title, issue.body, labels))
+            except KeyError as e:
+                pass
 
         return Issues(issues)
 
@@ -257,8 +265,8 @@ def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
     return ABSTAIN
 
 def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
-    if commit.issues.match(keywords): return label
-    if commit.issues.match_bigram(bigrams): return label
+    if keywords and commit.issues.match(keywords): return label
+    if bigrams and commit.issues.match_bigram(bigrams): return label
     return ABSTAIN
 
 def keyword_lookup_in_message(commit: Commit, keyword, bigram, label):

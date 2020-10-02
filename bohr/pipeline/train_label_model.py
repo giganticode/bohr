@@ -26,7 +26,7 @@ def train_label_model(args) -> Dict[str, Any]:
     L_test = np.load(PROJECT_DIR / args.path_to_heuristics_matrix_test, allow_pickle=True)
 
     label_model = LabelModel(cardinality=2, verbose=True)
-    label_model.fit(L_train=L_dev, n_epochs=100, log_freq=100, seed=123)
+    label_model.fit(L_train=L_dev, n_epochs=1, log_freq=100, seed=123)
     label_model.save(PROJECT_DIR / args.save_label_model_to)
     label_model.eval()
     # stats['label_model_train_acc'] = label_model.score(L=L_dev, Y=df_train.label, tie_break_policy="random")["accuracy"]

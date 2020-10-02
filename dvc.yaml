@@ -1,15 +1,20 @@
 stages:
   apply_heuristics:
+<<<<<<< HEAD
+    cmd: python bohr/pipeline/apply_heuristics.py --dataset-path-train data/combination/Training_Dataset.clean.csv
+      --dataset-path-test data/combination/Test_Dataset.clean.csv --rows-train 50000 --rows-test
+=======
     cmd: python -mbohr.pipeline.apply_heuristics --dataset-path-train data/combination/Training_Dataset.csv
       --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
+>>>>>>> 01de22f746d16d2b8910e1e679107fbac858f833
       5000 --save-heuristics-matrix-train-to generated/heuristic_matrix_train.pkl
       --save-heuristics-matrix-test-to generated/heuristic_matrix_test.pkl --save-metrics-to
       heuristic_metrics.json
     deps:
     - bohr/heuristics
     - bohr/pipeline/apply_heuristics.py
-    - data/combination/Test_Dataset.csv
-    - data/combination/Training_Dataset.csv
+    - data/combination/Test_Dataset.clean.csv
+    - data/combination/Training_Dataset.clean.csv
     outs:
     - generated/heuristic_matrix_test.pkl
     - generated/heuristic_matrix_train.pkl
@@ -17,15 +22,20 @@ stages:
     - heuristic_metrics.json:
         cache: false
   train_label_model:
+<<<<<<< HEAD
+    cmd: python bohr/pipeline/train_label_model.py --dataset-path-train data/combination/Training_Dataset.clean.csv
+      --dataset-path-test data/combination/Test_Dataset.clean.csv --rows-train 50000 --rows-test
+=======
     cmd: python -mbohr.pipeline.train_label_model --dataset-path-train data/combination/Training_Dataset.csv
       --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
+>>>>>>> 01de22f746d16d2b8910e1e679107fbac858f833
       5000 --path-to-heuristics-matrix-train generated/heuristic_matrix_train.pkl
       --path-to-heuristics-matrix-test generated/heuristic_matrix_test.pkl --save-label-model-to
       generated/label_model.pkl --save-metrics-to label_model_metrics.json
     deps:
     - bohr/pipeline/train_label_model.py
-    - data/combination/Test_Dataset.csv
-    - data/combination/Training_Dataset.csv
+    - data/combination/Test_Dataset.clean.csv
+    - data/combination/Training_Dataset.clean.csv
     - generated/heuristic_matrix_test.pkl
     - generated/heuristic_matrix_train.pkl
     outs:

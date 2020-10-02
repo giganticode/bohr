@@ -56,17 +56,17 @@ def apply_heuristics(args) -> Dict[str, Any]:
     L_train.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
 
     LFAnalysis(L_train, lfs).lf_summary().to_csv(
-        PROJECT_DIR / 'generated' / 'analysis.csv')
-
-    # applier = PandasParallelLFApplier(lfs=lfs)
+        PROJECT_DIR / 'generated' / 'analysis_train.csv')
     applier = PandasLFApplier(lfs=lfs)
     L_test = applier.apply(df=df_test)
     L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
 
+    LFAnalysis(L_test, lfs).lf_summary(Y=df_test.bug.values).to_csv(
+        PROJECT_DIR / 'generated' / 'analysis_test.csv')
+
     stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
     stats['coverage_test'] = sum((L_test != -1).any(axis=1)) / len(L_test)
 
-    # stats['majority_accuracy_train'] = majority_acc(L_dev, df_train)
     stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
 
     return stats
@@ -74,8 +74,7 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rows-train', type=int, default=100000)
-    parser.add_argument('--rows-test', type=int, default=5000)
+    parser.add_argument('--rows-train', type=int, default=50000)
     parser.add_argument('--save-heuristics-matrix-train-to',
                         default='generated/heuristic_matrix_train.pkl')
     parser.add_argument('--save-heuristics-matrix-test-to',

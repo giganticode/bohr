@@ -1,43 +1,40 @@
 apply_heuristics:
-  cmd: python -mbohr.pipeline.apply_heuristics --dataset-path-train data/combination/Training_Dataset.csv
-    --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
-    5000 --save-heuristics-matrix-train-to generated/heuristic_matrix_train.pkl --save-heuristics-matrix-test-to
-    generated/heuristic_matrix_test.pkl --save-metrics-to heuristic_metrics.json
+  cmd: python bohr/pipeline/apply_heuristics.py
   deps:
   - path: bohr/heuristics
-    md5: c6e050e5f3ff05b692e86aa89f2d9184.dir
+    md5: 5d0327b134170fcee33ff58720ef6cb3.dir
   - path: bohr/pipeline/apply_heuristics.py
-    md5: ffa7fd3aca90e013fac6799ad3186be2
-  - path: data/combination/Test_Dataset.csv
-    md5: 3d2a49cd24dc34ef9a1698af2c1d82ae
-  - path: data/combination/Training_Dataset.csv
-    md5: 945bffaf7ac8ad7fdbd59c55b0e9f8db
+    md5: bfebdf3e053d4d046e47d5af69261915
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
   outs:
+  - path: generated/analysis_test.csv
+    md5: 18286cb847d7c7fcb130e036e20a3b4a
+  - path: generated/analysis_train.csv
+    md5: 10d57088c2483baf277c05136d386b83
   - path: generated/heuristic_matrix_test.pkl
-    md5: db497fe0788ed7a2eb22d7a19ab75508
+    md5: 767a38f7d5716d9b86e7dc1e568b4714
   - path: generated/heuristic_matrix_train.pkl
-    md5: 628da1e5e47d4799bebdf5cb3b85d5c6
+    md5: b182beda5bce41c136d96d64fdcf6d62
   - path: heuristic_metrics.json
-    md5: d129f3ef6528109f0608dd63fa101828
+    md5: b57bef1ef1d2c6acd7ee6ef3e710768b
 train_label_model:
-  cmd: python -mbohr.pipeline.train_label_model --dataset-path-train data/combination/Training_Dataset.csv
-    --dataset-path-test data/combination/Test_Dataset.csv --rows-train 50000 --rows-test
-    5000 --path-to-heuristics-matrix-train generated/heuristic_matrix_train.pkl --path-to-heuristics-matrix-test
-    generated/heuristic_matrix_test.pkl --save-label-model-to generated/label_model.pkl
-    --save-metrics-to label_model_metrics.json
+  cmd: python bohr/pipeline/train_label_model.py
   deps:
   - path: bohr/pipeline/train_label_model.py
-    md5: 0e59ba631970276a9981462a68b09c5f
-  - path: data/combination/Test_Dataset.csv
-    md5: 3d2a49cd24dc34ef9a1698af2c1d82ae
-  - path: data/combination/Training_Dataset.csv
-    md5: 945bffaf7ac8ad7fdbd59c55b0e9f8db
+    md5: 8a4b8576f41c7cb925aae7bbe7ce5102
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
   - path: generated/heuristic_matrix_test.pkl
-    md5: db497fe0788ed7a2eb22d7a19ab75508
+    md5: 767a38f7d5716d9b86e7dc1e568b4714
   - path: generated/heuristic_matrix_train.pkl
-    md5: 628da1e5e47d4799bebdf5cb3b85d5c6
+    md5: b182beda5bce41c136d96d64fdcf6d62
   outs:
   - path: generated/label_model.pkl
-    md5: eeffd305d9ad782c5f5973ade0c67ac7
+    md5: 3de171aa4c142156b965fde841fe73fb
   - path: label_model_metrics.json
-    md5: 249df0c902ff915335480fce3cd9e637
+    md5: 09d128d5f522f55c28fccb49965a35c4

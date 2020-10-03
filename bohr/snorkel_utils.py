@@ -208,6 +208,8 @@ class Commit:
                     labels = issue.labels
                     if pd.isna(labels):
                         labels = []
+                    elif isinstance(labels, float):
+                        labels = [str(labels)]
                     else:
                         labels = labels.split(', ')
 

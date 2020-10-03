@@ -2,7 +2,7 @@ name: calculate-metrics
 on: [pull_request]
 jobs:
   run:
-    runs-on: [ubuntu-latest]
+    runs-on: self-hosted
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
@@ -11,9 +11,9 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
-
+          sudo apt-get update && sudo apt-get install p7zip-full
           pip install -r requirements.txt
-          dvc pull -r gdrive data/combination/Test_Dataset.csv data/combination/Training_Dataset.csv
+          dvc pull -r gdrive data/test downloaded-data/b_b.7z
           dvc repro
 
           git fetch --prune 

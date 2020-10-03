@@ -2,10 +2,10 @@
 github_ref_in_message,0,[],0.0,0.0,0.0,0,0,0.0
 version_in_message,1,[0],0.002373887240356083,0.0019287833827893175,0.0010385756676557863,11,5,0.6875
 bug_message_keyword_bad,2,[1],0.0034124629080118695,0.002373887240356083,0.0010385756676557863,19,4,0.8260869565217391
-bug_message_keywords_bugg,3,[1],0.08724035608308606,0.08264094955489615,0.03798219584569733,507,81,0.8622448979591837
+bug_message_keywords_bug,3,[1],0.08724035608308606,0.08264094955489615,0.03798219584569733,507,81,0.8622448979591837
 bug_message_keyword_broken,4,[1],0.004451038575667656,0.0032640949554896144,0.0017804154302670622,25,5,0.8333333333333333
 bug_message_keyword_concurr,5,[1],0.00741839762611276,0.007121661721068249,0.004154302670623145,34,16,0.6799999999999999
-bug_message_keywords_correct,6,[1],0.016320474777448073,0.012462908011869436,0.0072700296735905045,83,27,0.7545454545454545
+bug_message_keywords_correctli,6,[1],0.016320474777448073,0.012462908011869436,0.0072700296735905045,83,27,0.7545454545454545
 bug_message_keyword_corrupt,7,[1],0.004599406528189911,0.003857566765578635,0.0019287833827893175,28,3,0.9032258064516129
 bug_message_keyword_crash,8,[1],0.0017804154302670622,0.0016320474777448072,0.0005934718100890207,9,3,0.75
 bug_message_keywords_deadlock,9,[1],0.005044510385756677,0.00370919881305638,0.002225519287833828,34,0,1.0
@@ -14,7 +14,7 @@ bug_message_keyword_endless,11,[1],0.0008902077151335311,0.0008902077151335311,0
 bug_message_keyword_ensur,12,[1],0.0032640949554896144,0.002373887240356083,0.0010385756676557863,18,4,0.8181818181818181
 bug_message_keyword_error,13,[1],0.01973293768545994,0.016172106824925817,0.009940652818991098,87,46,0.6541353383458647
 bug_message_keywords_failur,14,[1],0.04169139465875371,0.023887240356083087,0.012611275964391691,237,44,0.8434163701067616
-bug_message_keywords_hotfix,15,[1],0.23620178041543027,0.1591988130563798,0.08071216617210683,1352,240,0.8492462311557789
+bug_message_keywords_quickfix,15,[1],0.23620178041543027,0.1591988130563798,0.08071216617210683,1352,240,0.8492462311557789
 bug_message_keyword_garbag,16,[1],0.0028189910979228485,0.0019287833827893175,0.000741839762611276,14,5,0.7368421052631579
 bug_message_keyword_incomplet,17,[1],0.0011869436201780415,0.0011869436201780415,0.0008902077151335311,5,3,0.625
 bug_message_keyword_inconsist,18,[1],0.003857566765578635,0.002373887240356083,0.0013353115727002967,22,4,0.8461538461538461
@@ -25,7 +25,7 @@ bug_message_keyword_issue,22,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_leak,23,[1],0.004599406528189911,0.0028189910979228485,0.000741839762611276,31,0,1.0
 bug_message_keyword_loop,24,[1],0.0060830860534124625,0.0051928783382789315,0.0016320474777448072,35,6,0.8536585365853658
 bug_message_keyword_mistak,25,[1],0.0001483679525222552,0.0001483679525222552,0.0,1,0,1.0
-bug_message_keywords_nullpointer,26,[1],0.013056379821958458,0.009495548961424332,0.002225519287833828,81,7,0.9204545454545454
+bug_message_keywords_npe,26,[1],0.013056379821958458,0.009495548961424332,0.002225519287833828,81,7,0.9204545454545454
 bug_message_bigram_not work,27,[1],0.004747774480712166,0.0026706231454005935,0.0013353115727002967,26,6,0.8125
 bug_message_bigram_not return,28,[1],0.0016320474777448072,0.0011869436201780415,0.00044510385756676556,11,0,1.0
 bug_message_keywords_outofbound,29,[1],0.0001483679525222552,0.0001483679525222552,0.0,1,0,1.0
@@ -46,15 +46,15 @@ bug_message_keyword_wrong,43,[1],0.008605341246290801,0.005637982195845697,0.003
 bug_message_keyword_except,44,[1],0.02566765578635015,0.020029673590504452,0.010979228486646885,118,55,0.6820809248554913
 bug_issue_label_keyword_bad,45,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_broken,46,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_label_keywords_bugg,47,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_label_keywords_bug,47,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_close,48,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_concurr,49,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_correct,50,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_crash,51,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_defect,52,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_error,53,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_label_keywords_failur,54,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_label_keywords_hotfix,55,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_label_keywords_fault,54,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_label_keywords_quickfix,55,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_handl,56,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_invalid,57,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_issue,58,[],0.0,0.0,0.0,0,0,0.0
@@ -64,10 +64,10 @@ bug_issue_label_keyword_minor,61,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_label_keyword_unknown,62,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_bad,63,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_broken,64,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keywords_bugg,65,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keywords_bug,65,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_close,66,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_concurr,67,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keywords_correct,68,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keywords_correctli,68,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_corrupt,69,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_crash,70,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keywords_deadlock,71,[],0.0,0.0,0.0,0,0,0.0
@@ -76,8 +76,8 @@ bug_issue_body_keyword_disabl,73,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_endless,74,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_ensur,75,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_error,76,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keywords_failur,77,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keywords_hotfix,78,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keywords_fault,77,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keywords_quickfix,78,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_garbag,79,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_handl,80,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_incomplet,81,[],0.0,0.0,0.0,0,0,0.0
@@ -105,7 +105,7 @@ bug_issue_body_keyword_unknown,102,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_unsynchron,103,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_wrong,104,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_except,105,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keywords_nullpointer,106,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keywords_npe,106,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keywords_outofbound,107,[],0.0,0.0,0.0,0,0,0.0
 bugless_message_keyword_abil,108,[0],0.0034124629080118695,0.0028189910979228485,0.0008902077151335311,18,5,0.7826086956521738
 bugless_message_keyword_ad,109,[0],0.055044510385756674,0.034421364985163204,0.015281899109792284,259,112,0.6981132075471699
@@ -234,7 +234,7 @@ bugless_issue_body_keyword_convert,231,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_create,232,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_deprec,233,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_develop,234,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_body_keywords_javadoc,235,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_body_keywords_document,235,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_drop,236,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_enhanc,237,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_exclud,238,[],0.0,0.0,0.0,0,0,0.0

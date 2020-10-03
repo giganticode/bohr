@@ -38,3 +38,11 @@ train_label_model:
     md5: 3de171aa4c142156b965fde841fe73fb
   - path: label_model_metrics.json
     md5: 09d128d5f522f55c28fccb49965a35c4
+extract_train_data:
+  cmd: 7z x downloaded-data/b_b.7z -odata
+  deps:
+  - path: downloaded-data/b_b.7z
+    md5: 9c406efc33b74f7310ea93cbb00e9194
+  outs:
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir

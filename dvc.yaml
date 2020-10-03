@@ -1,4 +1,11 @@
 stages:
+  extract_train_data:
+    cmd: 7z x downloaded-data/b_b.7z -odata
+    deps:
+    - downloaded-data/b_b.7z
+    outs:
+    - data/train:
+        cache: false
   apply_heuristics:
     cmd: python bohr/pipeline/apply_heuristics.py
     deps:

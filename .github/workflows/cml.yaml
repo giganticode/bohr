@@ -13,7 +13,7 @@ jobs:
         run: |
 
           pip install -r requirements.txt
-          dvc pull -r gdrive data/combination/Test_Dataset.csv data/combination/Training_Dataset.csv
+          dvc pull -r gdrive data/test downloaded-data/b_b.7z
           dvc repro
 
           git fetch --prune 

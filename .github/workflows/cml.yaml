@@ -10,9 +10,8 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          PYTHONPATH: /home/hbabii/actions-runner/_work/bohr 
+          PYTHONPATH: /__w/bohr/bohr 
         run: |
-          pwd
           sudo apt-get update && sudo apt-get install libpython3-dev && sudo apt-get install p7zip-full
           pip install -r requirements.txt
           dvc pull -r gdrive data/test downloaded-data/b_b.7z

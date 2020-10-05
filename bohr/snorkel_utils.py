@@ -190,7 +190,10 @@ class Commit:
             try:
                 df = df.loc[[self.sha]]
                 for sha, file in df.iterrows():
-                    files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
+                    try:
+                        files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
+                    except AttributeError:
+                        print(f'Attribute Error in this row: {file}')
             except KeyError as e:
                 pass
 

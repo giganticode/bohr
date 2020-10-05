@@ -211,6 +211,8 @@ def bogus_fix_keyword_in_message(commit: Commit):
 
 @commit_lf()
 def no_files_have_modified_status(commit: Commit):
+    if not commit.files:
+        return ABSTAIN
     for file in commit.files:
         if file.status == 'modified': return ABSTAIN
         if file.status == 'added': return ABSTAIN

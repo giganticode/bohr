@@ -20,10 +20,12 @@ jobs:
           export PATH="$HOME/.pyenv/bin:$PATH"
           pyenv install 3.8.0
           pyenv global 3.8.0
+          python --version
           
           pip install -r requirements.txt
           dvc pull -r gdrive data/test downloaded-data/b_b.7z
           dvc repro
+
           git fetch --prune 
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md

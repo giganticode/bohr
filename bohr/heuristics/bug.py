@@ -209,7 +209,7 @@ def bogus_fix_keyword_in_message(commit: Commit):
             return BUG
     return ABSTAIN
 
-#@commit_lf()
+@commit_lf()
 def no_files_have_modified_status(commit: Commit):
     for file in commit.files:
         if file.status == 'modified': return ABSTAIN

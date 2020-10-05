@@ -25,6 +25,7 @@ jobs:
           python --version
           
           pip install -r requirements.txt
+          python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/b_b.7z
           dvc repro
 

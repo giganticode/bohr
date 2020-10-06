@@ -174,7 +174,7 @@ class Commit:
     def __load_df(self, type: str, owner: str, repository: str):
         path = TRAIN_DIR / type  / owner / f"{repository}.csv"
         if path.is_file():
-            return pd.read_csv(path, index_col=['sha'])
+            return pd.read_csv(path, index_col=['sha'], keep_default_na=False)
         else:
             return None
 
@@ -206,12 +206,7 @@ class Commit:
                 df = df.loc[[self.sha]]
                 for sha, issue in df.iterrows():
                     labels = issue.labels
-                    if pd.isna(labels):
-                        labels = []
-                    elif isinstance(labels, float):
-                        labels = [str(labels)]
-                    else:
-                        labels = labels.split(', ')
+                    labels = list(filter(None, labels.split(', ')))
 
                     issues.append(Issue(issue.title, issue.body, labels))
             except KeyError as e:

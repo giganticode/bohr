@@ -69,8 +69,8 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
 
-    os.listdir(PROJECT_DIR)
-    os.listdir(PROJECT_DIR / 'generated')
+    print(os.listdir(PROJECT_DIR))
+    print(os.listdir(PROJECT_DIR / 'generated'))
     return stats
 
 

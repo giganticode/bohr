@@ -7,7 +7,7 @@ stages:
     - data/train:
         cache: false
   apply_heuristics:
-    cmd: python bohr/pipeline/apply_heuristics.py
+    cmd: python bohr/pipeline/apply_heuristics.py && pwd && ls "generated/heuristic_matrix_test.pkl"
     deps:
     - bohr/heuristics
     - bohr/pipeline/apply_heuristics.py

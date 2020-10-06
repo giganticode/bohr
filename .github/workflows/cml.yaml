@@ -9,9 +9,10 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          PYTHONPATH: /user/src/app/
+          PYTHONPATH: /usr/src/app/
         run: |
-          echo "PYHTONPATH: ${PYTHONPATH}"
+          git branch
+          git checkout master
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch

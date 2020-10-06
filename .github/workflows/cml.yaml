@@ -11,7 +11,7 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
           PYTHONPATH: /usr/src/app/
         run: |
-          RUN eval "$(pyenv init -)"
+          RUN which python
           RUN python --version
           git branch
           git checkout master

@@ -34,7 +34,7 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100000)
+    df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100)
     df_test = pd.concat([pd.read_csv(p)
                          for p in TEST_DIR.glob('*.csv')], ignore_index=True, sort=True)
 
@@ -69,6 +69,8 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
 
+    os.listdir(PROJECT_DIR)
+    os.listdir(PROJECT_DIR / 'generated')
     return stats
 
 

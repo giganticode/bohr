@@ -11,6 +11,7 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
           PYTHONPATH: /usr/src/app
         run: |
+          cd /usr/src/app
           pyenv global 3.8.0
           eval "$(pyenv init -)"
           echo "$(python --version)"
@@ -20,6 +21,8 @@ jobs:
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
           dvc pull -r gdrive data/test downloaded-data/b_b.7z
+          cd /usr/src/app
+          echo "$pwd"
           dvc repro
 
           git checkout master 

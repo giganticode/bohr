@@ -37,7 +37,7 @@ def apply_heuristics(args) -> Dict[str, Any]:
     df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100000)
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
-    df_1151_commits = pd.read_csv(TEST_DIR / '1151_commits.csv')
+    df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
 
     df_train.message = df_train.message.astype(str)
 

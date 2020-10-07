@@ -18,7 +18,7 @@ def train_label_model(args) -> Dict[str, Any]:
 
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
-    df_1151_commits = pd.read_csv(TEST_DIR / '1151_commits.csv')
+    df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
 
     L_train = np.load(PROJECT_DIR / args.path_to_heuristics_matrix_train, allow_pickle=True)
     L_herzig = np.load(PROJECT_DIR / args.path_to_heuristics_matrix_herzig, allow_pickle=True)

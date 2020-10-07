@@ -75,8 +75,8 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
     stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)
-    stats['coverage_berger'] = sum((L_herzig != -1).any(axis=1)) / len(L_berger)
-    stats['coverage_1151_commits'] = sum((L_herzig != -1).any(axis=1)) / len(L_1151_commits)
+    stats['coverage_berger'] = sum((L_berger != -1).any(axis=1)) / len(L_berger)
+    stats['coverage_1151_commits'] = sum((L_1151_commits != -1).any(axis=1)) / len(L_1151_commits)
 
     stats['majority_accuracy_herzig'] = majority_acc(L_herzig, df_herzig)
     stats['majority_accuracy_berger'] = majority_acc(L_berger, df_berger)

@@ -174,7 +174,7 @@ class Commit:
     def __load_df(self, type: str, owner: str, repository: str):
         path = TRAIN_DIR / type  / owner / f"{repository}.csv"
         if path.is_file():
-            return pd.read_csv(path, index_col=['sha'], keep_default_na=False)
+            return pd.read_csv(path, index_col=['sha'], keep_default_na=False, dtype={'labels': 'str'})
         else:
             return None
 
@@ -281,7 +281,6 @@ def keyword_lookup_in_issue_body(commit: Commit, keyword, bigram, label):
     return ABSTAIN
 
 def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams: Union[Tuple[str, str], Set[Tuple[str, str]]] = None):
-
     name_elem = None
     label_name = LABEL_NAMES[label]
     multi = False
@@ -313,7 +312,7 @@ def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams
         resources=resources
     )
 
-def keyword_lfs(keywords: List[str], where: str, label: Label):
+def keyword_lfs(keywords: List[str], where: str, label: Label) -> List[LabelingFunction]:
     lfs = []
     for elem in keywords:
         if isinstance(elem, str):

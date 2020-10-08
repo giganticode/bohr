@@ -313,6 +313,21 @@ def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams
     )
 
 def keyword_lfs(keywords: List[str], where: str, label: Label) -> List[LabelingFunction]:
+    """
+    >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', 1)
+    >>> lfs[0].name
+    'bug_message_keyword_keyword1'
+    >>> lfs[0]._resources
+    {'keyword': 'keyword1', 'bigram': None, 'label': 1}
+    >>> lfs[1].name
+    'bug_message_keywords_keyword3'
+    >>> lfs[1]._resources
+    {'keywords': {'keyword3'}, 'bigrams': {('key', 'word2')}, 'label': 1}
+    >>> lfs[2].name
+    'bug_message_bigram_key word4'
+    >>> lfs[2]._resources
+    {'keyword': None, 'bigram': ('key', 'word4'), 'label': 1}
+    """
     lfs = []
     for elem in keywords:
         if isinstance(elem, str):

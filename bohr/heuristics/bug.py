@@ -95,7 +95,6 @@ NO_BUG_MESSAGE_KEYWORDS = [
    'includ',
    'info',
    'intorduc',
-   'javadoc',
    'limit',
    'log',
    'migrat',

@@ -14,11 +14,17 @@ stages:
     - data/train
     - data/test
     outs:
-    - generated/heuristic_matrix_test.pkl
     - generated/heuristic_matrix_train.pkl
+    - generated/heuristic_matrix_herzig.pkl
+    - generated/heuristic_matrix_berger.pkl
+    - generated/heuristic_matrix_1151_commits.pkl
     - generated/analysis_train.csv:
         cache: false
-    - generated/analysis_test.csv:
+    - generated/analysis_herzig.csv:
+        cache: false
+    - generated/analysis_berger.csv:
+        cache: false
+    - generated/analysis_1151_commits.csv:
         cache: false
     metrics:
     - heuristic_metrics.json:
@@ -27,8 +33,10 @@ stages:
     cmd: python bohr/pipeline/train_label_model.py
     deps:
     - bohr/pipeline/train_label_model.py
-    - generated/heuristic_matrix_test.pkl
     - generated/heuristic_matrix_train.pkl
+    - generated/heuristic_matrix_herzig.pkl
+    - generated/heuristic_matrix_berger.pkl
+    - generated/heuristic_matrix_1151_commits.pkl
     - data/train
     - data/test
     outs:

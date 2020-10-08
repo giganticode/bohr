@@ -43,7 +43,6 @@ BUG_MESSAGE_KEYWORDS = [
     'race condit',
     'repair',
     ['resolv', 'solv'],
-    'solv',
     ['threw', 'throw'],
     'timeout',
     'unabl',
@@ -172,16 +171,6 @@ NO_BUG_ISSUE_LABEL_KEYWORDS = [
     'renovate',
     'new',
 
-]
-
-lfs = [
-    *keyword_lfs(BUG_MESSAGE_KEYWORDS, 'message', BUG),
-    *keyword_lfs(BUG_ISSUE_LABEL_KEYWORDS, 'issue_label', BUG),
-    *keyword_lfs(BUG_MESSAGE_KEYWORDS, 'issue_body', BUG),
-
-    *keyword_lfs(NO_BUG_MESSAGE_KEYWORDS, 'message', BUGLESS),
-    *keyword_lfs(NO_BUG_ISSUE_LABEL_KEYWORDS, 'issue_label', BUGLESS),
-    *keyword_lfs(NO_BUG_MESSAGE_KEYWORDS, 'issue_body', BUGLESS),
 ]
 
 BOGUS_FIX_KEYWORDS = set(["ad", "add", "build", "chang", "doc", "document",

@@ -1,1 +1,1 @@
-{"n_labeling_functions": 306, "coverage_train": 0.6924, "coverage_test": 0.8080118694362017, "majority_accuracy_test": 0.7222551928783383}
+{"n_labeling_functions": 306, "coverage_train": 0.6924, "coverage_herzig": 0.7974683544303798, "coverage_berger": 0.8906666666666667, "coverage_1151_commits": 0.8288444830582102, "majority_accuracy_herzig": 0.7017644802454929, "majority_accuracy_berger": 0.752, "majority_accuracy_1151_commits": 0.789748045178106}

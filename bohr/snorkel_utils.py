@@ -83,29 +83,14 @@ class Issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
         return False
 
-    def contains_label(self, stemmed_label: str) -> bool:
-        for issue in self.__issues:
-            if stemmed_label in issue.stemmed_labels: return True
-        return False
-
     def match(self, stemmed_keywords: Set[str]) -> bool:
         for issue in self.__issues:
             if not issue.stems.isdisjoint(stemmed_keywords): return True
         return False
 
-    def contains(self, stemmed_keyword: str) -> bool:
-        for issue in self.__issues:
-            if stemmed_keyword in issue.stems: return True
-        return False
-
     def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
         for issue in self.__issues:
             if not issue.stem_bigrams.isdisjoint(stemmed_bigrams): return True
-        return False
-
-    def contains_bigram(self, stemmed_bigram: Tuple[str, str]) -> bool:
-        for issue in self.__issues:
-            if stemmed_bigram in issue.stem_bigrams: return True
         return False
 
 
@@ -266,88 +251,61 @@ def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
     if bigrams and commit.issues.match_bigram(bigrams): return label
     return ABSTAIN
 
-def keyword_lookup_in_message(commit: Commit, keyword, bigram, label):
-    if keyword in commit.message.stems: return label
-    if bigram in commit.message.stem_bigrams: return label
-    return ABSTAIN
 
-def keyword_lookup_in_issue_label(commit: Commit, keyword, bigram, label):
-    if keyword and commit.issues.contains_label(keyword): return label
-    return ABSTAIN
-
-def keyword_lookup_in_issue_body(commit: Commit, keyword, bigram, label):
-    if commit.issues.contains(keyword): return label
-    if commit.issues.contains_bigram(bigram): return label
-    return ABSTAIN
-
-def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams: Union[Tuple[str, str], Set[Tuple[str, str]]] = None):
-    name_elem = None
+def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[str, ...]]) -> CommitLabelingFunction:
     label_name = LABEL_NAMES[label]
-    multi = False
-    
-    if isinstance(keywords, str):
-        name_elem = keywords
-    elif isinstance(keywords, set):
+
+    if keywords:
         name_elem = next(iter(keywords))
-        multi = True
+    else:
+        name_elem = ' '.join(next(iter(bigrams)))
 
-    if isinstance(bigrams, tuple):
-        name_elem = name_elem or ' '.join(bigrams)
-    if isinstance(bigrams, set):
-        name_elem = name_elem or ' '.join(next(iter(bigrams)))
-        multi = True
-
-    keyword_or_bigram_str = f"{'keyword' if keywords is not None else 'bigram'}{'s' if multi else ''}"
+    keyword_or_bigram_str = f"{'keyword' if keywords else 'bigram'}"
 
     name = f"{label_name}_{where}_{keyword_or_bigram_str}_{name_elem}"
 
-    if multi:
-        resources = dict(keywords=keywords, bigrams=bigrams, label=label)
-    else:
-        resources = dict(keyword=keywords, bigram=bigrams, label=label)
+    resources = dict(keywords=keywords, bigrams=bigrams, label=label)
 
     return CommitLabelingFunction(
         name=name,
-        f=globals()[f"keyword{'s' if multi else ''}_lookup_in_{where}"],
+        f=globals()[f"keywords_lookup_in_{where}"],
         resources=resources
     )
 
-def keyword_lfs(keywords: List[str], where: str, label: Label) -> List[LabelingFunction]:
+
+def keyword_lfs(keywords: List[Union[str, List[str]]], where: str, label: Label) -> List[LabelingFunction]:
     """
     >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', 1)
     >>> lfs[0].name
     'bug_message_keyword_keyword1'
     >>> lfs[0]._resources
-    {'keyword': 'keyword1', 'bigram': None, 'label': 1}
+    {'keywords': {'keyword1'}, 'bigrams': set(), 'label': 1}
     >>> lfs[1].name
-    'bug_message_keywords_keyword3'
+    'bug_message_keyword_keyword3'
     >>> lfs[1]._resources
     {'keywords': {'keyword3'}, 'bigrams': {('key', 'word2')}, 'label': 1}
     >>> lfs[2].name
     'bug_message_bigram_key word4'
     >>> lfs[2]._resources
-    {'keyword': None, 'bigram': ('key', 'word4'), 'label': 1}
+    {'keywords': set(), 'bigrams': {('key', 'word4')}, 'label': 1}
     """
     lfs = []
     for elem in keywords:
+        if not (isinstance(elem, str) or isinstance(elem, list)):
+            raise ValueError(f"Keyword or list of keywords expected, got: {elem}")
+
         if isinstance(elem, str):
-            if ' ' in elem:
-                lfs.append(keyword_lf(where, keywords=None, bigrams=tuple(elem.split(' ')), label=label))
+            elem = [elem]
+
+        keywords = set()
+        bigrams = set()
+
+        for kw in elem:
+            if ' ' in kw:
+                bigrams.add(tuple(kw.split(' ')))
             else:
-                lfs.append(keyword_lf(where, elem, label))
-        elif isinstance(elem, list):
-            keywords = []
-            bigrams = []
+                keywords.add(kw)
 
-            for kw in elem:
-                if ' ' in kw:
-                    bigrams.append(tuple(kw.split(' ')))
-                else:
-                    keywords.append(kw)                    
-
-            lfs.append(keyword_lf(where, keywords=set(keywords) if keywords else None,
-                                         bigrams=set(bigrams) if bigrams else None, label=label))
-        else:
-            raise ValueError()                
+        lfs.append(keyword_lf(where, keywords=keywords, bigrams=bigrams, label=label))
 
     return lfs

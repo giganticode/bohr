@@ -20,7 +20,6 @@ from snorkel.labeling.model import MajorityLabelVoter
 
 from bohr.heuristics import all_lfs
 import bohr.heuristics.bug as bug_heuristics
-from bohr.snorkel_utils import BUG, BUGLESS
 from bohr import PROJECT_DIR, TRAIN_DIR, TEST_DIR
 
 

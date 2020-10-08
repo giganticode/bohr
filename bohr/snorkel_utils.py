@@ -1,3 +1,4 @@
+from enum import Enum
 from functools import wraps, cached_property, lru_cache
 from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 from snorkel.types import DataPoint
@@ -19,16 +20,12 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer 
 from nltk import bigrams
 
-Label = int
 
-BUG = 1
-BUGLESS = 0
-ABSTAIN = -1
+class Label(Enum):
+    BUG = 1
+    BUGLESS = 0
+    ABSTAIN = -1
 
-LABEL_NAMES = {
-    BUG: 'bug',
-    BUGLESS: 'bugless',
-}
 
 def safe_word_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
@@ -232,29 +229,27 @@ class CommitLabelingFunction(LabelingFunction):
 
 
 class commit_lf(labeling_function):
-    def __call__(self, f: Callable[..., int]) -> LabelingFunction:
+    def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
-        return CommitLabelingFunction(name=name, f=f, resources=self.resources, pre=self.pre)
+        return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)
 
 
-def keywords_lookup_in_message(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.message.match(keywords): return label
-    if bigrams and commit.message.match_bigram(bigrams): return label
-    return ABSTAIN
+def keywords_lookup_in_message(commit: Commit, keywords, bigrams, label) -> int:
+    if keywords and commit.message.match(keywords): return label.value
+    if bigrams and commit.message.match_bigram(bigrams): return label.value
+    return Label.ABSTAIN.value
 
-def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.issues.match_label(keywords): return label
-    return ABSTAIN
+def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label) -> int:
+    if keywords and commit.issues.match_label(keywords): return label.value
+    return Label.ABSTAIN.value
 
-def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.issues.match(keywords): return label
-    if bigrams and commit.issues.match_bigram(bigrams): return label
-    return ABSTAIN
+def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label) -> int:
+    if keywords and commit.issues.match(keywords): return label.value
+    if bigrams and commit.issues.match_bigram(bigrams): return label.value
+    return Label.ABSTAIN.value
 
 
 def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[str, ...]]) -> CommitLabelingFunction:
-    label_name = LABEL_NAMES[label]
-
     if keywords:
         name_elem = next(iter(keywords))
     else:
@@ -262,7 +257,7 @@ def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[
 
     keyword_or_bigram_str = f"{'keyword' if keywords else 'bigram'}"
 
-    name = f"{label_name}_{where}_{keyword_or_bigram_str}_{name_elem}"
+    name = f"{label.name.lower()}_{where}_{keyword_or_bigram_str}_{name_elem}"
 
     resources = dict(keywords=keywords, bigrams=bigrams, label=label)
 
@@ -275,19 +270,19 @@ def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[
 
 def keyword_lfs(keywords: List[Union[str, List[str]]], where: str, label: Label) -> List[LabelingFunction]:
     """
-    >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', 1)
+    >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', Label.BUG)
     >>> lfs[0].name
     'bug_message_keyword_keyword1'
     >>> lfs[0]._resources
-    {'keywords': {'keyword1'}, 'bigrams': set(), 'label': 1}
+    {'keywords': {'keyword1'}, 'bigrams': set(), 'label': <Label.BUG: 1>}
     >>> lfs[1].name
     'bug_message_keyword_keyword3'
     >>> lfs[1]._resources
-    {'keywords': {'keyword3'}, 'bigrams': {('key', 'word2')}, 'label': 1}
+    {'keywords': {'keyword3'}, 'bigrams': {('key', 'word2')}, 'label': <Label.BUG: 1>}
     >>> lfs[2].name
     'bug_message_bigram_key word4'
     >>> lfs[2]._resources
-    {'keywords': set(), 'bigrams': {('key', 'word4')}, 'label': 1}
+    {'keywords': set(), 'bigrams': {('key', 'word4')}, 'label': <Label.BUG: 1>}
     """
     lfs = []
     for elem in keywords:

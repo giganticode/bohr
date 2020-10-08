@@ -1,4 +1,4 @@
-from bohr.snorkel_utils import BUG, BUGLESS, ABSTAIN, commit_lf, keyword_lfs
+from bohr.snorkel_utils import commit_lf, keyword_lfs, Label
 import re
 from bohr.snorkel_utils import Commit
 
@@ -182,26 +182,26 @@ VERSION_RE = re.compile(r"v\d+.*", flags=re.I)
 
 
 @commit_lf()
-def github_ref_in_message(commit):
-    return BUG if GITHUB_REF_RE.search(commit.message.raw) else ABSTAIN
+def github_ref_in_message(commit) -> Label:
+    return Label.BUG if GITHUB_REF_RE.search(commit.message.raw) else Label.ABSTAIN
 
 @commit_lf()
-def version_in_message(commit):
-    return BUGLESS if VERSION_RE.search(commit.message.raw) else ABSTAIN
+def version_in_message(commit) -> Label:
+    return Label.BUGLESS if VERSION_RE.search(commit.message.raw) else Label.ABSTAIN
 
 #@commit_lf()
-def bogus_fix_keyword_in_message(commit: Commit):
+def bogus_fix_keyword_in_message(commit: Commit) -> Label:
     if 'fix' in commit.message.stems or 'bug' in commit.message.stems:
         if commit.message.match(BOGUS_FIX_KEYWORDS):
-            return BUGLESS
+            return Label.BUGLESS
         else:
-            return BUG
-    return ABSTAIN
+            return Label.BUG
+    return Label.ABSTAIN
 
 #@commit_lf()
-def no_files_have_modified_status(commit: Commit):
+def no_files_have_modified_status(commit: Commit) -> Label:
     for file in commit.files:
-        if file.status == 'modified': return ABSTAIN
-        if file.status == 'added': return ABSTAIN
-    return BUGLESS
+        if file.status == 'modified': return Label.ABSTAIN
+        if file.status == 'added': return Label.ABSTAIN
+    return Label.BUGLESS
 

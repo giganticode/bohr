@@ -6,7 +6,8 @@ Getting started
 ===========================================
 
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Create a virtual environment and run ``pip install -r requirements.txt`` (Python 3.8 or higher is required)
+#. Create a virtual environment ``conda create --name <envname> python==3.8.0`` & ``conda activate <envname>`` [Recommended]
+#. Run ``pip install -r requirements.txt`` (Python 3.8 or higher is required)
 
 Running the code and reproducing the models
 ===========================================

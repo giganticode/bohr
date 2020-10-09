@@ -21,6 +21,9 @@ from nltk.stem import PorterStemmer
 from nltk import bigrams
 
 
+NgramSet = Set[Union[Tuple[str], str]]
+
+
 class Label(Enum):
     BUG = 1
     BUGLESS = 0
@@ -56,7 +59,7 @@ class Issue:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stemmed_ngrams(self) -> Set[str]:
+    def stemmed_ngrams(self) -> NgramSet:
         return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
 
@@ -75,7 +78,7 @@ class Issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
         return False
 
-    def match_ngrams(self, stemmed_keywords: Set[str]) -> bool:
+    def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
         for issue in self.__issues:
             if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords): return True
         return False
@@ -115,11 +118,11 @@ class CommitMessage:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stems_ngrams(self) -> Set[str]:
+    def stemmed_ngrams(self) -> NgramSet:
         return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
-    def match_ngrams(self, stemmed_keywords: Set[Tuple[str]]) -> bool:
-        return not self.stems_ngrams.isdisjoint(stemmed_keywords)
+    def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
+        return not self.stemmed_ngrams.isdisjoint(stemmed_keywords)
 
 
 
@@ -217,25 +220,22 @@ class commit_lf(labeling_function):
         return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)
 
 
-KeywordGroup = Set[Union[Tuple[str], str]]
-
-
-def keywords_lookup_in_message(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+def keywords_lookup_in_message(commit: Commit, keywords: NgramSet, label: Label) -> int:
     if commit.message.match_ngrams(keywords): return label.value
     return Label.ABSTAIN.value
 
 
-def keywords_lookup_in_issue_label(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+def keywords_lookup_in_issue_label(commit: Commit, keywords: NgramSet, label: Label) -> int:
     if commit.issues.match_label(keywords): return label.value
     return Label.ABSTAIN.value
 
 
-def keywords_lookup_in_issue_body(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+def keywords_lookup_in_issue_body(commit: Commit, keywords: NgramSet, label: Label) -> int:
     if commit.issues.match_ngrams(keywords): return label.value
     return Label.ABSTAIN.value
 
 
-def keyword_lf(where: str, keyword_group: KeywordGroup, label: Label) -> CommitLabelingFunction:
+def keyword_lf(where: str, keyword_group: NgramSet, label: Label) -> CommitLabelingFunction:
     if not keyword_group:
         raise ValueError("At least one keyword needs to be provided")
 

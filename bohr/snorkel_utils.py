@@ -56,13 +56,8 @@ class Issue:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stems(self) -> Set[str]:
-        return set(self.ordered_stems)
-
-    @cached_property
-    def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.ordered_stems))
-
+    def stemmed_ngrams(self) -> Set[str]:
+        return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
 
 class Issues:
@@ -80,14 +75,9 @@ class Issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
         return False
 
-    def match(self, stemmed_keywords: Set[str]) -> bool:
+    def match_ngrams(self, stemmed_keywords: Set[str]) -> bool:
         for issue in self.__issues:
-            if not issue.stems.isdisjoint(stemmed_keywords): return True
-        return False
-
-    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
-        for issue in self.__issues:
-            if not issue.stem_bigrams.isdisjoint(stemmed_bigrams): return True
+            if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords): return True
         return False
 
 
@@ -125,18 +115,11 @@ class CommitMessage:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stems(self) -> Set[str]:
-        return set(self.ordered_stems)
+    def stems_ngrams(self) -> Set[str]:
+        return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
-    @cached_property
-    def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.ordered_stems))
-
-    def match(self, stemmed_keywords: Set[str]) -> bool:
-        return not self.stems.isdisjoint(stemmed_keywords)
-
-    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
-        return not self.stem_bigrams.isdisjoint(stemmed_bigrams)
+    def match_ngrams(self, stemmed_keywords: Set[Tuple[str]]) -> bool:
+        return not self.stems_ngrams.isdisjoint(stemmed_keywords)
 
 
 
@@ -234,32 +217,34 @@ class commit_lf(labeling_function):
         return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)
 
 
-def keywords_lookup_in_message(commit: Commit, keywords, bigrams, label) -> int:
-    if keywords and commit.message.match(keywords): return label.value
-    if bigrams and commit.message.match_bigram(bigrams): return label.value
-    return Label.ABSTAIN.value
+KeywordGroup = Set[Union[Tuple[str], str]]
 
-def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label) -> int:
-    if keywords and commit.issues.match_label(keywords): return label.value
-    return Label.ABSTAIN.value
 
-def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label) -> int:
-    if keywords and commit.issues.match(keywords): return label.value
-    if bigrams and commit.issues.match_bigram(bigrams): return label.value
+def keywords_lookup_in_message(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+    if commit.message.match_ngrams(keywords): return label.value
     return Label.ABSTAIN.value
 
 
-def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[str, ...]]) -> CommitLabelingFunction:
-    if keywords:
-        name_elem = next(iter(keywords))
-    else:
-        name_elem = ' '.join(next(iter(bigrams)))
+def keywords_lookup_in_issue_label(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+    if commit.issues.match_label(keywords): return label.value
+    return Label.ABSTAIN.value
 
-    keyword_or_bigram_str = f"{'keyword' if keywords else 'bigram'}"
 
-    name = f"{label.name.lower()}_{where}_{keyword_or_bigram_str}_{name_elem}"
+def keywords_lookup_in_issue_body(commit: Commit, keywords: KeywordGroup, label: Label) -> int:
+    if commit.issues.match_ngrams(keywords): return label.value
+    return Label.ABSTAIN.value
 
-    resources = dict(keywords=keywords, bigrams=bigrams, label=label)
+
+def keyword_lf(where: str, keyword_group: KeywordGroup, label: Label) -> CommitLabelingFunction:
+    if not keyword_group:
+        raise ValueError("At least one keyword needs to be provided")
+
+    first_keyword = sorted(keyword_group, key=lambda x: "".join(x))[0]
+    name_elem = first_keyword if isinstance(first_keyword, str) else '|'.join(first_keyword)
+
+    name = f"{label.name.lower()}_{where}_keyword_{name_elem}"
+
+    resources = dict(keywords=keyword_group, label=label)
 
     return CommitLabelingFunction(
         name=name,
@@ -268,39 +253,33 @@ def keyword_lf(where: str, keywords: Set[str], label: Label, bigrams: Set[Tuple[
     )
 
 
-def keyword_lfs(keywords: List[Union[str, List[str]]], where: str, label: Label) -> List[LabelingFunction]:
+def keyword_lfs(keyword_list: List[Union[str, List[str]]], where: str, label: Label) -> List[LabelingFunction]:
     """
     >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', Label.BUG)
     >>> lfs[0].name
     'bug_message_keyword_keyword1'
-    >>> lfs[0]._resources
-    {'keywords': {'keyword1'}, 'bigrams': set(), 'label': <Label.BUG: 1>}
+    >>> sorted(lfs[0]._resources['keywords'])
+    ['keyword1']
     >>> lfs[1].name
-    'bug_message_keyword_keyword3'
-    >>> lfs[1]._resources
-    {'keywords': {'keyword3'}, 'bigrams': {('key', 'word2')}, 'label': <Label.BUG: 1>}
+    'bug_message_keyword_key|word2'
+    >>> sorted(lfs[1]._resources['keywords'], key=lambda x: "".join(x))
+    [('key', 'word2'), 'keyword3']
     >>> lfs[2].name
-    'bug_message_bigram_key word4'
-    >>> lfs[2]._resources
-    {'keywords': set(), 'bigrams': {('key', 'word4')}, 'label': <Label.BUG: 1>}
+    'bug_message_keyword_key|word4'
+    >>> sorted(lfs[2]._resources['keywords'])
+    [('key', 'word4')]
     """
     lfs = []
-    for elem in keywords:
-        if not (isinstance(elem, str) or isinstance(elem, list)):
-            raise ValueError(f"Keyword or list of keywords expected, got: {elem}")
+    for keyword_group in keyword_list:
+        if not (isinstance(keyword_group, str) or isinstance(keyword_group, list)):
+            raise ValueError(f"Keyword or list of keywords expected, got: {keyword_group}")
 
-        if isinstance(elem, str):
-            elem = [elem]
+        if isinstance(keyword_group, str):
+            keyword_group = [keyword_group]
 
-        keywords = set()
-        bigrams = set()
+        def to_tuple_or_str(lst: List[str]): return lst[0] if len(lst) == 1 else tuple(lst)
+        keywords = {to_tuple_or_str(kw.split(' ')) for kw in keyword_group}
 
-        for kw in elem:
-            if ' ' in kw:
-                bigrams.add(tuple(kw.split(' ')))
-            else:
-                keywords.add(kw)
-
-        lfs.append(keyword_lf(where, keywords=keywords, bigrams=bigrams, label=label))
+        lfs.append(keyword_lf(where, keyword_group=keywords, label=label))
 
     return lfs

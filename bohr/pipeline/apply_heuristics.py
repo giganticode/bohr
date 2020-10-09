@@ -33,8 +33,9 @@ def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
     df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100000)
-    df_test = pd.concat([pd.read_csv(p)
-                         for p in TEST_DIR.glob('*.csv')], ignore_index=True, sort=True)
+    df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
+    df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
+    df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
 
     df_train.message = df_train.message.astype(str)
     scenarios = [
@@ -56,18 +57,31 @@ def apply_heuristics(args) -> Dict[str, Any]:
         applier = PandasLFApplier(lfs=lfs)
         L_test = applier.apply(df=df_test)
 
-        L_train.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
-        L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
-
         LFAnalysis(L_train, lfs).lf_summary().to_csv(
             PROJECT_DIR / 'generated' / 'analysis_train.csv')
-        LFAnalysis(L_test, lfs).lf_summary(Y=df_test.bug.values).to_csv(
-            PROJECT_DIR / 'generated' / 'analysis_test.csv')
+        applier = PandasLFApplier(lfs=lfs)
+        L_herzig = applier.apply(df=df_herzig)
+        L_herzig.dump(PROJECT_DIR / args.save_heuristics_matrix_herzig_to)
+        L_berger = applier.apply(df=df_berger)
+        L_berger.dump(PROJECT_DIR / args.save_heuristics_matrix_berger_to)
+        L_1151_commits = applier.apply(df=df_1151_commits)
+        L_1151_commits.dump(PROJECT_DIR / args.save_heuristics_matrix_1151_commits_to)
+
+        LFAnalysis(L_herzig, lfs).lf_summary(Y=df_herzig.bug.values).to_csv(
+            PROJECT_DIR / 'generated' / 'analysis_herzig.csv')
+        LFAnalysis(L_berger, lfs).lf_summary(Y=df_berger.bug.values).to_csv(
+            PROJECT_DIR / 'generated' / 'analysis_berger.csv')
+        LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_csv(
+            PROJECT_DIR / 'generated' / 'analysis_1151_commits.csv')
 
         stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
-        stats['coverage_test'] = sum((L_test != -1).any(axis=1)) / len(L_test)
+        stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)
+        stats['coverage_berger'] = sum((L_berger != -1).any(axis=1)) / len(L_berger)
+        stats['coverage_1151_commits'] = sum((L_1151_commits != -1).any(axis=1)) / len(L_1151_commits)
 
-        stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
+        stats['majority_accuracy_herzig'] = majority_acc(L_herzig, df_herzig)
+        stats['majority_accuracy_berger'] = majority_acc(L_berger, df_berger)
+        stats['majority_accuracy_1151_commits'] = majority_acc(L_1151_commits, df_1151_commits)
 
     return stats
 
@@ -76,8 +90,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--save-heuristics-matrix-train-to',
                         default='generated/heuristic_matrix_train.pkl')
-    parser.add_argument('--save-heuristics-matrix-test-to',
-                        default='generated/heuristic_matrix_test.pkl')
+    parser.add_argument('--save-heuristics-matrix-herzig-to',
+                        default='generated/heuristic_matrix_herzig.pkl')
+    parser.add_argument('--save-heuristics-matrix-berger-to',
+                        default='generated/heuristic_matrix_berger.pkl')
+    parser.add_argument('--save-heuristics-matrix-1151-commits-to',
+                        default='generated/heuristic_matrix_1151_commits.pkl')
     parser.add_argument('--save-metrics-to', default='heuristic_metrics.json')
     parser.add_argument('--n-parallel', type=int, default=5)
     parser.add_argument('--profile', action='store_true', default=False)

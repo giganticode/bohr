@@ -14,7 +14,9 @@ Running the code and reproducing the models
 Using DVC (Data Version Control) - preferred
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Install dvc_ and Install p7zip_ (7z) for your OS
+#. Install dvc_ 
+
+#. Install p7zip_ (7z) for your OS
 
 #. Setting up datasource. Ironspeed users should create a file ``.dvc/config.local``. Dvc will check this file to know where datasets should be fetched from on the next step. It contains sensitive data, must not be committed, and is gitignored by default. The contents of the file should be the following::
 
@@ -26,6 +28,7 @@ Using DVC (Data Version Control) - preferred
         user = <password>
 
 #. Run ``dvc pull -r ironspeed data/test downloaded-data/b_b.7z``
+
 #. Run ``dvc repro``
 
 .. _dvc: https://dvc.org/doc/install

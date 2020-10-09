@@ -25,7 +25,7 @@ Using DVC (Data Version Control) - preferred
         password = <username>
         user = <password>
 
-#. Run ``dvc pull data/combination/Test_Dataset.csv data/combination/Training_Dataset.csv``
+#. Run ``dvc pull -r ironspeed data/test downloaded-data/b_b.7z``
 #. Run ``dvc repro``
 
 .. _dvc: https://dvc.org/doc/install

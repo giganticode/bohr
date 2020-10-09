@@ -47,6 +47,10 @@ Without DVC
 ~~~~~~~~~~~
 TBA
 
+
+
+EDIT TEXT BELOW WITH UPDATED STEPS >>>
+
 Contribute to the project by adding your first heuristic:
 ===========================================================
 

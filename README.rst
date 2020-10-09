@@ -6,13 +6,13 @@ Getting started
 ===========================================
 
 Install Anaconda/Miniconda
-+++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #. Install conda_ [Skip this step if you already have conda installed]
 #. Create a virtual environment ``conda create --name <YOUR ENV NAME> python==3.8.0`` 
 #. Activate virtual environment ``conda activate <YOUR ENV NAME>`` 
 
 Get started with BOHR
-+++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
 #. Run ``pip install -r requirements.txt`` (Python 3.8 or higher is required)
 

@@ -18,8 +18,7 @@ from snorkel.labeling.apply.dask import DaskLFApplier, PandasParallelLFApplier
 
 from snorkel.labeling.model import MajorityLabelVoter
 
-from bohr.heuristics import all_lfs
-import bohr.heuristics.bug as bug_heuristics
+from bohr.core import load_labeling_functions
 from bohr import PROJECT_DIR, TRAIN_DIR, TEST_DIR
 
 
@@ -38,35 +37,37 @@ def apply_heuristics(args) -> Dict[str, Any]:
                          for p in TEST_DIR.glob('*.csv')], ignore_index=True, sort=True)
 
     df_train.message = df_train.message.astype(str)
+    scenarios = [
+        {'message', 'issues', 'changes'}
+    ]
+    for scenario in scenarios:
+        lfs = load_labeling_functions(scenario)
 
-    lfs = all_lfs(bug_heuristics)
-
-    stats['n_labeling_functions'] = len(lfs)
+        stats['n_labeling_functions'] = len(lfs)
 
 
-    if args.n_parallel <= 1:
+        if args.n_parallel <= 1:
+            applier = PandasLFApplier(lfs=lfs)
+            L_train = applier.apply(df=df_train)
+        else:
+            ProgressBar().register()
+            applier = PandasParallelLFApplier(lfs=lfs)
+            L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
         applier = PandasLFApplier(lfs=lfs)
-        L_train = applier.apply(df=df_train)
-    else:
-        ProgressBar().register()
-        applier = PandasParallelLFApplier(lfs=lfs)
-        L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
+        L_test = applier.apply(df=df_test)
 
-    L_train.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
+        L_train.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
+        L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
 
-    LFAnalysis(L_train, lfs).lf_summary().to_csv(
-        PROJECT_DIR / 'generated' / 'analysis_train.csv')
-    applier = PandasLFApplier(lfs=lfs)
-    L_test = applier.apply(df=df_test)
-    L_test.dump(PROJECT_DIR / args.save_heuristics_matrix_test_to)
+        LFAnalysis(L_train, lfs).lf_summary().to_csv(
+            PROJECT_DIR / 'generated' / 'analysis_train.csv')
+        LFAnalysis(L_test, lfs).lf_summary(Y=df_test.bug.values).to_csv(
+            PROJECT_DIR / 'generated' / 'analysis_test.csv')
 
-    LFAnalysis(L_test, lfs).lf_summary(Y=df_test.bug.values).to_csv(
-        PROJECT_DIR / 'generated' / 'analysis_test.csv')
+        stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
+        stats['coverage_test'] = sum((L_test != -1).any(axis=1)) / len(L_test)
 
-    stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
-    stats['coverage_test'] = sum((L_test != -1).any(axis=1)) / len(L_test)
-
-    stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
+        stats['majority_accuracy_test'] = majority_acc(L_test, df_test)
 
     return stats
 

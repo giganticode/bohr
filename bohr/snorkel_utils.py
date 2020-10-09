@@ -1,25 +1,19 @@
-from enum import Enum
-from functools import wraps, cached_property, lru_cache
-from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
-from snorkel.types import DataPoint
-
-from bohr import TEST_DIR, TRAIN_DIR
-
 from dataclasses import dataclass, field
-from cachetools import LRUCache
+from enum import Enum
+from functools import cached_property, lru_cache
+from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 
 import pandas as pd
-
-import snorkel
-from snorkel.labeling import labeling_function, LabelingFunction
-from snorkel.preprocess import preprocessor, BasePreprocessor
-from snorkel.map import BaseMapper, LambdaMapper
-from snorkel.map.core import MapFunction
-
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer 
+from cachetools import LRUCache
 from nltk import bigrams
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from snorkel.labeling import labeling_function, LabelingFunction
+from snorkel.map import BaseMapper
+from snorkel.preprocess import BasePreprocessor
+from snorkel.types import DataPoint
 
+from bohr import TRAIN_DIR
 
 NgramSet = Set[Union[Tuple[str], str]]
 
@@ -218,68 +212,3 @@ class commit_lf(labeling_function):
     def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
         return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)
-
-
-def keywords_lookup_in_message(commit: Commit, keywords: NgramSet, label: Label) -> int:
-    if commit.message.match_ngrams(keywords): return label.value
-    return Label.ABSTAIN.value
-
-
-def keywords_lookup_in_issue_label(commit: Commit, keywords: NgramSet, label: Label) -> int:
-    if commit.issues.match_label(keywords): return label.value
-    return Label.ABSTAIN.value
-
-
-def keywords_lookup_in_issue_body(commit: Commit, keywords: NgramSet, label: Label) -> int:
-    if commit.issues.match_ngrams(keywords): return label.value
-    return Label.ABSTAIN.value
-
-
-def keyword_lf(where: str, keyword_group: NgramSet, label: Label) -> CommitLabelingFunction:
-    if not keyword_group:
-        raise ValueError("At least one keyword needs to be provided")
-
-    first_keyword = sorted(keyword_group, key=lambda x: "".join(x))[0]
-    name_elem = first_keyword if isinstance(first_keyword, str) else '|'.join(first_keyword)
-
-    name = f"{label.name.lower()}_{where}_keyword_{name_elem}"
-
-    resources = dict(keywords=keyword_group, label=label)
-
-    return CommitLabelingFunction(
-        name=name,
-        f=globals()[f"keywords_lookup_in_{where}"],
-        resources=resources
-    )
-
-
-def keyword_lfs(keyword_list: List[Union[str, List[str]]], where: str, label: Label) -> List[LabelingFunction]:
-    """
-    >>> lfs = keyword_lfs(['keyword1', ['key word2', 'keyword3'], 'key word4'], 'message', Label.BUG)
-    >>> lfs[0].name
-    'bug_message_keyword_keyword1'
-    >>> sorted(lfs[0]._resources['keywords'])
-    ['keyword1']
-    >>> lfs[1].name
-    'bug_message_keyword_key|word2'
-    >>> sorted(lfs[1]._resources['keywords'], key=lambda x: "".join(x))
-    [('key', 'word2'), 'keyword3']
-    >>> lfs[2].name
-    'bug_message_keyword_key|word4'
-    >>> sorted(lfs[2]._resources['keywords'])
-    [('key', 'word4')]
-    """
-    lfs = []
-    for keyword_group in keyword_list:
-        if not (isinstance(keyword_group, str) or isinstance(keyword_group, list)):
-            raise ValueError(f"Keyword or list of keywords expected, got: {keyword_group}")
-
-        if isinstance(keyword_group, str):
-            keyword_group = [keyword_group]
-
-        def to_tuple_or_str(lst: List[str]): return lst[0] if len(lst) == 1 else tuple(lst)
-        keywords = {to_tuple_or_str(kw.split(' ')) for kw in keyword_group}
-
-        lfs.append(keyword_lf(where, keyword_group=keywords, label=label))
-
-    return lfs

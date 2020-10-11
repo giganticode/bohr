@@ -1,8 +1,8 @@
 stages:
   extract_train_data:
-    cmd: 7z x downloaded-data/test.7z -odata
+    cmd: 7z x downloaded-data/b_b.7z -odata
     deps:
-    - downloaded-data/test.7z
+    - downloaded-data/b_b.7z
     outs:
     - data/train:
         cache: false

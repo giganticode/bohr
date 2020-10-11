@@ -13,7 +13,7 @@ from snorkel.map import BaseMapper
 from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
-from bohr import TRAIN_DIR
+from bohr import TRAIN_DIR, logger
 
 NgramSet = Set[Union[Tuple[str], str]]
 
@@ -153,8 +153,8 @@ class Commit:
                 df = df.loc[[self.sha]]
                 for sha, file in df.iterrows():
                     files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
-            except KeyError as e:
-                pass
+            except (KeyError, AttributeError) as e:
+                logger.warn(f'Cannot add commit files:\n {df}')
 
         return CommitFiles(files)
 

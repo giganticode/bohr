@@ -54,6 +54,7 @@ def apply_heuristics(args) -> Dict[str, Any]:
             ProgressBar().register()
             applier = PandasParallelLFApplier(lfs=lfs)
             L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
+        L_train.dump(PROJECT_DIR / args.save_heuristics_matrix_train_to)
 
         LFAnalysis(L_train, lfs).lf_summary().to_csv(
             PROJECT_DIR / 'generated' / 'analysis_train.csv')

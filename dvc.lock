@@ -58,3 +58,171 @@ extract_train_data:
   outs:
   - path: data/train
     md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+apply_heuristics_message:
+  cmd: python bohr/pipeline/apply_heuristics.py message
+  deps:
+  - path: bohr/heuristics/keywords
+    md5: f08579e81a558ffad5d4384c61d1e27e.dir
+  - path: bohr/heuristics/message.py
+    md5: 0f6faaf31deed0de5bfc02e80740302f
+  - path: bohr/pipeline/apply_heuristics.py
+    md5: 6fa2d608add83c33a15f4acde66925fb
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  outs:
+  - path: generated/message/analysis_1151_commits.csv
+    md5: b15eb8f080fceccaa5ccc17369d26e7e
+  - path: generated/message/analysis_berger.csv
+    md5: 1b95c3f798d96402a634c4b7ba423e48
+  - path: generated/message/analysis_herzig.csv
+    md5: 878b9e8aed73f272faf01a28bda3cd2f
+  - path: generated/message/analysis_train.csv
+    md5: 8ab10133b257500cd89b56ec18718231
+  - path: generated/message/heuristic_matrix_1151_commits.pkl
+    md5: 49f9ed2ff913ba2356ca1103a7431c1e
+  - path: generated/message/heuristic_matrix_berger.pkl
+    md5: 3365e4f286a0ac303cf596393db80571
+  - path: generated/message/heuristic_matrix_herzig.pkl
+    md5: 217db7a483f8e68d81abd6acadfd6499
+  - path: generated/message/heuristic_matrix_train.pkl
+    md5: 7bc3dd31e2d4d515faf0ab3cf5e63ace
+  - path: metrics/message/heuristic_metrics.json
+    md5: 83bc6e3b36e8e4f1e2744a8aa42f6c80
+apply_heuristics_message_issues:
+  cmd: python bohr/pipeline/apply_heuristics.py message issues
+  deps:
+  - path: bohr/heuristics/issues.py
+    md5: 9bb114ec4f4ab34a4f0928b858be535b
+  - path: bohr/heuristics/keywords
+    md5: f08579e81a558ffad5d4384c61d1e27e.dir
+  - path: bohr/heuristics/message.py
+    md5: 0f6faaf31deed0de5bfc02e80740302f
+  - path: bohr/pipeline/apply_heuristics.py
+    md5: 6fa2d608add83c33a15f4acde66925fb
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  outs:
+  - path: generated/message_issues/analysis_1151_commits.csv
+    md5: 09b5d5520562beadae99d35fe045a5ac
+  - path: generated/message_issues/analysis_berger.csv
+    md5: 7dc34c473bae909ec32421562c982b37
+  - path: generated/message_issues/analysis_herzig.csv
+    md5: 91d531153a6ff0058d1abf2347d106c9
+  - path: generated/message_issues/analysis_train.csv
+    md5: 0de1b1aa1ae6fcb1221479b2018b1980
+  - path: generated/message_issues/heuristic_matrix_1151_commits.pkl
+    md5: 4d96a6cc4d6544a1b6ecf4357d910f77
+  - path: generated/message_issues/heuristic_matrix_berger.pkl
+    md5: c2df77b81471064563f3661175c659ac
+  - path: generated/message_issues/heuristic_matrix_herzig.pkl
+    md5: a6a8b4e0ed7d51b54a85ea84e25a95e3
+  - path: generated/message_issues/heuristic_matrix_train.pkl
+    md5: a6059704e90d1e8e5b5e9852c4abf4df
+  - path: metrics/message_issues/heuristic_metrics.json
+    md5: f4cf9873b3c6b0058275e9dbcc7cd5b6
+apply_heuristics_message_issues_changes:
+  cmd: python bohr/pipeline/apply_heuristics.py message issues changes
+  deps:
+  - path: bohr/heuristics/changes.py
+    md5: 9372cdc2a7c5dc09ca07006eef43c6e8
+  - path: bohr/heuristics/issues.py
+    md5: 9bb114ec4f4ab34a4f0928b858be535b
+  - path: bohr/heuristics/keywords
+    md5: f08579e81a558ffad5d4384c61d1e27e.dir
+  - path: bohr/heuristics/message.py
+    md5: 0f6faaf31deed0de5bfc02e80740302f
+  - path: bohr/pipeline/apply_heuristics.py
+    md5: 6fa2d608add83c33a15f4acde66925fb
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  outs:
+  - path: generated/message_issues_changes/analysis_1151_commits.csv
+    md5: dd3319fad633890af129616f18eb12ea
+  - path: generated/message_issues_changes/analysis_berger.csv
+    md5: a08b91f1575fbb46d11242cae4de1cb9
+  - path: generated/message_issues_changes/analysis_herzig.csv
+    md5: de72c06e7a0f5ec7226a6e009c928f75
+  - path: generated/message_issues_changes/analysis_train.csv
+    md5: 5b4a5f1154c2448979e6db2061dad90d
+  - path: generated/message_issues_changes/heuristic_matrix_1151_commits.pkl
+    md5: 1b7ff9c91457e9f645ec6b0fed5a979d
+  - path: generated/message_issues_changes/heuristic_matrix_berger.pkl
+    md5: 3a979b0bdfc894d1893bd1712e789ede
+  - path: generated/message_issues_changes/heuristic_matrix_herzig.pkl
+    md5: 64386fd20db67449d4b56e8e4bcc80ff
+  - path: generated/message_issues_changes/heuristic_matrix_train.pkl
+    md5: 130bf45dcddc18e893a2f70dde8312d5
+  - path: metrics/message_issues_changes/heuristic_metrics.json
+    md5: eb4def9493a78a796332be315f59e967
+train_label_model_message:
+  cmd: python bohr/pipeline/train_label_model.py message
+  deps:
+  - path: bohr/pipeline/train_label_model.py
+    md5: 589ac84c34be5220126971325e4ce819
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  - path: generated/message/heuristic_matrix_1151_commits.pkl
+    md5: 49f9ed2ff913ba2356ca1103a7431c1e
+  - path: generated/message/heuristic_matrix_berger.pkl
+    md5: 3365e4f286a0ac303cf596393db80571
+  - path: generated/message/heuristic_matrix_herzig.pkl
+    md5: 217db7a483f8e68d81abd6acadfd6499
+  - path: generated/message/heuristic_matrix_train.pkl
+    md5: 7bc3dd31e2d4d515faf0ab3cf5e63ace
+  outs:
+  - path: generated/message/label_model.pkl
+    md5: 70d1efbdab151c2a2ca0fec153ec9cfc
+  - path: metrics/message/label_model_metrics.json
+    md5: b2b7c9a8c53dde56e2dda03eaa76d85b
+train_label_model_message_issues:
+  cmd: python bohr/pipeline/train_label_model.py message issues
+  deps:
+  - path: bohr/pipeline/train_label_model.py
+    md5: 589ac84c34be5220126971325e4ce819
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  - path: generated/message_issues/heuristic_matrix_1151_commits.pkl
+    md5: 4d96a6cc4d6544a1b6ecf4357d910f77
+  - path: generated/message_issues/heuristic_matrix_berger.pkl
+    md5: c2df77b81471064563f3661175c659ac
+  - path: generated/message_issues/heuristic_matrix_herzig.pkl
+    md5: a6a8b4e0ed7d51b54a85ea84e25a95e3
+  - path: generated/message_issues/heuristic_matrix_train.pkl
+    md5: a6059704e90d1e8e5b5e9852c4abf4df
+  outs:
+  - path: generated/message_issues/label_model.pkl
+    md5: 11e8552423e5e8f88643ae5b81197ae9
+  - path: metrics/message_issues/label_model_metrics.json
+    md5: 4ba14356405e2df13ea359a2abad23d7
+train_label_model_message_issues_changes:
+  cmd: python bohr/pipeline/train_label_model.py message issues changes
+  deps:
+  - path: bohr/pipeline/train_label_model.py
+    md5: 589ac84c34be5220126971325e4ce819
+  - path: data/test
+    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
+  - path: data/train
+    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
+  - path: generated/message_issues_changes/heuristic_matrix_1151_commits.pkl
+    md5: 1b7ff9c91457e9f645ec6b0fed5a979d
+  - path: generated/message_issues_changes/heuristic_matrix_berger.pkl
+    md5: 3a979b0bdfc894d1893bd1712e789ede
+  - path: generated/message_issues_changes/heuristic_matrix_herzig.pkl
+    md5: 64386fd20db67449d4b56e8e4bcc80ff
+  - path: generated/message_issues_changes/heuristic_matrix_train.pkl
+    md5: 130bf45dcddc18e893a2f70dde8312d5
+  outs:
+  - path: generated/message_issues_changes/label_model.pkl
+    md5: bf98a0db666145589b7e9e3beac896fb
+  - path: metrics/message_issues_changes/label_model_metrics.json
+    md5: 4558a1064fb0a38415d4bbfbcbff9056

@@ -39,6 +39,7 @@ pytz==2020.1
 PyYAML==5.3.1
 regex==2020.6.8
 requests==2.24.0
+rich==8.0.0
 scikit-learn==0.21.3
 scipy==1.5.1
 six==1.15.0

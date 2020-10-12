@@ -1,34 +1,28 @@
-from functools import wraps, cached_property, lru_cache
-from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
-from snorkel.types import DataPoint
-
-from bohr import TEST_DIR, TRAIN_DIR
-
 from dataclasses import dataclass, field
-from cachetools import LRUCache
+from enum import Enum
+from functools import cached_property, lru_cache
+from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 
 import pandas as pd
-
-import snorkel
-from snorkel.labeling import labeling_function, LabelingFunction
-from snorkel.preprocess import preprocessor, BasePreprocessor
-from snorkel.map import BaseMapper, LambdaMapper
-from snorkel.map.core import MapFunction
-
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer 
+from cachetools import LRUCache
 from nltk import bigrams
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from snorkel.labeling import labeling_function, LabelingFunction
+from snorkel.map import BaseMapper
+from snorkel.preprocess import BasePreprocessor
+from snorkel.types import DataPoint
 
-Label = int
+from bohr import TRAIN_DIR, logger
 
-BUG = 1
-BUGLESS = 0
-ABSTAIN = -1
+NgramSet = Set[Union[Tuple[str], str]]
 
-LABEL_NAMES = {
-    BUG: 'bug',
-    BUGLESS: 'bugless',
-}
+
+class Label(Enum):
+    BUG = 1
+    BUGLESS = 0
+    ABSTAIN = -1
+
 
 def safe_word_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
@@ -59,13 +53,8 @@ class Issue:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stems(self) -> Set[str]:
-        return set(self.ordered_stems)
-
-    @cached_property
-    def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.ordered_stems))
-
+    def stemmed_ngrams(self) -> NgramSet:
+        return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
 
 class Issues:
@@ -83,29 +72,9 @@ class Issues:
             if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
         return False
 
-    def contains_label(self, stemmed_label: str) -> bool:
+    def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
         for issue in self.__issues:
-            if stemmed_label in issue.stemmed_labels: return True
-        return False
-
-    def match(self, stemmed_keywords: Set[str]) -> bool:
-        for issue in self.__issues:
-            if not issue.stems.isdisjoint(stemmed_keywords): return True
-        return False
-
-    def contains(self, stemmed_keyword: str) -> bool:
-        for issue in self.__issues:
-            if stemmed_keyword in issue.stems: return True
-        return False
-
-    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
-        for issue in self.__issues:
-            if not issue.stem_bigrams.isdisjoint(stemmed_bigrams): return True
-        return False
-
-    def contains_bigram(self, stemmed_bigram: Tuple[str, str]) -> bool:
-        for issue in self.__issues:
-            if stemmed_bigram in issue.stem_bigrams: return True
+            if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords): return True
         return False
 
 
@@ -143,18 +112,11 @@ class CommitMessage:
         return [stemmer.stem(w) for w in self.tokens]
 
     @cached_property
-    def stems(self) -> Set[str]:
-        return set(self.ordered_stems)
+    def stemmed_ngrams(self) -> NgramSet:
+        return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
-    @cached_property
-    def stem_bigrams(self) -> Set[Tuple[str, str]]:
-        return set(bigrams(self.ordered_stems))
-
-    def match(self, stemmed_keywords: Set[str]) -> bool:
-        return not self.stems.isdisjoint(stemmed_keywords)
-
-    def match_bigram(self, stemmed_bigrams: Set[Tuple[str, str]]) -> bool:
-        return not self.stem_bigrams.isdisjoint(stemmed_bigrams)
+    def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
+        return not self.stemmed_ngrams.isdisjoint(stemmed_keywords)
 
 
 
@@ -191,8 +153,8 @@ class Commit:
                 df = df.loc[[self.sha]]
                 for sha, file in df.iterrows():
                     files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
-            except KeyError as e:
-                pass
+            except (KeyError, AttributeError) as e:
+                logger.warn(f'Cannot add commit files:\n {df}')
 
         return CommitFiles(files)
 
@@ -247,92 +209,6 @@ class CommitLabelingFunction(LabelingFunction):
 
 
 class commit_lf(labeling_function):
-    def __call__(self, f: Callable[..., int]) -> LabelingFunction:
+    def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
-        return CommitLabelingFunction(name=name, f=f, resources=self.resources, pre=self.pre)
-
-
-def keywords_lookup_in_message(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.message.match(keywords): return label
-    if bigrams and commit.message.match_bigram(bigrams): return label
-    return ABSTAIN
-
-def keywords_lookup_in_issue_label(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.issues.match_label(keywords): return label
-    return ABSTAIN
-
-def keywords_lookup_in_issue_body(commit: Commit, keywords, bigrams, label):
-    if keywords and commit.issues.match(keywords): return label
-    if bigrams and commit.issues.match_bigram(bigrams): return label
-    return ABSTAIN
-
-def keyword_lookup_in_message(commit: Commit, keyword, bigram, label):
-    if keyword in commit.message.stems: return label
-    if bigram in commit.message.stem_bigrams: return label
-    return ABSTAIN
-
-def keyword_lookup_in_issue_label(commit: Commit, keyword, bigram, label):
-    if keyword and commit.issues.contains_label(keyword): return label
-    return ABSTAIN
-
-def keyword_lookup_in_issue_body(commit: Commit, keyword, bigram, label):
-    if commit.issues.contains(keyword): return label
-    if commit.issues.contains_bigram(bigram): return label
-    return ABSTAIN
-
-def keyword_lf(where: str, keywords: Union[str, Set[str]], label: Label, bigrams: Union[Tuple[str, str], Set[Tuple[str, str]]] = None):
-    name_elem = None
-    label_name = LABEL_NAMES[label]
-    multi = False
-    
-    if isinstance(keywords, str):
-        name_elem = keywords
-    elif isinstance(keywords, set):
-        name_elem = next(iter(keywords))
-        multi = True
-
-    if isinstance(bigrams, tuple):
-        name_elem = name_elem or ' '.join(bigrams)
-    if isinstance(bigrams, set):
-        name_elem = name_elem or ' '.join(next(iter(bigrams)))
-        multi = True
-
-    keyword_or_bigram_str = f"{'keyword' if keywords is not None else 'bigram'}{'s' if multi else ''}"
-
-    name = f"{label_name}_{where}_{keyword_or_bigram_str}_{name_elem}"
-
-    if multi:
-        resources = dict(keywords=keywords, bigrams=bigrams, label=label)
-    else:
-        resources = dict(keyword=keywords, bigram=bigrams, label=label)
-
-    return CommitLabelingFunction(
-        name=name,
-        f=globals()[f"keyword{'s' if multi else ''}_lookup_in_{where}"],
-        resources=resources
-    )
-
-def keyword_lfs(keywords: List[str], where: str, label: Label) -> List[LabelingFunction]:
-    lfs = []
-    for elem in keywords:
-        if isinstance(elem, str):
-            if ' ' in elem:
-                lfs.append(keyword_lf(where, keywords=None, bigrams=tuple(elem.split(' ')), label=label))
-            else:
-                lfs.append(keyword_lf(where, elem, label))
-        elif isinstance(elem, list):
-            keywords = []
-            bigrams = []
-
-            for kw in elem:
-                if ' ' in kw:
-                    bigrams.append(tuple(kw.split(' ')))
-                else:
-                    keywords.append(kw)                    
-
-            lfs.append(keyword_lf(where, keywords=set(keywords) if keywords else None,
-                                         bigrams=set(bigrams) if bigrams else None, label=label))
-        else:
-            raise ValueError()                
-
-    return lfs
+        return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)

@@ -6,42 +6,124 @@ stages:
     outs:
     - data/train:
         cache: false
-  apply_heuristics:
-    cmd: python bohr/pipeline/apply_heuristics.py
+  apply_heuristics_message:
+    cmd: python bohr/pipeline/apply_heuristics.py message
     deps:
-    - bohr/heuristics
+    - bohr/heuristics/keywords
+    - bohr/heuristics/message.py
     - bohr/pipeline/apply_heuristics.py
     - data/train
     - data/test
     outs:
-    - generated/heuristic_matrix_train.pkl
-    - generated/heuristic_matrix_herzig.pkl
-    - generated/heuristic_matrix_berger.pkl
-    - generated/heuristic_matrix_1151_commits.pkl
-    - generated/analysis_train.csv:
+    - generated/message/heuristic_matrix_train.pkl
+    - generated/message/heuristic_matrix_herzig.pkl
+    - generated/message/heuristic_matrix_berger.pkl
+    - generated/message/heuristic_matrix_1151_commits.pkl
+    - generated/message/analysis_train.csv:
         cache: false
-    - generated/analysis_herzig.csv:
+    - generated/message/analysis_herzig.csv:
         cache: false
-    - generated/analysis_berger.csv:
+    - generated/message/analysis_berger.csv:
         cache: false
-    - generated/analysis_1151_commits.csv:
+    - generated/message/analysis_1151_commits.csv:
         cache: false
     metrics:
-    - heuristic_metrics.json:
+    - metrics/message/heuristic_metrics.json:
         cache: false
-  train_label_model:
-    cmd: python bohr/pipeline/train_label_model.py
+  apply_heuristics_message_issues:
+    cmd: python bohr/pipeline/apply_heuristics.py message issues
+    deps:
+      - bohr/heuristics/keywords
+      - bohr/heuristics/message.py
+      - bohr/heuristics/issues.py
+      - bohr/pipeline/apply_heuristics.py
+      - data/train
+      - data/test
+    outs:
+      - generated/message_issues/heuristic_matrix_train.pkl
+      - generated/message_issues/heuristic_matrix_herzig.pkl
+      - generated/message_issues/heuristic_matrix_berger.pkl
+      - generated/message_issues/heuristic_matrix_1151_commits.pkl
+      - generated/message_issues/analysis_train.csv:
+          cache: false
+      - generated/message_issues/analysis_herzig.csv:
+          cache: false
+      - generated/message_issues/analysis_berger.csv:
+          cache: false
+      - generated/message_issues/analysis_1151_commits.csv:
+          cache: false
+    metrics:
+      - metrics/message_issues/heuristic_metrics.json:
+          cache: false
+  apply_heuristics_message_issues_changes:
+    cmd: python bohr/pipeline/apply_heuristics.py message issues changes
+    deps:
+      - bohr/heuristics/keywords
+      - bohr/heuristics/message.py
+      - bohr/heuristics/issues.py
+      - bohr/heuristics/changes.py
+      - bohr/pipeline/apply_heuristics.py
+      - data/train
+      - data/test
+    outs:
+      - generated/message_issues_changes/heuristic_matrix_train.pkl
+      - generated/message_issues_changes/heuristic_matrix_herzig.pkl
+      - generated/message_issues_changes/heuristic_matrix_berger.pkl
+      - generated/message_issues_changes/heuristic_matrix_1151_commits.pkl
+      - generated/message_issues_changes/analysis_train.csv:
+          cache: false
+      - generated/message_issues_changes/analysis_herzig.csv:
+          cache: false
+      - generated/message_issues_changes/analysis_berger.csv:
+          cache: false
+      - generated/message_issues_changes/analysis_1151_commits.csv:
+          cache: false
+    metrics:
+      - metrics/message_issues_changes/heuristic_metrics.json:
+          cache: false
+  train_label_model_message:
+    cmd: python bohr/pipeline/train_label_model.py message
     deps:
     - bohr/pipeline/train_label_model.py
-    - generated/heuristic_matrix_train.pkl
-    - generated/heuristic_matrix_herzig.pkl
-    - generated/heuristic_matrix_berger.pkl
-    - generated/heuristic_matrix_1151_commits.pkl
+    - generated/message/heuristic_matrix_train.pkl
+    - generated/message/heuristic_matrix_herzig.pkl
+    - generated/message/heuristic_matrix_berger.pkl
+    - generated/message/heuristic_matrix_1151_commits.pkl
     - data/train
     - data/test
     outs:
-    - generated/label_model.pkl
+    - generated/message/label_model.pkl
     metrics:
-    - label_model_metrics.json:
+    - metrics/message/label_model_metrics.json:
         cache: false
+  train_label_model_message_issues:
+    cmd: python bohr/pipeline/train_label_model.py message issues
+    deps:
+      - bohr/pipeline/train_label_model.py
+      - generated/message_issues/heuristic_matrix_train.pkl
+      - generated/message_issues/heuristic_matrix_herzig.pkl
+      - generated/message_issues/heuristic_matrix_berger.pkl
+      - generated/message_issues/heuristic_matrix_1151_commits.pkl
+      - data/train
+      - data/test
+    outs:
+      - generated/message_issues/label_model.pkl
+    metrics:
+      - metrics/message_issues/label_model_metrics.json:
+          cache: false
+  train_label_model_message_issues_changes:
+    cmd: python bohr/pipeline/train_label_model.py message issues changes
+    deps:
+      - bohr/pipeline/train_label_model.py
+      - generated/message_issues_changes/heuristic_matrix_train.pkl
+      - generated/message_issues_changes/heuristic_matrix_herzig.pkl
+      - generated/message_issues_changes/heuristic_matrix_berger.pkl
+      - generated/message_issues_changes/heuristic_matrix_1151_commits.pkl
+      - data/train
+      - data/test
+    outs:
+      - generated/message_issues_changes/label_model.pkl
+    metrics:
+      - metrics/message_issues_changes/label_model_metrics.json:
+          cache: false
 

@@ -32,7 +32,7 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100000)
+    df_train = pd.read_csv(args.commits_file)
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
     df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
@@ -87,20 +87,7 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('heuristic_groups', nargs='+')
-    parser.add_argument('--save-heuristics-matrix-train-to',
-                        default='heuristic_matrix_train.pkl')
-    parser.add_argument('--save-heuristics-matrix-herzig-to',
-                        default='heuristic_matrix_herzig.pkl')
-    parser.add_argument('--save-heuristics-matrix-berger-to',
-                        default='heuristic_matrix_berger.pkl')
-    parser.add_argument('--save-heuristics-matrix-1151-commits-to',
-                        default='heuristic_matrix_1151_commits.pkl')
-    parser.add_argument('--save-metrics-to', default='heuristic_metrics.json')
-    parser.add_argument('--n-parallel', type=int, default=5)
-    parser.add_argument('--profile', action='store_true', default=False)
-    args = parser.parse_args()
+    from bohr.pipeline.args import args
 
     if args.profile:
         import cProfile

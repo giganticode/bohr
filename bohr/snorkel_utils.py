@@ -151,7 +151,7 @@ class Commit:
         def get_resources_from_file(self, type: str, owner: str, repository: str, sha: str):
             if type == 'issues':
                 df = self.__issues_df
-            elif type == 'file':
+            elif type == 'files':
                 df = self.__files_df
             else:
                raise ValueError('invalid resources type')

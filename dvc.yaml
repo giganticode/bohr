@@ -1,13 +1,13 @@
 stages:
   extract_train_data:
-    cmd: 7z x downloaded-data/b_b.7z -odata
+    cmd: 7z x downloaded-data/sample.7z -odata
     deps:
-    - downloaded-data/b_b.7z
+    - downloaded-data/sample.7z
     outs:
     - data/train:
         cache: false
   apply_heuristics_message:
-    cmd: python bohr/pipeline/apply_heuristics.py message
+    cmd: python bohr/pipeline/apply_heuristics.py message --n-parallel=1 --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv
     deps:
     - bohr/heuristics/keywords
     - bohr/heuristics/message.py
@@ -31,7 +31,7 @@ stages:
     - metrics/message/heuristic_metrics.json:
         cache: false
   apply_heuristics_message_issues:
-    cmd: python bohr/pipeline/apply_heuristics.py message issues
+    cmd: python bohr/pipeline/apply_heuristics.py message issues --n-parallel=1 --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv
     deps:
       - bohr/heuristics/keywords
       - bohr/heuristics/message.py
@@ -56,7 +56,7 @@ stages:
       - metrics/message_issues/heuristic_metrics.json:
           cache: false
   apply_heuristics_message_issues_changes:
-    cmd: python bohr/pipeline/apply_heuristics.py message issues changes
+    cmd: python bohr/pipeline/apply_heuristics.py message issues changes --n-parallel=1 --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv --changes-file data/train/bug_sample_files.csv
     deps:
       - bohr/heuristics/keywords
       - bohr/heuristics/message.py

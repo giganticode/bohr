@@ -28,11 +28,16 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
         L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
 
+def save_labeled_dataset(df_train, L_train, filename):
+    majority_model = MajorityLabelVoter()
+    labels = majority_model.predict(L=L_train)
+    df_labeled_train = df_train.assign(bug=labels)
+    df_labeled_train.to_csv(filename, index=False)
 
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(args.commits_file)
+    df_train = pd.read_csv(args.commits_file, nrows=args.n_commits)
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
     df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
@@ -74,6 +79,9 @@ def apply_heuristics(args) -> Dict[str, Any]:
     LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.csv')
 
+    if args.save_labeled_dataset_to:
+        save_labeled_dataset(df_train, L_train, args.save_labeled_dataset_to)
+
     stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
     stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)
     stats['coverage_berger'] = sum((L_berger != -1).any(axis=1)) / len(L_berger)
@@ -84,6 +92,7 @@ def apply_heuristics(args) -> Dict[str, Any]:
     stats['majority_accuracy_1151_commits'] = majority_acc(L_1151_commits, df_1151_commits)
 
     return stats
+
 
 
 if __name__ == '__main__':

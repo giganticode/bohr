@@ -18,6 +18,13 @@ def bugless_keywords_lookup_in_message(commit: Commit, keywords: NgramSet) -> La
     return Label.ABSTAIN
 
 
+@commit_lf()
+def bug_keywords_lookup_in_message_otherwise_bugless(commit: Commit) -> Label:
+    if commit.message.match_ngrams('bug'):
+        return Label.BUG
+    return Label.BUGLESS
+
+
 #@keyword_labeling_functions('bogusbugs', name_pattern='bogusbugs_message_keyword_%1')
 def bogus_fix_keyword_in_message(commit: Commit, keywords: NgramSet) -> Label:
     if 'fix' in commit.message.stemmed_ngrams or 'bug' in commit.message.stemmed_ngrams:

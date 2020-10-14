@@ -8,7 +8,7 @@ from bohr.snorkel_utils import Commit
 def bug_keywords_lookup_in_message(commit: Commit, keywords: NgramSet) -> Label:
     if commit.message.match_ngrams(keywords):
         return Label.BUG
-    return Label.ABSTAIN
+    return Label.BUGLESS
 
 
 @keyword_labeling_functions('bugless', name_pattern='bugless_message_keyword_%1')

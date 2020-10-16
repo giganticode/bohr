@@ -58,7 +58,7 @@ jobs:
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
-          dvc repro
+          dvc repro train_label_model_message_issues
 
           git fetch --prune
           dvc metrics diff --show-md master >> report.md
@@ -89,7 +89,7 @@ jobs:
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
-          dvc repro
+          dvc repro train_label_model_message_issues_changes
 
           git fetch --prune
           dvc metrics diff --show-md master >> report.md

@@ -28,12 +28,6 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
         L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
 
-def save_labeled_dataset(df_train, L_train, filename):
-    majority_model = MajorityLabelVoter()
-    labels = majority_model.predict(L=L_train)
-    df_labeled_train = df_train.assign(bug=labels)
-    df_labeled_train.to_csv(filename, index=False)
-
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
@@ -58,11 +52,11 @@ def apply_heuristics(args) -> Dict[str, Any]:
         ProgressBar().register()
         applier = PandasParallelLFApplier(lfs=lfs)
         L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
+
     L_train.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_train_to)
 
     LFAnalysis(L_train, lfs).lf_summary().to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.csv')
-
 
     applier = PandasLFApplier(lfs=lfs)
     L_herzig = applier.apply(df=df_herzig)
@@ -79,9 +73,6 @@ def apply_heuristics(args) -> Dict[str, Any]:
     LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.csv')
 
-    if args.save_labeled_dataset_to:
-        save_labeled_dataset(df_train, L_train, args.save_labeled_dataset_to)
-
     stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
     stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)
     stats['coverage_berger'] = sum((L_berger != -1).any(axis=1)) / len(L_berger)
@@ -96,7 +87,9 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
 
 if __name__ == '__main__':
-    from bohr.pipeline.args import args
+    from bohr.pipeline.args import parse_heuristic_args
+
+    args = parse_heuristic_args()
 
     if args.profile:
         import cProfile

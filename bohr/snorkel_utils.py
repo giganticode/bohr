@@ -14,7 +14,7 @@ from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
 from bohr import TRAIN_DIR, logger
-from bohr.pipeline.args import args
+from bohr.pipeline.args import get_heuristic_args
 
 NgramSet = Set[Union[Tuple[str], str]]
 
@@ -131,6 +131,11 @@ class Commit:
     message: CommitMessage = field(init=False)
 
     class Cache:
+
+        @property
+        def __args(self):
+            return get_heuristic_args()
+
         @lru_cache(maxsize=8)
         def __load_df(self, type: str, owner: str, repository: str):
             path = TRAIN_DIR / type  / owner / f"{repository}.csv"
@@ -141,12 +146,12 @@ class Commit:
 
         @cached_property
         def __issues_df(self):
-            return pd.read_csv(args.issues_file, index_col=['owner', 'repository', 'sha'],
+            return pd.read_csv(self.__args.issues_file, index_col=['owner', 'repository', 'sha'],
                                keep_default_na=False, dtype={'labels': 'str'})
 
         @cached_property
         def __files_df(self):
-            return pd.read_csv(args.changes_file, index_col=['owner', 'repository', 'sha'])
+            return pd.read_csv(self.__args.changes_file, index_col=['owner', 'repository', 'sha'])
 
         def get_resources_from_file(self, type: str, owner: str, repository: str, sha: str):
             if type == 'issues':
@@ -169,13 +174,13 @@ class Commit:
                 return None
 
         def get_files(self, owner: str, repository: str, sha: str):
-            if args.changes_file:
+            if self.__args.changes_file:
                 return self.get_resources_from_file('files', owner, repository, sha)
             else:
                 return self.get_resources_from_dir('files', owner, repository, sha)
 
         def get_issues(self, owner: str, repository: str, sha: str):
-            if args.issues_file:
+            if self.__args.issues_file:
                 return self.get_resources_from_file('issues', owner, repository, sha)
             else:
                 return self.get_resources_from_dir('issues', owner, repository, sha)

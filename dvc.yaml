@@ -111,6 +111,14 @@ stages:
     metrics:
       - metrics/message_issues/label_model_metrics.json:
           cache: false
+  label_dataset_message_issues:
+    cmd: python bohr/pipeline/label_dataset.py message issues --commits-file data/train/bug_sample.csv -o labeled_with_model2.csv --debug
+    deps:
+      - bohr/pipeline/label_dataset.py
+      - generated/message_issues/heuristic_matrix_train.pkl
+      - data/train
+    outs:
+      - labeled_with_model2.csv
   train_label_model_message_issues_changes:
     cmd: python bohr/pipeline/train_label_model.py message issues changes
     deps:

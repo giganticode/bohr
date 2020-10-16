@@ -16,6 +16,7 @@ from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
 from bohr import TRAIN_DIR, logger
+from bohr.pipeline.args import get_heuristic_args
 
 NgramSet = Set[Union[Tuple[str], str]]
 
@@ -132,51 +133,97 @@ class Commit:
     raw_message: str
     message: CommitMessage = field(init=False)
 
+    class Cache:
+
+        @property
+        def __args(self):
+            return get_heuristic_args()
+
+        @lru_cache(maxsize=8)
+        def __load_df(self, type: str, owner: str, repository: str):
+            path = TRAIN_DIR / type  / owner / f"{repository}.csv"
+            if path.is_file():
+                return pd.read_csv(path, index_col=['sha'], keep_default_na=False, dtype={'labels': 'str'})
+            else:
+                return None
+
+        @cached_property
+        def __issues_df(self):
+            return pd.read_csv(self.__args.issues_file, index_col=['owner', 'repository', 'sha'],
+                               keep_default_na=False, dtype={'labels': 'str'})
+
+        @cached_property
+        def __files_df(self):
+            return pd.read_csv(self.__args.changes_file, index_col=['owner', 'repository', 'sha'])
+
+        def get_resources_from_file(self, type: str, owner: str, repository: str, sha: str):
+            if type == 'issues':
+                df = self.__issues_df
+            elif type == 'files':
+                df = self.__files_df
+            else:
+               raise ValueError('invalid resources type')
+
+            try:
+                return df.loc[[(owner, repository, sha)]]
+            except KeyError as e:
+                return None
+
+        def get_resources_from_dir(self, type: str, owner: str, repository: str, sha: str):
+            df = self.__load_df(type, owner, repository)
+            try:
+                return df.loc[[sha]]
+            except KeyError as e:
+                return None
+
+        def get_files(self, owner: str, repository: str, sha: str):
+            if self.__args.changes_file:
+                return self.get_resources_from_file('files', owner, repository, sha)
+            else:
+                return self.get_resources_from_dir('files', owner, repository, sha)
+
+        def get_issues(self, owner: str, repository: str, sha: str):
+            if self.__args.issues_file:
+                return self.get_resources_from_file('issues', owner, repository, sha)
+            else:
+                return self.get_resources_from_dir('issues', owner, repository, sha)
+
+
+    _cache = Cache()
+
     def __post_init__(self):
         self.message = CommitMessage(self.raw_message)
-
-    @lru_cache(maxsize=4)
-    def __load_df(self, type: str, owner: str, repository: str):
-        path = TRAIN_DIR / type  / owner / f"{repository}.csv"
-        if path.is_file():
-            return pd.read_csv(path, index_col=['sha'], keep_default_na=False, dtype={'labels': 'str'})
-        else:
-            return None
 
     def __hash__(self):
         return hash((self.owner, self.repository, self.sha))
 
     @cached_property
     def files(self) -> CommitFiles:
-        df = self.__load_df('files', self.owner, self.repository)
+        df = self._cache.get_files(self.owner, self.repository, self.sha)
         files = []
 
         if df is not None:
             try:
                 df = df.loc[[self.sha]]
-                for sha, file in df.iterrows():
+                for file in df.itertuples():
                     files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
-            except (KeyError, AttributeError) as e:
+            except (AttributeError) as e:
                 logger.warn(f'Cannot add commit files:\n {df}')
 
         return CommitFiles(files)
 
     @cached_property
     def issues(self) -> Issues:
-        df = self.__load_df('issues', self.owner, self.repository)
+        df = self._cache.get_issues(self.owner, self.repository, self.sha)
         issues = []
 
         if df is not None:
-            try:
-                df = df.loc[[self.sha]]
-                for sha, issue in df.iterrows():
-                    labels = issue.labels
-                    labels = list(filter(None, labels.split(', ')))
+            for issue in df.itertuples():
+                labels = issue.labels
+                labels = list(filter(None, labels.split(', ')))
 
-                    issues.append(Issue(issue.title, issue.body, labels))
-            except KeyError as e:
-                pass
-
+                issues.append(Issue(issue.title, issue.body, labels))
+        
         return Issues(issues)
 
 class CommitMapper(BaseMapper):

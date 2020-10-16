@@ -28,11 +28,10 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
         L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
 
-
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(TRAIN_DIR / 'b_b.csv', nrows=100000)
+    df_train = pd.read_csv(args.commits_file, nrows=args.n_commits)
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
     df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
@@ -53,11 +52,11 @@ def apply_heuristics(args) -> Dict[str, Any]:
         ProgressBar().register()
         applier = PandasParallelLFApplier(lfs=lfs)
         L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
+
     L_train.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_train_to)
 
     LFAnalysis(L_train, lfs).lf_summary().to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.csv')
-
 
     applier = PandasLFApplier(lfs=lfs)
     L_herzig = applier.apply(df=df_herzig)
@@ -86,21 +85,11 @@ def apply_heuristics(args) -> Dict[str, Any]:
     return stats
 
 
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('heuristic_groups', nargs='+')
-    parser.add_argument('--save-heuristics-matrix-train-to',
-                        default='heuristic_matrix_train.pkl')
-    parser.add_argument('--save-heuristics-matrix-herzig-to',
-                        default='heuristic_matrix_herzig.pkl')
-    parser.add_argument('--save-heuristics-matrix-berger-to',
-                        default='heuristic_matrix_berger.pkl')
-    parser.add_argument('--save-heuristics-matrix-1151-commits-to',
-                        default='heuristic_matrix_1151_commits.pkl')
-    parser.add_argument('--save-metrics-to', default='heuristic_metrics.json')
-    parser.add_argument('--n-parallel', type=int, default=5)
-    parser.add_argument('--profile', action='store_true', default=False)
-    args = parser.parse_args()
+    from bohr.pipeline.args import parse_heuristic_args
+
+    args = parse_heuristic_args()
 
     if args.profile:
         import cProfile

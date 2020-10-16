@@ -32,8 +32,8 @@ Using DVC (Data Version Control) - preferred
         remote = ironspeed
     ['remote "ironspeed"']
         url = ssh://10.10.20.160/home/hbabii/.dvcstorage/bohr
-        password = <username>
-        user = <password>
+        user = <username>
+        password = <password>
 
 #. Run ``dvc pull -r ironspeed data/test downloaded-data/b_b.7z``
 

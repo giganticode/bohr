@@ -2,12 +2,14 @@ from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
 from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
+import re
 
 import pandas as pd
 from cachetools import LRUCache
 from nltk import bigrams
 from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import regexp_tokenize
+
 from snorkel.labeling import labeling_function, LabelingFunction
 from snorkel.map import BaseMapper
 from snorkel.preprocess import BasePreprocessor
@@ -23,12 +25,13 @@ class Label(Enum):
     BUGLESS = 0
     ABSTAIN = -1
 
+TOKENIZER_REGEXP = re.compile(r"[\s_\.,%#/\?!\-]\'\"")
 
-def safe_word_tokenize(text: Any) -> Set[str]:
+def safe_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
     if pd.isna(text): return set()
 
-    return word_tokenize(str(text).lower())
+    return regexp_tokenize(str(text).lower(), pattern=TOKENIZER_REGEXP, gaps=True)
 
 
 @dataclass
@@ -45,7 +48,7 @@ class Issue:
     @cached_property
     def tokens(self) -> Set[str]:
         if self.body is None: return set()
-        return safe_word_tokenize(self.body)
+        return safe_tokenize(self.body)
 
     @cached_property
     def ordered_stems(self) -> List[str]:
@@ -104,7 +107,7 @@ class CommitMessage:
     @cached_property
     def tokens(self) -> Set[str]:
         if self.raw is None: return set()
-        return safe_word_tokenize(self.raw)
+        return safe_tokenize(self.raw)
 
     @cached_property
     def ordered_stems(self) -> List[str]:

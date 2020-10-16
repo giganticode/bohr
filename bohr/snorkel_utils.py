@@ -202,7 +202,7 @@ class Commit:
 
         if df is not None:
             for file in df.itertuples(index=False):
-                files.append(CommitFile(file.filename, file.status, file.patch if not math.isnan(file.patch) else None, file.change if not math.isnan(file.change) else None))
+                files.append(CommitFile(file.filename, file.status, file.patch if not isinstance(file.patch, float) else None, file.change if not isinstance(file.change, float) else None))
         return CommitFiles(files)
 
     @cached_property

@@ -3,6 +3,7 @@ from enum import Enum
 from functools import cached_property, lru_cache
 from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 
+import math
 import pandas as pd
 from cachetools import LRUCache
 from nltk import bigrams
@@ -201,7 +202,7 @@ class Commit:
 
         if df is not None:
             for file in df.itertuples(index=False):
-                files.append(CommitFile(file.filename, file.status, file.patch, file.change))
+                files.append(CommitFile(file.filename, file.status, file.patch if not math.isnan(file.patch) else None, file.change if not math.isnan(file.change) else None))
         return CommitFiles(files)
 
     @cached_property

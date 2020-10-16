@@ -200,13 +200,8 @@ class Commit:
         files = []
 
         if df is not None:
-            try:
-                df = df.loc[[self.sha]]
-                for file in df.itertuples():
-                    files.append(CommitFile(file.filename, file.status, file.get('patch', None), file.get('change', None)))
-            except (AttributeError) as e:
-                logger.warn(f'Cannot add commit files:\n {df}')
-
+            for file in df.itertuples(index=False):
+                files.append(CommitFile(file.filename, file.status, file.patch, file.change))
         return CommitFiles(files)
 
     @cached_property

@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
@@ -87,6 +88,12 @@ class CommitFile:
     status: str
     patch: Optional[str]
     changes: Optional[str]
+
+    def no_added_lines(self):
+        return '<ins>' not in self.changes
+
+    def no_removed_lines(self):
+        return '<del>' not in self.changes
 
 
 class CommitFiles:

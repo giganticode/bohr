@@ -1,8 +1,8 @@
 name: calculate-metrics
 on: [pull_request]
 jobs:
-  run:
-    runs-on: self-hosted
+  message:
+    runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
@@ -26,9 +26,71 @@ jobs:
           
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive data/test downloaded-data/b_b.7z
-          dvc repro
+          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc repro train_label_model_message
 
           git fetch --prune 
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md
+  message_issues:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          PYTHONPATH: /__w/bohr/bohr
+        run: |
+          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
+
+          rm -rf /github/home/.pyenv
+          unset PYENV_ROOT
+          curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          pyenv install 3.8.0
+          pyenv global 3.8.0
+          eval "$(pyenv init -)"
+          pyenv versions
+          python --version
+
+          pip install -r requirements.txt
+          python -c 'import nltk; nltk.download("punkt")'
+          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc repro train_label_model_message_issues label_dataset_message_issues
+
+          git fetch --prune
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md
+  message_issues_changes:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          PYTHONPATH: /__w/bohr/bohr
+        run: |
+          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
+
+          rm -rf /github/home/.pyenv
+          unset PYENV_ROOT
+          curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          pyenv install 3.8.0
+          pyenv global 3.8.0
+          eval "$(pyenv init -)"
+          pyenv versions
+          python --version
+
+          pip install -r requirements.txt
+          python -c 'import nltk; nltk.download("punkt")'
+          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc repro train_label_model_message_issues_changes
+
+          git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md

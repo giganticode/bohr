@@ -8,7 +8,7 @@ import pandas as pd
 from cachetools import LRUCache
 from nltk import bigrams
 from nltk.stem import PorterStemmer
-from nltk.tokenize import regexp_tokenize
+from nltk.tokenize import RegexpTokenizer
 
 from snorkel.labeling import labeling_function, LabelingFunction
 from snorkel.map import BaseMapper
@@ -26,13 +26,15 @@ class Label(Enum):
     BUGLESS = 0
     ABSTAIN = -1
 
-TOKENIZER_REGEXP = re.compile(r"[\s_\.,%#/\?!\-]\'\"")
+_tokenizer = RegexpTokenizer(r"[\s_\.,%#/\?!\-\'\"\)\(\]\[]", gaps=True)
 
 def safe_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
     if pd.isna(text): return set()
 
-    return regexp_tokenize(str(text).lower(), pattern=TOKENIZER_REGEXP, gaps=True)
+    tokens = _tokenizer.tokenize(str(text).lower())
+    print(tokens)
+    return tokens
 
 
 @dataclass

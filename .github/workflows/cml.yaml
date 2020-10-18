@@ -1,5 +1,5 @@
 name: calculate-metrics
-on: [pull_request]
+on: [push]
 jobs:
   message:
     runs-on: [ubuntu-latest]

@@ -28,10 +28,6 @@ jobs:
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
           dvc repro train_label_model_message
-
-          git fetch --prune 
-          dvc metrics diff --show-md master >> report.md
-          cml-send-comment report.md
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
@@ -42,6 +38,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref }}
+      - name: post_metrics
+        run: |
+          git fetch --prune 
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md
   message_issues:
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest

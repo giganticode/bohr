@@ -31,7 +31,7 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
 def apply_heuristics(args) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(args.commits_file, nrows=args.n_commits)
+    df_train = pd.read_csv(args.commits_file, nrows=20)
     df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
     df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
     df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')

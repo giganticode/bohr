@@ -1,8 +1,6 @@
 bad
 broken
 bug|bugg
-close
-concurr
 correct|correctli
 corrupt
 crash
@@ -16,7 +14,6 @@ except
 fail|failur|fault
 fix|hotfix|quickfix|small fix
 garbag
-handl
 incomplet
 inconsist
 incorrect
@@ -25,19 +22,16 @@ invalid
 issue
 leak
 loop
-minor
 mistak
 nullpointer|npe|null pointer
 not work
 not return
 outofbound|of bound
-patch
 prevent
 problem
 properli
 race condit
 repair
-resolv|solv
 threw|throw
 timeout
 unabl

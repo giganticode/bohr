@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
 from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
-import re
 
 import pandas as pd
 from cachetools import LRUCache
@@ -33,7 +32,6 @@ def safe_tokenize(text: Any) -> Set[str]:
     if pd.isna(text): return set()
 
     tokens = _tokenizer.tokenize(str(text).lower())
-    print(tokens)
     return tokens
 
 

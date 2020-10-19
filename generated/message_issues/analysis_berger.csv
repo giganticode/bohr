@@ -9,7 +9,7 @@ bug_message_keyword_concurr,6,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_correct,7,[1],0.021333333333333333,0.018666666666666668,0.013333333333333334,5,3,0.625
 bug_message_keyword_corrupt,8,[1],0.0026666666666666666,0.0026666666666666666,0.0,1,0,1.0
 bug_message_keyword_crash,9,[1],0.016,0.016,0.010666666666666666,4,2,0.6666666666666666
-bug_message_keyword_deadlock,10,[],0.0,0.0,0.0,0,0,0.0
+bug_message_keyword_dead|lock,10,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_defect,11,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_disabl,12,[1],0.005333333333333333,0.0026666666666666666,0.0,1,1,0.5
 bug_message_keyword_endless,13,[],0.0,0.0,0.0,0,0,0.0
@@ -154,7 +154,7 @@ bug_issue_body_keyword_concurr,151,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_correct,152,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_corrupt,153,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_crash,154,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keyword_deadlock,155,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keyword_dead|lock,155,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_defect,156,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_disabl,157,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_endless,158,[],0.0,0.0,0.0,0,0,0.0
@@ -295,7 +295,9 @@ bugless_issue_body_keyword_unnecessari,292,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_updat,293,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_upgrad,294,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_version,295,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_bug,296,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fix,298,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_error,299,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_enhancement,296,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_feature,297,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_request,298,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_refactor,299,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_renovate,300,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_new,301,[],0.0,0.0,0.0,0,0,0.0

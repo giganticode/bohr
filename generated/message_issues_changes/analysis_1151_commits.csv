@@ -9,7 +9,7 @@ bug_message_keyword_concurr,6,[1],0.005212858384013901,0.005212858384013901,0.00
 bug_message_keyword_correct,7,[1],0.010425716768027803,0.010425716768027803,0.010425716768027803,9,3,0.75
 bug_message_keyword_corrupt,8,[1],0.0026064291920069507,0.0026064291920069507,0.0026064291920069507,2,1,0.6666666666666666
 bug_message_keyword_crash,9,[1],0.0008688097306689834,0.0008688097306689834,0.0008688097306689834,1,0,1.0
-bug_message_keyword_dead|lock,10,[1],0.0034752389226759338,0.0034752389226759338,0.0034752389226759338,4,0,1.0
+bug_message_keyword_deadlock,10,[1],0.0034752389226759338,0.0034752389226759338,0.0034752389226759338,4,0,1.0
 bug_message_keyword_defect,11,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_disabl,12,[1],0.005212858384013901,0.005212858384013901,0.005212858384013901,4,2,0.6666666666666666
 bug_message_keyword_endless,13,[1],0.0008688097306689834,0.0008688097306689834,0.0008688097306689834,1,0,1.0
@@ -130,7 +130,7 @@ bugless_message_keyword_rid,127,[0],0.0017376194613379669,0.0017376194613379669,
 bugless_message_keyword_set|up,128,[],0.0,0.0,0.0,0,0,0.0
 bugless_message_keyword_simplif,129,[0],0.0017376194613379669,0.0017376194613379669,0.0017376194613379669,2,0,1.0
 bugless_message_keyword_simplifi,130,[0],0.004344048653344918,0.004344048653344918,0.0026064291920069507,3,2,0.6
-bugless_message_keyword_speedup,131,[],0.0,0.0,0.0,0,0,0.0
+bugless_message_keyword_speed|up,131,[],0.0,0.0,0.0,0,0,0.0
 bugless_message_keyword_stage,132,[0],0.0008688097306689834,0.0008688097306689834,0.0008688097306689834,1,0,1.0
 bugless_message_keyword_stat,133,[],0.0,0.0,0.0,0,0,0.0
 bugless_message_keyword_statist,134,[0],0.0008688097306689834,0.0008688097306689834,0.0,1,0,1.0
@@ -154,7 +154,7 @@ bug_issue_body_keyword_concurr,151,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_correct,152,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_corrupt,153,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_crash,154,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keyword_dead|lock,155,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keyword_deadlock,155,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_defect,156,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_disabl,157,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_endless,158,[],0.0,0.0,0.0,0,0,0.0
@@ -279,7 +279,7 @@ bugless_issue_body_keyword_rid,276,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_set|up,277,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_simplif,278,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_simplifi,279,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_body_keyword_speedup,280,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_body_keyword_speed|up,280,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_stage,281,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_stat,282,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_statist,283,[],0.0,0.0,0.0,0,0,0.0
@@ -295,8 +295,10 @@ bugless_issue_body_keyword_unnecessari,292,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_updat,293,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_upgrad,294,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_version,295,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_bug,296,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fix,298,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_error,299,[],0.0,0.0,0.0,0,0,0.0
-no_files_have_modified_status,300,[0],1.0,0.8279756733275413,0.4265855777584709,651,500,0.5655951346655083
+bugless_issue_label_keyword_enhancement,296,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_feature,297,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_request,298,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_refactor,299,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_renovate,300,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_new,301,[],0.0,0.0,0.0,0,0,0.0
+no_files_have_modified_status,302,[0],1.0,0.8279756733275413,0.4265855777584709,651,500,0.5655951346655083

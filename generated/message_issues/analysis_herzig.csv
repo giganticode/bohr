@@ -9,7 +9,7 @@ bug_message_keyword_concurr,6,[1],0.008438818565400843,0.00805523590333717,0.006
 bug_message_keyword_correct,7,[1],0.01726121979286536,0.014384349827387802,0.008822401227464518,69,21,0.7666666666666666
 bug_message_keyword_corrupt,8,[1],0.005178365937859608,0.004219409282700422,0.002493287303413886,25,2,0.9259259259259259
 bug_message_keyword_crash,9,[1],0.0009589566551591868,0.0007671653241273494,0.0005753739930955121,4,1,0.8
-bug_message_keyword_deadlock,10,[1],0.0055619485999232835,0.004602991944764097,0.0034522439585730723,29,0,1.0
+bug_message_keyword_dead|lock,10,[1],0.0055619485999232835,0.004602991944764097,0.0034522439585730723,29,0,1.0
 bug_message_keyword_defect,11,[1],0.00019179133103183735,0.00019179133103183735,0.0,1,0,1.0
 bug_message_keyword_disabl,12,[1],0.0055619485999232835,0.004411200613732259,0.0038358266206367474,16,13,0.5517241379310345
 bug_message_keyword_endless,13,[1],0.0009589566551591868,0.0009589566551591868,0.00019179133103183735,5,0,1.0
@@ -154,7 +154,7 @@ bug_issue_body_keyword_concurr,151,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_correct,152,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_corrupt,153,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_crash,154,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keyword_deadlock,155,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keyword_dead|lock,155,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_defect,156,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_disabl,157,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_endless,158,[],0.0,0.0,0.0,0,0,0.0
@@ -295,7 +295,9 @@ bugless_issue_body_keyword_unnecessari,292,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_updat,293,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_upgrad,294,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_version,295,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_bug,296,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fixed,297,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_fix,298,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_label_keyword_error,299,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_enhancement,296,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_feature,297,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_request,298,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_refactor,299,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_renovate,300,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_label_keyword_new,301,[],0.0,0.0,0.0,0,0,0.0

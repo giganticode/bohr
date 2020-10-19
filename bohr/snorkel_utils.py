@@ -25,7 +25,7 @@ class Label(Enum):
     BUGLESS = 0
     ABSTAIN = -1
 
-_tokenizer = RegexpTokenizer(r"[\s_\.,%#/\?!\-\'\"\)\(\]\[\:]", gaps=True)
+_tokenizer = RegexpTokenizer(r"[\s_\.,%#/\?!\-\'\"\)\(\]\[\:;]", gaps=True)
 
 def safe_tokenize(text: Any) -> Set[str]:
     if text is None: return set()

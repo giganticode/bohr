@@ -15,4 +15,5 @@ jobs:
           PYTHONPATH: /__w/bohr/bohr
         run: |
           dvc pull -r gdrive
-          dvc status
+          dvc repro extract_train_data
+          dvc status -q

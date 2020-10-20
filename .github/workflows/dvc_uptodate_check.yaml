@@ -1,7 +1,7 @@
 name: check-dvc-clean
 on:
   push:
-    branches: [ check-dvc-clean ]
+    branches: [ master ]
 jobs:
   check-dvc-clean:
     runs-on: [ubuntu-latest]

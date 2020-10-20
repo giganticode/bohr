@@ -17,4 +17,5 @@ jobs:
           sudo apt-get update && sudo apt-get install p7zip-full
           dvc pull -r gdrive
           dvc repro extract_train_data
+          dvc status
           dvc status -q

@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
@@ -8,7 +9,8 @@ import pandas as pd
 from cachetools import LRUCache
 from nltk import bigrams
 from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import RegexpTokenizer
+
 from snorkel.labeling import labeling_function, LabelingFunction
 from snorkel.map import BaseMapper
 from snorkel.preprocess import BasePreprocessor
@@ -25,12 +27,14 @@ class Label(Enum):
     BUGLESS = 0
     ABSTAIN = -1
 
+_tokenizer = RegexpTokenizer(r"[\s_\.,%#/\?!\-\'\"\)\(\]\[\:;]", gaps=True)
 
-def safe_word_tokenize(text: Any) -> Set[str]:
+def safe_tokenize(text: Any) -> Set[str]:
     if text is None: return set()
     if pd.isna(text): return set()
 
-    return word_tokenize(str(text).lower())
+    tokens = _tokenizer.tokenize(str(text).lower())
+    return tokens
 
 
 @dataclass
@@ -47,7 +51,7 @@ class Issue:
     @cached_property
     def tokens(self) -> Set[str]:
         if self.body is None: return set()
-        return safe_word_tokenize(self.body)
+        return safe_tokenize(self.body)
 
     @cached_property
     def ordered_stems(self) -> List[str]:
@@ -88,6 +92,12 @@ class CommitFile:
     patch: Optional[str]
     changes: Optional[str]
 
+    def no_added_lines(self):
+        return '<ins>' not in self.changes
+
+    def no_removed_lines(self):
+        return '<del>' not in self.changes
+
 
 class CommitFiles:
     def __init__(self, files):
@@ -106,7 +116,7 @@ class CommitMessage:
     @cached_property
     def tokens(self) -> Set[str]:
         if self.raw is None: return set()
-        return safe_word_tokenize(self.raw)
+        return safe_tokenize(self.raw)
 
     @cached_property
     def ordered_stems(self) -> List[str]:

@@ -1,0 +1,21 @@
+name: check-dvc-clean
+on:
+  push:
+    branches: [ master ]
+jobs:
+  check-dvc-clean:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dvc-status
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          PYTHONPATH: /__w/bohr/bohr
+        run: |
+          sudo apt-get update && sudo apt-get install p7zip-full
+          dvc pull -r gdrive
+          dvc repro extract_train_data
+          dvc status
+          dvc status -q

@@ -16,7 +16,7 @@ from snorkel.labeling.model import LabelModel
 
 def label_dataset(args):
     heuristic_groups = "_".join(args.heuristic_groups)
-    df = pd.read_csv(args.commits_file)
+    df = pd.read_csv(args.commits_file, nrows=20)
 
     L_train = np.load(PROJECT_DIR / 'generated' / heuristic_groups / args.path_to_heuristics_matrix_train, allow_pickle=True)
 

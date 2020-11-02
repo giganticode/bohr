@@ -68,7 +68,7 @@ apply_heuristics_message:
   - path: bohr/heuristics/keywords
     md5: b4e7587c1b8e4e1461685a305d48bd66.dir
   - path: bohr/pipeline/apply_heuristics.py
-    md5: 2169963fd603f95f9aadd9ed30e21659
+    md5: 3210677263f4241accc7b37580402c09
   - path: data/test
     md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
   - path: data/train
@@ -76,20 +76,12 @@ apply_heuristics_message:
   outs:
   - path: generated/bugginess/analysis_1151_commits.csv
     md5: ba4f11accd4a5d88ca808d7ba0a9397e
-  - path: generated/bugginess/analysis_1151_commits.json
-    md5: ff2d1210bae2810e1d4d737dadb4037c
   - path: generated/bugginess/analysis_berger.csv
     md5: 5c44eb45ba9f76fb31923365cd05b08f
-  - path: generated/bugginess/analysis_berger.json
-    md5: fa684e7f37f3eaefd8c4838e4093f839
   - path: generated/bugginess/analysis_herzig.csv
     md5: 8c90a9b4e5b372bcb12e4009783b2490
-  - path: generated/bugginess/analysis_herzig.json
-    md5: 32b309d4b553663f440a00a0f70df3e6
   - path: generated/bugginess/analysis_train.csv
     md5: b87f2756893d543b289988e0065c8ca6
-  - path: generated/bugginess/analysis_train.json
-    md5: b008c1af30598b4c3c232b4911608f97
   - path: generated/bugginess/heuristic_matrix_1151_commits.pkl
     md5: bc61ea311c9e4bf98a52c6f867823c14
   - path: generated/bugginess/heuristic_matrix_berger.pkl
@@ -119,7 +111,7 @@ train_label_model_message:
     md5: f06bdbd568034153d6a1a3510429dbc4
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 9e2ac8d6125e870b3c2355bc2f7917ec
+    md5: fd4b545c527f7893ddd05b7c9fd4604d
   - path: metrics/bugginess/label_model_metrics.json
     md5: b28fad4663fe4a50e7cece7484c4ffde
 label_dataset_message_issues:
@@ -134,4 +126,4 @@ label_dataset_message_issues:
     md5: f06bdbd568034153d6a1a3510429dbc4
   outs:
   - path: labeled_with_model2.csv
-    md5: c6d9601036d87f320373211fb534c2d3
+    md5: b1df81eeb84beefe30f80502d115f43f

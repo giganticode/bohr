@@ -30,6 +30,14 @@ stages:
     metrics:
     - metrics/bugginess/heuristic_metrics.json:
         cache: false
+    - generated/bugginess/analysis_train.json:
+        cache: false
+    - generated/bugginess/analysis_herzig.json:
+        cache: false
+    - generated/bugginess/analysis_berger.json:
+        cache: false
+    - generated/bugginess/analysis_1151_commits.json:
+        cache: false
   train_label_model_message:
     cmd: python bohr/pipeline/train_label_model.py bugginess
     deps:

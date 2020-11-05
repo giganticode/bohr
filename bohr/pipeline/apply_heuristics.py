@@ -57,6 +57,8 @@ def apply_heuristics(args) -> Dict[str, Any]:
 
     LFAnalysis(L_train, lfs).lf_summary().to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.csv')
+    LFAnalysis(L_train, lfs).lf_summary().to_json(
+        PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.json')
 
     applier = PandasLFApplier(lfs=lfs)
     L_herzig = applier.apply(df=df_herzig)
@@ -72,6 +74,12 @@ def apply_heuristics(args) -> Dict[str, Any]:
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_berger.csv')
     LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_csv(
         PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.csv')
+    LFAnalysis(L_herzig, lfs).lf_summary(Y=df_herzig.bug.values).to_json(
+        PROJECT_DIR / 'generated' / scenario_name / 'analysis_herzig.json')
+    LFAnalysis(L_berger, lfs).lf_summary(Y=df_berger.bug.values).to_json(
+        PROJECT_DIR / 'generated' / scenario_name / 'analysis_berger.json')
+    LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_json(
+        PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.json')
 
     stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
     stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)

@@ -44,7 +44,7 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc gc --cloud -r gdrive --workspace --all-tags
+          dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

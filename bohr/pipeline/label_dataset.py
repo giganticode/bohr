@@ -7,8 +7,9 @@ from bohr import params
 from bohr.core import load_labeling_functions
 
 
-def label_dataset():
-    df = pd.read_csv(params.COMMITS_FILE, nrows=params.N_ROWS)
+def label_dataset(args):
+    heuristic_groups = "_".join(args.heuristic_groups)
+    df = pd.read_csv(args.commits_file, nrows=20)
 
     L_train = np.load(PROJECT_DIR / 'generated' / params.TASK / 'heuristic_matrix_train.pkl', allow_pickle=True)
 

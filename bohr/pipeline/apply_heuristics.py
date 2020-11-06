@@ -20,6 +20,13 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
     maj_model_train_acc = majority_model.score(L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
 
+def apply_heuristics(args) -> Dict[str, Any]:
+    stats: Dict[str, Any] = {}
+
+    df_train = pd.read_csv(args.commits_file, nrows=20)
+    df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
+    df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
+    df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
 
 def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: Path) -> Dict[str, Any]:
     commit_df = pd.read_csv(params.COMMITS_FILE, nrows=params.N_ROWS)

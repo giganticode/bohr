@@ -30,11 +30,13 @@ jobs:
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
           dvc repro
+          dvc push -r gdrive
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Add dvc outputs" -a
+          git add .
+          git commit -m "Add dvc outputs"
       - name: Push to dvc
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}

@@ -119,7 +119,7 @@ train_label_model_message:
     md5: f06bdbd568034153d6a1a3510429dbc4
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 9e2ac8d6125e870b3c2355bc2f7917ec
+    md5: faa8fce82173f802f57b8f0d829d9b44
   - path: metrics/bugginess/label_model_metrics.json
     md5: b28fad4663fe4a50e7cece7484c4ffde
 label_dataset_message_issues:

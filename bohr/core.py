@@ -6,7 +6,8 @@ from typing import List, Set, Callable
 from snorkel.labeling import LabelingFunction, labeling_function
 
 from bohr import HEURISTIC_DIR
-from bohr.snorkel_utils import Label, CommitLabelingFunction
+from bohr.labels import Label
+from bohr.snorkel_utils import CommitLabelingFunction
 
 KEYWORD_GROUP_SEPARATOR = '|'
 

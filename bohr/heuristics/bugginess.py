@@ -1,7 +1,9 @@
 from bohr.core import keyword_labeling_functions
-from bohr.snorkel_utils import commit_lf, Label, NgramSet
+from bohr.nlp_utils import NgramSet
+from bohr.labels import Label
+from bohr.snorkel_utils import commit_lf
 import re
-from bohr.snorkel_utils import Commit
+from bohr.artifacts.commits import Commit
 
 
 @keyword_labeling_functions('bug', name_pattern='bug_message_keyword_%1')

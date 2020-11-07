@@ -7,25 +7,33 @@ stages:
     - data/train:
         cache: false
   apply_heuristics_message:
-    cmd: python bohr/pipeline/apply_heuristics.py bugginess --n-parallel=1 --commits-file data/train/bug_sample.csv --issues-file data/train/bug_sample_issues.csv --changes-file data/train/bug_sample_files.csv
+    cmd: python bohr/pipeline/apply_heuristics.py
     deps:
     - bohr/heuristics/keywords
     - bohr/heuristics/bugginess.py
     - bohr/pipeline/apply_heuristics.py
     - data/train
     - data/test
+    params:
+    - bohr/params.py:
+      - N_PARALLEL
+      - N_ROWS
+      - COMMITS_FILE
+      - TEST_SETS
+      - PROFILE
+      - TASK
     outs:
     - generated/bugginess/heuristic_matrix_train.pkl
     - generated/bugginess/heuristic_matrix_herzig.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_1151_commits.pkl
+    - generated/bugginess/heuristic_matrix_1151-commits.pkl
     - generated/bugginess/analysis_train.csv:
         cache: false
     - generated/bugginess/analysis_herzig.csv:
         cache: false
     - generated/bugginess/analysis_berger.csv:
         cache: false
-    - generated/bugginess/analysis_1151_commits.csv:
+    - generated/bugginess/analysis_1151-commits.csv:
         cache: false
     metrics:
     - metrics/bugginess/heuristic_metrics.json:
@@ -36,28 +44,39 @@ stages:
         cache: false
     - generated/bugginess/analysis_berger.json:
         cache: false
-    - generated/bugginess/analysis_1151_commits.json:
+    - generated/bugginess/analysis_1151-commits.json:
         cache: false
   train_label_model_message:
-    cmd: python bohr/pipeline/train_label_model.py bugginess
+    cmd: python bohr/pipeline/train_label_model.py
     deps:
     - bohr/pipeline/train_label_model.py
     - generated/bugginess/heuristic_matrix_train.pkl
     - generated/bugginess/heuristic_matrix_herzig.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_1151_commits.pkl
+    - generated/bugginess/heuristic_matrix_1151-commits.pkl
     - data/train
     - data/test
+    params:
+      - bohr/params.py:
+        - TEST_SETS
+        - TASK
     outs:
     - generated/bugginess/label_model.pkl
     metrics:
     - metrics/bugginess/label_model_metrics.json:
         cache: false
   label_dataset_message_issues:
-    cmd: python bohr/pipeline/label_dataset.py bugginess --commits-file data/train/bug_sample.csv -o labeled_with_model2.csv --debug
+    cmd: python bohr/pipeline/label_dataset.py
     deps:
       - bohr/pipeline/label_dataset.py
       - generated/bugginess/heuristic_matrix_train.pkl
       - data/train
+    params:
+      - bohr/params.py:
+          - N_ROWS
+          - COMMITS_FILE
+          - TASK
+          - LABELED_DATASET_OUTPUT_PATH
+          - LABEL_DATASET_DEBUG
     outs:
       - labeled_with_model2.csv

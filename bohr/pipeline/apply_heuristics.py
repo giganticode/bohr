@@ -1,121 +1,106 @@
-
-import os
-from pathlib import Path
-
-import argparse
 import json
+from pathlib import Path
 from pprint import pprint
-from typing import Any, Dict
+from typing import Any, Dict, List
 
+import dask.dataframe as dd
 import numpy as np
 import pandas as pd
-import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
-import csv
-
 from snorkel.labeling import PandasLFApplier, LFAnalysis
-from snorkel.labeling.apply.dask import DaskLFApplier, PandasParallelLFApplier
-
+from snorkel.labeling.apply.dask import PandasParallelLFApplier
 from snorkel.labeling.model import MajorityLabelVoter
 
+from bohr import PROJECT_DIR, TEST_DIR
 from bohr.core import load_labeling_functions
-from bohr import PROJECT_DIR, TRAIN_DIR, TEST_DIR
 
 
 def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
     majority_model = MajorityLabelVoter()
-    maj_model_train_acc = majority_model.score(
-        L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
+    maj_model_train_acc = majority_model.score(L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
     return maj_model_train_acc
 
-def apply_heuristics(args) -> Dict[str, Any]:
-    stats: Dict[str, Any] = {}
 
-    df_train = pd.read_csv(args.commits_file)
-    df_herzig = pd.read_csv(TEST_DIR / 'herzig.csv')
-    df_berger = pd.read_csv(TEST_DIR / 'berger.csv')
-    df_1151_commits = pd.read_csv(TEST_DIR / '1151-commits.csv')
+def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: Path) -> Dict[str, Any]:
+    commit_df = pd.read_csv(args.commits_file, nrows=20)
 
-    df_train.message = df_train.message.astype(str)
-    scenario_name = "_".join(args.heuristic_groups)
-    lfs = load_labeling_functions(args.heuristic_groups)
-
-    stats[f'n_labeling_functions'] = len(lfs)
-
-    if not (PROJECT_DIR / 'generated' / scenario_name).exists():
-        (PROJECT_DIR / 'generated' / scenario_name).mkdir(parents=True)
+    commit_df.message = commit_df.message.astype(str)
 
     if args.n_parallel <= 1:
         applier = PandasLFApplier(lfs=lfs)
-        L_train = applier.apply(df=df_train)
+        applied_lf_matrix = applier.apply(df=commit_df)
     else:
         ProgressBar().register()
         applier = PandasParallelLFApplier(lfs=lfs)
-        L_train = applier.apply(df=df_train, n_parallel=args.n_parallel)
+        applied_lf_matrix = applier.apply(df=commit_df, n_parallel=args.n_parallel)
 
-    L_train.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_train_to)
+    applied_lf_matrix.dump(save_generated_to / 'heuristic_matrix_train.pkl')
 
-    LFAnalysis(L_train, lfs).lf_summary().to_csv(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.csv')
-    LFAnalysis(L_train, lfs).lf_summary().to_json(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_train.json')
+    lf_analysis_summary = LFAnalysis(applied_lf_matrix, lfs).lf_summary()
+    lf_analysis_summary.to_csv(save_generated_to / 'analysis_train.csv')
+    lf_analysis_summary.to_json(save_generated_to / 'analysis_train.json')
+    coverage_train = sum((applied_lf_matrix != -1).any(axis=1)) / len(applied_lf_matrix)
+    return {'n_labeling_functions': len(lfs), 'coverage_train': coverage_train}
 
+
+def apply_lfs_to_test_set(lfs: List, test_set: str, save_generated_to: Path, save_metrics_to: Path) -> Dict[str, float]:
     applier = PandasLFApplier(lfs=lfs)
-    L_herzig = applier.apply(df=df_herzig)
-    L_herzig.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_herzig_to)
-    L_berger = applier.apply(df=df_berger)
-    L_berger.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_berger_to)
-    L_1151_commits = applier.apply(df=df_1151_commits)
-    L_1151_commits.dump(PROJECT_DIR / 'generated' / scenario_name / args.save_heuristics_matrix_1151_commits_to)
+    df = pd.read_csv(TEST_DIR / f'{test_set}.csv')
+    L = applier.apply(df=df)
+    L.dump(save_generated_to / f'heuristic_matrix_{test_set}.pkl')
+    lf_analysis_summary = LFAnalysis(L, lfs).lf_summary(Y=df.bug.values)
+    lf_analysis_summary.to_csv(save_generated_to / f'analysis_{test_set}.csv')
+    lf_analysis_summary.to_json(save_generated_to / f'analysis_{test_set}.json')
+    coverage = sum((L != -1).any(axis=1)) / len(L)
+    majority_accuracy = majority_acc(L, df)
+    return {f'coverage_{test_set}': coverage, f'majority_accuracy_{test_set}': majority_accuracy}
 
-    LFAnalysis(L_herzig, lfs).lf_summary(Y=df_herzig.bug.values).to_csv(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_herzig.csv')
-    LFAnalysis(L_berger, lfs).lf_summary(Y=df_berger.bug.values).to_csv(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_berger.csv')
-    LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_csv(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.csv')
-    LFAnalysis(L_herzig, lfs).lf_summary(Y=df_herzig.bug.values).to_json(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_herzig.json')
-    LFAnalysis(L_berger, lfs).lf_summary(Y=df_berger.bug.values).to_json(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_berger.json')
-    LFAnalysis(L_1151_commits, lfs).lf_summary(Y=df_1151_commits.bug.values).to_json(
-        PROJECT_DIR / 'generated' / scenario_name / 'analysis_1151_commits.json')
 
-    stats['coverage_train'] = sum((L_train != -1).any(axis=1)) / len(L_train)
-    stats['coverage_herzig'] = sum((L_herzig != -1).any(axis=1)) / len(L_herzig)
-    stats['coverage_berger'] = sum((L_berger != -1).any(axis=1)) / len(L_berger)
-    stats['coverage_1151_commits'] = sum((L_1151_commits != -1).any(axis=1)) / len(L_1151_commits)
+def apply_heuristics(task: str) -> None:
+    all_stats: Dict[str, Any] = {}
 
-    stats['majority_accuracy_herzig'] = majority_acc(L_herzig, df_herzig)
-    stats['majority_accuracy_berger'] = majority_acc(L_berger, df_berger)
-    stats['majority_accuracy_1151_commits'] = majority_acc(L_1151_commits, df_1151_commits)
+    task_dir_generated = PROJECT_DIR / 'generated' / task
+    task_dir_metrics = PROJECT_DIR / 'metrics' / task
+    if not task_dir_generated.exists():
+        task_dir_generated.mkdir(parents=True)
+    if not task_dir_metrics.exists():
+        task_dir_metrics.mkdir(parents=True)
 
-    return stats
+    lfs = load_labeling_functions({task})
+    stats = apply_lfs_to_train_set(lfs, save_generated_to=task_dir_generated, save_metrics_to=task_dir_metrics)
+    all_stats.update(**stats)
 
+    for test_set in ['herzig', 'berger', '1151-commits']:
+        stats = apply_lfs_to_test_set(lfs, test_set,
+                                      save_generated_to=task_dir_generated, save_metrics_to=task_dir_metrics)
+        all_stats.update(**stats)
+
+    with open(task_dir_metrics / 'heuristic_metrics.json', 'w') as f:
+        json.dump(all_stats, f)
+
+    pprint(all_stats)
+
+
+class Profiler(object):
+    def __init__(self, enabled: bool):
+        self.enabled = enabled
+        if self.enabled:
+            import cProfile
+            self.profiler = cProfile.Profile()
+
+    def __enter__(self):
+        if self.enabled:
+            self.profiler.enable()
+
+    def __exit__(self, type, value, traceback):
+        if self.enabled:
+            self.profiler.disable()
+            self.profiler.print_stats(sort='cumtime')
 
 
 if __name__ == '__main__':
     from bohr.pipeline.args import parse_heuristic_args
 
     args = parse_heuristic_args()
-
-    if args.profile:
-        import cProfile
-        pr = cProfile.Profile()
-
-    try:
-        if args.profile:
-            pr.enable()
-        stats = apply_heuristics(args)
-    finally:
-        if args.profile:
-            pr.disable()
-            pr.print_stats(sort='cumtime')
-
-    scenario_name = "_".join(args.heuristic_groups)
-    if not (PROJECT_DIR / 'metrics' / scenario_name).exists():
-        (PROJECT_DIR / 'metrics' / scenario_name).mkdir(parents=True)
-    with open(PROJECT_DIR / 'metrics' / scenario_name / Path(args.save_metrics_to), 'w') as f:
-        json.dump(stats, f)
-
-    pprint(stats)
+    with Profiler(enabled=args.profile):
+        apply_heuristics(args.task)

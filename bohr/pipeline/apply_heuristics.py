@@ -11,7 +11,7 @@ from snorkel.labeling import PandasLFApplier, LFAnalysis
 from snorkel.labeling.apply.dask import PandasParallelLFApplier
 from snorkel.labeling.model import MajorityLabelVoter
 
-from bohr import PROJECT_DIR, TEST_DIR
+from bohr import PROJECT_DIR, TEST_DIR, params
 from bohr.core import load_labeling_functions
 
 
@@ -22,17 +22,17 @@ def majority_acc(L: np.ndarray, df: dd.DataFrame) -> float:
 
 
 def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: Path) -> Dict[str, Any]:
-    commit_df = pd.read_csv(args.commits_file, nrows=20)
+    commit_df = pd.read_csv(params.COMMITS_FILE, nrows=params.N_ROWS)
 
     commit_df.message = commit_df.message.astype(str)
 
-    if args.n_parallel <= 1:
+    if params.N_PARALLEL <= 1:
         applier = PandasLFApplier(lfs=lfs)
         applied_lf_matrix = applier.apply(df=commit_df)
     else:
         ProgressBar().register()
         applier = PandasParallelLFApplier(lfs=lfs)
-        applied_lf_matrix = applier.apply(df=commit_df, n_parallel=args.n_parallel)
+        applied_lf_matrix = applier.apply(df=commit_df, n_parallel=params.N_PARALLEL)
 
     applied_lf_matrix.dump(save_generated_to / 'heuristic_matrix_train.pkl')
 
@@ -70,7 +70,7 @@ def apply_heuristics(task: str) -> None:
     stats = apply_lfs_to_train_set(lfs, save_generated_to=task_dir_generated, save_metrics_to=task_dir_metrics)
     all_stats.update(**stats)
 
-    for test_set in ['herzig', 'berger', '1151-commits']:
+    for test_set in params.TEST_SETS:
         stats = apply_lfs_to_test_set(lfs, test_set,
                                       save_generated_to=task_dir_generated, save_metrics_to=task_dir_metrics)
         all_stats.update(**stats)
@@ -99,8 +99,5 @@ class Profiler(object):
 
 
 if __name__ == '__main__':
-    from bohr.pipeline.args import parse_heuristic_args
-
-    args = parse_heuristic_args()
-    with Profiler(enabled=args.profile):
-        apply_heuristics(args.task)
+    with Profiler(enabled=params.PROFILE):
+        apply_heuristics(params.TASK)

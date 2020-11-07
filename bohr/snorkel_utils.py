@@ -1,10 +1,8 @@
-import math
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
 from typing import Optional, List, Set, Mapping, Any, Tuple, Callable, Union
 
-import math
 import pandas as pd
 from cachetools import LRUCache
 from nltk import bigrams
@@ -16,8 +14,7 @@ from snorkel.map import BaseMapper
 from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
-from bohr import TRAIN_DIR, logger
-from bohr.pipeline.args import get_heuristic_args
+from bohr import TRAIN_DIR, params
 
 NgramSet = Set[Union[Tuple[str], str]]
 
@@ -143,10 +140,6 @@ class Commit:
 
     class Cache:
 
-        @property
-        def __args(self):
-            return get_heuristic_args()
-
         @lru_cache(maxsize=8)
         def __load_df(self, type: str, owner: str, repository: str):
             path = TRAIN_DIR / type  / owner / f"{repository}.csv"
@@ -157,12 +150,12 @@ class Commit:
 
         @cached_property
         def __issues_df(self):
-            return pd.read_csv(self.__args.issues_file, index_col=['owner', 'repository', 'sha'],
+            return pd.read_csv(params.ISSUES_FILE, index_col=['owner', 'repository', 'sha'],
                                keep_default_na=False, dtype={'labels': 'str'})
 
         @cached_property
         def __files_df(self):
-            return pd.read_csv(self.__args.changes_file, index_col=['owner', 'repository', 'sha'])
+            return pd.read_csv(params.CHANGES_FILE, index_col=['owner', 'repository', 'sha'])
 
         def get_resources_from_file(self, type: str, owner: str, repository: str, sha: str):
             if type == 'issues':
@@ -185,13 +178,13 @@ class Commit:
                 return None
 
         def get_files(self, owner: str, repository: str, sha: str):
-            if self.__args.changes_file:
+            if params.CHANGES_FILE:
                 return self.get_resources_from_file('files', owner, repository, sha)
             else:
                 return self.get_resources_from_dir('files', owner, repository, sha)
 
         def get_issues(self, owner: str, repository: str, sha: str):
-            if self.__args.issues_file:
+            if params.ISSUES_FILE:
                 return self.get_resources_from_file('issues', owner, repository, sha)
             else:
                 return self.get_resources_from_dir('issues', owner, repository, sha)

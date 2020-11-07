@@ -1,5 +1,5 @@
 N_PARALLEL = 1
-N_ROWS = 20
+N_ROWS = None
 PROFILE = False
 TASK = 'bugginess'
 

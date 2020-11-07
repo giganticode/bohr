@@ -38,7 +38,7 @@ def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: 
 
     lf_analysis_summary = LFAnalysis(applied_lf_matrix, lfs).lf_summary()
     lf_analysis_summary.to_csv(save_generated_to / 'analysis_train.csv')
-    lf_analysis_summary.to_json(save_generated_to / 'analysis_train.json')
+    lf_analysis_summary.to_json(save_metrics_to / 'analysis_train.json')
     coverage_train = sum((applied_lf_matrix != -1).any(axis=1)) / len(applied_lf_matrix)
     return {'n_labeling_functions': len(lfs), 'coverage_train': coverage_train}
 
@@ -50,7 +50,7 @@ def apply_lfs_to_test_set(lfs: List, test_set: str, save_generated_to: Path, sav
     L.dump(save_generated_to / f'heuristic_matrix_{test_set}.pkl')
     lf_analysis_summary = LFAnalysis(L, lfs).lf_summary(Y=df.bug.values)
     lf_analysis_summary.to_csv(save_generated_to / f'analysis_{test_set}.csv')
-    lf_analysis_summary.to_json(save_generated_to / f'analysis_{test_set}.json')
+    lf_analysis_summary.to_json(save_metrics_to / f'analysis_{test_set}.json')
     coverage = sum((L != -1).any(axis=1)) / len(L)
     majority_accuracy = majority_acc(L, df)
     return {f'coverage_{test_set}': coverage, f'majority_accuracy_{test_set}': majority_accuracy}

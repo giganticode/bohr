@@ -39,6 +39,7 @@ def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: 
     lf_analysis_summary = LFAnalysis(applied_lf_matrix, lfs).lf_summary()
     lf_analysis_summary.to_csv(save_generated_to / 'analysis_train.csv')
     analysis_dict = lf_analysis_summary.to_dict()
+    del analysis_dict['j']
     with open(save_metrics_to / 'analysis_train.json', 'w') as f:
         f.write(pformat(analysis_dict))
     coverage_train = sum((applied_lf_matrix != -1).any(axis=1)) / len(applied_lf_matrix)
@@ -53,6 +54,7 @@ def apply_lfs_to_test_set(lfs: List, test_set: str, save_generated_to: Path, sav
     lf_analysis_summary = LFAnalysis(L, lfs).lf_summary(Y=df.bug.values)
     lf_analysis_summary.to_csv(save_generated_to / f'analysis_{test_set}.csv')
     analysis_dict = lf_analysis_summary.to_dict()
+    del analysis_dict['j']
     with open(save_metrics_to / f'analysis_{test_set}.json', 'w') as f:
         f.write(pformat(analysis_dict))
     coverage = sum((L != -1).any(axis=1)) / len(L)

@@ -1,0 +1,11 @@
+# This is automatically generated code. Do not edit manually.
+class Label(object):
+    pass
+
+{% for clazz in classes %}
+class {{clazz.name}}({{clazz.parent}}):
+    pass
+
+{% endfor %}
+{% for clazz in classes %}{{clazz.name}} = {{clazz.name}}()
+{% endfor %}

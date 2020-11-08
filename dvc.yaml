@@ -6,7 +6,7 @@ stages:
     outs:
     - data/train:
         cache: false
-  apply_heuristics_message:
+  apply_heuristics_bugginess:
     cmd: python bohr/pipeline/apply_heuristics.py
     deps:
     - bohr/heuristics/keywords
@@ -46,7 +46,7 @@ stages:
         cache: false
     - metrics/bugginess/analysis_1151-commits.json:
         cache: false
-  train_label_model_message:
+  train_label_model_bugginess:
     cmd: python bohr/pipeline/train_label_model.py
     deps:
     - bohr/pipeline/train_label_model.py
@@ -65,7 +65,7 @@ stages:
     metrics:
     - metrics/bugginess/label_model_metrics.json:
         cache: false
-  label_dataset_message_issues:
+  label_dataset_bugginess:
     cmd: python bohr/pipeline/label_dataset.py
     deps:
       - bohr/pipeline/label_dataset.py

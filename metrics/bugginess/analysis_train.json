@@ -10,7 +10,7 @@
         "bug_issue_body_keyword_correct": 0.01741328329627182,
         "bug_issue_body_keyword_corrupt": 0.000612600271087679,
         "bug_issue_body_keyword_crash": 0.005836585259969225,
-        "bug_issue_body_keyword_dead|lock": 0.0002460048332714302,
+        "bug_issue_body_keyword_deadlock": 0.0002460048332714302,
         "bug_issue_body_keyword_defect": 0.0003087119476347359,
         "bug_issue_body_keyword_disabl": 0.006236946067058023,
         "bug_issue_body_keyword_endless": 0.00015917959799916068,
@@ -62,7 +62,7 @@
         "bug_message_keyword_correct": 0.011788937500301477,
         "bug_message_keyword_corrupt": 0.0004003608070887981,
         "bug_message_keyword_crash": 0.0033283006854369964,
-        "bug_message_keyword_dead|lock": 0.00030388832345294313,
+        "bug_message_keyword_deadlock": 0.00030388832345294313,
         "bug_message_keyword_defect": 0.00030388832345294313,
         "bug_message_keyword_disabl": 0.005855879756696396,
         "bug_message_keyword_endless": 0.00012541422872661145,
@@ -183,7 +183,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 7.717798690868398e-05,
         "bugless_issue_body_keyword_simplifi": 0.0015001471205375446,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.001644855845991327,
         "bugless_issue_body_keyword_stat": 0.0014712053754467882,
         "bugless_issue_body_keyword_statist": 0.0004823624181792748,
@@ -286,7 +286,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00010611973199944046,
         "bugless_message_keyword_simplifi": 0.001876389806717379,
-        "bugless_message_keyword_speedup": 7.717798690868398e-05,
+        "bugless_message_keyword_speed|up": 7.717798690868398e-05,
         "bugless_message_keyword_stage": 0.000979195708903928,
         "bugless_message_keyword_stat": 0.0008586051043591092,
         "bugless_message_keyword_statist": 0.00034730094108907785,
@@ -317,7 +317,7 @@
         "bug_issue_body_keyword_correct": 0.018537187730629533,
         "bug_issue_body_keyword_corrupt": 0.0006560128887238137,
         "bug_issue_body_keyword_crash": 0.006454009155238697,
-        "bug_issue_body_keyword_dead|lock": 0.00027494657836218663,
+        "bug_issue_body_keyword_deadlock": 0.00027494657836218663,
         "bug_issue_body_keyword_defect": 0.00034730094108907785,
         "bug_issue_body_keyword_disabl": 0.006589070632328894,
         "bug_issue_body_keyword_endless": 0.00017847409472633168,
@@ -369,7 +369,7 @@
         "bug_message_keyword_correct": 0.0166270325546396,
         "bug_message_keyword_corrupt": 0.0005402459083607878,
         "bug_message_keyword_crash": 0.0045438539792487685,
-        "bug_message_keyword_dead|lock": 0.00034247731690728513,
+        "bug_message_keyword_deadlock": 0.00034247731690728513,
         "bug_message_keyword_defect": 0.0005450695325425806,
         "bug_message_keyword_disabl": 0.008007216141775962,
         "bug_message_keyword_endless": 0.00016882684636274618,
@@ -490,7 +490,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 8.682523527226946e-05,
         "bugless_issue_body_keyword_simplifi": 0.001606266852536985,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.0016930920878092547,
         "bugless_issue_body_keyword_stat": 0.0015242652414465085,
         "bugless_issue_body_keyword_statist": 0.000535422284178995,
@@ -593,7 +593,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00018812134308991718,
         "bugless_message_keyword_simplifi": 0.003473009410890779,
-        "bugless_message_keyword_speedup": 0.00011576698036302595,
+        "bugless_message_keyword_speed|up": 0.00011576698036302595,
         "bugless_message_keyword_stage": 0.001553206986537265,
         "bugless_message_keyword_stat": 0.0018715661825355863,
         "bugless_message_keyword_statist": 0.0005498931567243733,
@@ -624,7 +624,7 @@
         "bug_issue_body_keyword_correct": 0.01851789323390236,
         "bug_issue_body_keyword_corrupt": 0.0006560128887238137,
         "bug_issue_body_keyword_crash": 0.00642506741014794,
-        "bug_issue_body_keyword_dead|lock": 0.00027494657836218663,
+        "bug_issue_body_keyword_deadlock": 0.00027494657836218663,
         "bug_issue_body_keyword_defect": 0.00034730094108907785,
         "bug_issue_body_keyword_disabl": 0.006584247008147102,
         "bug_issue_body_keyword_endless": 0.00017365047054453893,
@@ -676,7 +676,7 @@
         "bug_message_keyword_correct": 0.014519108787196172,
         "bug_message_keyword_corrupt": 0.000516127787451824,
         "bug_message_keyword_crash": 0.004413616126340365,
-        "bug_message_keyword_dead|lock": 0.00033765369272549235,
+        "bug_message_keyword_deadlock": 0.00033765369272549235,
         "bug_message_keyword_defect": 0.0005305986599972023,
         "bug_message_keyword_disabl": 0.006868840834872873,
         "bug_message_keyword_endless": 0.00015917959799916068,
@@ -797,7 +797,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 8.682523527226946e-05,
         "bugless_issue_body_keyword_simplifi": 0.0015966196041733995,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.0016930920878092547,
         "bugless_issue_body_keyword_stat": 0.0015242652414465085,
         "bugless_issue_body_keyword_statist": 0.0005305986599972023,
@@ -900,7 +900,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00015917959799916068,
         "bugless_message_keyword_simplifi": 0.0027542894078036594,
-        "bugless_message_keyword_speedup": 0.00011094335618123321,
+        "bugless_message_keyword_speed|up": 0.00011094335618123321,
         "bugless_message_keyword_stage": 0.0014422636303560317,
         "bugless_message_keyword_stat": 0.0014326163819924462,
         "bugless_message_keyword_statist": 0.0005113041632700313,
@@ -951,7 +951,7 @@
         "bug_issue_body_keyword_crash": [
             1
         ],
-        "bug_issue_body_keyword_dead|lock": [
+        "bug_issue_body_keyword_deadlock": [
             1
         ],
         "bug_issue_body_keyword_defect": [
@@ -1097,7 +1097,7 @@
         "bug_message_keyword_crash": [
             1
         ],
-        "bug_message_keyword_dead|lock": [
+        "bug_message_keyword_deadlock": [
             1
         ],
         "bug_message_keyword_defect": [
@@ -1426,7 +1426,7 @@
         "bugless_issue_body_keyword_simplifi": [
             0
         ],
-        "bugless_issue_body_keyword_speedup": [
+        "bugless_issue_body_keyword_speed|up": [
             0
         ],
         "bugless_issue_body_keyword_stage": [
@@ -1701,7 +1701,7 @@
         "bugless_message_keyword_simplifi": [
             0
         ],
-        "bugless_message_keyword_speedup": [
+        "bugless_message_keyword_speed|up": [
             0
         ],
         "bugless_message_keyword_stage": [

@@ -36,7 +36,7 @@ bug_issue_body_keyword_mistak,33,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_npe,34,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_not|work,35,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_not|return,36,[],0.0,0.0,0.0,0,0,0.0
-bug_issue_body_keyword_of|bound,37,[],0.0,0.0,0.0,0,0,0.0
+bug_issue_body_keyword_outofbound,37,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_patch,38,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_prevent,39,[],0.0,0.0,0.0,0,0,0.0
 bug_issue_body_keyword_problem,40,[],0.0,0.0,0.0,0,0,0.0
@@ -88,7 +88,7 @@ bug_message_keyword_mistak,85,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_npe,86,[1],0.012466436517069428,0.012466436517069428,0.012466436517069428,60,5,0.9230769230769231
 bug_message_keyword_not|work,87,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_not|return,88,[],0.0,0.0,0.0,0,0,0.0
-bug_message_keyword_of|bound,89,[],0.0,0.0,0.0,0,0,0.0
+bug_message_keyword_outofbound,89,[],0.0,0.0,0.0,0,0,0.0
 bug_message_keyword_patch,90,[1],0.07115458381281166,0.07115458381281166,0.07115458381281166,212,159,0.5714285714285714
 bug_message_keyword_prevent,91,[1],0.009397775220560031,0.009397775220560031,0.009397775220560031,39,10,0.7959183673469388
 bug_message_keyword_problem,92,[1],0.012082853855005753,0.012082853855005753,0.012082853855005753,58,5,0.9206349206349207
@@ -185,7 +185,7 @@ bugless_issue_body_keyword_rid,182,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_set|up,183,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_simplif,184,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_simplifi,185,[],0.0,0.0,0.0,0,0,0.0
-bugless_issue_body_keyword_speed|up,186,[],0.0,0.0,0.0,0,0,0.0
+bugless_issue_body_keyword_speedup,186,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_stage,187,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_stat,188,[],0.0,0.0,0.0,0,0,0.0
 bugless_issue_body_keyword_statist,189,[],0.0,0.0,0.0,0,0,0.0
@@ -288,7 +288,7 @@ bugless_message_keyword_rid,285,[0],0.0007671653241273494,0.0007671653241273494,
 bugless_message_keyword_set|up,286,[],0.0,0.0,0.0,0,0,0.0
 bugless_message_keyword_simplif,287,[0],0.0005753739930955121,0.0005753739930955121,0.0,2,1,0.6666666666666666
 bugless_message_keyword_simplifi,288,[0],0.004027617951668585,0.004027617951668585,0.0019179133103183737,11,10,0.5238095238095238
-bugless_message_keyword_speed|up,289,[0],0.002109704641350211,0.002109704641350211,0.00019179133103183735,8,3,0.7272727272727273
+bugless_message_keyword_speedup,289,[0],0.002109704641350211,0.002109704641350211,0.00019179133103183735,8,3,0.7272727272727273
 bugless_message_keyword_stage,290,[0],0.0003835826620636747,0.0003835826620636747,0.0,2,0,1.0
 bugless_message_keyword_stat,291,[0],0.0023014959723820483,0.0023014959723820483,0.00019179133103183735,6,6,0.5
 bugless_message_keyword_statist,292,[0],0.0005753739930955121,0.0005753739930955121,0.0003835826620636747,3,0,1.0

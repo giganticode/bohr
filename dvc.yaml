@@ -1,4 +1,15 @@
 stages:
+  parse_labels:
+    cmd: python bohr/pipeline/parse_labels.py
+    deps:
+    - bohr/pipeline/parse_labels.py
+    - bohr/resources/labels.template
+    - bohr/labels
+    outs:
+    - bohr/labels.py:
+        cache: false
+    - bohr/labels_dict.json:
+        cache: false
   extract_train_data:
     cmd: 7z x downloaded-data/sample.7z -odata
     deps:
@@ -22,6 +33,7 @@ stages:
       - TEST_SETS
       - PROFILE
       - TASK
+      - LABEL_CATEGORIES
     outs:
     - generated/bugginess/heuristic_matrix_train.pkl
     - generated/bugginess/heuristic_matrix_herzig.pkl
@@ -60,6 +72,7 @@ stages:
       - bohr/params.py:
         - TEST_SETS
         - TASK
+        - LABEL_CATEGORIES
     outs:
     - generated/bugginess/label_model.pkl
     metrics:
@@ -78,5 +91,6 @@ stages:
           - TASK
           - LABELED_DATASET_OUTPUT_PATH
           - LABEL_DATASET_DEBUG
+          - LABEL_CATEGORIES
     outs:
       - labeled_with_model2.csv

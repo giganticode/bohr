@@ -7,7 +7,7 @@ from snorkel.labeling import LabelingFunction, labeling_function
 
 from bohr import HEURISTIC_DIR
 from bohr.labels import Label
-from bohr.snorkel_utils import CommitLabelingFunction
+from bohr.snorkel_utils import CommitLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = '|'
 
@@ -47,6 +47,6 @@ class keyword_labeling_functions(labeling_function):
             name_elem = first_keyword if isinstance(first_keyword, str) else '|'.join(first_keyword)
             name = self.name_pattern.replace('%1', name_elem)
             resources = dict(keywords=keyword_group)
-            labeling_function = CommitLabelingFunction(name=name, f=lambda c, keywords: f(c, keywords).value, resources=resources)
+            labeling_function = CommitLabelingFunction(name=name, f=lambda c, keywords: to_snorkel_label(f(c, keywords)), resources=resources)
             function_list.append(labeling_function)
         return function_list

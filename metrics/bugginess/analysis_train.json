@@ -183,7 +183,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 7.717798690868398e-05,
         "bugless_issue_body_keyword_simplifi": 0.0015001471205375446,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.001644855845991327,
         "bugless_issue_body_keyword_stat": 0.0014712053754467882,
         "bugless_issue_body_keyword_statist": 0.0004823624181792748,
@@ -286,7 +286,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00010611973199944046,
         "bugless_message_keyword_simplifi": 0.001876389806717379,
-        "bugless_message_keyword_speedup": 7.717798690868398e-05,
+        "bugless_message_keyword_speed|up": 7.717798690868398e-05,
         "bugless_message_keyword_stage": 0.000979195708903928,
         "bugless_message_keyword_stat": 0.0008586051043591092,
         "bugless_message_keyword_statist": 0.00034730094108907785,
@@ -490,7 +490,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 8.682523527226946e-05,
         "bugless_issue_body_keyword_simplifi": 0.001606266852536985,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.0016930920878092547,
         "bugless_issue_body_keyword_stat": 0.0015242652414465085,
         "bugless_issue_body_keyword_statist": 0.000535422284178995,
@@ -593,7 +593,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00018812134308991718,
         "bugless_message_keyword_simplifi": 0.003473009410890779,
-        "bugless_message_keyword_speedup": 0.00011576698036302595,
+        "bugless_message_keyword_speed|up": 0.00011576698036302595,
         "bugless_message_keyword_stage": 0.001553206986537265,
         "bugless_message_keyword_stat": 0.0018715661825355863,
         "bugless_message_keyword_statist": 0.0005498931567243733,
@@ -797,7 +797,7 @@
         "bugless_issue_body_keyword_set|up": 0.0,
         "bugless_issue_body_keyword_simplif": 8.682523527226946e-05,
         "bugless_issue_body_keyword_simplifi": 0.0015966196041733995,
-        "bugless_issue_body_keyword_speedup": 3.376536927254924e-05,
+        "bugless_issue_body_keyword_speed|up": 3.376536927254924e-05,
         "bugless_issue_body_keyword_stage": 0.0016930920878092547,
         "bugless_issue_body_keyword_stat": 0.0015242652414465085,
         "bugless_issue_body_keyword_statist": 0.0005305986599972023,
@@ -900,7 +900,7 @@
         "bugless_message_keyword_set|up": 0.0,
         "bugless_message_keyword_simplif": 0.00015917959799916068,
         "bugless_message_keyword_simplifi": 0.0027542894078036594,
-        "bugless_message_keyword_speedup": 0.00011094335618123321,
+        "bugless_message_keyword_speed|up": 0.00011094335618123321,
         "bugless_message_keyword_stage": 0.0014422636303560317,
         "bugless_message_keyword_stat": 0.0014326163819924462,
         "bugless_message_keyword_statist": 0.0005113041632700313,
@@ -1426,7 +1426,7 @@
         "bugless_issue_body_keyword_simplifi": [
             0
         ],
-        "bugless_issue_body_keyword_speedup": [
+        "bugless_issue_body_keyword_speed|up": [
             0
         ],
         "bugless_issue_body_keyword_stage": [
@@ -1701,7 +1701,7 @@
         "bugless_message_keyword_simplifi": [
             0
         ],
-        "bugless_message_keyword_speedup": [
+        "bugless_message_keyword_speed|up": [
             0
         ],
         "bugless_message_keyword_stage": [

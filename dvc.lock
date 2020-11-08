@@ -1,55 +1,3 @@
-apply_heuristics:
-  cmd: python bohr/pipeline/apply_heuristics.py
-  deps:
-  - path: bohr/heuristics
-    md5: a18ce36445669159271ca76bcdc3fa98.dir
-  - path: bohr/pipeline/apply_heuristics.py
-    md5: 3fcbf8600918efe9a836cbe0b4e511be
-  - path: data/test
-    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
-  - path: data/train
-    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
-  outs:
-  - path: generated/bugginess/analysis_1151_commits.csv
-    md5: 19fc7a968297cd2b8f468ce5839716ad
-  - path: generated/bugginess/analysis_berger.csv
-    md5: e2bfa560578478188d41c384aa24e3ca
-  - path: generated/bugginess/analysis_herzig.csv
-    md5: d781aa2da5fbc2993e095e6a893188c2
-  - path: generated/bugginess/analysis_train.csv
-    md5: 1981586a416e5126a9bf0c6fd0e17204
-  - path: generated/bugginess/heuristic_matrix_1151_commits.pkl
-    md5: 3adb1251612267e002f98debcb9ed6ba
-  - path: generated/bugginess/heuristic_matrix_berger.pkl
-    md5: 657c18094045cbca41fc2f039c6c1c9a
-  - path: generated/bugginess/heuristic_matrix_herzig.pkl
-    md5: 68de235b1d88fdf0b54f92abf072eded
-  - path: generated/bugginess/heuristic_matrix_train.pkl
-    md5: c2bfdb04a822aea324bca24d9783e0c5
-  - path: heuristic_metrics.json
-    md5: c3156e066c55a6a1babbecf838eb3c56
-train_label_model:
-  cmd: python bohr/pipeline/train_label_model.py
-  deps:
-  - path: bohr/pipeline/train_label_model.py
-    md5: ef9df4cb16d04f5f4e85ef4006d159d7
-  - path: data/test
-    md5: be0eacd103c0db6020f05c1d3ccd21ee.dir
-  - path: data/train
-    md5: 452519dc55f09b240e8d65ad6a6ccd21.dir
-  - path: generated/bugginess/heuristic_matrix_1151_commits.pkl
-    md5: 3adb1251612267e002f98debcb9ed6ba
-  - path: generated/bugginess/heuristic_matrix_berger.pkl
-    md5: 657c18094045cbca41fc2f039c6c1c9a
-  - path: generated/bugginess/heuristic_matrix_herzig.pkl
-    md5: 68de235b1d88fdf0b54f92abf072eded
-  - path: generated/bugginess/heuristic_matrix_train.pkl
-    md5: c2bfdb04a822aea324bca24d9783e0c5
-  outs:
-  - path: generated/bugginess/label_model.pkl
-    md5: 61b88ce245d3b350b9dd776930b91a0e
-  - path: label_model_metrics.json
-    md5: 7763c6811109997f24c65aba84002476
 extract_train_data:
   cmd: 7z x downloaded-data/sample.7z -odata
   deps:
@@ -84,13 +32,13 @@ apply_heuristics_message:
       - 1151-commits
   outs:
   - path: generated/bugginess/analysis_1151-commits.csv
-    md5: 2020b1900d6ad2f198e6581a12ddc57f
+    md5: 9d5c1fd2850ea0d2b4396855750cf681
   - path: generated/bugginess/analysis_berger.csv
-    md5: 0a281e2193be069bc67614759c5db842
+    md5: 1e6a7e10b8d6b50c3c2a21fbd1f8e3e9
   - path: generated/bugginess/analysis_herzig.csv
-    md5: b73727759a7c53b73966f553037f7c23
+    md5: 8e69d6e21ed94bf4dfd1ea99bd7ccc09
   - path: generated/bugginess/analysis_train.csv
-    md5: 7a64fd1bd1c46b0526b648fcae186af9
+    md5: 774e79e6b0ef68d7cb743b608f8d5eb2
   - path: generated/bugginess/heuristic_matrix_1151-commits.pkl
     md5: 354f1bf3ec79164aa7060e58aced4f4c
   - path: generated/bugginess/heuristic_matrix_berger.pkl
@@ -100,13 +48,13 @@ apply_heuristics_message:
   - path: generated/bugginess/heuristic_matrix_train.pkl
     md5: 926fc79b368e5c8d6fac72b85382659b
   - path: metrics/bugginess/analysis_1151-commits.json
-    md5: 7c0b4a35674a6f3c3488324865615f8d
+    md5: 767cf48ba96bb49f49856ea90e0723a3
   - path: metrics/bugginess/analysis_berger.json
-    md5: 957f1173b23bd30234ccfdd1f830d6b1
+    md5: 0887bd14f86bfcd02ff35db64d113d62
   - path: metrics/bugginess/analysis_herzig.json
-    md5: 1a969848d87a549e4339f7d02bde96dc
+    md5: ee1b1ea5d0356a2f39d9ce11edbb126d
   - path: metrics/bugginess/analysis_train.json
-    md5: 549f196472b5e0bf15c5e682311439c3
+    md5: c370abd12d15c4ff75bfce0e0db20525
   - path: metrics/bugginess/heuristic_metrics.json
     md5: c5c2c20ed8bc5048bb210f82352ce44f
 train_label_model_message:
@@ -135,7 +83,7 @@ train_label_model_message:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 55b450f52dd59eec868051a9208265ae
+    md5: 02a63bea9628c4f0d485868f602ed0a6
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893
 label_dataset_message_issues:
@@ -156,4 +104,4 @@ label_dataset_message_issues:
       TASK: bugginess
   outs:
   - path: labeled_with_model2.csv
-    md5: 2be09a297ba6e985db7bc52e657f9b09
+    md5: 36772c701e6d6f54dcf6d02985ea6646

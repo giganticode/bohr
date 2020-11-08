@@ -7,6 +7,7 @@ import dask.dataframe as dd
 import numpy as np
 import pandas as pd
 from dask.diagnostics import ProgressBar
+from numpyencoder import NumpyEncoder
 from snorkel.labeling import PandasLFApplier, LFAnalysis
 from snorkel.labeling.apply.dask import PandasParallelLFApplier
 from snorkel.labeling.model import MajorityLabelVoter
@@ -41,7 +42,7 @@ def apply_lfs_to_train_set(lfs: List, save_generated_to: Path, save_metrics_to: 
     analysis_dict = lf_analysis_summary.to_dict()
     del analysis_dict['j']
     with open(save_metrics_to / 'analysis_train.json', 'w') as f:
-        f.write(pformat(analysis_dict))
+        json.dump(analysis_dict, f, indent=4, sort_keys=True, cls=NumpyEncoder)
     coverage_train = sum((applied_lf_matrix != -1).any(axis=1)) / len(applied_lf_matrix)
     return {'n_labeling_functions': len(lfs), 'coverage_train': coverage_train}
 
@@ -56,7 +57,7 @@ def apply_lfs_to_test_set(lfs: List, test_set: str, save_generated_to: Path, sav
     analysis_dict = lf_analysis_summary.to_dict()
     del analysis_dict['j']
     with open(save_metrics_to / f'analysis_{test_set}.json', 'w') as f:
-        f.write(pformat(analysis_dict))
+        json.dump(analysis_dict, f, indent=4, sort_keys=True, cls=NumpyEncoder)
     coverage = sum((L != -1).any(axis=1)) / len(L)
     majority_accuracy = majority_acc(L, df)
     return {f'coverage_{test_set}': coverage, f'majority_accuracy_{test_set}': majority_accuracy}

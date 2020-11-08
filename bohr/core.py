@@ -43,7 +43,7 @@ class keyword_labeling_functions(labeling_function):
         for keyword_group in self.keyword_list:
             def to_tuple_or_str(lst: List[str]): return lst[0] if len(lst) == 1 else tuple(lst)
             keywords = {to_tuple_or_str(kw.split(' ')) for kw in keyword_group}
-            first_keyword = sorted(keywords, key=lambda x: "".join(x))[0]
+            first_keyword = sorted(keywords, key=lambda x: " ".join(x))[0]
             name_elem = first_keyword if isinstance(first_keyword, str) else '|'.join(first_keyword)
             name = self.name_pattern.replace('%1', name_elem)
             resources = dict(keywords=keyword_group)

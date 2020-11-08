@@ -26,6 +26,7 @@ munkres==1.1.2
 networkx==2.3
 nltk==3.5
 numpy==1.19.0
+numpyencoder==0.3.0
 pandas==0.25.3
 partd==1.1.0
 Pillow==7.2.0

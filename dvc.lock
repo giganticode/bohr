@@ -62,7 +62,7 @@ apply_heuristics_message:
   cmd: python bohr/pipeline/apply_heuristics.py
   deps:
   - path: bohr/heuristics/bugginess.py
-    md5: 9133a76ac29ae6ab2888dd44c9ffcc64
+    md5: a3d3c1d5bdfd8305d14ccf715f1ff7e5
   - path: bohr/heuristics/keywords
     md5: b4e7587c1b8e4e1461685a305d48bd66.dir
   - path: bohr/pipeline/apply_heuristics.py
@@ -74,9 +74,6 @@ apply_heuristics_message:
   params:
     bohr/params.py:
       COMMITS_FILE: data/train/bug_sample.csv
-      LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
       N_PARALLEL: 1
       N_ROWS:
       PROFILE: false
@@ -87,13 +84,13 @@ apply_heuristics_message:
       - 1151-commits
   outs:
   - path: generated/bugginess/analysis_1151-commits.csv
-    md5: e65953ee630cd49f5472916ad58c6b44
+    md5: ba4f11accd4a5d88ca808d7ba0a9397e
   - path: generated/bugginess/analysis_berger.csv
-    md5: 3de24465525d33767f7b3ef53e545cd7
+    md5: 5c44eb45ba9f76fb31923365cd05b08f
   - path: generated/bugginess/analysis_herzig.csv
-    md5: 11aaa7a4217ee1607bca483455fb5684
+    md5: 8c90a9b4e5b372bcb12e4009783b2490
   - path: generated/bugginess/analysis_train.csv
-    md5: 684eae2e526d2c2538b947db72573e74
+    md5: b87f2756893d543b289988e0065c8ca6
   - path: generated/bugginess/heuristic_matrix_1151-commits.pkl
     md5: bc61ea311c9e4bf98a52c6f867823c14
   - path: generated/bugginess/heuristic_matrix_berger.pkl
@@ -103,13 +100,13 @@ apply_heuristics_message:
   - path: generated/bugginess/heuristic_matrix_train.pkl
     md5: f06bdbd568034153d6a1a3510429dbc4
   - path: metrics/bugginess/analysis_1151-commits.json
-    md5: 442e92ff2bf5f4e465ae0006fe436efa
+    md5: 99181344d9ccd78e92f426cea29f7904
   - path: metrics/bugginess/analysis_berger.json
-    md5: 6c36467b26a502a5fb2f2692f5f1ed66
+    md5: 79d80ec615bbc595e16b079839c7d57f
   - path: metrics/bugginess/analysis_herzig.json
-    md5: 7b490340778b59f2cc782c7cc670b93c
+    md5: 4b9b289c696d5addfbd467bc875840e4
   - path: metrics/bugginess/analysis_train.json
-    md5: 2f9f89d7fd1ddeaaa51ce17708db0b09
+    md5: 06f9e95989d35d7506d742c9e6052aff
   - path: metrics/bugginess/heuristic_metrics.json
     md5: 63662debf70ab37351fa5dcbaf4f2544
 train_label_model_message:
@@ -131,9 +128,6 @@ train_label_model_message:
     md5: f06bdbd568034153d6a1a3510429dbc4
   params:
     bohr/params.py:
-      LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
       TASK: bugginess
       TEST_SETS:
       - herzig
@@ -141,7 +135,7 @@ train_label_model_message:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 2fabcb44cb3a2c026dda8944cd8d17a9
+    md5: 61d2c3c745d65df396a1a3a2f84dc2bc
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893
 label_dataset_message_issues:
@@ -157,26 +151,9 @@ label_dataset_message_issues:
     bohr/params.py:
       COMMITS_FILE: data/train/bug_sample.csv
       LABELED_DATASET_OUTPUT_PATH: labeled_with_model2.csv
-      LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
       LABEL_DATASET_DEBUG: true
       N_ROWS:
       TASK: bugginess
   outs:
   - path: labeled_with_model2.csv
-    md5: a53ef53063f5b0ea22292ad7693b47f2
-parse_labels:
-  cmd: python bohr/pipeline/parse_labels.py
-  deps:
-  - path: bohr/labels
-    md5: 79323c548f2c726728cccdc9bd56d4d6.dir
-  - path: bohr/pipeline/parse_labels.py
-    md5: d1d8a1696adf6b2a6cb4399da0ba0c55
-  - path: bohr/resources/labels.template
-    md5: d6c63bfb0142fd60f10c18fa8b387467
-  outs:
-  - path: bohr/labels.py
-    md5: 84de977f7bee2587cc8e71e3746c03ed
-  - path: bohr/labels_dict.json
-    md5: 1e110aec6550fadc1847f6a2f48e103b
+    md5: ef948cb7f8ac569cdc0606543ae7da7c

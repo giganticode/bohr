@@ -1,1 +1,0 @@
-{"TangledCommit": "Label", "NonTangledCommit": "Label", "Bugless": "Label", "Minor": "Label", "Major": "Label", "Critical": "Label", "BugFix": "Label", "NonBugFix": "Label", "BogusFix": "NonBugFix", "DocFix": "BogusFix", "TestFix": "BogusFix"}

@@ -10,6 +10,7 @@
         "bug_issue_body_keyword_correct": 0.01741328329627182,
         "bug_issue_body_keyword_corrupt": 0.000612600271087679,
         "bug_issue_body_keyword_crash": 0.005836585259969225,
+        "bug_issue_body_keyword_critical": 0.0,
         "bug_issue_body_keyword_deadlock": 0.0002460048332714302,
         "bug_issue_body_keyword_defect": 0.0003087119476347359,
         "bug_issue_body_keyword_disabl": 0.006236946067058023,
@@ -62,6 +63,7 @@
         "bug_message_keyword_correct": 0.011788937500301477,
         "bug_message_keyword_corrupt": 0.0004003608070887981,
         "bug_message_keyword_crash": 0.0033283006854369964,
+        "bug_message_keyword_critical": 0.0,
         "bug_message_keyword_deadlock": 0.00030388832345294313,
         "bug_message_keyword_defect": 0.00030388832345294313,
         "bug_message_keyword_disabl": 0.005855879756696396,
@@ -317,6 +319,7 @@
         "bug_issue_body_keyword_correct": 0.018537187730629533,
         "bug_issue_body_keyword_corrupt": 0.0006560128887238137,
         "bug_issue_body_keyword_crash": 0.006454009155238697,
+        "bug_issue_body_keyword_critical": 0.0,
         "bug_issue_body_keyword_deadlock": 0.00027494657836218663,
         "bug_issue_body_keyword_defect": 0.00034730094108907785,
         "bug_issue_body_keyword_disabl": 0.006589070632328894,
@@ -369,6 +372,7 @@
         "bug_message_keyword_correct": 0.0166270325546396,
         "bug_message_keyword_corrupt": 0.0005402459083607878,
         "bug_message_keyword_crash": 0.0045438539792487685,
+        "bug_message_keyword_critical": 0.0,
         "bug_message_keyword_deadlock": 0.00034247731690728513,
         "bug_message_keyword_defect": 0.0005450695325425806,
         "bug_message_keyword_disabl": 0.008007216141775962,
@@ -624,6 +628,7 @@
         "bug_issue_body_keyword_correct": 0.01851789323390236,
         "bug_issue_body_keyword_corrupt": 0.0006560128887238137,
         "bug_issue_body_keyword_crash": 0.00642506741014794,
+        "bug_issue_body_keyword_critical": 0.0,
         "bug_issue_body_keyword_deadlock": 0.00027494657836218663,
         "bug_issue_body_keyword_defect": 0.00034730094108907785,
         "bug_issue_body_keyword_disabl": 0.006584247008147102,
@@ -676,6 +681,7 @@
         "bug_message_keyword_correct": 0.014519108787196172,
         "bug_message_keyword_corrupt": 0.000516127787451824,
         "bug_message_keyword_crash": 0.004413616126340365,
+        "bug_message_keyword_critical": 0.0,
         "bug_message_keyword_deadlock": 0.00033765369272549235,
         "bug_message_keyword_defect": 0.0005305986599972023,
         "bug_message_keyword_disabl": 0.006868840834872873,
@@ -951,6 +957,7 @@
         "bug_issue_body_keyword_crash": [
             1
         ],
+        "bug_issue_body_keyword_critical": [],
         "bug_issue_body_keyword_deadlock": [
             1
         ],
@@ -1097,6 +1104,7 @@
         "bug_message_keyword_crash": [
             1
         ],
+        "bug_message_keyword_critical": [],
         "bug_message_keyword_deadlock": [
             1
         ],

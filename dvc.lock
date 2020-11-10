@@ -234,7 +234,7 @@ train_label_model_bugginess:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 7b7838ba7df9f7085ba172e452b5abec
+    md5: 0d8c86282cdb6a59f5a2f367aea6f538
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893
 label_dataset_bugginess:

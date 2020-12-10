@@ -1,60 +1,51 @@
 # This is automatically generated code. Do not edit manually.
-class Label(object):
-    pass
+
+from enum import auto
+from bohr.pipeline.labels.labelset import Label
+
+
+class CommitLabel(Label):
+    MinorBugFix = auto() 
+    MajorBugFix = auto() 
+    CriticalBugFix = auto() 
+    OtherSeverityLevelBugFix = auto() 
+    BugFix = MinorBugFix | MajorBugFix | CriticalBugFix | OtherSeverityLevelBugFix
+    DocFix = auto() 
+    TestFix = auto() 
+    BogusFix = DocFix | TestFix
+    NonBugFix = BogusFix
+    Commit = BugFix | NonBugFix
+    Label = Commit
+
+    def parent(self):
+        return None
+
+
+class SStuBBugFix(Label):
+    WrongIdentifier = auto() 
+    WrongNumericLiteral = auto() 
+    WrongModifier = auto() 
+    WrongBooleanLiteral = auto() 
+    WrongFunctionName = auto() 
+    TooFewArguments = auto() 
+    TooManyArguments = auto() 
+    WrongFunction = WrongFunctionName | TooFewArguments | TooManyArguments
+    WrongBinaryOperator = auto() 
+    WrongUnaryOperator = auto() 
+    WrongOperator = WrongBinaryOperator | WrongUnaryOperator
+    MissingThrowsException = auto() 
+    SStuB = WrongIdentifier | WrongNumericLiteral | WrongModifier | WrongBooleanLiteral | WrongFunction | WrongOperator | MissingThrowsException
+    BugFix = SStuB
+
+    def parent(self):
+        return CommitLabel.BugFix 
 
 
 class TangledCommit(Label):
-    pass
+    Tangled = auto() 
+    NonTangled = auto() 
+    Commit = Tangled | NonTangled
 
+    def parent(self):
+        return CommitLabel.Commit 
 
-class NonTangledCommit(Label):
-    pass
-
-
-class Bugless(Label):
-    pass
-
-
-class Minor(Label):
-    pass
-
-
-class Major(Label):
-    pass
-
-
-class Critical(Label):
-    pass
-
-
-class BugFix(Label):
-    pass
-
-
-class NonBugFix(Label):
-    pass
-
-
-class BogusFix(NonBugFix):
-    pass
-
-
-class DocFix(BogusFix):
-    pass
-
-
-class TestFix(BogusFix):
-    pass
-
-
-TangledCommit = TangledCommit()
-NonTangledCommit = NonTangledCommit()
-Bugless = Bugless()
-Minor = Minor()
-Major = Major()
-Critical = Critical()
-BugFix = BugFix()
-NonBugFix = NonBugFix()
-BogusFix = BogusFix()
-DocFix = DocFix()
-TestFix = TestFix()

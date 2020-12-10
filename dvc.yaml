@@ -8,8 +8,6 @@ stages:
     outs:
     - bohr/labels.py:
         cache: false
-    - bohr/labels_dict.json:
-        cache: false
   extract_train_data:
     cmd: 7z x downloaded-data/sample.7z -odata
     deps:
@@ -20,6 +18,7 @@ stages:
   apply_heuristics_bugginess:
     cmd: python bohr/pipeline/apply_heuristics.py
     deps:
+    - bohr/labels.py
     - bohr/heuristics/keywords
     - bohr/heuristics/bugginess.py
     - bohr/pipeline/apply_heuristics.py

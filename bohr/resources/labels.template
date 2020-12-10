@@ -1,11 +1,13 @@
 # This is automatically generated code. Do not edit manually.
-class Label(object):
-    pass
 
-{% for clazz in classes %}
-class {{clazz.name}}({{clazz.parent}}):
-    pass
+from enum import auto
+from bohr.pipeline.labels.labelset import Label
 
-{% endfor %}
-{% for clazz in classes %}{{clazz.name}} = {{clazz.name}}()
+{% for hierarchy in hierarchies %}
+class {{hierarchy.name}}(Label):{% for row in hierarchy.nodes %}
+    {{row[0]}} ={% if row[1] %}{% for r in row[1][:-1] %} {{r}} |{% endfor %} {{row[1][-1]}}{% else %} auto() {% endif %}{% endfor %}
+
+    def parent(self):
+        return {% if hierarchy.parent_hierarchy %}{{hierarchy.parent_hierarchy.name}}.{{hierarchy.parent_hierarchy.mount_point}} {% else %}None{% endif %}
+
 {% endfor %}

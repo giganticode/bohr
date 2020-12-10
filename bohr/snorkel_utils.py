@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Callable, Mapping, Any, List
 
 from cachetools import LRUCache
@@ -6,14 +7,18 @@ from snorkel.map import BaseMapper
 from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
-from bohr import PROJECT_DIR
 from bohr.artifacts.commits import Commit
-from bohr.labels import Label
-from bohr.params import LABEL_CATEGORIES
-from bohr.pipeline.parse_labels import FlattenedLabelHierarchy
+from bohr.pipeline.labels.cache import CategoryMappingCache
 
-flattened_label_hierarchy = FlattenedLabelHierarchy.load(PROJECT_DIR / 'bohr' / 'labels_dict.json')
-bohr_to_snorkel_labels_map = flattened_label_hierarchy.get_category_map(LABEL_CATEGORIES)
+from bohr.pipeline.labels.labelset import LabelSet, Label
+
+logger = logging.getLogger(__name__)
+
+
+category_mapping_cache = CategoryMappingCache(maxsize=10000)
+
+
+
 
 
 class CommitMapper(BaseMapper):
@@ -48,14 +53,13 @@ class CommitLabelingFunction(LabelingFunction):
         super().__init__(name, f, resources, pre=pre)
 
 
-def to_snorkel_label(label: Label) -> int:
-    if label is None:
+def to_snorkel_label(labels) -> int:
+    if labels is None:
         return -1
-    snorkel_label = bohr_to_snorkel_labels_map[type(label).__name__]
-    if snorkel_label == 'Label':
-        return len(LABEL_CATEGORIES)
+    label_set = labels if isinstance(labels, LabelSet) else LabelSet.of(labels)
+    snorkel_label = category_mapping_cache[label_set]
+    return snorkel_label
 
-    return LABEL_CATEGORIES.index(snorkel_label)
 
 
 class commit_lf(labeling_function):

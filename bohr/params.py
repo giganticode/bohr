@@ -12,4 +12,4 @@ TEST_SETS = ['herzig', 'berger', '1151-commits']
 LABEL_DATASET_DEBUG = True
 LABELED_DATASET_OUTPUT_PATH = 'labeled_with_model2.csv'
 
-LABEL_CATEGORIES = ['NonBugFix', 'BugFix']
+LABEL_CATEGORIES = ['CommitLabel.NonBugFix', 'CommitLabel.BugFix']

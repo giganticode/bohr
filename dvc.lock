@@ -161,23 +161,23 @@ parse_labels:
   cmd: python bohr/pipeline/parse_labels.py
   deps:
   - path: bohr/labels
-    md5: 79323c548f2c726728cccdc9bd56d4d6.dir
+    md5: b4333938b83cf820c16e9ad32e045c48.dir
   - path: bohr/pipeline/parse_labels.py
-    md5: d1d8a1696adf6b2a6cb4399da0ba0c55
+    md5: 332b17e4278089635ce489d100464015
   - path: bohr/resources/labels.template
-    md5: d6c63bfb0142fd60f10c18fa8b387467
+    md5: 869534ff93a412d25eb51bc2ab0a103a
   outs:
   - path: bohr/labels.py
-    md5: 84de977f7bee2587cc8e71e3746c03ed
-  - path: bohr/labels_dict.json
-    md5: 1e110aec6550fadc1847f6a2f48e103b
+    md5: 2e11f90e7a567cff81917ae6e00b542d
 apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py
   deps:
   - path: bohr/heuristics/bugginess.py
-    md5: 9133a76ac29ae6ab2888dd44c9ffcc64
+    md5: 8574922facd221885ba345df4900ee10
   - path: bohr/heuristics/keywords
     md5: b4e7587c1b8e4e1461685a305d48bd66.dir
+  - path: bohr/labels.py
+    md5: 2e11f90e7a567cff81917ae6e00b542d
   - path: bohr/pipeline/apply_heuristics.py
     md5: 5aeb1fe58b205d28a6ec3dc0b12228e8
   - path: data/test
@@ -188,8 +188,8 @@ apply_heuristics_bugginess:
     bohr/params.py:
       COMMITS_FILE: data/train/bug_sample.csv
       LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
+      - CommitLabel.NonBugFix
+      - CommitLabel.BugFix
       N_PARALLEL: 1
       N_ROWS:
       PROFILE: false
@@ -245,8 +245,8 @@ train_label_model_bugginess:
   params:
     bohr/params.py:
       LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
+      - CommitLabel.NonBugFix
+      - CommitLabel.BugFix
       TASK: bugginess
       TEST_SETS:
       - herzig
@@ -254,7 +254,7 @@ train_label_model_bugginess:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: e873f0e1aa4bf40dadd5f3d9d66bcf31
+    md5: d377ec345b9ceb90faaabd969606b6ff
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893
 label_dataset_bugginess:
@@ -271,11 +271,11 @@ label_dataset_bugginess:
       COMMITS_FILE: data/train/bug_sample.csv
       LABELED_DATASET_OUTPUT_PATH: labeled_with_model2.csv
       LABEL_CATEGORIES:
-      - NonBugFix
-      - BugFix
+      - CommitLabel.NonBugFix
+      - CommitLabel.BugFix
       LABEL_DATASET_DEBUG: true
       N_ROWS:
       TASK: bugginess
   outs:
   - path: labeled_with_model2.csv
-    md5: 6005b55af6c4de545039fc016a7c6726
+    md5: bd7bb656c2ec0e1211c8e26f9e74fee0

@@ -77,17 +77,17 @@ class LabelHierarchy:
         return self.children
 
     def flatten(self, parent: Optional[ParentHierarchy] = None) -> List[FlattenedHierarchy]:
-        this_hirarchy_name = f'{self.children[0].label}{self.label}'
-        this_hierarchy_tail, other_hierarchies = self._partial_list(this_hirarchy_name)
-        return [FlattenedHierarchy(this_hirarchy_name, parent, this_hierarchy_tail)] + other_hierarchies
+        hirarchy_name = f'{self.children[0].label}{self.label}'
+        hierarchy_tail, other_hierarchies = self._flatten(hirarchy_name)
+        return [FlattenedHierarchy(hirarchy_name, parent, hierarchy_tail)] + other_hierarchies
 
-    def _partial_list(self, hierarchy_top: Optional['str'] = None) -> Tuple[FlattenedNodes, List[FlattenedHierarchy]]:
+    def _flatten(self, hierarchy_top: Optional['str'] = None) -> Tuple[FlattenedNodes, List[FlattenedHierarchy]]:
         other_hierarchies: List[FlattenedHierarchy] = []
         main_hierarchy_nodes: FlattenedNodes = []
         for child in self.children:
-            mlst, lst = child._partial_list(hierarchy_top)
+            child_nodes, lst = child._flatten(hierarchy_top)
             other_hierarchies.extend(lst)
-            main_hierarchy_nodes.extend(mlst)
+            main_hierarchy_nodes.extend(child_nodes)
         main_hierarchy_nodes.append((self.label, list(map(lambda c: c.label, self.children))))
         if self.mounted_hierarchy:
             other_hierarchies += self.mounted_hierarchy.flatten(ParentHierarchy(hierarchy_top, self.label))

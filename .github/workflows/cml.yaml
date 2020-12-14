@@ -30,7 +30,6 @@ jobs:
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
           dvc repro
-          dvc push -r gdrive
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

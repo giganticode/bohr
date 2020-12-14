@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Callable, Mapping, Any, List
 
 from cachetools import LRUCache
@@ -7,7 +8,17 @@ from snorkel.preprocess import BasePreprocessor
 from snorkel.types import DataPoint
 
 from bohr.artifacts.commits import Commit
-from bohr.labels import Label
+from bohr.pipeline.labels.cache import CategoryMappingCache
+
+from bohr.pipeline.labels.labelset import LabelSet, Label
+
+logger = logging.getLogger(__name__)
+
+
+category_mapping_cache = CategoryMappingCache(maxsize=10000)
+
+
+
 
 
 class CommitMapper(BaseMapper):
@@ -42,7 +53,16 @@ class CommitLabelingFunction(LabelingFunction):
         super().__init__(name, f, resources, pre=pre)
 
 
+def to_snorkel_label(labels) -> int:
+    if labels is None:
+        return -1
+    label_set = labels if isinstance(labels, LabelSet) else LabelSet.of(labels)
+    snorkel_label = category_mapping_cache[label_set]
+    return snorkel_label
+
+
+
 class commit_lf(labeling_function):
     def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
-        return CommitLabelingFunction(name=name, f=lambda *args: f(*args).value, resources=self.resources, pre=self.pre)
+        return CommitLabelingFunction(name=name, f=lambda *args: to_snorkel_label(f(*args)), resources=self.resources, pre=self.pre)

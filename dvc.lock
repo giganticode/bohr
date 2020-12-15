@@ -176,8 +176,8 @@ apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py
   deps:
   - path: bohr/heuristics/bugginess.py
-    md5: 8574922facd221885ba345df4900ee10
-    size: 3567
+    md5: a95371540b941b99cb5b66d46aa72dc0
+    size: 4070
   - path: bohr/heuristics/keywords
     md5: b4e7587c1b8e4e1461685a305d48bd66.dir
     size: 1382
@@ -288,7 +288,7 @@ train_label_model_bugginess:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: e7eda8edb769412c8b7c742e7b99dd31
+    md5: 802d0d48d20669cd32a941a807f48fa0
     size: 1899960
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893

@@ -164,14 +164,19 @@ parse_labels:
   cmd: python bohr/pipeline/parse_labels.py
   deps:
   - path: bohr/labels
-    md5: b4333938b83cf820c16e9ad32e045c48.dir
+    md5: 6a49b9011708a3ba18328bb6c119967f.dir
+    size: 459
+    nfiles: 2
   - path: bohr/pipeline/parse_labels.py
-    md5: 332b17e4278089635ce489d100464015
+    md5: b24e6018d7821c90740277690ab09b57
+    size: 2719
   - path: bohr/resources/labels.template
     md5: 869534ff93a412d25eb51bc2ab0a103a
+    size: 559
   outs:
   - path: bohr/labels.py
-    md5: 2e11f90e7a567cff81917ae6e00b542d
+    md5: d17f1cec74c37e410802e387dc9c80eb
+    size: 1443
 apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py
   deps:
@@ -183,8 +188,8 @@ apply_heuristics_bugginess:
     size: 1382
     nfiles: 5
   - path: bohr/labels.py
-    md5: 2e11f90e7a567cff81917ae6e00b542d
-    size: 1437
+    md5: d17f1cec74c37e410802e387dc9c80eb
+    size: 1443
   - path: bohr/pipeline/apply_heuristics.py
     md5: 5aeb1fe58b205d28a6ec3dc0b12228e8
     size: 4267
@@ -288,7 +293,7 @@ train_label_model_bugginess:
       - 1151-commits
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 802d0d48d20669cd32a941a807f48fa0
+    md5: 993c60fa7367bcff5c4122e233a85e59
     size: 1899960
   - path: metrics/bugginess/label_model_metrics.json
     md5: ca9b4ec3f7dc49a648827b51f9d6d893

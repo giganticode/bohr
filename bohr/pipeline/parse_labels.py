@@ -48,7 +48,7 @@ def merge_dicts_(a: Dict[str, List[Any]], b: Dict[str, List[Any]]) -> Dict[str, 
 
 def build_label_tree(path_to_labels: Path) -> LabelHierarchy:
     flattened_multi_hierarchy: FlattenedMultiHierarchy = {}
-    for label_file in glob(f'{path_to_labels}/*.txt'):
+    for label_file in sorted(glob(f'{path_to_labels}/*.txt')):
         with open(label_file, 'r') as f:
             merge_dicts_(flattened_multi_hierarchy, load(f.readlines()))
     tree = LabelHierarchy.create_root("Label")

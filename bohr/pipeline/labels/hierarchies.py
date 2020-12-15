@@ -59,19 +59,6 @@ class LabelHierarchy:
     def create_root(cls, label: str) -> 'LabelHierarchy':
         return cls(label, None, [])
 
-    def find_node_by_label(self, label: str) -> Optional['LabelHierarchy']:
-        if self.label == label:
-            if not self.mounted_hierarchy:
-                return self
-            else:
-                return self.mounted_hierarchy.find_node_by_label(label)
-        else:
-            for child in self.children:
-                node = child.find_node_by_label(label)
-                if node:
-                    return node
-            return self.mounted_hierarchy.find_node_by_label(label) if self.mounted_hierarchy else None
-
     def add_children(self, children: List[str]) -> List['LabelHierarchy']:
         self.children = [LabelHierarchy(child, self, []) for child in children]
         return self.children

@@ -1,4 +1,6 @@
 import logging
+import functools
+import sys
 from typing import Optional, Callable, Mapping, Any, List
 
 from cachetools import LRUCache
@@ -44,12 +46,14 @@ class CommitLabelingFunction(LabelingFunction):
         self,
         name: str,
         f: Callable[..., int],
+        applied_to_commit: Callable[[Commit], Label],
         resources: Optional[Mapping[str, Any]] = None,
         pre: Optional[List[BasePreprocessor]] = None,
     ) -> None:
         if pre is None:
             pre = []
         pre.insert(0, CommitMapper())
+        self.applied_to_commit = applied_to_commit
         super().__init__(name, f, resources, pre=pre)
 
 
@@ -65,4 +69,6 @@ def to_snorkel_label(labels) -> int:
 class commit_lf(labeling_function):
     def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
-        return CommitLabelingFunction(name=name, f=lambda *args: to_snorkel_label(f(*args)), resources=self.resources, pre=self.pre)
+        func = CommitLabelingFunction(name=name, f=lambda *args: to_snorkel_label(f(*args)), applied_to_commit=f, resources=self.resources, pre=self.pre)
+        func = functools.wraps(f)(func)
+        return func

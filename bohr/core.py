@@ -47,6 +47,6 @@ class keyword_labeling_functions(labeling_function):
             name_elem = first_keyword if isinstance(first_keyword, str) else '|'.join(first_keyword)
             name = self.name_pattern.replace('%1', name_elem)
             resources = dict(keywords=keyword_group)
-            labeling_function = CommitLabelingFunction(name=name, f=lambda c, keywords: to_snorkel_label(f(c, keywords)), resources=resources)
+            labeling_function = CommitLabelingFunction(name=name, f=lambda c, keywords: to_snorkel_label(f(c, keywords)), applied_to_commit=f, resources=resources)
             function_list.append(labeling_function)
         return function_list

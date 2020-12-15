@@ -1,5 +1,6 @@
 import json
 import logging
+from glob import glob
 from pathlib import Path
 from typing import List, Tuple
 
@@ -23,9 +24,10 @@ def load(f: List[str]) -> List[Tuple[str, List[str]]]:
 
 
 def build_label_tree(path_to_labels: Path) -> LabelHierarchy:
-    label_file = f'{path_to_labels}/labels.txt'
-    with open(label_file, 'r') as f:
-        lsts = load(f.readlines())
+    lsts = []
+    for label_file in glob(f'{path_to_labels}/*.txt'):
+        with open(label_file, 'r') as f:
+            lsts.extend(load(f.readlines()))
     tree = LabelHierarchy.create_root("Label")
     for parent, children in lsts:
         node = tree.find_node_by_label(parent)

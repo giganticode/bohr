@@ -5,6 +5,23 @@ from bohr.pipeline.labels.labelset import Label
 
 
 class CommitLabel(Label):
+    MinorBugFix = auto() 
+    MajorBugFix = auto() 
+    CriticalBugFix = auto() 
+    OtherSeverityLevelBugFix = auto() 
+    BugFix = MinorBugFix | MajorBugFix | CriticalBugFix | OtherSeverityLevelBugFix
+    DocFix = auto() 
+    TestFix = auto() 
+    BogusFix = DocFix | TestFix
+    NonBugFix = BogusFix
+    Commit = BugFix | NonBugFix
+    Label = Commit
+
+    def parent(self):
+        return None
+
+
+class SStuBBugFix(Label):
     WrongIdentifier = auto() 
     WrongNumericLiteral = auto() 
     WrongModifier = auto() 
@@ -19,23 +36,6 @@ class CommitLabel(Label):
     MissingThrowsException = auto() 
     SStuB = WrongIdentifier | WrongNumericLiteral | WrongModifier | WrongBooleanLiteral | WrongFunction | WrongOperator | MissingThrowsException
     BugFix = SStuB
-    DocFix = auto() 
-    TestFix = auto() 
-    BogusFix = DocFix | TestFix
-    NonBugFix = BogusFix
-    Commit = BugFix | NonBugFix
-    Label = Commit
-
-    def parent(self):
-        return None
-
-
-class MinorBugFixBugFix(Label):
-    MinorBugFix = auto() 
-    MajorBugFix = auto() 
-    CriticalBugFix = auto() 
-    OtherSeverityLevelBugFix = auto() 
-    BugFix = MinorBugFix | MajorBugFix | CriticalBugFix | OtherSeverityLevelBugFix
 
     def parent(self):
         return CommitLabel.BugFix 

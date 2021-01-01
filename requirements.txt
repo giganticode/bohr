@@ -60,3 +60,4 @@ wordcloud==1.7.0
 wrapt==1.12.1
 zict==2.0.0
 zipp==3.1.0
+pre-commit==2.9.3

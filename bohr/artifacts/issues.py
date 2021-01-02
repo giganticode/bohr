@@ -4,11 +4,12 @@ from typing import List, Set
 
 from nltk import PorterStemmer, bigrams
 
+from bohr.artifacts.core import Artifact
 from bohr.nlp_utils import safe_tokenize, NgramSet
 
 
 @dataclass
-class Issue:
+class Issue(Artifact):
     title: str
     body: str
     labels: List[str]
@@ -34,7 +35,7 @@ class Issue:
         return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
 
 
-class Issues:
+class Issues(Artifact):
     def __init__(self, issues):
         self.__issues = issues
 

@@ -1,3 +1,4 @@
+import argparse
 import json
 from pathlib import Path
 from pprint import pprint
@@ -7,21 +8,22 @@ import numpy as np
 import pandas as pd
 from snorkel.labeling.model import LabelModel
 
-from bohr import PROJECT_DIR, TEST_DIR, params
+from bohr import PROJECT_DIR, TEST_DIR
+from bohr.core import Task
 
 
 def get_test_set_accuracy(
-    label_model: LabelModel, test_set: str, save_to: Path
+    label_model: LabelModel, test_set_name: str, save_to: Path
 ) -> float:
-    df = pd.read_csv(TEST_DIR / f"{test_set}.csv")
-    L = np.load(save_to / f"heuristic_matrix_{test_set}.pkl", allow_pickle=True)
+    df = pd.read_csv(TEST_DIR / f"{test_set_name}.csv")
+    L = np.load(save_to / f"heuristic_matrix_{test_set_name}.pkl", allow_pickle=True)
     return label_model.score(L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
 
 
-def train_label_model() -> Dict[str, Any]:
+def train_label_model(task_name: str) -> Dict[str, Any]:
     stats: Dict[str, Any] = {}
 
-    task_dir_generated = PROJECT_DIR / "generated" / params.TASK
+    task_dir_generated = PROJECT_DIR / "generated" / task_name
 
     L_train = np.load(
         task_dir_generated / "heuristic_matrix_train.pkl", allow_pickle=True
@@ -31,18 +33,23 @@ def train_label_model() -> Dict[str, Any]:
     label_model.save(task_dir_generated / "label_model.pkl")
     label_model.eval()
 
-    for test_set in params.TEST_SETS:
+    task = Task.load(task_name)
+    for test_set in task.test_datasets:
         stats[f"label_model_acc_{test_set}"] = get_test_set_accuracy(
-            label_model, test_set, save_to=task_dir_generated
+            label_model, test_set.name, save_to=task_dir_generated
         )
 
     return stats
 
 
 if __name__ == "__main__":
-    stats = train_label_model()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("task")
+    args = parser.parse_args()
+
+    stats = train_label_model(args.task)
     with open(
-        PROJECT_DIR / "metrics" / params.TASK / "label_model_metrics.json", "w"
+        PROJECT_DIR / "metrics" / args.task / "label_model_metrics.json", "w"
     ) as f:
         json.dump(stats, f)
 

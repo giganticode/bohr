@@ -1,10 +1,10 @@
 from typing import Optional, Union
 
-from bohr.core import keyword_labeling_functions
+from bohr.core import Heuristic
+from bohr.heuristics.templates.keywords import KeywordHeuristics
 from bohr.labels import *
 from bohr.nlp_utils import NgramSet
 from bohr.pipeline.labels.labelset import LabelSet
-from bohr.snorkel_utils import commit_lf
 import re
 from bohr.artifacts.commits import Commit
 
@@ -12,7 +12,7 @@ from bohr.artifacts.commits import Commit
 Labels = Union[Label, LabelSet]
 
 
-@keyword_labeling_functions("bug", name_pattern="bug_message_keyword_%1")
+@KeywordHeuristics(Commit, "bug", name_pattern="bug_message_keyword_%1")
 def bug_keywords_lookup_in_message(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
@@ -21,7 +21,7 @@ def bug_keywords_lookup_in_message(
     return None
 
 
-@keyword_labeling_functions("bugless", name_pattern="bugless_message_keyword_%1")
+@KeywordHeuristics(Commit, "bugless", name_pattern="bugless_message_keyword_%1")
 def bugless_keywords_lookup_in_message(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
@@ -44,29 +44,27 @@ GITHUB_REF_RE = re.compile(r"gh(-|\s)\d+", flags=re.I)
 VERSION_RE = re.compile(r"v\d+.*", flags=re.I)
 
 
-@commit_lf()
+@Heuristic(Commit)
 def github_ref_in_message(commit: Commit) -> Optional[Labels]:
     """
-    >>> github_ref_in_message.applied_to_commit(Commit("x", "y", "12afbc4564ba", "gh-123: bug"))
+    >>> github_ref_in_message(Commit("x", "y", "12afbc4564ba", "gh-123: bug"))
     CommitLabel.BugFix
-    >>> github_ref_in_message.applied_to_commit(Commit("x", "y", "12afbc4564ba", "gh 123"))
+    >>> github_ref_in_message(Commit("x", "y", "12afbc4564ba", "gh 123"))
     CommitLabel.BugFix
-    >>> github_ref_in_message.applied_to_commit(Commit("x", "y", "12afbc4564ba", "GH 123: bug2"))
+    >>> github_ref_in_message(Commit("x", "y", "12afbc4564ba", "GH 123: bug2"))
     CommitLabel.BugFix
-    >>> github_ref_in_message.applied_to_commit(Commit("x", "y", "12afbc4564ba", "GH123: wrong issue reference")) is None
+    >>> github_ref_in_message(Commit("x", "y", "12afbc4564ba", "GH123: wrong issue reference")) is None
     True
     """
     return CommitLabel.BugFix if GITHUB_REF_RE.search(commit.message.raw) else None
 
 
-@commit_lf()
+@Heuristic(Commit)
 def version_in_message(commit: Commit) -> Optional[Labels]:
     return CommitLabel.NonBugFix if VERSION_RE.search(commit.message.raw) else None
 
 
-@keyword_labeling_functions(
-    "bug.issue_label", name_pattern="bug_issue_label_keyword_%1"
-)
+@KeywordHeuristics(Commit, "bug.issue_label", name_pattern="bug_issue_label_keyword_%1")
 def bug_keywords_lookup_in_issue_label(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
@@ -75,8 +73,8 @@ def bug_keywords_lookup_in_issue_label(
     return None
 
 
-@keyword_labeling_functions(
-    "bugless.issue_label", name_pattern="bugless_issue_label_keyword_%1"
+@KeywordHeuristics(
+    Commit, "bugless.issue_label", name_pattern="bugless_issue_label_keyword_%1"
 )
 def bugless_keywords_lookup_in_issue_label(
     commit: Commit, keywords: NgramSet
@@ -86,7 +84,7 @@ def bugless_keywords_lookup_in_issue_label(
     return None
 
 
-@keyword_labeling_functions("bug", name_pattern="bug_issue_body_keyword_%1")
+@KeywordHeuristics(Commit, "bug", name_pattern="bug_issue_body_keyword_%1")
 def bug_keywords_lookup_in_issue_body(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
@@ -95,7 +93,7 @@ def bug_keywords_lookup_in_issue_body(
     return None
 
 
-@keyword_labeling_functions("bugless", name_pattern="bugless_issue_body_keyword_%1")
+@KeywordHeuristics(Commit, "bugless", name_pattern="bugless_issue_body_keyword_%1")
 def bugless_keywords_lookup_in_issue_body(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
@@ -104,7 +102,7 @@ def bugless_keywords_lookup_in_issue_body(
     return None
 
 
-@commit_lf()
+@Heuristic(Commit)
 def no_files_have_modified_status(commit: Commit) -> Optional[Labels]:
     for file in commit.files:
         if file.status == "modified":
@@ -112,7 +110,7 @@ def no_files_have_modified_status(commit: Commit) -> Optional[Labels]:
     return CommitLabel.NonBugFix
 
 
-@commit_lf()
+@Heuristic(Commit)
 def bug_if_only_changed_lines_in_one_file(commit: Commit) -> Optional[Labels]:
     if (
         len(commit.files) == 1
@@ -125,7 +123,7 @@ def bug_if_only_changed_lines_in_one_file(commit: Commit) -> Optional[Labels]:
     return None
 
 
-@commit_lf()
+@Heuristic(Commit)
 def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
     if len(commit.files) > 6:
         return CommitLabel.NonBugFix

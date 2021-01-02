@@ -5,13 +5,19 @@ from typing import Optional, Set, List
 import pandas as pd
 from nltk import PorterStemmer, bigrams
 
-from bohr import TRAIN_DIR, params
+from bohr import TRAIN_DIR, PROJECT_DIR
+from bohr.artifacts.core import Artifact
 from bohr.nlp_utils import safe_tokenize, NgramSet
 from bohr.artifacts.issues import Issue, Issues
 
 
+ISSUES_FILE = PROJECT_DIR / "data/train/bug_sample_issues.csv"
+CHANGES_FILE = PROJECT_DIR / "data/train/bug_sample_files.csv"
+COMMITS_FILE = PROJECT_DIR / "data/train/bug_sample.csv"
+
+
 @dataclass
-class CommitFile:
+class CommitFile(Artifact):
     filename: str
     status: str
     patch: Optional[str]
@@ -24,7 +30,7 @@ class CommitFile:
         return "<del>" not in self.changes
 
 
-class CommitFiles:
+class CommitFiles(Artifact):
     def __init__(self, files):
         self.__files = files
 
@@ -36,7 +42,7 @@ class CommitFiles:
 
 
 @dataclass
-class CommitMessage:
+class CommitMessage(Artifact):
     raw: str
 
     @cached_property
@@ -59,7 +65,7 @@ class CommitMessage:
 
 
 @dataclass
-class Commit:
+class Commit(Artifact):
 
     owner: str
     repository: str
@@ -84,7 +90,7 @@ class Commit:
         @cached_property
         def __issues_df(self):
             return pd.read_csv(
-                params.ISSUES_FILE,
+                ISSUES_FILE,
                 index_col=["owner", "repository", "sha"],
                 keep_default_na=False,
                 dtype={"labels": "str"},
@@ -92,9 +98,7 @@ class Commit:
 
         @cached_property
         def __files_df(self):
-            return pd.read_csv(
-                params.CHANGES_FILE, index_col=["owner", "repository", "sha"]
-            )
+            return pd.read_csv(CHANGES_FILE, index_col=["owner", "repository", "sha"])
 
         def get_resources_from_file(
             self, type: str, owner: str, repository: str, sha: str
@@ -121,13 +125,13 @@ class Commit:
                 return None
 
         def get_files(self, owner: str, repository: str, sha: str):
-            if params.CHANGES_FILE:
+            if CHANGES_FILE:
                 return self.get_resources_from_file("files", owner, repository, sha)
             else:
                 return self.get_resources_from_dir("files", owner, repository, sha)
 
         def get_issues(self, owner: str, repository: str, sha: str):
-            if params.ISSUES_FILE:
+            if ISSUES_FILE:
                 return self.get_resources_from_file("issues", owner, repository, sha)
             else:
                 return self.get_resources_from_dir("issues", owner, repository, sha)

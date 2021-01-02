@@ -35,7 +35,7 @@ def train_label_model(task_name: str) -> Dict[str, Any]:
 
     task = Task.load(task_name)
     for test_set in task.test_datasets:
-        stats[f"label_model_acc_{test_set}"] = get_test_set_accuracy(
+        stats[f"label_model_acc_{test_set.name}"] = get_test_set_accuracy(
             label_model, test_set.name, save_to=task_dir_generated
         )
 

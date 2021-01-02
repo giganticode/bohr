@@ -8,7 +8,7 @@ from bohr.pipeline.labels.hierarchies import LabelHierarchy
 
 logger = logging.getLogger(__name__)
 
-PATH_TO_LABELS_DIR = PROJECT_DIR / 'bohr' / 'labels'
+PATH_TO_LABELS_DIR = PROJECT_DIR / "bohr" / "labels"
 
 FlattenedMultiHierarchy = Dict[str, List[List[str]]]
 
@@ -16,9 +16,11 @@ FlattenedMultiHierarchy = Dict[str, List[List[str]]]
 def load(f: List[str]) -> FlattenedMultiHierarchy:
     res: FlattenedMultiHierarchy = {}
     for line in f:
-        spl_line: List[str] = line.strip('\n').split(":")
+        spl_line: List[str] = line.strip("\n").split(":")
         if len(spl_line) != 2:
-            raise ValueError(f"Invalid line: {line}\n The format must be: Parent: child1, child2, ..., childN")
+            raise ValueError(
+                f"Invalid line: {line}\n The format must be: Parent: child1, child2, ..., childN"
+            )
         parent, children = spl_line
         parent = parent.strip()
         if parent not in res:
@@ -27,7 +29,9 @@ def load(f: List[str]) -> FlattenedMultiHierarchy:
     return res
 
 
-def merge_dicts_(a: Dict[str, List[Any]], b: Dict[str, List[Any]]) -> Dict[str, List[Any]]:
+def merge_dicts_(
+    a: Dict[str, List[Any]], b: Dict[str, List[Any]]
+) -> Dict[str, List[Any]]:
     """
     >>> a = {}
     >>> merge_dicts_(a, {})
@@ -48,8 +52,8 @@ def merge_dicts_(a: Dict[str, List[Any]], b: Dict[str, List[Any]]) -> Dict[str, 
 
 def build_label_tree(path_to_labels: Path) -> LabelHierarchy:
     flattened_multi_hierarchy: FlattenedMultiHierarchy = {}
-    for label_file in sorted(glob(f'{path_to_labels}/*.txt')):
-        with open(label_file, 'r') as f:
+    for label_file in sorted(glob(f"{path_to_labels}/*.txt")):
+        with open(label_file, "r") as f:
             merge_dicts_(flattened_multi_hierarchy, load(f.readlines()))
     tree = LabelHierarchy.create_root("Label")
     pool = [tree]
@@ -70,15 +74,13 @@ def build_label_tree(path_to_labels: Path) -> LabelHierarchy:
 def parse_label() -> None:
     label_tree = build_label_tree(PATH_TO_LABELS_DIR)
     from jinja2 import Environment, PackageLoader
-    env = Environment(
-        loader=PackageLoader('bohr', 'resources')
-    )
-    template = env.get_template('labels.template')
+
+    env = Environment(loader=PackageLoader("bohr", "resources"))
+    template = env.get_template("labels.template")
     s = template.render(hierarchies=label_tree.flatten())
-    with open(PROJECT_DIR / 'bohr' / 'labels.py', 'w') as f:
+    with open(PROJECT_DIR / "bohr" / "labels.py", "w") as f:
         f.write(s)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parse_label()
-

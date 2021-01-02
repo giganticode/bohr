@@ -5,32 +5,34 @@ from typing import List, Type, Union, TypeVar, Set
 
 
 class Label(Flag):
-    def __or__(self, other: Union['LabelSet', 'Label']):
+    def __or__(self, other: Union["LabelSet", "Label"]):
         if type(self) == type(other):
             return super().__or__(other)
         else:
             return LabelSet.of(self) | other
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}.{self.name}'
+        return f"{self.__class__.__name__}.{self.name}"
 
     @classmethod
-    def hierarchy_root(cls: Type['Label']) -> 'Label':
+    def hierarchy_root(cls: Type["Label"]) -> "Label":
         return reduce(lambda x, y: x | y, cls)
 
-    def is_ancestor_of(self, child: 'Label') -> bool:
+    def is_ancestor_of(self, child: "Label") -> bool:
         if child is None:
             return False
         if type(self) == type(child):
             return self | child == self and self & child == child
 
-        if not hasattr(child, 'parent'):
-            raise ValueError("Incorrectly defined class. All classes inherited from label must have method 'parent()'")
+        if not hasattr(child, "parent"):
+            raise ValueError(
+                "Incorrectly defined class. All classes inherited from label must have method 'parent()'"
+            )
 
         return self.is_ancestor_of(child.parent())
 
 
-LabelSubclass = TypeVar('LabelSubclass', bound=Label)
+LabelSubclass = TypeVar("LabelSubclass", bound=Label)
 
 
 @dataclass(frozen=True)
@@ -116,6 +118,7 @@ class LabelSet(object):
     >>> LabelSet.of(A.A2).distribute_into_categories([A.A3, A.A4])
     A.A0
     """
+
     labels: Set[LabelSubclass]
 
     def __post_init__(self):
@@ -134,7 +137,9 @@ class LabelSet(object):
         return "{" + ", ".join(map(lambda l: repr(l), sorted_labels)) + "}"
 
     @staticmethod
-    def _add_label(labels: Set[LabelSubclass], label_to_add: LabelSubclass) -> Set[LabelSubclass]:
+    def _add_label(
+        labels: Set[LabelSubclass], label_to_add: LabelSubclass
+    ) -> Set[LabelSubclass]:
         flag_to_remove = None
         for flag in labels:
             if type(flag) == type(label_to_add):
@@ -146,7 +151,7 @@ class LabelSet(object):
         labels.add(label_to_add)
         return labels
 
-    def __or__(self, other: Union['LabelSet', Label]) -> 'LabelSet':
+    def __or__(self, other: Union["LabelSet", Label]) -> "LabelSet":
         label_set = other if isinstance(other, LabelSet) else LabelSet.of(other)
 
         new_label_set = set(self.labels)
@@ -155,15 +160,19 @@ class LabelSet(object):
 
         return LabelSet(frozenset(new_label_set))
 
-    def distribute_into_categories(self, categories: List[LabelSubclass]) -> LabelSubclass:
+    def distribute_into_categories(
+        self, categories: List[LabelSubclass]
+    ) -> LabelSubclass:
         if not categories:
             raise ValueError("List of categories cannot be empty")
         categories_union = categories[0]
 
         for category in categories:
             if type(category) != type(categories[0]):
-                raise ValueError("All categories should be from the same hierarchy. "
-                                 f"However you have categories from different hierarchies: {categories[0]} and {category}")
+                raise ValueError(
+                    "All categories should be from the same hierarchy. "
+                    f"However you have categories from different hierarchies: {categories[0]} and {category}"
+                )
             categories_union |= category
 
         result = type(categories_union).hierarchy_root()
@@ -173,7 +182,6 @@ class LabelSet(object):
                     label = label.parent()
                 for category in categories:
                     if category & label:
-                        result &= (category | label)
+                        result &= category | label
 
         return result
-

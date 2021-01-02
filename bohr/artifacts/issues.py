@@ -20,7 +20,8 @@ class Issue:
 
     @cached_property
     def tokens(self) -> Set[str]:
-        if self.body is None: return set()
+        if self.body is None:
+            return set()
         return safe_tokenize(self.body)
 
     @cached_property
@@ -45,10 +46,12 @@ class Issues:
 
     def match_label(self, stemmed_labels: Set[str]) -> bool:
         for issue in self.__issues:
-            if not issue.stemmed_labels.isdisjoint(stemmed_labels): return True
+            if not issue.stemmed_labels.isdisjoint(stemmed_labels):
+                return True
         return False
 
     def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
         for issue in self.__issues:
-            if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords): return True
+            if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords):
+                return True
         return False

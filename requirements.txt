@@ -61,3 +61,4 @@ wrapt==1.12.1
 zict==2.0.0
 zipp==3.1.0
 pre-commit==2.9.3
+black==20.8b1

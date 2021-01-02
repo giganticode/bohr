@@ -20,15 +20,12 @@ logger = logging.getLogger(__name__)
 category_mapping_cache = CategoryMappingCache(maxsize=10000)
 
 
-
-
-
 class CommitMapper(BaseMapper):
 
     cache = LRUCache(512)
 
     def __init__(self) -> None:
-        super().__init__('CommitMapper', [], memoize=False)
+        super().__init__("CommitMapper", [], memoize=False)
 
     def __call__(self, x: DataPoint) -> Optional[DataPoint]:
         key = (x.owner, x.repository, x.sha)
@@ -65,10 +62,15 @@ def to_snorkel_label(labels) -> int:
     return snorkel_label
 
 
-
 class commit_lf(labeling_function):
     def __call__(self, f: Callable[..., Label]) -> LabelingFunction:
         name = self.name or f.__name__
-        func = CommitLabelingFunction(name=name, f=lambda *args: to_snorkel_label(f(*args)), applied_to_commit=f, resources=self.resources, pre=self.pre)
+        func = CommitLabelingFunction(
+            name=name,
+            f=lambda *args: to_snorkel_label(f(*args)),
+            applied_to_commit=f,
+            resources=self.resources,
+            pre=self.pre,
+        )
         func = functools.wraps(f)(func)
         return func

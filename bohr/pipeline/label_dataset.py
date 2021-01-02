@@ -10,7 +10,10 @@ from bohr.core import load_labeling_functions
 def label_dataset():
     df = pd.read_csv(params.COMMITS_FILE, nrows=params.N_ROWS)
 
-    L_train = np.load(PROJECT_DIR / 'generated' / params.TASK / 'heuristic_matrix_train.pkl', allow_pickle=True)
+    L_train = np.load(
+        PROJECT_DIR / "generated" / params.TASK / "heuristic_matrix_train.pkl",
+        allow_pickle=True,
+    )
 
     print(L_train.shape)
     print(df.shape)
@@ -23,18 +26,18 @@ def label_dataset():
     labels, probs = label_model.predict(L=L_train, return_probs=True)
     df_labeled = df.assign(bug=labels)
 
-    df_probs = pd.DataFrame(probs, columns=['prob_bugless', 'prob_bug'])
+    df_probs = pd.DataFrame(probs, columns=["prob_bugless", "prob_bug"])
     df_labeled = pd.concat([df_labeled, df_probs], axis=1)
 
     if params.LABEL_DATASET_DEBUG:
         df_lfs = pd.DataFrame(L_train, columns=[lf.name for lf in lfs])
         for name, col in df_lfs.iteritems():
-            df_lfs[name] = col.map({0: name, 1: name, -1: ''})
-        col_lfs = df_lfs.apply(lambda c: ';'.join([v for v in c if v]), axis=1)
-        df_labeled['lfs'] = col_lfs
+            df_lfs[name] = col.map({0: name, 1: name, -1: ""})
+        col_lfs = df_lfs.apply(lambda c: ";".join([v for v in c if v]), axis=1)
+        df_labeled["lfs"] = col_lfs
 
     df_labeled.to_csv(params.LABELED_DATASET_OUTPUT_PATH, index=False)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     label_dataset()

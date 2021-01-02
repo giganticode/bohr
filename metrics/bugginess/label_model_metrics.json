@@ -1,1 +1,1 @@
-{"label_model_acc_<bohr.datasets.templates.loaders.from_csv.CsvDatasetLoader object at 0x7fb4f95276a0>": 0.6741963509991312, "label_model_acc_<bohr.datasets.templates.loaders.from_csv.CsvDatasetLoader object at 0x7fb4f9527fa0>": 0.7386666666666667, "label_model_acc_<bohr.datasets.templates.loaders.from_csv.CsvDatasetLoader object at 0x7fb4f95276d0>": 0.6482546988876102}
+{"label_model_acc_1151-commits": 0.6741963509991312, "label_model_acc_berger": 0.7386666666666667, "label_model_acc_herzig": 0.6482546988876102}

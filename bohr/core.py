@@ -1,7 +1,9 @@
 import functools
 import importlib
 import inspect
+import logging
 import os
+import sys
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
 from typing import List, Callable, Type, Optional, Set
@@ -16,6 +18,9 @@ from bohr.pipeline.labels.cache import CategoryMappingCache
 from bohr.snorkel import SnorkelLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = "|"
+
+
+logger = logging.getLogger(__name__)
 
 
 class ArtifactMapper(BaseMapper, ABC):
@@ -45,7 +50,11 @@ class Heuristic(object):
         def func(artifact, *args, **kwargs):
             if not isinstance(artifact, self.artifact_type_applied_to):
                 raise ValueError("Not right artifact")
-            return f(artifact, *args, **kwargs)
+            try:
+                return f(artifact, *args, **kwargs)
+            except BaseException:
+                logger.error(sys.exc_info())
+                return None
 
         return functools.wraps(f)(func)
 

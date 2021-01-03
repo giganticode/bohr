@@ -12,10 +12,10 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          PYTHONPATH: /__w/bohr/bohr 
+          PYTHONPATH: /__w/bohr/bohr
         run: |
           sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
-          
+
           rm -rf /github/home/.pyenv
           unset PYENV_ROOT
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -25,7 +25,8 @@ jobs:
           eval "$(pyenv init -)"
           pyenv versions
           python --version
-          
+
+          pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
           dvc pull -r gdrive data/test downloaded-data/sample.7z
@@ -55,6 +56,6 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git fetch --prune 
+          git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md

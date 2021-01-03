@@ -1,5 +1,9 @@
 language: python
 if: 'type = pull_request OR branch = master'
+os:
+  - linux
+  - osx
+  - windows
 python:
   - "3.8"
 install:

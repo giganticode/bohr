@@ -16,7 +16,7 @@ jobs:
       language: sh
       python: "3.8"
       before_install:
-        - choco install python3.8 --params "/InstallDir:C:\\Python"
+        - choco install python --version 3.8.7 --params "/InstallDir:C:\\Python"
         - export PATH="/c/Python:/c/Python/Scripts:$PATH"
 install:
   - pip install --upgrade pip wheel setuptools

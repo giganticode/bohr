@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 class ArtifactMapper(BaseMapper, ABC):
     @abstractmethod
-    def get_artifact(self):
+    def get_artifact(self) -> Type:
         pass
 
 
@@ -46,7 +46,7 @@ class Heuristic(object):
     def __init__(self, artifact_type_applied_to: Type[Artifact]):
         self.artifact_type_applied_to = artifact_type_applied_to
 
-    def get_artifact_safe_func(self, f: Callable):
+    def get_artifact_safe_func(self, f: Callable) -> Callable[..., Optional[Label]]:
         def func(artifact, *args, **kwargs):
             if not isinstance(artifact, self.artifact_type_applied_to):
                 raise ValueError("Not right artifact")
@@ -105,9 +105,15 @@ def load_heuristics(
 
 
 class DatasetLoader(ABC):
-    def __init__(self, name: str, test_set: bool):
+    def __init__(
+        self,
+        name: str,
+        test_set: bool,
+        mapper: ArtifactMapper,
+    ):
         self.name = name
         self.test_set = test_set
+        self.mapper = mapper
 
     def get_artifact(self) -> Type:
         return self.get_mapper().get_artifact()
@@ -116,9 +122,8 @@ class DatasetLoader(ABC):
     def load(self) -> DataFrame:
         pass
 
-    @abstractmethod
     def get_mapper(self) -> ArtifactMapper:
-        pass
+        return self.mapper
 
     def is_test_set(self):
         return self.test_set

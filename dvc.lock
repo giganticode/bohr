@@ -292,5 +292,5 @@ label_dataset_bugginess:
     size: 1006492972
   outs:
   - path: labeled_with_model2.csv
-    md5: 7faa148721751620dfa090e54e7aac90
-    size: 66035383
+    md5: 964814f911da640eae38a451d6156081
+    size: 66016784

@@ -4,7 +4,6 @@ click==7.1.2
 cloudpickle==1.6.0
 colorama==0.4.4
 commonmark==0.9.1
-Cython==0.29.21
 dask==2020.12.0
 decorator==4.4.2
 distributed==2020.12.0

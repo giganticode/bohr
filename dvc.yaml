@@ -71,4 +71,4 @@ stages:
     - generated/bugginess/heuristic_matrix_train.pkl
     - data/train
     outs:
-    - labeled_with_model2.csv
+    - labeled-data/bugginess-train.csv

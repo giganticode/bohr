@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from snorkel.labeling.model import LabelModel
 
-from bohr import PROJECT_DIR
+from bohr import PROJECT_DIR, LABELED_DATA_DIR
 from bohr.core import (
     load_heuristics,
     DatasetLoader,
@@ -48,7 +48,7 @@ def label_dataset(task_name: str, dataset_name: str, debug: bool = False):
         col_lfs = df_lfs.apply(lambda c: ";".join([v for v in c if v]), axis=1)
         df_labeled["lfs"] = col_lfs
 
-    df_labeled.to_csv("labeled_with_model2.csv", index=False)
+    df_labeled.to_csv(LABELED_DATA_DIR / dataset_name, index=False)
 
 
 if __name__ == "__main__":

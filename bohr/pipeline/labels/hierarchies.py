@@ -31,12 +31,6 @@ class LabelHierarchy:
     >>> commit.mounted_hierarchy = LabelHierarchy.create_root("Commit")
     >>> tangled, non_tangled = commit.mounted_hierarchy.add_children(["Tangled", "NonTangled"])
 
-    >>> root_label.find_node_by_label("Tangled") == tangled
-    True
-    >>> root_label.find_node_by_label("Major") == major
-    True
-    >>> root_label.find_node_by_label("NonExistent") is None
-    True
     >>> from pprint import pprint
     >>> pprint(root_label.flatten())
     [FlattenedHierarchy(name='CommitLabel', parent_hierarchy=None, nodes=[('Minor', []), ('Major', []), ('Critical', []), ('OtherSeverityLevel', []), ('BugFix', ['Minor', 'Major', 'Critical', 'OtherSeverityLevel']), ('MinorRefactoring', []), ('MajorRefactoring', []), ('Refactoring', ['MinorRefactoring', 'MajorRefactoring']), ('Feature', []), ('Commit', ['BugFix', 'Refactoring', 'Feature']), ('Label', ['Commit'])]),

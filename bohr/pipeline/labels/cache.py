@@ -29,9 +29,9 @@ def get_category_objets(
 class CategoryMappingCache(LRUCache):
     """
     >>> from bohr.labels import SStuBBugFix, CommitLabel
+    >>> logger.setLevel("CRITICAL")
 
-    >>> cache = CategoryMappingCache(1)
-    >>> cache.labelsq = [CommitLabel.NonBugFix, CommitLabel.BugFix]
+    >>> cache = CategoryMappingCache(["CommitLabel.NonBugFix", "CommitLabel.BugFix"], 10)
     >>> cache[LabelSet.of(CommitLabel.NonBugFix)]
     0
     >>> cache[LabelSet.of(CommitLabel.BugFix)]

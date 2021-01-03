@@ -1,11 +1,23 @@
 language: python
 if: 'type = pull_request OR branch = master'
-os:
-  - linux
-  - osx
-  - windows
 python:
   - "3.8"
+jobs:
+  include:
+    - os: osx
+      language: sh
+      python: "3.8"
+      before_install:
+        - brew update
+        - python3 -m pip install virtualenv
+        - virtualenv .venv -p python3
+        - source .venv/bin/activate
+    - os: windows
+      language: sh
+      python: "3.8"
+      before_install:
+        - choco install python3 --params "/InstallDir:C:\\Python"
+        - export PATH="/c/Python:/c/Python/Scripts:$PATH
 install:
   - pip install --upgrade pip wheel setuptools
   - pip install Cython==0.29.21

@@ -50,7 +50,9 @@ def label_dataset(task_name: str, dataset_name: str, debug: bool = False):
 
     if not LABELED_DATA_DIR.exists():
         LABELED_DATA_DIR.mkdir(parents=True)
-    df_labeled.to_csv(LABELED_DATA_DIR / f"{dataset_name}.csv", index=False)
+    target_file = LABELED_DATA_DIR / f"{dataset_name}.csv"
+    df_labeled.to_csv(target_file, index=False)
+    print(f"Labeled dataset has been written to {target_file}.")
 
 
 if __name__ == "__main__":

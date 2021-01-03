@@ -14,7 +14,8 @@ Install Anaconda/Miniconda
 Get started with BOHR
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Run ``pip install -r requirements.txt`` (Python 3.8 or higher is required)
+#. Run `pip install --upgrade pip setuptools wheel` (Python 3.8 or higher is required)
+#. Run ``pip install -r requirements.txt`` 
 
 Running the code and reproducing the models
 ===========================================

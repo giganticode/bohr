@@ -48,6 +48,8 @@ def label_dataset(task_name: str, dataset_name: str, debug: bool = False):
         col_lfs = df_lfs.apply(lambda c: ";".join([v for v in c if v]), axis=1)
         df_labeled["lfs"] = col_lfs
 
+    if not LABELED_DATA_DIR.exists():
+        LABELED_DATA_DIR.mkdir(parents=True)
     df_labeled.to_csv(LABELED_DATA_DIR / dataset_name, index=False)
 
 

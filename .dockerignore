@@ -13,7 +13,7 @@ uploads
 *.log
 
 
-.dvc
+.dvc/cache/*
 
 downloaded-data/*
 generated/*

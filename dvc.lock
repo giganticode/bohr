@@ -175,12 +175,12 @@ parse_labels:
     md5: ee1a099306ed4fab3324914c803ed125
     size: 2749
   - path: bohr/resources/labels.template
-    md5: 869534ff93a412d25eb51bc2ab0a103a
-    size: 559
+    md5: ecbde2e7656eb2335b51830c3e033177
+    size: 558
   outs:
   - path: bohr/labels.py
-    md5: 2e11f90e7a567cff81917ae6e00b542d
-    size: 1437
+    md5: c5f6acc83b6eaaccb365b15c70c3c5d6
+    size: 1417
 apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py bugginess
   deps:

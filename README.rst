@@ -5,8 +5,17 @@ Big Old Heuristic Repository
 Getting started
 ===========================================
 
+Install Anaconda/Miniconda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#. Install conda_ [Skip this step if you already have conda installed]
+#. Create a virtual environment ``conda create --name <YOUR ENV NAME> python==3.8.0`` 
+#. Activate virtual environment ``conda activate <YOUR ENV NAME>`` 
+
+Get started with BOHR
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Create a virtual environment and run ``pip install -r requirements.txt`` (Python 3.8 or higher is required)
+#. Run ``pip install --upgrade pip setuptools wheel`` (Python 3.8 or higher is required)
+#. Run ``pip install -r requirements.txt`` 
 
 Running the code and reproducing the models
 ===========================================
@@ -14,7 +23,9 @@ Running the code and reproducing the models
 Using DVC (Data Version Control) - preferred
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Install dvc_
+#. Install dvc_ for your OS
+
+#. Install p7zip_ for your OS
 
 #. Setting up datasource. Ironspeed users should create a file ``.dvc/config.local``. Dvc will check this file to know where datasets should be fetched from on the next step. It contains sensitive data, must not be committed, and is gitignored by default. The contents of the file should be the following::
 
@@ -22,17 +33,24 @@ Using DVC (Data Version Control) - preferred
         remote = ironspeed
     ['remote "ironspeed"']
         url = ssh://10.10.20.160/home/hbabii/.dvcstorage/bohr
-        password = <username>
-        user = <password>
+        user = <username>
+        password = <password>
 
-#. Run ``dvc pull data/combination/Test_Dataset.csv data/combination/Training_Dataset.csv``
+#. Run ``dvc pull -r ironspeed data/test downloaded-data/b_b.7z``
+
 #. Run ``dvc repro``
 
 .. _dvc: https://dvc.org/doc/install
+.. _p7zip: https://www.7-zip.org
+.. _conda: https://docs.anaconda.com/anaconda/install/
 
 Without DVC
 ~~~~~~~~~~~
 TBA
+
+
+
+EDIT TEXT BELOW WITH UPDATED STEPS >>>
 
 Contribute to the project by adding your first heuristic:
 ===========================================================

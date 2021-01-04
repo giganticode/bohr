@@ -1,0 +1,6 @@
+Label: Commit
+Commit: BugFix, NonBugFix
+Commit: Tangled, NonTangled
+BugFix: MinorBugFix, MajorBugFix, CriticalBugFix, OtherSeverityLevelBugFix
+NonBugFix: BogusFix
+BogusFix: DocFix, TestFix

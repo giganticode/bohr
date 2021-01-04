@@ -18,6 +18,7 @@ ENV PYTHONPATH="/usr/src/bohr/:$PYTHONPATH"
 RUN pyenv install 3.8.0
 
 RUN echo "$(ls)"
+RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
 RUN dvc status

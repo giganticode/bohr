@@ -149,6 +149,7 @@ disable=print-statement,
         missing-function-docstring,
         missing-module-docstring,
         missing-class-docstring,
+        bad-whitespace, # compatibility with black
         # TODO possibly temporarily disable, check them out:
         no-else-return,
         unidiomatic-typecheck,

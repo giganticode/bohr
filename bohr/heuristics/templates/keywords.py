@@ -39,10 +39,10 @@ class KeywordHeuristics(Heuristic):
             name = self.name_pattern.replace("%1", name_elem)
             resources = dict(keywords=keyword_group)
 
-            ff = self.get_artifact_safe_func(f)
-            ff.__name__ = name
+            safe_func = self.get_artifact_safe_func(f)
+            safe_func.__name__ = name
             heuristic = _Heuristic(
-                ff,
+                safe_func,
                 artifact_type_applied_to=self.artifact_type_applied_to,
                 resources=resources,
             )

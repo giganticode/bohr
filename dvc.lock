@@ -252,8 +252,8 @@ train_label_model_bugginess:
   cmd: python bohr/pipeline/train_label_model.py bugginess
   deps:
   - path: bohr/pipeline/train_label_model.py
-    md5: 2323e6e474b24affd1f8b691513e7566
-    size: 1636
+    md5: e0cf6350d6c967812651897ebe3c62fd
+    size: 1663
   - path: data
     md5: c42ce7cb1421358ff73863c34d09e8b3.dir
     size: 2491587432

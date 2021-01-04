@@ -111,7 +111,7 @@ class Commit(Artifact):
 
             try:
                 return df.loc[[(owner, repository, sha)]]
-            except KeyError as e:
+            except KeyError:
                 return None
 
         def get_resources_from_dir(
@@ -120,7 +120,7 @@ class Commit(Artifact):
             df = self.__load_df(type, owner, repository)
             try:
                 return df.loc[[sha]]
-            except KeyError as e:
+            except KeyError:
                 return None
 
         def get_files(self, owner: str, repository: str, sha: str):

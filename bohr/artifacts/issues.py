@@ -17,7 +17,7 @@ class Issue(Artifact):
     @cached_property
     def stemmed_labels(self) -> Set[str]:
         stemmer = PorterStemmer()
-        return set([stemmer.stem(l) for l in self.labels])
+        return {stemmer.stem(label) for label in self.labels}
 
     @cached_property
     def tokens(self) -> Set[str]:

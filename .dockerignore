@@ -1,0 +1,23 @@
+# These unnecessary files would invalidate your docker build cache.
+# https://medium.com/@rdsubhas/docker-for-development-common-problems-and-solutions-95b25cae41eb
+
+# App
+.dockerignore
+Dockerfile
+.gitignore
+.travis.yml
+
+maildev
+tmp
+uploads
+*.md
+*.log
+
+
+.dvc/cache/*
+
+downloaded-data/*.7z
+generated/*
+labeled-data/*
+data/test
+data/train

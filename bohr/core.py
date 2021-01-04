@@ -52,7 +52,7 @@ class Heuristic:
                 raise ValueError("Not right artifact")
             try:
                 return f(artifact, *args, **kwargs)
-            except (ValueError, KeyError, AttributeError, IndexError):
+            except (ValueError, KeyError, AttributeError, IndexError, TypeError):
                 logger.error(sys.exc_info())
                 return None
 

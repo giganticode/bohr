@@ -29,7 +29,7 @@ class ArtifactMapper(BaseMapper, ABC):
         pass
 
 
-class _Heuristic(object):
+class _Heuristic:
     def __init__(
         self, func: Callable, artifact_type_applied_to: Type[Artifact], resources=None
     ):
@@ -42,7 +42,7 @@ class _Heuristic(object):
         return self.func(artifact, *args, **kwargs)
 
 
-class Heuristic(object):
+class Heuristic:
     def __init__(self, artifact_type_applied_to: Type[Artifact]):
         self.artifact_type_applied_to = artifact_type_applied_to
 
@@ -52,7 +52,7 @@ class Heuristic(object):
                 raise ValueError("Not right artifact")
             try:
                 return f(artifact, *args, **kwargs)
-            except BaseException:
+            except (ValueError, KeyError, AttributeError, IndexError, TypeError):
                 logger.error(sys.exc_info())
                 return None
 
@@ -65,14 +65,14 @@ class Heuristic(object):
 
 def load_heuristics_from_module(
     artifact_type: Type, module_name: str
-) -> List[Heuristic]:
+) -> List[_Heuristic]:
     def is_heuristic_of_needed_type(obj):
         return (
             isinstance(obj, _Heuristic)
             and obj.artifact_type_applied_to == artifact_type
         )
 
-    heuristics: List[Heuristic] = []
+    heuristics: List[_Heuristic] = []
     module = importlib.import_module(f"bohr.heuristics.{module_name}")
     heuristics.extend(
         [
@@ -92,14 +92,14 @@ def load_heuristics_from_module(
 
 
 def load_heuristics(
-    artifactType: Type, limited_to_modules: Optional[Set[str]] = None
+    artifact_type: Type, limited_to_modules: Optional[Set[str]] = None
 ) -> List[_Heuristic]:
-    heuristics: List[Heuristic] = []
+    heuristics: List[_Heuristic] = []
     for heuristic_file in next(os.walk(HEURISTIC_DIR))[2]:
         heuristic_module_name = ".".join(heuristic_file.split(".")[:-1])
         if limited_to_modules is None or heuristic_module_name in limited_to_modules:
             heuristics.extend(
-                load_heuristics_from_module(artifactType, heuristic_module_name)
+                load_heuristics_from_module(artifact_type, heuristic_module_name)
             )
     return heuristics
 

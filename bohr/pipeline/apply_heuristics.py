@@ -17,10 +17,10 @@ from bohr.core import to_labeling_functions, load_heuristics, Task
 from bohr.pipeline.profiler import Profiler
 
 
-def majority_acc(L: np.ndarray, df: DataFrame) -> float:
+def majority_acc(line: np.ndarray, df: DataFrame) -> float:
     majority_model = MajorityLabelVoter()
     maj_model_train_acc = majority_model.score(
-        L=L, Y=df.bug, tie_break_policy="random"
+        L=line, Y=df.bug, tie_break_policy="random"
     )["accuracy"]
     return maj_model_train_acc
 
@@ -60,16 +60,16 @@ def apply_lfs_to_test_set(
     save_metrics_to: Path,
 ) -> Dict[str, float]:
     applier = PandasLFApplier(lfs=lfs)
-    L = applier.apply(df=artifact_df)
-    L.dump(save_generated_to / f"heuristic_matrix_{test_set_name}.pkl")
-    lf_analysis_summary = LFAnalysis(L, lfs).lf_summary(Y=artifact_df.bug.values)
+    lines = applier.apply(df=artifact_df)
+    lines.dump(save_generated_to / f"heuristic_matrix_{test_set_name}.pkl")
+    lf_analysis_summary = LFAnalysis(lines, lfs).lf_summary(Y=artifact_df.bug.values)
     lf_analysis_summary.to_csv(save_generated_to / f"analysis_{test_set_name}.csv")
     analysis_dict = lf_analysis_summary.to_dict()
     del analysis_dict["j"]
     with open(save_metrics_to / f"analysis_{test_set_name}.json", "w") as f:
         json.dump(analysis_dict, f, indent=4, sort_keys=True, cls=NumpyEncoder)
-    coverage = sum((L != -1).any(axis=1)) / len(L)
-    majority_accuracy = majority_acc(L, artifact_df)
+    coverage = sum((lines != -1).any(axis=1)) / len(lines)
+    majority_accuracy = majority_acc(lines, artifact_df)
     return {
         f"coverage_{test_set_name}": coverage,
         f"majority_accuracy_{test_set_name}": majority_accuracy,

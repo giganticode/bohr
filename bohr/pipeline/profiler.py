@@ -1,4 +1,4 @@
-class Profiler(object):
+class Profiler:
     def __init__(self, enabled: bool):
         self.enabled = enabled
         if self.enabled:

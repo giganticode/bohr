@@ -16,8 +16,10 @@ def get_test_set_accuracy(
     label_model: LabelModel, test_set_name: str, save_to: Path
 ) -> float:
     df = pd.read_csv(TEST_DIR / f"{test_set_name}.csv")
-    L = np.load(save_to / f"heuristic_matrix_{test_set_name}.pkl", allow_pickle=True)
-    return label_model.score(L=L, Y=df.bug, tie_break_policy="random")["accuracy"]
+    lines = np.load(
+        str(save_to / f"heuristic_matrix_{test_set_name}.pkl"), allow_pickle=True
+    )
+    return label_model.score(L=lines, Y=df.bug, tie_break_policy="random")["accuracy"]
 
 
 def train_label_model(task_name: str) -> Dict[str, Any]:
@@ -25,11 +27,11 @@ def train_label_model(task_name: str) -> Dict[str, Any]:
 
     task_dir_generated = PROJECT_DIR / "generated" / task_name
 
-    L_train = np.load(
+    lines_train = np.load(
         task_dir_generated / "heuristic_matrix_train.pkl", allow_pickle=True
     )
     label_model = LabelModel(cardinality=2, verbose=True)
-    label_model.fit(L_train=L_train, n_epochs=100, log_freq=100, seed=123)
+    label_model.fit(lines_train, n_epochs=100, log_freq=100, seed=123)
     label_model.save(task_dir_generated / "label_model.pkl")
     label_model.eval()
 

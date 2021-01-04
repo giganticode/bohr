@@ -3,7 +3,7 @@ from typing import Optional
 
 import pandas as pd
 
-from bohr.core import DatasetLoader, ArtifactMapper
+from bohr.core import ArtifactMapper, DatasetLoader
 
 
 class CsvDatasetLoader(DatasetLoader):

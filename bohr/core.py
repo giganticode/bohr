@@ -4,14 +4,14 @@ import inspect
 import logging
 import os
 import sys
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Callable, Type, Optional, Set
+from typing import Callable, List, Optional, Set, Type
 
 from dask.dataframe import DataFrame
 from snorkel.map import BaseMapper
 
-from bohr import HEURISTIC_DIR, DATASET_DIR
+from bohr import DATASET_DIR, HEURISTIC_DIR
 from bohr.artifacts.core import Artifact
 from bohr.labels import Label
 from bohr.pipeline.labels.cache import CategoryMappingCache

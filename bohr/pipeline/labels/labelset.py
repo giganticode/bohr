@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Flag, auto
 from functools import reduce
-from typing import List, Type, Union, TypeVar, Set
+from typing import List, Set, Type, TypeVar, Union
 
 
 class Label(Flag):

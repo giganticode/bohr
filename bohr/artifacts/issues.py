@@ -5,7 +5,7 @@ from typing import List, Set
 from nltk import PorterStemmer, bigrams
 
 from bohr.artifacts.core import Artifact
-from bohr.nlp_utils import safe_tokenize, NgramSet
+from bohr.nlp_utils import NgramSet, safe_tokenize
 
 
 @dataclass

@@ -1,11 +1,10 @@
 import logging
 import sys
-from typing import Type, Tuple, List
+from typing import List, Tuple, Type
 
 from cachetools import LRUCache
 
 from bohr.pipeline.labels.labelset import LabelSet, LabelSubclass
-
 
 logger = logging.getLogger(__name__)
 

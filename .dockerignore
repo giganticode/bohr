@@ -14,3 +14,7 @@ uploads
 
 
 .dvc
+
+downloaded-data/*
+generated/*
+labeled-data/*

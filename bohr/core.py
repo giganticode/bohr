@@ -203,10 +203,16 @@ class Task:
             label_categories = getattr(module, "label_categories")
             test_dataset_names = getattr(module, "test_datasets")
             test_datasets = list(map(get_dataset_loader, test_dataset_names))
-            all_dataset_loaders = get_dataset_loaders(top_artifact)
-            train_datasets = list(
-                filter(lambda d: d.name not in test_dataset_names, all_dataset_loaders)
-            )
+            try:
+                train_dataset_names = getattr(module, "train_datasets")
+                train_datasets = list(map(get_dataset_loader, train_dataset_names))
+            except AttributeError:
+                all_dataset_loaders = get_dataset_loaders(top_artifact)
+                train_datasets = list(
+                    filter(
+                        lambda d: d.name not in test_dataset_names, all_dataset_loaders
+                    )
+                )
             return cls(
                 name,
                 top_artifact,

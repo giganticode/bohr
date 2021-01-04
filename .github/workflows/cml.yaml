@@ -1,7 +1,44 @@
 name: calculate-metrics
 on: [pull_request]
 jobs:
-  bugginess:
+  bugginess-short:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          PYTHONPATH: /__w/bohr/bohr
+        run: |
+          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
+
+          rm -rf /github/home/.pyenv
+          unset PYENV_ROOT
+          curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          pyenv install 3.8.0
+          pyenv global 3.8.0
+          eval "$(pyenv init -)"
+          pyenv versions
+          python --version
+
+          pip install Cython==0.29.21
+          pip install -r requirements.txt
+          python -c 'import nltk; nltk.download("punkt")'
+          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc repro label_dataset_bugginess_10k
+      - name: post_metrics
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch --prune
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md
+  bugginess: #TODO find a way to reuse stages: https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851/12
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:

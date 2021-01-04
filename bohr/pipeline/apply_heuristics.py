@@ -60,6 +60,7 @@ def apply_lfs_to_test_set(
     save_metrics_to: Path,
 ) -> Dict[str, float]:
     applier = PandasLFApplier(lfs=lfs)
+
     lines = applier.apply(df=artifact_df)
     lines.dump(save_generated_to / f"heuristic_matrix_{test_set_name}.pkl")
     lf_analysis_summary = LFAnalysis(lines, lfs).lf_summary(Y=artifact_df.bug.values)

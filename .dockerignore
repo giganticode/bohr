@@ -13,7 +13,4 @@ uploads
 *.log
 
 
-# Ignore .git folder
-.git*
-
 .dvc

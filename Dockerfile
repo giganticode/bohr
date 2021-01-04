@@ -21,8 +21,6 @@ RUN echo "$(ls)"
 RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
-RUN git clone https://github.com/giganticode/bohr
-RUN cd bohr
 RUN dvc status
 
 RUN dvc pull data/test downloaded-data/b_b.7z

@@ -1,0 +1,19 @@
+# These unnecessary files would invalidate your docker build cache.
+# https://medium.com/@rdsubhas/docker-for-development-common-problems-and-solutions-95b25cae41eb
+
+# App
+.dockerignore
+.gitignore
+.travis.yml
+
+maildev
+tmp
+uploads
+*.md
+*.log
+
+
+# Ignore .git folder
+.git*
+
+.dvc

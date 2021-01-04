@@ -149,8 +149,8 @@ disable=print-statement,
         missing-function-docstring,
         missing-module-docstring,
         missing-class-docstring,
+        bad-whitespace, # compatibility with black
         # TODO possibly temporarily disable, check them out:
-        line-too-long,
         no-else-return,
         unidiomatic-typecheck,
         redefined-outer-name,
@@ -331,7 +331,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=79
+max-line-length=88
 
 # Maximum number of lines in a module.
 max-module-lines=1000

@@ -66,18 +66,18 @@ class LabelHierarchy:
         self, parent: Optional[ParentHierarchy] = None
     ) -> List[FlattenedHierarchy]:
         hirarchy_name = f"{self.children[0].label}{self.label}"
-        hierarchy_tail, other_hierarchies = self._flatten(hirarchy_name)
+        hierarchy_tail, other_hierarchies = self.flatten_int(hirarchy_name)
         return [
             FlattenedHierarchy(hirarchy_name, parent, hierarchy_tail)
         ] + other_hierarchies
 
-    def _flatten(
+    def flatten_int(
         self, hierarchy_top: Optional["str"] = None
     ) -> Tuple[FlattenedNodes, List[FlattenedHierarchy]]:
         other_hierarchies: List[FlattenedHierarchy] = []
         main_hierarchy_nodes: FlattenedNodes = []
         for child in self.children:
-            child_nodes, lst = child._flatten(hierarchy_top)
+            child_nodes, lst = child.flatten_int(hierarchy_top)
             other_hierarchies.extend(lst)
             main_hierarchy_nodes.extend(child_nodes)
         main_hierarchy_nodes.append(

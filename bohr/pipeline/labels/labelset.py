@@ -36,7 +36,7 @@ LabelSubclass = TypeVar("LabelSubclass", bound=Label)
 
 
 @dataclass(frozen=True)
-class LabelSet(object):
+class LabelSet:
     """
     >>> class A(Label):
     ...    A3 = auto()

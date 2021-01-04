@@ -1,2 +1,2 @@
-class Artifact(object):
+class Artifact:
     pass

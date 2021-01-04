@@ -3,6 +3,7 @@
 
 # App
 .dockerignore
+Dockerfile
 .gitignore
 .travis.yml
 
@@ -15,7 +16,8 @@ uploads
 
 .dvc/cache/*
 
-downloaded-data/*
+downloaded-data/*.7z
 generated/*
 labeled-data/*
-data/*
+data/test
+data/train

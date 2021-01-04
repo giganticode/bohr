@@ -21,7 +21,7 @@ RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
 
-RUN dvc pull data/test downloaded-data/b_b.7z
+RUN dvc pull data/test downloaded-data/sample.7z
 RUN dvc repro
 RUN test -z "$(git status --porcelain)"
 RUN dvc status

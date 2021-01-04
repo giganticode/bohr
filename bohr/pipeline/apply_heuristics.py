@@ -8,12 +8,12 @@ import numpy as np
 from dask.dataframe import DataFrame
 from dask.diagnostics import ProgressBar
 from numpyencoder import NumpyEncoder
-from snorkel.labeling import PandasLFApplier, LFAnalysis
+from snorkel.labeling import LFAnalysis, PandasLFApplier
 from snorkel.labeling.apply.dask import PandasParallelLFApplier
 from snorkel.labeling.model import MajorityLabelVoter
 
 from bohr import PROJECT_DIR
-from bohr.core import to_labeling_functions, load_heuristics, Task
+from bohr.core import Task, load_heuristics, to_labeling_functions
 from bohr.pipeline.profiler import Profiler
 
 

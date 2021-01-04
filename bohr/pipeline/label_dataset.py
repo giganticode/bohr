@@ -4,14 +4,8 @@ import numpy as np
 import pandas as pd
 from snorkel.labeling.model import LabelModel
 
-from bohr import PROJECT_DIR, LABELED_DATA_DIR
-from bohr.core import (
-    load_heuristics,
-    DatasetLoader,
-    Task,
-    to_labeling_functions,
-    get_dataset_loader,
-)
+from bohr import LABELED_DATA_DIR, PROJECT_DIR
+from bohr.core import Task, get_dataset_loader, load_heuristics, to_labeling_functions
 
 
 def label_dataset(task_name: str, dataset_name: str, debug: bool = False):

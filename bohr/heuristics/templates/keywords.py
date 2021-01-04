@@ -1,9 +1,9 @@
 from pathlib import Path
-from typing import Type, Callable, List
+from typing import Callable, List, Type
 
 from bohr import HEURISTIC_DIR
 from bohr.artifacts.core import Artifact
-from bohr.core import Heuristic, _Heuristic, KEYWORD_GROUP_SEPARATOR
+from bohr.core import KEYWORD_GROUP_SEPARATOR, Heuristic, _Heuristic
 from bohr.pipeline.labels.labelset import Label
 
 

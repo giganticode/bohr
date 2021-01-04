@@ -1,4 +1,4 @@
-from typing import Set, Any, Tuple, Union
+from typing import Any, Set, Tuple, Union
 
 import pandas as pd
 from nltk.tokenize import RegexpTokenizer

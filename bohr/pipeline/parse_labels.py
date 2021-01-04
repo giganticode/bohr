@@ -1,7 +1,7 @@
 import logging
 from glob import glob
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from bohr import PROJECT_DIR
 from bohr.pipeline.labels.hierarchies import LabelHierarchy

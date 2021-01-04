@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Callable, Mapping, Any, List
+from typing import Any, Callable, List, Mapping, Optional
 
 from snorkel.labeling import LabelingFunction
 from snorkel.map import BaseMapper

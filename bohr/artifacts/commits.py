@@ -1,15 +1,14 @@
 from dataclasses import dataclass, field
 from functools import cached_property, lru_cache
-from typing import Optional, Set, List
+from typing import List, Optional, Set
 
 import pandas as pd
 from nltk import PorterStemmer, bigrams
 
-from bohr import TRAIN_DIR, PROJECT_DIR
+from bohr import PROJECT_DIR, TRAIN_DIR
 from bohr.artifacts.core import Artifact
-from bohr.nlp_utils import safe_tokenize, NgramSet
 from bohr.artifacts.issues import Issue, Issues
-
+from bohr.nlp_utils import NgramSet, safe_tokenize
 
 ISSUES_FILE = PROJECT_DIR / "data/train/bug_sample_issues.csv"
 CHANGES_FILE = PROJECT_DIR / "data/train/bug_sample_files.csv"

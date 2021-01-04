@@ -18,3 +18,4 @@ uploads
 downloaded-data/*
 generated/*
 labeled-data/*
+data/*

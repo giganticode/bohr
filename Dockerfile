@@ -5,7 +5,6 @@ WORKDIR /usr/src/bohr
 MAINTAINER hlib <hlibbabii@gmail.com>
 
 COPY . .
-RUN test -z "$(git status --porcelain)"
 
 RUN sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
 
@@ -21,10 +20,10 @@ RUN echo "$(ls)"
 RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
-RUN dvc status
 
 RUN dvc pull data/test downloaded-data/b_b.7z
 RUN dvc repro
 RUN test -z "$(git status --porcelain)"
+RUN dvc status
 
 ENTRYPOINT ['/bin/bash']

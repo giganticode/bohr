@@ -9,17 +9,22 @@ import pandas as pd
 from snorkel.labeling.model import LabelModel
 
 from bohr import PROJECT_DIR, TEST_DIR
-from bohr.core import Task
+from bohr.core import DatasetLoader, Task
 
 
 def get_test_set_accuracy(
-    label_model: LabelModel, test_set_name: str, save_to: Path
+    label_model: LabelModel,
+    test_set: DatasetLoader,
+    save_to: Path,
+    label_column_name: str,
 ) -> float:
-    df = pd.read_csv(TEST_DIR / f"{test_set_name}.csv")
+    df = pd.read_csv(TEST_DIR / f"{test_set}.csv")
     lines = np.load(
-        str(save_to / f"heuristic_matrix_{test_set_name}.pkl"), allow_pickle=True
+        str(save_to / f"heuristic_matrix_{test_set.name}.pkl"), allow_pickle=True
     )
-    return label_model.score(L=lines, Y=df.bug, tie_break_policy="random")["accuracy"]
+    return label_model.score(
+        L=lines, Y=df[label_column_name], tie_break_policy="random"
+    )["accuracy"]
 
 
 def train_label_model(task_name: str) -> Dict[str, Any]:
@@ -38,7 +43,10 @@ def train_label_model(task_name: str) -> Dict[str, Any]:
     task = Task.load(task_name)
     for test_set in task.test_datasets:
         stats[f"label_model_acc_{test_set.name}"] = get_test_set_accuracy(
-            label_model, test_set.name, save_to=task_dir_generated
+            label_model,
+            test_set,
+            save_to=task_dir_generated,
+            label_column_name=task.label_column_name,
         )
 
     return stats

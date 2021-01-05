@@ -131,7 +131,7 @@ def apply_heuristics(task_name: str, n_parallel: int) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("task", default="bugginess")
+    parser.add_argument("task")
     parser.add_argument("--n-workers", type=int, default=1)
     parser.add_argument("--profile", action="store_true")
     args = parser.parse_args()

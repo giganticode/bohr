@@ -1,0 +1,9 @@
+md5: 37ad3e424ddfea788492511b950e809c
+frozen: true
+deps:
+- etag: W/"md5:9019beae88089838d2d13dc12e69241b"
+  path: https://zenodo.org/record/3666840/files/MLCQCodeSmellSamples.csv?download=1
+outs:
+- md5: 3d60d277b9fa1306c05ccfdefe22e9d1
+  size: 7513770
+  path: smells-madeyski.csv

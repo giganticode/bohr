@@ -5,10 +5,9 @@ from pprint import pprint
 from typing import Any, Dict
 
 import numpy as np
-import pandas as pd
 from snorkel.labeling.model import LabelModel
 
-from bohr import PROJECT_DIR, TEST_DIR
+from bohr import PROJECT_DIR
 from bohr.core import DatasetLoader, Task
 
 
@@ -18,7 +17,7 @@ def get_test_set_accuracy(
     save_to: Path,
     label_column_name: str,
 ) -> float:
-    df = pd.read_csv(TEST_DIR / f"{test_set}.csv")
+    df = test_set.load()
     lines = np.load(
         str(save_to / f"heuristic_matrix_{test_set.name}.pkl"), allow_pickle=True
     )

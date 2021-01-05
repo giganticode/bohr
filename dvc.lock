@@ -164,11 +164,11 @@ parse_labels:
   cmd: python bohr/pipeline/parse_labels.py
   deps:
   - path: bohr/labels
-    md5: 6a49b9011708a3ba18328bb6c119967f.dir
-    size: 459
-    nfiles: 2
+    md5: eef8bbeae28b23dfd111577207a25767.dir
+    size: 538
+    nfiles: 3
   - path: bohr/pipeline/labels
-    md5: 8c9fff0a3885e81a06782fa92e7b86c6.dir
+    md5: 9fc03ec097a81b70c99e83e42999160a.dir
     size: 25055
     nfiles: 8
   - path: bohr/pipeline/parse_labels.py
@@ -179,8 +179,8 @@ parse_labels:
     size: 558
   outs:
   - path: bohr/labels.py
-    md5: c5f6acc83b6eaaccb365b15c70c3c5d6
-    size: 1417
+    md5: 124376a1f143b48af26379ad74d58adf
+    size: 1677
 apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py bugginess
   deps:
@@ -294,3 +294,126 @@ label_dataset_bugginess:
   - path: labeled-data/bugginess-train.csv
     md5: e064e4c4beba071ff5ef7f91b68af2c7
     size: 66028172
+preprocess-and-split-smell-dataset:
+  cmd: data-preprocessing/smells.sh
+  deps:
+  - path: data-preprocessing/smells.sh
+    md5: 5586fe7da173ecfb168fb1279556974c
+    size: 1640
+  - path: downloaded-data/smells-madeyski.csv
+    md5: 3d60d277b9fa1306c05ccfdefe22e9d1
+    size: 7499030
+  outs:
+  - path: data/smells/test.csv
+    md5: c059489aceb0b0410d6034716c592926
+    size: 77464
+  - path: data/smells/train.csv
+    md5: 7fc9a7617e6f201523fba311317ba48f
+    size: 296407
+apply_heuristics_smells:
+  cmd: python bohr/pipeline/apply_heuristics.py smells
+  deps:
+  - path: bohr/artifacts
+    md5: 04f1da5f5b544be04374deafa39f7d96.dir
+    size: 19429
+    nfiles: 10
+  - path: bohr/core.py
+    md5: d80ec32ab2614e9ea1e9fd7834f8db11
+    size: 8704
+  - path: bohr/datasets
+    md5: 7b661c9db1d3ff9333314e0902e26241.dir
+    size: 13502
+    nfiles: 28
+  - path: bohr/heuristics
+    md5: d14a66bf33641048ab676a83bac8bb70.dir
+    size: 17721
+    nfiles: 16
+  - path: bohr/labels.py
+    md5: 124376a1f143b48af26379ad74d58adf
+    size: 1677
+  - path: bohr/pipeline/apply_heuristics.py
+    md5: 65022852393528e09482c2d800cdc383
+    size: 5206
+  - path: bohr/tasks/smells.py
+    md5: 59a388c03d6a858853e42e54b5b383ef
+    size: 158
+  - path: data
+    md5: 223cf417d18c6776dbb2e560c59fc798.dir
+    size: 2491961324
+    nfiles: 11
+  outs:
+  - path: generated/smells/analysis_smells-test.csv
+    md5: 0e9a0cb4bca25888a4c21bb79dd903fc
+    size: 337
+  - path: generated/smells/analysis_train.csv
+    md5: fbb491949031407029f57e7089a123ca
+    size: 252
+  - path: generated/smells/heuristic_matrix_smells-test.pkl
+    md5: e02374e512c2a8965efc1c5e8b07af81
+    size: 6160
+  - path: generated/smells/heuristic_matrix_train.pkl
+    md5: 34d9fda2129d72f64c1564c5c5931347
+    size: 24313
+  - path: metrics/smells/analysis_smells-test.json
+    md5: b210737d114c81d670a7b5d49a99a250
+    size: 1119
+  - path: metrics/smells/analysis_train.json
+    md5: 4d96593b82baf44b775be1d171c73358
+    size: 698
+  - path: metrics/smells/heuristic_metrics.json
+    md5: acb305bc3bdc18a1423017cf0e891828
+    size: 162
+label_dataset_bugginess_smells:
+  cmd: python bohr/pipeline/label_dataset.py smells smells-train
+  deps:
+  - path: bohr/datasets
+    md5: 7b661c9db1d3ff9333314e0902e26241.dir
+    size: 13502
+    nfiles: 28
+  - path: bohr/pipeline/label_dataset.py
+    md5: e6d52c1839abc8d39983fb71aafb0a9e
+    size: 2039
+  - path: bohr/tasks/smells.py
+    md5: 59a388c03d6a858853e42e54b5b383ef
+    size: 158
+  - path: data/train
+    md5: 5df7291dd57bd397a889b63e2d12c5b2.dir
+    size: 2489726547
+    nfiles: 3
+  - path: generated/smells/heuristic_matrix_train.pkl
+    md5: 34d9fda2129d72f64c1564c5c5931347
+    size: 24313
+  outs:
+  - path: labeled-data/smells-train.csv
+    md5: dbc45d82d67347005c8e967597f86adc
+    size: 310778
+train_label_model_smells:
+  cmd: python bohr/pipeline/train_label_model.py smells
+  deps:
+  - path: bohr/datasets
+    md5: 7b661c9db1d3ff9333314e0902e26241.dir
+    size: 13502
+    nfiles: 28
+  - path: bohr/pipeline/train_label_model.py
+    md5: ef3907f88667b490a970ef03244a0e57
+    size: 1728
+  - path: bohr/tasks/smells.py
+    md5: 59a388c03d6a858853e42e54b5b383ef
+    size: 158
+  - path: data
+    md5: 223cf417d18c6776dbb2e560c59fc798.dir
+    size: 2491961324
+    nfiles: 11
+  - path: generated/smells/heuristic_matrix_smells-test.pkl
+    md5: e02374e512c2a8965efc1c5e8b07af81
+    size: 6160
+  - path: generated/smells/heuristic_matrix_train.pkl
+    md5: 34d9fda2129d72f64c1564c5c5931347
+    size: 24313
+  outs:
+  - path: generated/smells/label_model.pkl
+    md5: f615f6f4c5908688ae98614dadf9e092
+    size: 4890
+  - path: metrics/smells/label_model_metrics.json
+    md5: d5833d6e6de51c941040b2394b923796
+    size: 51

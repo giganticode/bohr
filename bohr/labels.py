@@ -49,3 +49,15 @@ class TangledCommit(Label):
 
     def parent(self):
         return CommitLabel.Commit
+
+
+class SnippetLabel(Label):
+    LongMethod = auto()
+    LongParameterList = auto()
+    Smelly = LongMethod | LongParameterList
+    NonSmelly = auto()
+    Snippet = Smelly | NonSmelly
+    Label = Snippet
+
+    def parent(self):
+        return CommitLabel.Label

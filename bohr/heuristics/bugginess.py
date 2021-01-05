@@ -6,7 +6,7 @@ from bohr.core import Heuristic
 from bohr.heuristics.templates.keywords import KeywordHeuristics
 from bohr.labels import *
 from bohr.nlp_utils import NgramSet
-from bohr.pipeline.labels.labelset import LabelSet
+from bohr.pipeline.labels.labelset import Label, LabelSet
 
 Labels = Union[Label, LabelSet]
 

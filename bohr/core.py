@@ -53,7 +53,10 @@ class Heuristic:
             try:
                 return f(artifact, *args, **kwargs)
             except (ValueError, KeyError, AttributeError, IndexError, TypeError):
-                logger.error(sys.exc_info())
+                logger.exception(
+                    "Exception thrown while applying heuristic, "
+                    "skipping the heuristic for this datapoint ..."
+                )
                 return None
 
         return functools.wraps(f)(func)

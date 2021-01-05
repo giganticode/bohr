@@ -29,7 +29,7 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc pull -r gdrive data/test downloaded-data/sample.7z downloaded-data/smells-madeyski.csv
           dvc repro label_dataset_bugginess_10k
       - name: post_metrics
         env:
@@ -66,7 +66,7 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive data/test downloaded-data/sample.7z
+          dvc pull -r gdrive data/test downloaded-data/sample.7z downloaded-data/smells-madeyski.csv
           dvc repro
       - name: Commit files
         run: |

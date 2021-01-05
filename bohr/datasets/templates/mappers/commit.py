@@ -3,7 +3,7 @@ from typing import Optional, Type
 from cachetools import LRUCache
 from snorkel.types import DataPoint
 
-from bohr.artifacts.commits import Commit
+from bohr.artifacts.commit import Commit
 from bohr.core import ArtifactMapper
 
 

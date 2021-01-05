@@ -93,6 +93,15 @@ def load_heuristics_from_module(
     return heuristics
 
 
+def check_names_unique(heuristics: List[_Heuristic]) -> None:
+    name_set = set()
+    for heuristic in heuristics:
+        name = heuristic.func.__name__
+        if name in name_set:
+            raise ValueError(f"Heuristic with name {name} already exists.")
+        name_set.add(name)
+
+
 def load_heuristics(
     artifact_type: Type, limited_to_modules: Optional[Set[str]] = None
 ) -> List[_Heuristic]:
@@ -103,6 +112,7 @@ def load_heuristics(
             heuristics.extend(
                 load_heuristics_from_module(artifact_type, heuristic_module_name)
             )
+    check_names_unique(heuristics)
     return heuristics
 
 
@@ -166,15 +176,15 @@ def to_labeling_functions(
     category_mapping_cache = CategoryMappingCache(labels, maxsize=10000)
     labeling_functions = list(
         map(
-            lambda h: SnorkelLabelingFunction(
-                name=h.__name__,
+            lambda x: SnorkelLabelingFunction(
+                name=f"{x[1].__name__}_{x[0]}",
                 f=lambda *args, **kwargs: apply_heuristic_and_convert_to_snorkel_label(
-                    h, category_mapping_cache, *args, **kwargs
+                    x[1], category_mapping_cache, *args, **kwargs
                 ),
                 mapper=mapper,
-                resources=h.resources,
+                resources=x[1].resources,
             ),
-            heuristics,
+            enumerate(heuristics),
         )
     )
     return labeling_functions

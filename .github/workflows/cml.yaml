@@ -66,8 +66,8 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive data/test downloaded-data/sample.7z downloaded-data/smells-madeyski.csv
-          dvc repro
+          dvc pull -r gdrive downloaded-data/smells-madeyski.csv
+          dvc repro label_dataset_bugginess_smells
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

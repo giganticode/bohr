@@ -3,7 +3,6 @@ import importlib
 import inspect
 import logging
 import os
-import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, List, Optional, Set, Type
@@ -13,8 +12,8 @@ from snorkel.map import BaseMapper
 
 from bohr import DATASET_DIR, HEURISTIC_DIR
 from bohr.artifacts.core import Artifact
-from bohr.labels import Label
 from bohr.pipeline.labels.cache import CategoryMappingCache
+from bohr.pipeline.labels.labelset import Label
 from bohr.snorkel import SnorkelLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = "|"

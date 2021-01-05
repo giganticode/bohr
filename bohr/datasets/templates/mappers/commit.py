@@ -19,7 +19,7 @@ class CommitMapper(ArtifactMapper):
         if key in self.cache:
             return self.cache[key]
 
-        commit = Commit(x.owner, x.repository, x.sha, x.message)
+        commit = Commit(x.owner, x.repository, x.sha, str(x.message))
         self.cache[key] = commit
 
         return commit

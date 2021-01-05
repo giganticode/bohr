@@ -188,6 +188,7 @@ class Task:
     labels: List[str]
     train_datasets: List[DatasetLoader]
     test_datasets: List[DatasetLoader]
+    label_column_name: str
 
     def __post_init__(self):
         for test_dataset in self.train_datasets + self.test_datasets:
@@ -216,12 +217,17 @@ class Task:
                         lambda d: d.name not in test_dataset_names, all_dataset_loaders
                     )
                 )
+            try:
+                label_column_name = getattr(module, "label_column_name")
+            except AttributeError:
+                label_column_name = name
             return cls(
                 name,
                 top_artifact,
                 label_categories,
                 train_datasets=train_datasets,
                 test_datasets=test_datasets,
+                label_column_name=label_column_name,
             )
         except AttributeError as e:
             raise ValueError("The task is defined incorrectly.") from e

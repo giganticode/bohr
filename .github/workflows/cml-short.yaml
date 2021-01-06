@@ -11,10 +11,6 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
           PYTHONPATH: /user/src/app/
         run: |
-          git pull
-          dvc pull -r gdrive data/test downloaded-data/sample.7z
-          dvc repro label_dataset_bugginess_10k
-
           cd /usr/src/app
           pyenv global 3.8.0
           eval "$(pyenv init -)"

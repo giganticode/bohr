@@ -6,7 +6,7 @@ MAINTAINER hlib <hlibbabii@gmail.com>
 
 COPY . .
 
-RUN sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
+RUN sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev bc
 
 RUN unset PYENV_ROOT
 RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -22,6 +22,5 @@ RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
 
 RUN dvc --version
-RUN dvc pull downloaded-data/smells-madeyski.csv.dvc
 
 ENTRYPOINT ['/bin/bash']

@@ -21,7 +21,7 @@ jobs:
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
           dvc pull -r gdrive data/test downloaded-data/sample.7z
-          cd /usr/src/app
+          cd /usr/src/bohr
           echo "$pwd"
           dvc repro label_dataset_bugginess_10k
 

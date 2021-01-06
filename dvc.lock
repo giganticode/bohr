@@ -164,13 +164,13 @@ parse_labels:
   cmd: python bohr/pipeline/parse_labels.py
   deps:
   - path: bohr/labels
-    md5: 6a49b9011708a3ba18328bb6c119967f.dir
-    size: 459
-    nfiles: 2
+    md5: eef8bbeae28b23dfd111577207a25767.dir
+    size: 538
+    nfiles: 3
   - path: bohr/pipeline/labels
-    md5: fd7c2b703d5f3c2c682e50df6698c9f3.dir
-    size: 16478
-    nfiles: 6
+    md5: 9fc03ec097a81b70c99e83e42999160a.dir
+    size: 25055
+    nfiles: 8
   - path: bohr/pipeline/parse_labels.py
     md5: ee1a099306ed4fab3324914c803ed125
     size: 2749
@@ -179,8 +179,8 @@ parse_labels:
     size: 558
   outs:
   - path: bohr/labels.py
-    md5: c5f6acc83b6eaaccb365b15c70c3c5d6
-    size: 1417
+    md5: 124376a1f143b48af26379ad74d58adf
+    size: 1677
 apply_heuristics_bugginess:
   cmd: python bohr/pipeline/apply_heuristics.py bugginess
   deps:
@@ -400,10 +400,40 @@ label_dataset_bugginess_10k:
     md5: 5df7291dd57bd397a889b63e2d12c5b2.dir
     size: 2489726547
     nfiles: 3
-  - path: generated/bugginess-10k/heuristic_matrix_train.pkl
-    md5: 70b43802be8f66595a79bdcc2f723817
-    size: 48534298
+  - path: generated/smells/heuristic_matrix_train.pkl
+    md5: 34d9fda2129d72f64c1564c5c5931347
+    size: 24313
   outs:
-  - path: labeled-data/bugginess-train-10k.csv
-    md5: 055fa90e0c1ff9f97796904b7d61bf38
-    size: 2044371
+  - path: labeled-data/smells-train.csv
+    md5: dbc45d82d67347005c8e967597f86adc
+    size: 310778
+train_label_model_smells:
+  cmd: python bohr/pipeline/train_label_model.py smells
+  deps:
+  - path: bohr/datasets
+    md5: 7b661c9db1d3ff9333314e0902e26241.dir
+    size: 13502
+    nfiles: 28
+  - path: bohr/pipeline/train_label_model.py
+    md5: ef3907f88667b490a970ef03244a0e57
+    size: 1728
+  - path: bohr/tasks/smells.py
+    md5: 59a388c03d6a858853e42e54b5b383ef
+    size: 158
+  - path: data
+    md5: 223cf417d18c6776dbb2e560c59fc798.dir
+    size: 2491961324
+    nfiles: 11
+  - path: generated/smells/heuristic_matrix_smells-test.pkl
+    md5: e02374e512c2a8965efc1c5e8b07af81
+    size: 6160
+  - path: generated/smells/heuristic_matrix_train.pkl
+    md5: 34d9fda2129d72f64c1564c5c5931347
+    size: 24313
+  outs:
+  - path: generated/smells/label_model.pkl
+    md5: f615f6f4c5908688ae98614dadf9e092
+    size: 4890
+  - path: metrics/smells/label_model_metrics.json
+    md5: d5833d6e6de51c941040b2394b923796
+    size: 51

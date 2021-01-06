@@ -3,7 +3,7 @@ from typing import Optional, Type
 from cachetools import LRUCache
 from snorkel.types import DataPoint
 
-from bohr.artifacts.commits import Commit
+from bohr.artifacts.commit import Commit
 from bohr.core import ArtifactMapper
 
 
@@ -19,7 +19,7 @@ class CommitMapper(ArtifactMapper):
         if key in self.cache:
             return self.cache[key]
 
-        commit = Commit(x.owner, x.repository, x.sha, x.message)
+        commit = Commit(x.owner, x.repository, x.sha, str(x.message))
         self.cache[key] = commit
 
         return commit

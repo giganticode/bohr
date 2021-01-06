@@ -23,4 +23,8 @@ class CsvDatasetLoader(DatasetLoader):
 
     def load(self) -> pd.DataFrame:
         artifact_df = pd.read_csv(self.path_to_file, nrows=self.n_rows, sep=self.sep)
+        if artifact_df.empty:
+            ValueError(
+                f"Dataframe is empty, path: {self.path_to_file}, n_rows={self.n_rows}"
+            )
         return artifact_df

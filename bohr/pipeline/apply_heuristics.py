@@ -17,10 +17,10 @@ from bohr.core import Task, load_heuristics, to_labeling_functions
 from bohr.pipeline.profiler import Profiler
 
 
-def majority_acc(line: np.ndarray, df: DataFrame) -> float:
+def majority_acc(line: np.ndarray, df: DataFrame, label_column_name: str) -> float:
     majority_model = MajorityLabelVoter()
     maj_model_train_acc = majority_model.score(
-        L=line, Y=df.bug, tie_break_policy="random"
+        L=line, Y=df[label_column_name], tie_break_policy="random"
     )["accuracy"]
     return maj_model_train_acc
 
@@ -58,19 +58,22 @@ def apply_lfs_to_test_set(
     test_set_name: str,
     save_generated_to: Path,
     save_metrics_to: Path,
+    label_column_name: str,
 ) -> Dict[str, float]:
     applier = PandasLFApplier(lfs=lfs)
 
     lines = applier.apply(df=artifact_df)
     lines.dump(save_generated_to / f"heuristic_matrix_{test_set_name}.pkl")
-    lf_analysis_summary = LFAnalysis(lines, lfs).lf_summary(Y=artifact_df.bug.values)
+    lf_analysis_summary = LFAnalysis(lines, lfs).lf_summary(
+        Y=artifact_df[label_column_name].values
+    )
     lf_analysis_summary.to_csv(save_generated_to / f"analysis_{test_set_name}.csv")
     analysis_dict = lf_analysis_summary.to_dict()
     del analysis_dict["j"]
     with open(save_metrics_to / f"analysis_{test_set_name}.json", "w") as f:
         json.dump(analysis_dict, f, indent=4, sort_keys=True, cls=NumpyEncoder)
     coverage = sum((lines != -1).any(axis=1)) / len(lines)
-    majority_accuracy = majority_acc(lines, artifact_df)
+    majority_accuracy = majority_acc(lines, artifact_df, label_column_name)
     return {
         f"coverage_{test_set_name}": coverage,
         f"majority_accuracy_{test_set_name}": majority_accuracy,
@@ -117,6 +120,7 @@ def apply_heuristics(task_name: str, n_parallel: int) -> None:
             test_set_name=dataset_loader.name,
             save_generated_to=task_dir_generated,
             save_metrics_to=task_dir_metrics,
+            label_column_name=task.label_column_name,
         )
         all_stats.update(**stats)
 
@@ -128,7 +132,7 @@ def apply_heuristics(task_name: str, n_parallel: int) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("task", default="bugginess")
+    parser.add_argument("task")
     parser.add_argument("--n-workers", type=int, default=1)
     parser.add_argument("--profile", action="store_true")
     args = parser.parse_args()

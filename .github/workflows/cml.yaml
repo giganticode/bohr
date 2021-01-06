@@ -14,7 +14,7 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
           PYTHONPATH: /__w/bohr/bohr
         run: |
-          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev
+          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev bc
 
           rm -rf /github/home/.pyenv
           unset PYENV_ROOT
@@ -29,8 +29,8 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive data/test downloaded-data/sample.7z
-          dvc repro
+          dvc pull -r gdrive downloaded-data/smells-madeyski.csv
+          dvc repro label_dataset_bugginess_smells
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

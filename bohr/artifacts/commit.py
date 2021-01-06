@@ -1,66 +1,19 @@
 from dataclasses import dataclass, field
 from functools import cached_property, lru_cache
-from typing import List, Optional, Set
+from typing import List, Set
 
 import pandas as pd
-from nltk import PorterStemmer, bigrams
 
 from bohr import PROJECT_DIR, TRAIN_DIR
+from bohr.artifacts.commit_file import CommitFile
+from bohr.artifacts.commit_message import CommitMessage
 from bohr.artifacts.core import Artifact
-from bohr.artifacts.issues import Issue, Issues
-from bohr.nlp_utils import NgramSet, safe_tokenize
+from bohr.artifacts.issue import Issue
+from bohr.nlp_utils import NgramSet
 
 ISSUES_FILE = PROJECT_DIR / "data/train/bug_sample_issues.csv"
 CHANGES_FILE = PROJECT_DIR / "data/train/bug_sample_files.csv"
 COMMITS_FILE = PROJECT_DIR / "data/train/bug_sample.csv"
-
-
-@dataclass
-class CommitFile(Artifact):
-    filename: str
-    status: str
-    patch: Optional[str]
-    changes: Optional[str]
-
-    def no_added_lines(self):
-        return "<ins>" not in self.changes
-
-    def no_removed_lines(self):
-        return "<del>" not in self.changes
-
-
-class CommitFiles(Artifact):
-    def __init__(self, files):
-        self.__files = files
-
-    def __len__(self) -> int:
-        return len(self.__files)
-
-    def __getitem__(self, idx) -> CommitFile:
-        return self.__files[idx]
-
-
-@dataclass
-class CommitMessage(Artifact):
-    raw: str
-
-    @cached_property
-    def tokens(self) -> Set[str]:
-        if self.raw is None:
-            return set()
-        return safe_tokenize(self.raw)
-
-    @cached_property
-    def ordered_stems(self) -> List[str]:
-        stemmer = PorterStemmer()
-        return [stemmer.stem(w) for w in self.tokens]
-
-    @cached_property
-    def stemmed_ngrams(self) -> NgramSet:
-        return set(self.ordered_stems).union(set(bigrams(self.ordered_stems)))
-
-    def match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
-        return not self.stemmed_ngrams.isdisjoint(stemmed_keywords)
 
 
 @dataclass
@@ -71,6 +24,9 @@ class Commit(Artifact):
     sha: str
     raw_message: str
     message: CommitMessage = field(init=False)
+
+    def __post_init__(self):
+        self.message = CommitMessage(self.raw_message)
 
     class Cache:
         @lru_cache(maxsize=8)
@@ -137,14 +93,11 @@ class Commit(Artifact):
 
     _cache = Cache()
 
-    def __post_init__(self):
-        self.message = CommitMessage(self.raw_message)
-
     def __hash__(self):
         return hash((self.owner, self.repository, self.sha))
 
     @cached_property
-    def files(self) -> CommitFiles:
+    def files(self) -> List[CommitFile]:
         df = self._cache.get_files(self.owner, self.repository, self.sha)
         files = []
 
@@ -158,10 +111,10 @@ class Commit(Artifact):
                         file.change if not isinstance(file.change, float) else None,
                     )
                 )
-        return CommitFiles(files)
+        return files
 
     @cached_property
-    def issues(self) -> Issues:
+    def issues(self) -> List[Issue]:
         df = self._cache.get_issues(self.owner, self.repository, self.sha)
         issues = []
 
@@ -172,4 +125,16 @@ class Commit(Artifact):
 
                 issues.append(Issue(issue.title, issue.body, labels))
 
-        return Issues(issues)
+        return issues
+
+    def issues_match_label(self, stemmed_labels: Set[str]) -> bool:
+        for issue in self.issues:
+            if not issue.stemmed_labels.isdisjoint(stemmed_labels):
+                return True
+        return False
+
+    def issues_match_ngrams(self, stemmed_keywords: NgramSet) -> bool:
+        for issue in self.issues:
+            if not issue.stemmed_ngrams.isdisjoint(stemmed_keywords):
+                return True
+        return False

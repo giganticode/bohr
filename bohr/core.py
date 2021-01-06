@@ -3,7 +3,6 @@ import importlib
 import inspect
 import logging
 import os
-import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, List, Optional, Set, Type
@@ -13,8 +12,8 @@ from snorkel.map import BaseMapper
 
 from bohr import DATASET_DIR, HEURISTIC_DIR
 from bohr.artifacts.core import Artifact
-from bohr.labels import Label
 from bohr.pipeline.labels.cache import CategoryMappingCache
+from bohr.pipeline.labels.labelset import Label
 from bohr.snorkel import SnorkelLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = "|"
@@ -53,7 +52,10 @@ class Heuristic:
             try:
                 return f(artifact, *args, **kwargs)
             except (ValueError, KeyError, AttributeError, IndexError, TypeError):
-                logger.error(sys.exc_info())
+                logger.exception(
+                    "Exception thrown while applying heuristic, "
+                    "skipping the heuristic for this datapoint ..."
+                )
                 return None
 
         return functools.wraps(f)(func)
@@ -91,6 +93,15 @@ def load_heuristics_from_module(
     return heuristics
 
 
+def check_names_unique(heuristics: List[_Heuristic]) -> None:
+    name_set = set()
+    for heuristic in heuristics:
+        name = heuristic.func.__name__
+        if name in name_set:
+            raise ValueError(f"Heuristic with name {name} already exists.")
+        name_set.add(name)
+
+
 def load_heuristics(
     artifact_type: Type, limited_to_modules: Optional[Set[str]] = None
 ) -> List[_Heuristic]:
@@ -101,6 +112,7 @@ def load_heuristics(
             heuristics.extend(
                 load_heuristics_from_module(artifact_type, heuristic_module_name)
             )
+    check_names_unique(heuristics)
     return heuristics
 
 
@@ -164,15 +176,15 @@ def to_labeling_functions(
     category_mapping_cache = CategoryMappingCache(labels, maxsize=10000)
     labeling_functions = list(
         map(
-            lambda h: SnorkelLabelingFunction(
-                name=h.__name__,
+            lambda x: SnorkelLabelingFunction(
+                name=f"{x[1].__name__}_{x[0]}",
                 f=lambda *args, **kwargs: apply_heuristic_and_convert_to_snorkel_label(
-                    h, category_mapping_cache, *args, **kwargs
+                    x[1], category_mapping_cache, *args, **kwargs
                 ),
                 mapper=mapper,
-                resources=h.resources,
+                resources=x[1].resources,
             ),
-            heuristics,
+            enumerate(heuristics),
         )
     )
     return labeling_functions
@@ -185,6 +197,7 @@ class Task:
     labels: List[str]
     train_datasets: List[DatasetLoader]
     test_datasets: List[DatasetLoader]
+    label_column_name: str
 
     def __post_init__(self):
         for test_dataset in self.train_datasets + self.test_datasets:
@@ -213,12 +226,17 @@ class Task:
                         lambda d: d.name not in test_dataset_names, all_dataset_loaders
                     )
                 )
+            try:
+                label_column_name = getattr(module, "label_column_name")
+            except AttributeError:
+                label_column_name = name
             return cls(
                 name,
                 top_artifact,
                 label_categories,
                 train_datasets=train_datasets,
                 test_datasets=test_datasets,
+                label_column_name=label_column_name,
             )
         except AttributeError as e:
             raise ValueError("The task is defined incorrectly.") from e

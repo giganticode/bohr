@@ -9,9 +9,9 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          PYTHONPATH: /user/src/app/
+          PYTHONPATH: /user/src/bohr/
         run: |
-          cd /usr/src/app
+          cd /usr/src/bohr
           pyenv global 3.8.0
           eval "$(pyenv init -)"
           echo "$(python --version)"

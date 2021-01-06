@@ -27,8 +27,6 @@ jobs:
           pip install -r requirements.txt
           dvc repro label_dataset_bugginess_10k
 
-          git checkout master
-          git pull
-          pip install -r requirements.txt
+          git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md

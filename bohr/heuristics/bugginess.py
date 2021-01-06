@@ -80,7 +80,7 @@ def bugless_keywords_lookup_in_issue_label(
 ) -> Optional[Labels]:
     if commit.issues_match_label(keywords):
         return CommitLabel.NonBugFix
-    return None
+    return None #
 
 
 @KeywordHeuristics(Commit, "bug", name_pattern="bug_issue_body_keyword_%1")

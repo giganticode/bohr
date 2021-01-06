@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   bugginess-short:
     runs-on: self-hosted
-    container: docker://giganticode/bohr-cml:latest
+    container: docker://giganticode/bohr-cml-base:latest
     steps:
       - name: cml_run
         env:

@@ -12,6 +12,7 @@ jobs:
           PYTHONPATH: /user/src/app/
         run: |
           git pull
+          dvc pull -r gdrive data/test downloaded-data/sample.7z
           dvc repro label_dataset_bugginess_10k
 
           cd /usr/src/app

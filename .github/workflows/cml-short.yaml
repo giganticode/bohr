@@ -25,8 +25,3 @@ jobs:
           echo "$pwd"
           pip install -r requirements.txt
           dvc repro label_dataset_bugginess_10k
-
-          git checkout master
-          pip install -r requirements.txt
-          dvc metrics diff --show-md master >> report.md
-          cml-send-comment report.md

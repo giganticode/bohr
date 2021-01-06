@@ -9,7 +9,7 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-          PYTHONPATH: /user/src/bohr/
+          PYTHONPATH: /usr/src/bohr/
         run: |
           cd /usr/src/bohr
           pyenv global 3.8.0

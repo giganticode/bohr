@@ -11,22 +11,22 @@ from bohr.pipeline.labels.labelset import Label, LabelSet
 Labels = Union[Label, LabelSet]
 
 
-@KeywordHeuristics(Commit, "bug", name_pattern="bug_message_keyword_%1")
-def bug_keywords_lookup_in_message(
-    commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
-    if commit.message.match_ngrams(keywords):
-        return CommitLabel.BugFix
-    return None
-
-
-@KeywordHeuristics(Commit, "bugless", name_pattern="bugless_message_keyword_%1")
-def bugless_keywords_lookup_in_message(
-    commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
-    if commit.message.match_ngrams(keywords):
-        return CommitLabel.NonBugFix
-    return None
+# @KeywordHeuristics(Commit, "bug", name_pattern="bug_message_keyword_%1")
+# def bug_keywords_lookup_in_message(
+#     commit: Commit, keywords: NgramSet
+# ) -> Optional[Labels]:
+#     if commit.message.match_ngrams(keywords):
+#         return CommitLabel.BugFix
+#     return None
+#
+#
+# @KeywordHeuristics(Commit, "bugless", name_pattern="bugless_message_keyword_%1")
+# def bugless_keywords_lookup_in_message(
+#     commit: Commit, keywords: NgramSet
+# ) -> Optional[Labels]:
+#     if commit.message.match_ngrams(keywords):
+#         return CommitLabel.NonBugFix
+#     return None
 
 
 # @keyword_labeling_functions('bogusbugs', name_pattern='bogusbugs_message_keyword_%1')
@@ -63,13 +63,13 @@ def version_in_message(commit: Commit) -> Optional[Labels]:
     return CommitLabel.NonBugFix if VERSION_RE.search(commit.message.raw) else None
 
 
-@KeywordHeuristics(Commit, "bug.issue_label", name_pattern="bug_issue_label_keyword_%1")
-def bug_keywords_lookup_in_issue_label(
-    commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
-    if commit.issues_match_label(keywords):
-        return CommitLabel.BugFix
-    return None
+# @KeywordHeuristics(Commit, "bug.issue_label", name_pattern="bug_issue_label_keyword_%1")
+# def bug_keywords_lookup_in_issue_label(
+#     commit: Commit, keywords: NgramSet
+# ) -> Optional[Labels]:
+#     if commit.issues_match_label(keywords):
+#         return CommitLabel.BugFix
+#     return None
 
 
 @KeywordHeuristics(
@@ -80,25 +80,25 @@ def bugless_keywords_lookup_in_issue_label(
 ) -> Optional[Labels]:
     if commit.issues_match_label(keywords):
         return CommitLabel.NonBugFix
-    return None #
+    return None  #
 
 
-@KeywordHeuristics(Commit, "bug", name_pattern="bug_issue_body_keyword_%1")
-def bug_keywords_lookup_in_issue_body(
-    commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
-    if commit.issues_match_ngrams(keywords):
-        return CommitLabel.BugFix
-    return None
-
-
-@KeywordHeuristics(Commit, "bugless", name_pattern="bugless_issue_body_keyword_%1")
-def bugless_keywords_lookup_in_issue_body(
-    commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
-    if commit.issues_match_ngrams(keywords):
-        return CommitLabel.NonBugFix
-    return None
+# @KeywordHeuristics(Commit, "bug", name_pattern="bug_issue_body_keyword_%1")
+# def bug_keywords_lookup_in_issue_body(
+#     commit: Commit, keywords: NgramSet
+# ) -> Optional[Labels]:
+#     if commit.issues_match_ngrams(keywords):
+#         return CommitLabel.BugFix
+#     return None
+#
+#
+# @KeywordHeuristics(Commit, "bugless", name_pattern="bugless_issue_body_keyword_%1")
+# def bugless_keywords_lookup_in_issue_body(
+#     commit: Commit, keywords: NgramSet
+# ) -> Optional[Labels]:
+#     if commit.issues_match_ngrams(keywords):
+#         return CommitLabel.NonBugFix
+#     return None
 
 
 @Heuristic(Commit)

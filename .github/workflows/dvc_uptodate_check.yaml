@@ -10,10 +10,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: dvc-status
         env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
           PYTHONPATH: /usr/src/bohr/
         run: |
           sudo apt-get update && sudo apt-get install p7zip-full
+          dvc remote modify --local ironspeed user hbabii
+          dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
           dvc pull
           dvc repro extract_train_data
           dvc status

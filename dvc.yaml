@@ -189,3 +189,52 @@ stages:
       - bohr/datasets
     outs:
       - labeled-data/smells-train.csv
+  apply_heuristics_smells_10:
+    cmd: python bohr/pipeline/apply_heuristics.py smells_10
+    deps:
+      - bohr/pipeline/apply_heuristics.py
+      - bohr/labels.py
+      - bohr/core.py
+      - bohr/heuristics
+      - bohr/artifacts
+      - data/smells
+      - bohr/tasks/smells-test_10.py
+      - bohr/datasets
+    outs:
+      - generated/smells_10/heuristic_matrix_train.pkl
+      - generated/smells_10/heuristic_matrix_smells-test.pkl
+      - generated/smells_10/analysis_train.csv:
+          cache: false
+      - generated/smells_10/analysis_smells-test.csv:
+          cache: false
+    metrics:
+      - metrics/smells_10/heuristic_metrics.json:
+          cache: false
+      - metrics/smells_10/analysis_train.json:
+          cache: false
+      - metrics/smells_10/analysis_smells-test.json:
+          cache: false
+  train_label_smells_10:
+    cmd: python bohr/pipeline/train_label_model.py smells_10
+    deps:
+      - bohr/pipeline/train_label_model.py
+      - generated/smells_10/heuristic_matrix_train.pkl
+      - generated/smells_10/heuristic_matrix_smells-test.pkl
+      - bohr/tasks/smells-test_10.py
+      - data/smells
+      - bohr/datasets
+    outs:
+      - generated/smells_10/label_model.pkl
+    metrics:
+      - metrics/smells_10/label_model_metrics.json:
+          cache: false
+  label_dataset_smells_10:
+    cmd: python bohr/pipeline/label_dataset.py smells_10 smells-train_10
+    deps:
+      - bohr/pipeline/label_dataset.py
+      - generated/smells_10/heuristic_matrix_train.pkl
+      - data/smells_10/train.csv
+      - bohr/tasks/smells-test_10.py
+      - bohr/datasets
+    outs:
+      - labeled-data/smells-train_10.csv

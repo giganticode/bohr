@@ -198,7 +198,7 @@ stages:
       - bohr/heuristics
       - bohr/artifacts
       - data/smells
-      - bohr/tasks/smells-test_10.py
+      - bohr/tasks/smells_10.py
       - bohr/datasets
     outs:
       - generated/smells_10/heuristic_matrix_train.pkl
@@ -220,7 +220,7 @@ stages:
       - bohr/pipeline/train_label_model.py
       - generated/smells_10/heuristic_matrix_train.pkl
       - generated/smells_10/heuristic_matrix_smells-test.pkl
-      - bohr/tasks/smells-test_10.py
+      - bohr/tasks/smells_10.py
       - data/smells
       - bohr/datasets
     outs:
@@ -234,7 +234,7 @@ stages:
       - bohr/pipeline/label_dataset.py
       - generated/smells_10/heuristic_matrix_train.pkl
       - data/smells_10/train.csv
-      - bohr/tasks/smells-test_10.py
+      - bohr/tasks/smells_10.py
       - bohr/datasets
     outs:
       - labeled-data/smells-train_10.csv

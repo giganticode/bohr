@@ -21,7 +21,7 @@ jobs:
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
-          downloaded-data/smells-madeyski.csv
+          rm downloaded-data/smells-madeyski.csv
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
           dvc pull downloaded-data/smells-madeyski.csv

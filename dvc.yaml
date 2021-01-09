@@ -237,4 +237,4 @@ stages:
       - bohr/tasks/smells_10.py
       - bohr/datasets
     outs:
-      - labeled-data/smells-train_10.csv
+      - labeled-data/smells-train_1 0.csv

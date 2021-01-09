@@ -24,7 +24,8 @@ stages:
     - bohr/core.py
     - bohr/heuristics
     - bohr/artifacts
-    - data
+    - data/test
+    - data/train
     - bohr/tasks/bugginess.py
     outs:
     - generated/bugginess/heuristic_matrix_train.pkl
@@ -58,7 +59,8 @@ stages:
     - generated/bugginess/heuristic_matrix_herzig.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
     - generated/bugginess/heuristic_matrix_1151-commits.pkl
-    - data
+    - data/train
+    - data/test
     outs:
     - generated/bugginess/label_model.pkl
     metrics:
@@ -80,7 +82,8 @@ stages:
       - bohr/core.py
       - bohr/heuristics
       - bohr/artifacts
-      - data
+      - data/test
+      - data/train
       - bohr/tasks/bugginess-10k.py
     outs:
       - generated/bugginess-10k/heuristic_matrix_train.pkl
@@ -114,7 +117,8 @@ stages:
       - generated/bugginess-10k/heuristic_matrix_herzig.pkl
       - generated/bugginess-10k/heuristic_matrix_berger.pkl
       - generated/bugginess-10k/heuristic_matrix_1151-commits.pkl
-      - data
+      - data/train
+      - data/test
     outs:
       - generated/bugginess-10k/label_model.pkl
     metrics:
@@ -144,7 +148,7 @@ stages:
       - bohr/core.py
       - bohr/heuristics
       - bohr/artifacts
-      - data
+      - data/smells
       - bohr/tasks/smells.py
       - bohr/datasets
     outs:
@@ -168,7 +172,7 @@ stages:
       - generated/smells/heuristic_matrix_train.pkl
       - generated/smells/heuristic_matrix_smells-test.pkl
       - bohr/tasks/smells.py
-      - data
+      - data/smells
       - bohr/datasets
     outs:
       - generated/smells/label_model.pkl
@@ -180,7 +184,7 @@ stages:
     deps:
       - bohr/pipeline/label_dataset.py
       - generated/smells/heuristic_matrix_train.pkl
-      - data/train
+      - data/smells/train.csv
       - bohr/tasks/smells.py
       - bohr/datasets
     outs:

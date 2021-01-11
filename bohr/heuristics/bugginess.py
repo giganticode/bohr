@@ -1,12 +1,12 @@
 import re
 from typing import Optional, Union
 
-from bohr.artifacts.commit import Commit
-from bohr.core import Heuristic
-from bohr.heuristics.templates.keywords import KeywordHeuristics
+from bohr.framework.artifacts.commit import Commit
+from bohr.framework.core import Heuristic
+from bohr.framework.labels.labelset import Label, LabelSet
+from bohr.framework.nlp_utils import NgramSet
+from bohr.framework.templates.heuristics.keywords import KeywordHeuristics
 from bohr.labels import *
-from bohr.nlp_utils import NgramSet
-from bohr.pipeline.labels.labelset import Label, LabelSet
 
 Labels = Union[Label, LabelSet]
 

@@ -2,25 +2,52 @@ stages:
   parse_labels:
     cmd: python bohr/framework/pipeline/parse_labels.py
     deps:
-    - bohr/framework
+    - bohr/framework #framework is an exception for now but for everything else we dvc-track separate files where possible
     - bohr/labels
     outs:
     - bohr/labels.py:
         cache: false
-  extract_train_data:
+  preprocess_bugginess_train:
     cmd: 7z x downloaded-data/bugginess_train.7z -odata/bugginess
     deps:
     - downloaded-data/bugginess_train.7z
     outs:
-    - data/bugginess/train:
+    - data/bugginess/train/bug_sample.csv:
         cache: false
+    - data/bugginess/train/bug_sample_files.csv:
+        cache: false
+    - data/bugginess/train/bug_sample_issues.csv:
+        cache: false
+  preprocess_bugginess_test:
+    cmd: cp downloaded-data/{1151-commits.csv,berger.csv,herzig.csv} data/bugginess/test
+    deps:
+      - downloaded-data/1151-commits.csv
+      - downloaded-data/berger.csv
+      - downloaded-data/herzig.csv
+    outs:
+      - data/bugginess/test/1151-commits.csv
+      - data/bugginess/test/berger.csv
+      - data/bugginess/test/herzig.csv
+  preprocess_smells:
+    cmd: data-preprocessing/smells.sh
+    deps:
+      - data-preprocessing/smells.sh
+      - downloaded-data/smells-madeyski.csv
+    outs:
+      - data/smells/test.csv
+      - data/smells/train.csv
   apply_heuristics_bugginess:
     cmd: python bohr/framework/pipeline/apply_heuristics.py bugginess
     deps:
     - bohr/framework
     - bohr/labels.py
     - bohr/heuristics
-    - data/bugginess
+    - data/bugginess/test/1151-commits.csv
+    - data/bugginess/test/berger.csv
+    - data/bugginess/test/herzig.csv
+    - data/bugginess/train/bug_sample.csv
+    - data/bugginess/train/bug_sample_files.csv
+    - data/bugginess/train/bug_sample_issues.csv
     - bohr/tasks/bugginess.py
     outs:
     - generated/bugginess/heuristic_matrix_train.pkl
@@ -54,7 +81,12 @@ stages:
     - generated/bugginess/heuristic_matrix_herzig.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
     - generated/bugginess/heuristic_matrix_1151-commits.pkl
-    - data/bugginess
+    - data/bugginess/test/1151-commits.csv
+    - data/bugginess/test/berger.csv
+    - data/bugginess/test/herzig.csv
+    - data/bugginess/train/bug_sample.csv
+    - data/bugginess/train/bug_sample_files.csv
+    - data/bugginess/train/bug_sample_issues.csv
     outs:
     - generated/bugginess/label_model.pkl
     metrics:
@@ -65,7 +97,9 @@ stages:
     deps:
     - bohr/framework
     - generated/bugginess/heuristic_matrix_train.pkl
-    - data/bugginess/train
+    - data/bugginess/train/bug_sample.csv
+    - data/bugginess/train/bug_sample_files.csv
+    - data/bugginess/train/bug_sample_issues.csv
     outs:
     - labeled-data/bugginess-train.csv
   apply_heuristics_bugginess_10k:
@@ -74,7 +108,12 @@ stages:
       - bohr/framework
       - bohr/labels.py
       - bohr/heuristics
-      - data/bugginess
+      - data/bugginess/test/1151-commits.csv
+      - data/bugginess/test/berger.csv
+      - data/bugginess/test/herzig.csv
+      - data/bugginess/train/bug_sample.csv
+      - data/bugginess/train/bug_sample_files.csv
+      - data/bugginess/train/bug_sample_issues.csv
       - bohr/tasks/bugginess-10k.py
     outs:
       - generated/bugginess-10k/heuristic_matrix_train.pkl
@@ -108,7 +147,12 @@ stages:
       - generated/bugginess-10k/heuristic_matrix_herzig.pkl
       - generated/bugginess-10k/heuristic_matrix_berger.pkl
       - generated/bugginess-10k/heuristic_matrix_1151-commits.pkl
-      - data/bugginess
+      - data/bugginess/test/1151-commits.csv
+      - data/bugginess/test/berger.csv
+      - data/bugginess/test/herzig.csv
+      - data/bugginess/train/bug_sample.csv
+      - data/bugginess/train/bug_sample_files.csv
+      - data/bugginess/train/bug_sample_issues.csv
     outs:
       - generated/bugginess-10k/label_model.pkl
     metrics:
@@ -119,17 +163,11 @@ stages:
     deps:
       - bohr/framework
       - generated/bugginess-10k/heuristic_matrix_train.pkl
-      - data/bugginess/train
+      - data/bugginess/train/bug_sample.csv
+      - data/bugginess/train/bug_sample_files.csv
+      - data/bugginess/train/bug_sample_issues.csv
     outs:
       - labeled-data/bugginess-train-10k.csv
-  preprocess-and-split-smell-dataset:
-    cmd: data-preprocessing/smells.sh
-    deps:
-      - data-preprocessing/smells.sh
-      - downloaded-data/smells-madeyski.csv
-    outs:
-      - data/smells/test.csv
-      - data/smells/train.csv
   apply_heuristics_smells:
     cmd: python bohr/framework/pipeline/apply_heuristics.py smells
     deps:
@@ -183,7 +221,8 @@ stages:
       - bohr/framework
       - bohr/labels.py
       - bohr/heuristics
-      - data/smells
+      - data/smells/train.csv
+      - data/smells/test.csv
       - bohr/tasks/smells_10.py
       - bohr/dataloaders
     outs:
@@ -207,7 +246,8 @@ stages:
       - generated/smells_10/heuristic_matrix_train.pkl
       - generated/smells_10/heuristic_matrix_smells-test_10.pkl
       - bohr/tasks/smells_10.py
-      - data/smells
+      - data/smells/train.csv
+      - data/smells/test.csv
       - bohr/dataloaders
     outs:
       - generated/smells_10/label_model.pkl
@@ -224,3 +264,10 @@ stages:
       - bohr/dataloaders
     outs:
       - labeled-data/smells-train_10.csv
+  all_short_stages:
+    cmd: echo "Running all short stages"
+    deps:
+      - labeled-data/smells-train_10.csv
+      - generated/smells_10/label_model.pkl
+      - labeled-data/bugginess-train-10k.csv
+      - generated/bugginess-10k/label_model.pkl

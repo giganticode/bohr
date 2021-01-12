@@ -35,15 +35,7 @@ class SStuBBugFix(Label):
     WrongUnaryOperator = auto()
     WrongOperator = WrongBinaryOperator | WrongUnaryOperator
     MissingThrowsException = auto()
-    SStuB = (
-        WrongIdentifier
-        | WrongNumericLiteral
-        | WrongModifier
-        | WrongBooleanLiteral
-        | WrongFunction
-        | WrongOperator
-        | MissingThrowsException
-    )
+    SStuB = WrongIdentifier | WrongNumericLiteral | WrongModifier | WrongBooleanLiteral | WrongFunction | WrongOperator | MissingThrowsException
     BugFix = SStuB
 
     def parent(self):

@@ -8,7 +8,7 @@ jobs:
     container: docker://giganticode/bohr-cml-base:latest
     steps:
       - uses: actions/checkout@v2
-      - name: dvc-status
+      - name: check-dvc-clean
         env:
           DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
           PYTHONPATH: /usr/src/bohr/

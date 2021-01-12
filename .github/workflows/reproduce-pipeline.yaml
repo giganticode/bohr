@@ -1,14 +1,14 @@
-name: calculate-metrics
+name: reproduce-pipeline
 on: [pull_request]
 jobs:
-  bugginess: #TODO find a way to reuse stages: https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851/12
+  reproduce-pipeline: #TODO find a way to reuse stages: https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851/12
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
         with:
          fetch-depth: 0
-      - name: cml_run
+      - name: reproduce-pipeline
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}

@@ -6,8 +6,6 @@ from rich.logging import RichHandler
 PYTHON_ROOT = Path(__file__).parent.parent
 PROJECT_DIR = PYTHON_ROOT.parent
 DATA_DIR = PROJECT_DIR / "data"
-TEST_DIR = DATA_DIR / "test"
-TRAIN_DIR = DATA_DIR / "train"
 LABELED_DATA_DIR = PROJECT_DIR / "labeled-data"
 HEURISTIC_DIR = PYTHON_ROOT / "heuristics"
 DATASET_DIR = PYTHON_ROOT / "dataloaders"

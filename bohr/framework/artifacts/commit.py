@@ -4,14 +4,14 @@ from typing import List, Set
 
 import pandas as pd
 
-from bohr.framework import PROJECT_DIR, TRAIN_DIR
+from bohr.framework import DATA_DIR
 from bohr.framework.artifacts.commit_file import CommitFile
 from bohr.framework.artifacts.commit_message import CommitMessage
 from bohr.framework.artifacts.core import Artifact
 from bohr.framework.artifacts.issue import Issue
 from bohr.framework.nlp_utils import NgramSet
 
-BUGGINESS_TRAIN = PROJECT_DIR / "data" / "bugginess" / "train"
+BUGGINESS_TRAIN = DATA_DIR / "bugginess" / "train"
 ISSUES_FILE = BUGGINESS_TRAIN / "bug_sample_issues.csv"
 CHANGES_FILE = BUGGINESS_TRAIN / "bug_sample_files.csv"
 COMMITS_FILE = BUGGINESS_TRAIN / "bug_sample.csv"
@@ -32,7 +32,7 @@ class Commit(Artifact):
     class Cache:
         @lru_cache(maxsize=8)
         def __load_df(self, type: str, owner: str, repository: str):
-            path = TRAIN_DIR / type / owner / f"{repository}.csv"
+            path = BUGGINESS_TRAIN / type / owner / f"{repository}.csv"
             if path.is_file():
                 return pd.read_csv(
                     path,

@@ -1,4 +1,4 @@
-name: calculate-metrics
+name: smells-short
 on: [pull_request]
 jobs:
   bugginess-short:

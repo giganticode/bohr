@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
+IFS=$'\n\t'
 
 DATA_SMELLS_DIR="data/smells"
 INPUT_CSV_FILE="downloaded-data/smells-madeyski.csv"
 
 if ! [ -d "$DATA_SMELLS_DIR" ]; then
     mkdir "$DATA_SMELLS_DIR"
+fi
+
+if ! [ -f "$INPUT_CSV_FILE" ]; then
+    echo "input file does not exist: $INPUT_CSV_FILE"
     exit -1
 fi
 

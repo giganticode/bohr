@@ -15,33 +15,42 @@ if ! [ -f "$INPUT_CSV_FILE" ]; then
     exit -1
 fi
 
-n_positive=$(cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;\(major\|critical\)" | wc -l)
-echo "Total positive samples: $n_positive"
+POSITIVE_PATTERN="\(\d\+\)\{3\};long method;\(major\|critical\)"
+NEGATIVE_PATTERN="\(\d\+\)\{3\};long method;none"
 
-n_negative=$(cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;none" | head -n "$n_positive" | wc -l)
-echo "Total negative samples: $n_negative"
+n_positive=$(grep -c -e "$POSITIVE_PATTERN" < "$INPUT_CSV_FILE")
+echo "Total positive samples: $n_positive"
 
 n_positive_train=$(echo "$n_positive * 80 / 100" | bc)
 n_positive_test=$(echo "$n_positive - $n_positive_train" | bc)
+echo "Among which $n_positive_train in the train set, $n_positive_test in the test set"
+
+n_negative=$(grep -c -m "$n_positive" -e "$NEGATIVE_PATTERN" < "$INPUT_CSV_FILE")
+echo "Total negative samples: $n_negative"
 
 n_negative_train=$(echo "$n_negative * 80 / 100" | bc)
 n_negative_test=$(echo "$n_negative - $n_negative_train" | bc)
+echo "Among which $n_negative_train in the train set, $n_negative_test in the test set"
 
 SMELL_TRAIN_FILE="$DATA_SMELLS_DIR/train.csv"
 SMELL_TEST_FILE="$DATA_SMELLS_DIR/test.csv"
 
 if [ -f "$SMELL_TRAIN_FILE" ]; then
+    echo -e "$SMELL_TRAIN_FILE already exists, removing it ..."
     rm "$SMELL_TRAIN_FILE"
 fi
 
 if [ -f "$SMELL_TEST_FILE" ]; then
+    echo -e "$SMELL_TEST_FILE already exists, removing it ..."
     rm "$SMELL_TEST_FILE"
 fi
 
 head -1 "$INPUT_CSV_FILE" >> "$SMELL_TRAIN_FILE"
-cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;\(major\|critical\)" | head -n "$n_positive_train" >> "$SMELL_TRAIN_FILE"
-cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;none" | head -n "$n_negative_train" >> "$SMELL_TRAIN_FILE"
+(grep "$POSITIVE_PATTERN" -m "$n_positive_train" < "$INPUT_CSV_FILE") >> "$SMELL_TRAIN_FILE"
+(grep -m "$n_negative_train" -e "$NEGATIVE_PATTERN" < "$INPUT_CSV_FILE") >> "$SMELL_TRAIN_FILE"
+echo -e "Pre-processed files written to:\n - $SMELL_TRAIN_FILE"
 
 head -1 "$INPUT_CSV_FILE" | awk 'NF{print "smelly;" $0}' >> "$SMELL_TEST_FILE"
-cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;\(major\|critical\)" | tail -n "$n_positive_test" | awk 'NF{print "1;" $0}' >> "$SMELL_TEST_FILE"
-cat "$INPUT_CSV_FILE" | grep -e "\(\d\+\)\{3\};long method;none" | tail -n "$n_negative_test" | awk 'NF{print "0;" $0}' >> "$SMELL_TEST_FILE"
+(grep -e "$POSITIVE_PATTERN" < "$INPUT_CSV_FILE" | tail -n "$n_positive_test" | awk 'NF{print "1;" $0}') >> "$SMELL_TEST_FILE"
+(grep -e "$NEGATIVE_PATTERN" < "$INPUT_CSV_FILE" | tail -n "$n_negative_test" | awk 'NF{print "0;" $0}') >> "$SMELL_TEST_FILE"
+echo -e "Pre-processed files written to:\n - $SMELL_TEST_FILE"

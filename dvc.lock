@@ -14,11 +14,11 @@ parse_labels:
     md5: ac5679ed5cad0edf5fbe38a1a79b36de
     size: 1678
 preprocess_smells:
-  cmd: data-preprocessing/smells.sh
+  cmd: bash data-preprocessing/smells.sh
   deps:
   - path: data-preprocessing/smells.sh
-    md5: 77f47532f24b26af411642992e6829c9
-    size: 1637
+    md5: 1792bc2011c1aba4d51cdca74beee11e
+    size: 2148
   - path: downloaded-data/smells-madeyski.csv
     md5: 3d60d277b9fa1306c05ccfdefe22e9d1
     size: 7513770
@@ -458,11 +458,11 @@ apply_heuristics_smells:
     nfiles: 10
   - path: bohr/framework
     md5: c7abfe0cb22358470f9600e6548b8f27.dir
-    size: 106852
+    size: 49223
     nfiles: 30
   - path: bohr/heuristics
     md5: d04a867a641bb7660cca26ab8bf64ddc.dir
-    size: 14227
+    size: 6294
     nfiles: 8
   - path: bohr/labels.py
     md5: ac5679ed5cad0edf5fbe38a1a79b36de
@@ -555,11 +555,11 @@ label_dataset_bugginess_smells:
   deps:
   - path: bohr/dataloaders
     md5: 364832ca79b363afbd285d70933c7b0a.dir
-    size: 7839
+    size: 4306
     nfiles: 10
   - path: bohr/framework
     md5: c7abfe0cb22358470f9600e6548b8f27.dir
-    size: 106852
+    size: 89517
     nfiles: 30
   - path: bohr/tasks/smells.py
     md5: fab9449fd2d3633360c079ac7abd4e2f

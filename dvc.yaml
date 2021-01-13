@@ -29,7 +29,7 @@ stages:
       - data/bugginess/test/berger.csv
       - data/bugginess/test/herzig.csv
   preprocess_smells:
-    cmd: data-preprocessing/smells.sh
+    cmd: bash data-preprocessing/smells.sh
     deps:
       - data-preprocessing/smells.sh
       - downloaded-data/smells-madeyski.csv

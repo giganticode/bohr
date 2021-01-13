@@ -1,11 +1,11 @@
-name: calculate-metrics
+name: bugginess-short
 on: [pull_request]
 jobs:
   bugginess-short:
     runs-on: self-hosted
     container: docker://giganticode/bohr-cml-base:latest
     steps:
-      - name: cml_run
+      - name: bugginess-short
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
@@ -23,7 +23,7 @@ jobs:
           git checkout new-branch
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
-          dvc pull data/test downloaded-data/sample.7z
+          dvc pull downloaded-data/bugginess_train.7z downloaded-data/berger.csv downloaded-data/herzig.csv downloaded-data/1151-commits.csv
           cd /usr/src/bohr
           echo "$pwd"
           pip install -r requirements.txt

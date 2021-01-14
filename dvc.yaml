@@ -283,7 +283,7 @@ stages:
   all_short_stages:
     cmd: echo "Running all short stages"
     deps:
-      - labeled-data/smells-train_10.csv
+      - labeled-data/smells_10.csv
       - generated/smells_10/label_model.pkl
-      - labeled-data/bugginess-train-10k.csv
+      - labeled-data/bugginess-10k.csv
       - generated/bugginess-10k/label_model.pkl

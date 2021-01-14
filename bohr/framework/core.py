@@ -5,6 +5,7 @@ import logging
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable, List, Optional, Set, Type
 
 from dask.dataframe import DataFrame
@@ -16,12 +17,13 @@ from bohr.framework import (
     DATASET_PACKAGE,
     HEURISTIC_DIR,
     HEURISTIC_PACKAGE,
+    TASK_DIR,
     TASK_PACKAGE,
 )
 from bohr.framework.artifacts.core import Artifact
 from bohr.framework.labels.cache import CategoryMappingCache
 from bohr.framework.labels.labelset import Label
-from bohr.framework.snorkel import SnorkelLabelingFunction, to_snorkel_label
+from bohr.framework.snorkel_util import SnorkelLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = "|"
 
@@ -123,22 +125,21 @@ def load_heuristics(
     return heuristics
 
 
+@dataclass
 class DatasetLoader(ABC):
-    def __init__(
-        self,
-        name: str,
-        test_set: bool,
-        mapper: ArtifactMapper,
-    ):
-        self.name = name
-        self.test_set = test_set
-        self.mapper = mapper
+    name: str
+    test_set: bool
+    mapper: ArtifactMapper
 
     def get_artifact(self) -> Type:
         return self.get_mapper().get_artifact()
 
     @abstractmethod
     def load(self) -> DataFrame:
+        pass
+
+    @abstractmethod
+    def get_paths(self) -> List[Path]:
         pass
 
     def get_mapper(self) -> ArtifactMapper:
@@ -206,6 +207,25 @@ class Task:
     test_datasets: List[DatasetLoader]
     label_column_name: str
 
+    @property
+    def datasets(self) -> List[DatasetLoader]:
+        return self.train_datasets + self.test_datasets
+
+    def _datapaths(self, datasets: List[DatasetLoader]) -> List[Path]:
+        return [p for dataset in datasets for p in dataset.get_paths()]
+
+    @property
+    def datapaths(self) -> List[Path]:
+        return self.train_datapaths + self.test_datapaths
+
+    @property
+    def train_datapaths(self) -> List[Path]:
+        return self._datapaths(self.train_datasets)
+
+    @property
+    def test_datapaths(self) -> List[Path]:
+        return self._datapaths(self.test_datasets)
+
     def __post_init__(self):
         for test_dataset in self.train_datasets + self.test_datasets:
             if test_dataset.get_artifact() != self.top_artifact:
@@ -265,15 +285,16 @@ def load_artifact_by_name(artifact_name: str) -> Type:
         raise ValueError(f"Artifact {name} not found in module {module}") from e
 
 
-def load_all_tasks() -> Set[Task]:
-    res = set()
-    for file in next(os.walk(DATASET_DIR))[2]:
+def load_all_tasks() -> List[Task]:
+    res = []
+    for file in next(os.walk(TASK_DIR))[2]:
         task_name = ".".join(file.split(".")[:-1])
         try:
             task = Task.load(task_name)
-            res.add(task)
+            res.append(task)
         except ValueError:
             pass
+    res = sorted(res, key=lambda x: x.name)
     return res
 
 

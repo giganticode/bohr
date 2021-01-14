@@ -1,0 +1,20 @@
+-n {{task.name}}_apply_heuristics
+
+-d bohr/framework
+-d bohr/labels.py
+-d bohr/heuristics
+-d bohr/tasks/{{task.name}}.py
+{% for datapath in task.datapaths %}
+-d {{datapath}}{% endfor %}
+{% for dataloader in task.datasets %}
+-d bohr/dataloaders/{{dataloader.name}}.py{% endfor %}
+
+-o generated/{{task.name}}/heuristic_matrix_train.pkl
+{% for test_dataset in task.test_datasets %} -o generated/{{task.name}}/heuristic_matrix_{{test_dataset.name}}.pkl {% endfor %}
+-O generated/{{task.name}}/analysis_train.csv
+{% for test_dataset in task.test_datasets %} -O generated/{{task.name}}/analysis_{{test_dataset.name}}.csv{% endfor %}
+
+-M metrics/{{task.name}}/heuristic_metrics.json -M metrics/{{task.name}}/analysis_train.json
+{% for test_dataset in task.test_datasets %} -M metrics/{{task.name}}/analysis_{{test_dataset.name}}.json{% endfor %}
+
+python bohr/framework/pipeline/apply_heuristics.py {{task.name}}

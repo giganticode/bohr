@@ -324,10 +324,10 @@ all_short_stages:
   - path: generated/smells_10/label_model.pkl
     md5: ab271d902486da406ffe2e430a9b3479
     size: 4889
-  - path: labeled-data/bugginess-train-10k.csv
+  - path: labeled-data/bugginess-10k.csv
     md5: 18677294f1d82b873003d3385e46a06b
     size: 2044301
-  - path: labeled-data/smells-train_10.csv
+  - path: labeled-data/smells_10.csv
     md5: f9fb7ce3c9ff8c412b038378a4d6f2d3
     size: 6404
 apply_heuristics_bugginess:

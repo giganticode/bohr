@@ -8,6 +8,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
          fetch-depth: 0
+      - name: connect-to-vpn
+        env:
+          VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
+          VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
+        run: |
+          sudo apt-get install openconnect
+          echo "$VPN_PASSWORD" | sudo openconnect  --protocol=anyconnect --user=$VPN_USERNAME --passwd-on-stdin vpn.scientificnet.org &
       - name: reproduce-pipeline
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -29,7 +36,7 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull -r gdrive
+          dvc pull
           dvc repro
       - name: Commit files
         run: |
@@ -41,12 +48,12 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc push -r gdrive
+          dvc push
       - name: Clean up dvc remote
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
+          dvc gc --cloud --workspace --all-tags --all-branches -f
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

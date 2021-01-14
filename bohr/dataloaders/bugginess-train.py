@@ -7,4 +7,8 @@ dataset_loader = CsvDatasetLoader(
     path_to_file=DATA_DIR / "bugginess" / "train" / "bug_sample.csv",
     mapper=CommitMapper(),
     test_set=False,
+    additional_data_files=[
+        DATA_DIR / "bugginess" / "train" / "bug_sample_issues.csv",
+        DATA_DIR / "bugginess" / "train" / "bug_sample_files.csv",
+    ],
 )

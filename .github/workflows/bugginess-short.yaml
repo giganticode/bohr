@@ -27,7 +27,7 @@ jobs:
           cd /usr/src/bohr
           echo "$pwd"
           pip install -r requirements.txt
-          dvc repro label_dataset_bugginess_10k
+          dvc repro bugginess-10k_label_dataset
 
           git fetch --prune
           dvc metrics diff --show-md master >> report.md

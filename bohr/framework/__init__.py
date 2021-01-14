@@ -9,6 +9,7 @@ DATA_DIR = PROJECT_DIR / "data"
 LABELED_DATA_DIR = PROJECT_DIR / "labeled-data"
 HEURISTIC_DIR = PYTHON_ROOT / "heuristics"
 DATASET_DIR = PYTHON_ROOT / "dataloaders"
+TASK_DIR = PYTHON_ROOT / "tasks"
 
 
 ARTIFACT_PACKAGE = "bohr.framework.artifacts"

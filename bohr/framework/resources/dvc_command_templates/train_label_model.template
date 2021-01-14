@@ -1,0 +1,14 @@
+-n {{task.name}}_train_label_model
+
+-d bohr/framework
+-d generated/{{task.name}}/heuristic_matrix_train.pkl
+{% for test_dataset in task.test_datasets %} -d generated/{{task.name}}/heuristic_matrix_{{test_dataset.name}}.pkl {% endfor %}
+{% for datapath in task.test_datapaths %} -d {{datapath}}{% endfor %}
+{% for dataloader in task.test_datasets %} -d bohr/dataloaders/{{dataloader.name}}.py{% endfor %}
+-d bohr/tasks/{{task.name}}.py
+
+-o generated/{{task.name}}/label_model.pkl
+
+-M metrics/{{task.name}}/label_model_metrics.json
+
+python bohr/framework/pipeline/train_label_model.py {{task.name}}

@@ -13,7 +13,7 @@ jobs:
           VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
           VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
         run: |
-          sudo apt-get install openconnect
+          sudo apt-get update && sudo apt-get install openconnect
           echo "$VPN_PASSWORD" | sudo openconnect  --protocol=anyconnect --user=$VPN_USERNAME --passwd-on-stdin vpn.scientificnet.org &
       - name: reproduce-pipeline
         env:

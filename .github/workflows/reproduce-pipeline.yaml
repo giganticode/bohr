@@ -35,6 +35,7 @@ jobs:
 
           pip install Cython==0.29.21
           pip install -r requirements.txt
+          python -c 'import nltk; nltk.download("punkt")'
           dvc pull
           dvc repro
       - name: Commit files

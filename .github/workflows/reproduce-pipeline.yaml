@@ -15,6 +15,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install openconnect
           echo "$VPN_PASSWORD" | sudo openconnect --background --protocol=anyconnect --user=$VPN_USERNAME --passwd-on-stdin vpn.scientificnet.org
+          dvc pull
       - name: reproduce-pipeline
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -36,7 +37,6 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
-          dvc pull
           dvc repro
       - name: Commit files
         run: |

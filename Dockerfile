@@ -65,5 +65,7 @@ RUN cd /usr/src/tools/RefactoringMiner && ./gradlew distZip && ZIP_NAME="$(ls bu
 RUN ls /usr/src/tools/
 RUN rm -rf /usr/src/tools/RefactoringMiner
 
+RUN source /usr/src/bohr/config/env/docker.env
+
 ENTRYPOINT ['/bin/bash']
 

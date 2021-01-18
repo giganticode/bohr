@@ -8,14 +8,7 @@ from bohr.framework import SOFTWARE_DIR
 from bohr.framework.artifacts.commit import Commit
 from bohr.framework.templates.heuristics.tool import Tool
 
-REFACTORING_MINER_PATH = (
-    SOFTWARE_DIR
-    / "RefactoringMiner"
-    / "build"
-    / "distributions"
-    / "RefactoringMiner-2.0.3"
-    / "bin"
-)
+REFACTORING_MINER_PATH = SOFTWARE_DIR / "RefactoringMiner-2.0.3" / "bin"
 
 
 @dataclass

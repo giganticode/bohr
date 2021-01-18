@@ -185,3 +185,6 @@ class LabelSet:
                         result &= category | label
 
         return result
+
+
+Labels = Union[Label, LabelSet]

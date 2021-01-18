@@ -6,6 +6,7 @@ import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
+from subprocess import CalledProcessError
 from typing import Callable, List, Optional, Set, Type
 
 from dask.dataframe import DataFrame
@@ -22,7 +23,7 @@ from bohr.framework import (
 )
 from bohr.framework.artifacts.core import Artifact
 from bohr.framework.labels.cache import CategoryMappingCache
-from bohr.framework.labels.labelset import Label
+from bohr.framework.labels.labelset import Label, Labels
 from bohr.framework.snorkel_util import SnorkelLabelingFunction, to_snorkel_label
 
 KEYWORD_GROUP_SEPARATOR = "|"
@@ -50,17 +51,27 @@ class _Heuristic:
         return self.func(artifact, *args, **kwargs)
 
 
+HeuristicFunction = Callable[..., Optional[Labels]]
+
+
 class Heuristic:
     def __init__(self, artifact_type_applied_to: Type[Artifact]):
         self.artifact_type_applied_to = artifact_type_applied_to
 
-    def get_artifact_safe_func(self, f: Callable) -> Callable[..., Optional[Label]]:
+    def get_artifact_safe_func(self, f: HeuristicFunction) -> HeuristicFunction:
         def func(artifact, *args, **kwargs):
             if not isinstance(artifact, self.artifact_type_applied_to):
                 raise ValueError("Not right artifact")
             try:
                 return f(artifact, *args, **kwargs)
-            except (ValueError, KeyError, AttributeError, IndexError, TypeError):
+            except (
+                ValueError,
+                KeyError,
+                AttributeError,
+                IndexError,
+                TypeError,
+                CalledProcessError,
+            ):
                 logger.exception(
                     "Exception thrown while applying heuristic, "
                     "skipping the heuristic for this datapoint ..."

@@ -42,14 +42,28 @@ RUN unset PYENV_ROOT
 RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
 ENV PATH="/root/.pyenv/bin:$PATH"
-ENV PYTHONPATH="/usr/src/bohr/:$PYTHONPATH"
 
 RUN pyenv install 3.8.0
 
 COPY . .
 
+ENV PYTHONPATH="/usr/src/bohr/:$PYTHONPATH"
+
 RUN echo "$(ls)"
 RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
+
+RUN dvc --version
+
+RUN apt-get install -y openjdk-11-jdk
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+RUN export JAVA_HOME
+
+RUN mkdir /usr/src/tools && cd /usr/src/tools && git clone https://github.com/tsantalis/RefactoringMiner
+RUN cd /usr/src/tools/RefactoringMiner && ./gradlew distZip && ZIP_NAME="$(ls build/distributions)" && unzip "build/distributions/$ZIP_NAME" -d /usr/src/tools/
+RUN ls /usr/src/tools/
+RUN rm -rf /usr/src/tools/RefactoringMiner
+
+ENTRYPOINT ['/bin/bash']
 

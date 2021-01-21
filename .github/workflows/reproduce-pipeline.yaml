@@ -27,6 +27,7 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
+          pip install "dvc[all]==$(cat DVC_VERSION)"
           dvc --version
           dvc pull -r gdrive
           dvc repro

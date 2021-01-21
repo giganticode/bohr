@@ -20,6 +20,8 @@ jobs:
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
+
+          cd /usr/src/bohr
           echo "$pwd"
           pip install -r requirements.txt
           pip install "dvc[ssh]==$(cat DVC_VERSION)"

@@ -30,7 +30,6 @@ jobs:
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
           dvc pull -r ironspeed downloaded-data/bugginess_train.7z downloaded-data/berger.csv downloaded-data/herzig.csv downloaded-data/1151-commits.csv
 
-
           dvc repro bugginess-10k_label_dataset
 
           git fetch --prune

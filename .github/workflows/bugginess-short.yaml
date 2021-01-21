@@ -22,6 +22,7 @@ jobs:
           git checkout new-branch
           echo "$pwd"
           pip install -r requirements.txt
+          pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

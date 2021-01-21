@@ -12,6 +12,7 @@ jobs:
           PYTHONPATH: /usr/src/bohr/
         run: |
           cd /usr/src/bohr
+          pyenv versions
           pyenv global 3.8.0
           eval "$(pyenv init -)"
           echo "$(python --version)"

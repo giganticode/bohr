@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   reproduce-pipeline: #TODO find a way to reuse stages: https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851/12
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    container: docker://giganticode/bohr-cml-base:latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -14,8 +14,6 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
           PYTHONPATH: /__w/bohr/bohr
         run: |
-          sudo apt-get update && sudo apt-get install libpython3-dev p7zip-full bzip2 openssl libssl-dev libffi-dev liblzma-dev python-openssl libbz2-dev libsqlite3-dev bc
-
           rm -rf /github/home/.pyenv
           unset PYENV_ROOT
           curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -29,6 +27,7 @@ jobs:
           pip install Cython==0.29.21
           pip install -r requirements.txt
           python -c 'import nltk; nltk.download("punkt")'
+          dvc --version
           dvc pull -r gdrive
           dvc repro
       - name: Commit files

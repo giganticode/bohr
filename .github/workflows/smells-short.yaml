@@ -11,7 +11,6 @@ jobs:
           DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
           PYTHONPATH: /usr/src/bohr/
         run: |
-          apt-get install bc
           cd /usr/src/bohr
           pyenv global 3.8.0
           eval "$(pyenv init -)"
@@ -21,12 +20,13 @@ jobs:
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
+          echo "$pwd"
+          pip install -r requirements.txt
+          dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
           dvc pull downloaded-data/smells-madeyski.csv
           cd /usr/src/bohr
-          echo "$pwd"
-          pip install -r requirements.txt
           dvc repro smells_10_label_dataset smells_10_train_label_model
 
           git fetch --prune

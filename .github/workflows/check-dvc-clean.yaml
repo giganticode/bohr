@@ -13,7 +13,8 @@ jobs:
           DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
           PYTHONPATH: /usr/src/bohr/
         run: |
-          sudo apt-get update && sudo apt-get install p7zip-full
+          pip install $(grep "dvc==" requirements.txt)
+          dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
           dvc pull

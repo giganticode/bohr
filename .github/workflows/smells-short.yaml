@@ -26,7 +26,7 @@ jobs:
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
-          dvc pull downloaded-data/smells-madeyski.csv
+          dvc pull -r ironspeed downloaded-data/smells-madeyski.csv
           cd /usr/src/bohr
           dvc repro smells_10_label_dataset smells_10_train_label_model
 

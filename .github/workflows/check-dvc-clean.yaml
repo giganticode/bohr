@@ -17,7 +17,7 @@ jobs:
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
-          dvc pull
+          dvc pull -r ironspeed
           dvc repro preprocess_bugginess_train
           dvc status
           dvc status -q

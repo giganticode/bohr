@@ -2,7 +2,7 @@ name: bugginess-short
 on: [pull_request]
 jobs:
   bugginess-short:
-    runs-on: [ubuntu-latest]
+    runs-on: self-hosted
     container: docker://giganticode/bohr-cml-base:latest
     steps:
       - name: bugginess-short

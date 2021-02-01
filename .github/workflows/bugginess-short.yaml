@@ -4,37 +4,37 @@ jobs:
   bugginess-short:
     runs-on: self-hosted
     container: docker://giganticode/bohr-cml-base:latest
+    env:
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: /usr/src/bohr/
     steps:
       - name: bugginess-short
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-          PYTHONPATH: /usr/src/bohr/
         run: |
           cd /usr/src/bohr
           pyenv versions
           pyenv global 3.8.0
           eval "$(pyenv init -)"
           echo "$(python --version)"
-          git branch
           git checkout $GITHUB_BASE_REF
           git pull
 
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
-
-          cd /usr/src/bohr
-          echo "$pwd"
           pip install -r requirements.txt
+      - name: install-dvc
+        run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+      - name: repro
+        run: |
           dvc pull -r ironspeed downloaded-data/bugginess_train.7z downloaded-data/berger.csv downloaded-data/herzig.csv downloaded-data/1151-commits.csv
-
           dvc repro bugginess-10k_label_dataset
-
+      - name: report-metrics
+        run: |
           git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md

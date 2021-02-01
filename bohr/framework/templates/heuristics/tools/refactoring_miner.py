@@ -43,5 +43,4 @@ class RefactoringMiner(Tool):
         )
 
         output = result.stdout.decode()
-        print(output)
         return jsons.loads(output, cls=RefactoringMinerOutput)

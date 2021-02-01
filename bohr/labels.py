@@ -14,7 +14,8 @@ class CommitLabel(Label):
     DocFix = auto()
     TestFix = auto()
     BogusFix = DocFix | TestFix
-    NonBugFix = BogusFix
+    Refactoring = auto()
+    NonBugFix = BogusFix | Refactoring
     Commit = BugFix | NonBugFix
     Label = Commit
 

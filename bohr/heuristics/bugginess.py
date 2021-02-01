@@ -1,14 +1,25 @@
 import re
-from typing import Optional, Union
+from typing import Optional
 
 from bohr.framework.artifacts.commit import Commit
 from bohr.framework.core import Heuristic
-from bohr.framework.labels.labelset import Label, LabelSet
+from bohr.framework.labels.labelset import Labels
 from bohr.framework.nlp_utils import NgramSet
 from bohr.framework.templates.heuristics.keywords import KeywordHeuristics
+from bohr.framework.templates.heuristics.tool import ToolOutputHeuristic
+from bohr.framework.templates.heuristics.tools.refactoring_miner import RefactoringMiner
 from bohr.labels import *
 
-Labels = Union[Label, LabelSet]
+
+@ToolOutputHeuristic(Commit, tool=RefactoringMiner)
+def refactorings_detected(
+    commit: Commit, refactoring_miner: RefactoringMiner
+) -> Optional[Labels]:
+    if commit.sha.endswith("f"):  # running on 1/16 of commits for now to make it faster
+        refactoring_miner_output = refactoring_miner.run(commit)
+        if len(refactoring_miner_output.commits[0].refactorings) > 0:
+            return CommitLabel.Refactoring
+    return None
 
 
 @KeywordHeuristics(Commit, "bug", name_pattern="bug_message_keyword_%1")

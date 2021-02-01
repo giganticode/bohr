@@ -2,6 +2,8 @@ language: python
 if: 'type = pull_request OR branch = master'
 python:
   - "3.8"
+env:
+  - SOFTWARE_DIR='.'
 install:
   - pip install --upgrade pip wheel setuptools
   - pip install Cython==0.29.21

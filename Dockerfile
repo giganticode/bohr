@@ -54,8 +54,6 @@ RUN /root/.pyenv/versions/3.8.0/bin/pip install Cython==0.29.21
 RUN /root/.pyenv/versions/3.8.0/bin/pip install -r requirements.txt
 RUN /root/.pyenv/versions/3.8.0/bin/python -c 'import nltk; nltk.download("punkt")'
 
-RUN dvc --version
-
 RUN apt-get install -y openjdk-11-jdk
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME

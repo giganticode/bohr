@@ -3,6 +3,10 @@ on: [pull_request]
 jobs:
   bugginess-short:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: /usr/src/bohr
     container: docker://giganticode/bohr-cml-base:latest
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -11,7 +15,6 @@ jobs:
     steps:
       - name: bugginess-short
         run: |
-          cd /usr/src/bohr
           pyenv versions
           pyenv global 3.8.0
           eval "$(pyenv init -)"

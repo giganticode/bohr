@@ -1,7 +1,7 @@
 name: smells-short
 on: [pull_request]
 jobs:
-  bugginess-short:
+  smells-short:
     runs-on: self-hosted
     container: docker://giganticode/bohr-cml-base:latest
     steps:

@@ -16,7 +16,9 @@ jobs:
           eval "$(pyenv init -)"
           echo "$(python --version)"
           git branch
-          git checkout master
+          git checkout $GITHUB_BASE_REF
+          git pull
+
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch

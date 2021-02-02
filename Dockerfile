@@ -65,6 +65,3 @@ RUN ls /usr/src/tools/
 RUN rm -rf /usr/src/tools/RefactoringMiner
 
 ENV SOFTWARE_DIR /usr/src/tools
-
-ENTRYPOINT ['/bin/bash']
-

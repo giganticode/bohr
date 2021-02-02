@@ -13,7 +13,7 @@ jobs:
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
       PYTHONPATH: /usr/src/bohr/
     steps:
-      - name: bugginess-short
+      - name: checkout-pull-request
         run: |
           pyenv versions
           pyenv global 3.8.0

@@ -7,7 +7,7 @@ jobs:
       run:
         shell: bash -lieo pipefail {0}
         working-directory: /usr/src/bohr
-    container: docker://giganticode/bohr-cml-base:latest
+    container: giganticode/bohr-cml-base:latest
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}

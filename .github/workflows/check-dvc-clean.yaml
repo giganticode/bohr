@@ -4,8 +4,12 @@ on:
     branches: [ master ]
 jobs:
   check-dvc-clean:
+    defaults:
+      run:
+        shell: bash -lieo pipefail {0}
+        working-directory: /usr/src/bohr
     runs-on: self-hosted
-    container: docker://giganticode/bohr-cml-base:latest
+    container: giganticode/bohr-cml-base:latest
     steps:
       - uses: actions/checkout@v2
       - name: check-dvc-clean

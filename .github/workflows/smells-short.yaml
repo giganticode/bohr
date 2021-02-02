@@ -7,7 +7,7 @@ jobs:
       run:
         shell: bash -lieo pipefail {0}
         working-directory: /usr/src/bohr
-    container: docker://giganticode/bohr-cml-base:latest
+    container: giganticode/bohr-cml-base:latest
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
@@ -31,7 +31,7 @@ jobs:
           python -m pip install -r requirements.txt
       - name: install-dvc
         run: |
-          python -m pip install "dvc[ssh]==$(cat DVC_VERSION)"
+          pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

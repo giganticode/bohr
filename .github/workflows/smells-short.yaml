@@ -3,34 +3,43 @@ on: [pull_request]
 jobs:
   smells-short:
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
+        working-directory: /usr/src/bohr
     container: docker://giganticode/bohr-cml-base:latest
+    env:
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: /usr/src/bohr/
     steps:
-      - name: smells-short
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-          PYTHONPATH: /usr/src/bohr/
+      - name: setup-python
         run: |
-          cd /usr/src/bohr
           pyenv global 3.8.0
           eval "$(pyenv init -)"
           echo "$(python --version)"
-          git branch
+          echo "Python is $(pyenv which python)"
+      - name: update-base-ref
+        run: |
           git checkout $GITHUB_BASE_REF
           git pull
-
+      - name: checkout-pull-request
+        run: |
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
-          echo "$pwd"
-          pip install -r requirements.txt
-          pip install "dvc[ssh]==$(cat DVC_VERSION)"
+          python -m pip install -r requirements.txt
+      - name: install-dvc
+        run: |
+          python -m pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+      - name: repro
+        run: |
           dvc pull -r ironspeed downloaded-data/smells-madeyski.csv
-          cd /usr/src/bohr
           dvc repro smells_10_label_dataset smells_10_train_label_model
-
+      - name: report-metrics
+        run: |
           git fetch --prune
           dvc metrics diff master

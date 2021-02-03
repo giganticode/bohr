@@ -27,6 +27,13 @@ jobs:
         with:
           default: "${{ matrix.python }}"
           command: pip install -U pip  # upgrade pip after installing python
+      - name: check-path
+        shell: python
+        run: |
+          import sys
+          print(sys.path)
+      - name: check-dir
+        run: pwd
       - name: install-dependencies
         run: |
           pip install Cython==0.29.21

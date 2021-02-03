@@ -10,7 +10,7 @@ jobs:
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-      PYTHONPATH: /__w/bohr/bohr
+      PYTHONPATH: /home/runner/work/bohr/bohr
     steps:
       - name: update-git
         run: |

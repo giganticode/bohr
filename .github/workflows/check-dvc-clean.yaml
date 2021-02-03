@@ -10,17 +10,19 @@ jobs:
         working-directory: /usr/src/bohr
     runs-on: self-hosted
     container: giganticode/bohr-cml-base:latest
+    env:
+      DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: /usr/src/bohr/
     steps:
       - uses: actions/checkout@v2
-      - name: check-dvc-clean
-        env:
-          DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-          PYTHONPATH: /usr/src/bohr/
+      - name: install-dvc
         run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user hbabii
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+      - name: reproduce-and-check-status
+        run: |
           dvc pull -r ironspeed
           dvc repro preprocess_bugginess_train
           dvc status

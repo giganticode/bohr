@@ -19,10 +19,6 @@ jobs:
           git pull
       - name: checkout-pull-request
         run: |
-          pyenv versions
-          pyenv global 3.8.0
-          eval "$(pyenv init -)"
-          echo "$(python --version)"
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch

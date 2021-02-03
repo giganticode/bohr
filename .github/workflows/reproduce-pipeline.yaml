@@ -10,16 +10,37 @@ jobs:
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-      PYTHONPATH: /__w/bohr/bohr
+      PYTHONPATH: /home/runner/work/bohr/bohr
+      SOFTWARE_DIR: /home/runner/work/bohr/tools
     steps:
+      - name: update-git
+        run: |
+          sudo apt-get install software-properties-common
+          sudo add-apt-repository ppa:git-core/ppa -y
+          sudo apt-get update
+          sudo apt-get install git -y
+          git --version
       - uses: actions/checkout@v2
         with:
          fetch-depth: 0
+      - name: install-tools
+        working-directory: /home/runner/work/bohr/bohr
+        run: |
+          ls
+          chmod +x tools/install-refactoring-miner.sh
+          tools/install-refactoring-miner.sh $SOFTWARE_DIR
       - name: Install python version
         uses: gabrielfalcao/pyenv-action@v7
         with:
           default: "${{ matrix.python }}"
           command: pip install -U pip  # upgrade pip after installing python
+      - name: check-path
+        shell: python
+        run: |
+          import sys
+          print(sys.path)
+      - name: check-dir
+        run: pwd
       - name: install-dependencies
         run: |
           pip install Cython==0.29.21

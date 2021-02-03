@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: update-git
         run: |
-          apt-get install software-properties-common
-          add-apt-repository ppa:git-core/ppa -y
-          apt-get update
-          apt-get install git -y
+          sudo apt-get install software-properties-common
+          sudo add-apt-repository ppa:git-core/ppa -y
+          sudo apt-get update
+          sudo apt-get install git -y
           git --version
       - uses: actions/checkout@v2
         with:

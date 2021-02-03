@@ -12,6 +12,13 @@ jobs:
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       PYTHONPATH: /__w/bohr/bohr
     steps:
+      - name: update-git
+        run: |
+          apt-get install software-properties-common
+          add-apt-repository ppa:git-core/ppa -y
+          apt-get update
+          apt-get install git -y
+          git --version
       - uses: actions/checkout@v2
         with:
          fetch-depth: 0

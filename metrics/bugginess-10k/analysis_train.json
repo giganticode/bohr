@@ -42,21 +42,21 @@
         "bug_issue_body_keyword_repair_44": 0.0001,
         "bug_issue_body_keyword_resolv_45": 0.0223,
         "bug_issue_body_keyword_threw_46": 0.0054,
-        "bug_issue_body_keyword_timeout_47": 0.0028,
+        "bug_issue_body_keyword_timeout_47": 0.0027,
         "bug_issue_body_keyword_unabl_48": 0.0027,
         "bug_issue_body_keyword_unclos_49": 0.0,
         "bug_issue_body_keyword_unexpect_50": 0.0028,
         "bug_issue_body_keyword_unknown_51": 0.0041,
         "bug_issue_body_keyword_unsynchron_52": 0.0,
         "bug_issue_body_keyword_wrong_53": 0.0104,
-        "bug_issue_label_keyword_bug_54": 0.2446,
+        "bug_issue_label_keyword_bug_54": 0.2444,
         "bug_issue_label_keyword_error_57": 0.0,
-        "bug_issue_label_keyword_fix_56": 0.0516,
+        "bug_issue_label_keyword_fix_56": 0.0513,
         "bug_issue_label_keyword_fixed_55": 0.0,
         "bug_message_keyword_bad_58": 0.0024,
         "bug_message_keyword_broken_59": 0.0047,
-        "bug_message_keyword_bug_60": 0.0193,
-        "bug_message_keyword_bugfix_74": 0.1869,
+        "bug_message_keyword_bug_60": 0.0192,
+        "bug_message_keyword_bugfix_74": 0.1867,
         "bug_message_keyword_close_61": 0.0259,
         "bug_message_keyword_concurr_62": 0.0003,
         "bug_message_keyword_correct_63": 0.0118,
@@ -304,7 +304,7 @@
         "bugless_message_keyword_version_305": 0.0131,
         "github_ref_in_message_2": 0.0003,
         "no_files_have_modified_status_3": 0.0112,
-        "refactorings_detected_4": 0.0033,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0052
     },
     "Coverage": {
@@ -612,7 +612,7 @@
         "bugless_message_keyword_version_305": 0.0258,
         "github_ref_in_message_2": 0.0003,
         "no_files_have_modified_status_3": 0.1046,
-        "refactorings_detected_4": 0.0043,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0118
     },
     "Overlaps": {
@@ -717,7 +717,7 @@
         "bug_message_keyword_unknown_103": 0.0005,
         "bug_message_keyword_unsynchron_104": 0.0,
         "bug_message_keyword_wrong_105": 0.0045,
-        "bugless_if_many_files_changes_1": 0.1137,
+        "bugless_if_many_files_changes_1": 0.1136,
         "bugless_issue_body_keyword_abil_106": 0.0023,
         "bugless_issue_body_keyword_ad_107": 0.0311,
         "bugless_issue_body_keyword_add_108": 0.0514,
@@ -839,7 +839,7 @@
         "bugless_message_keyword_complet_224": 0.0049,
         "bugless_message_keyword_configur|chang_225": 0.0,
         "bugless_message_keyword_consolid_226": 0.0003,
-        "bugless_message_keyword_convert_227": 0.0036,
+        "bugless_message_keyword_convert_227": 0.0035,
         "bugless_message_keyword_coverag_228": 0.0014,
         "bugless_message_keyword_create_229": 0.0,
         "bugless_message_keyword_deprec_230": 0.002,
@@ -884,7 +884,7 @@
         "bugless_message_keyword_publish_269": 0.0028,
         "bugless_message_keyword_readm_270": 0.017,
         "bugless_message_keyword_reduc_271": 0.0018,
-        "bugless_message_keyword_refactor_272": 0.0104,
+        "bugless_message_keyword_refactor_272": 0.0103,
         "bugless_message_keyword_refin_273": 0.001,
         "bugless_message_keyword_reformat_274": 0.0003,
         "bugless_message_keyword_regress|test_275": 0.0,
@@ -920,7 +920,7 @@
         "bugless_message_keyword_version_305": 0.0229,
         "github_ref_in_message_2": 0.0003,
         "no_files_have_modified_status_3": 0.0633,
-        "refactorings_detected_4": 0.0041,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0101
     },
     "Polarity": {
@@ -1726,9 +1726,7 @@
         "no_files_have_modified_status_3": [
             0
         ],
-        "refactorings_detected_4": [
-            0
-        ],
+        "refactorings_detected_4": [],
         "version_in_message_5": [
             0
         ]

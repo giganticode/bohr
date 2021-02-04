@@ -304,7 +304,7 @@
         "bugless_message_keyword_version_305": 0.01304181051016494,
         "github_ref_in_message_2": 0.0,
         "no_files_have_modified_status_3": 0.44572305331799,
-        "refactorings_detected_4": 0.008822401227464518,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0003835826620636747
     },
     "Correct": {
@@ -612,7 +612,7 @@
         "bugless_message_keyword_version_305": 57,
         "github_ref_in_message_2": 0,
         "no_files_have_modified_status_3": 2536,
-        "refactorings_detected_4": 67,
+        "refactorings_detected_4": 0,
         "version_in_message_5": 2
     },
     "Coverage": {
@@ -920,7 +920,7 @@
         "bugless_message_keyword_version_305": 0.027234369006520907,
         "github_ref_in_message_2": 0.0,
         "no_files_have_modified_status_3": 1.0,
-        "refactorings_detected_4": 0.022823168392788647,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0005753739930955121
     },
     "Emp. Acc.": {
@@ -1228,7 +1228,7 @@
         "bugless_message_keyword_version_305": 0.4014084507042254,
         "github_ref_in_message_2": 0.0,
         "no_files_have_modified_status_3": 0.48638281549673956,
-        "refactorings_detected_4": 0.5630252100840336,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.6666666666666666
     },
     "Incorrect": {
@@ -1536,7 +1536,7 @@
         "bugless_message_keyword_version_305": 85,
         "github_ref_in_message_2": 0,
         "no_files_have_modified_status_3": 2678,
-        "refactorings_detected_4": 52,
+        "refactorings_detected_4": 0,
         "version_in_message_5": 1
     },
     "Overlaps": {
@@ -1843,8 +1843,8 @@
         "bugless_message_keyword_upgrad_304": 0.008822401227464518,
         "bugless_message_keyword_version_305": 0.027234369006520907,
         "github_ref_in_message_2": 0.0,
-        "no_files_have_modified_status_3": 0.8060989643268124,
-        "refactorings_detected_4": 0.022823168392788647,
+        "no_files_have_modified_status_3": 0.8009205983889528,
+        "refactorings_detected_4": 0.0,
         "version_in_message_5": 0.0005753739930955121
     },
     "Polarity": {
@@ -2392,9 +2392,7 @@
         "no_files_have_modified_status_3": [
             0
         ],
-        "refactorings_detected_4": [
-            0
-        ],
+        "refactorings_detected_4": [],
         "version_in_message_5": [
             0
         ]

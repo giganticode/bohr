@@ -1,0 +1,18 @@
+name: check-dvc-clean
+on: [pull_request, push]
+jobs:
+  update-docker-container:
+    defaults:
+      run:
+        shell: bash -lieo pipefail {0}
+        working-directory: /usr/src/bohr
+    runs-on: self-hosted
+    container: giganticode/bohr-cml-base:latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: build-container
+        run: bash bin/update-docker.sh
+

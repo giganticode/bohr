@@ -195,15 +195,15 @@ def to_labeling_functions(
     category_mapping_cache = CategoryMappingCache(labels, maxsize=10000)
     labeling_functions = list(
         map(
-            lambda x: SnorkelLabelingFunction(
-                name=f"{x[1].__name__}_{x[0]}",
+            lambda h: SnorkelLabelingFunction(
+                name=h.__name__,
                 f=lambda *args, **kwargs: apply_heuristic_and_convert_to_snorkel_label(
-                    x[1], category_mapping_cache, *args, **kwargs
+                    h, category_mapping_cache, *args, **kwargs
                 ),
                 mapper=mapper,
-                resources=x[1].resources,
+                resources=h.resources,
             ),
-            enumerate(heuristics),
+            heuristics,
         )
     )
     return labeling_functions

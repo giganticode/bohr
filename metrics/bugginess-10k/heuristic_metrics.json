@@ -1,1 +1,1 @@
-{"n_labeling_functions": 306, "coverage_train": 0.9041, "coverage_1151-commits": 1.0, "majority_accuracy_1151-commits": 0.7106863596872285, "coverage_berger": 1.0, "majority_accuracy_berger": 0.7653333333333333, "coverage_herzig": 1.0, "majority_accuracy_herzig": 0.6392405063291139}
+{"n_labeling_functions": 306, "coverage_train": 0.9039, "coverage_1151-commits": 1.0, "majority_accuracy_1151-commits": 0.7124239791485665, "coverage_berger": 1.0, "majority_accuracy_berger": 0.7653333333333333, "coverage_herzig": 1.0, "majority_accuracy_herzig": 0.6401994629842731}

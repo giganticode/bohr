@@ -10,11 +10,33 @@ jobs:
     env:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-      PYTHONPATH: /__w/bohr/bohr
+      PYTHONPATH: /home/runner/work/bohr/bohr
+      SOFTWARE_DIR: /home/runner/work/bohr/tools
     steps:
+      - name: update-git
+        run: |
+          sudo apt-get install software-properties-common
+          sudo add-apt-repository ppa:git-core/ppa -y
+          sudo apt-get update
+          sudo apt-get install git -y
+          git --version
+      - name: install-cml
+        run: |
+          curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
+          sudo apt-get update
+          sudo apt-get install -y nodejs
+          sudo node -v
+          sudo npm -v
+          sudo npm i -g @dvcorg/cml
       - uses: actions/checkout@v2
         with:
          fetch-depth: 0
+      - name: install-tools
+        working-directory: /home/runner/work/bohr/bohr
+        run: |
+          ls
+          chmod +x tools/install-refactoring-miner.sh
+          tools/install-refactoring-miner.sh $SOFTWARE_DIR
       - name: Install python version
         uses: gabrielfalcao/pyenv-action@v7
         with:

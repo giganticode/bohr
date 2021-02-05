@@ -8,6 +8,8 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
+      - name : fetch-master
+        run: git fetch origin "$GITHUB_BASE_REF"
       - name: build-image
-        run: bash bin/update-docker.sh
+        run: bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"
 

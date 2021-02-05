@@ -23,6 +23,8 @@ jobs:
           git fetch origin pull/$PR_NUMBER/head:new-branch
           git checkout new-branch
           pip install -r requirements.txt
+      - name: build-image
+        run: bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"
       - name: install-dvc
         run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"

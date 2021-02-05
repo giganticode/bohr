@@ -1,3 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
 if [ -n "$(git --no-pager diff HEAD~1 -- Dockerfile)" ]; then
     docker build --tag giganticode/bohr-cml-base:latest .
     docker push giganticode/bohr-cml-base:latest

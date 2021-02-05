@@ -2,11 +2,7 @@ name: build-docker
 on: [pull_request, push]
 jobs:
   update-docker-container:
-    defaults:
-      run:
-        shell: bash -lieo pipefail {0}
-        working-directory: /usr/src/bohr
-    runs-on: self-hosted
+    runs-on: [ubuntu-latest]
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

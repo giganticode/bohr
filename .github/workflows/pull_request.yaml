@@ -12,6 +12,8 @@ jobs:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
       PYTHONPATH: /usr/src/bohr/
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: update-base-ref
         run: |
@@ -24,7 +26,7 @@ jobs:
           git checkout new-branch
           pip install -r requirements.txt
       - name: build-image
-        run: bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"
       - name: install-dvc
         run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"

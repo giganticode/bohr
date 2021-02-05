@@ -68,3 +68,4 @@ ENV SOFTWARE_DIR /usr/src/tools
 
 RUN pyenv global 3.8.0
 RUN echo 'eval "$(pyenv init -)"' >> /etc/profile
+RUN echo "test"

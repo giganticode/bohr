@@ -1,0 +1,15 @@
+name: build-docker
+on: pull_request
+jobs:
+  update-docker-image:
+    runs-on: [ubuntu-latest]
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+      - name : fetch-master
+        run: git fetch origin "$GITHUB_BASE_REF"
+      - name: build-image
+        run: bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"
+

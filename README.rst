@@ -2,6 +2,11 @@ BOHR
 ----------------------------------
 Big Old Heuristic Repository
 
+
+
+.. contents:: **Contents**
+  :backlinks: none
+
 Getting started
 ===========================================
 
@@ -20,54 +25,130 @@ Get started with BOHR
 Running the code and reproducing the models
 ===========================================
 
-Using DVC (Data Version Control) - preferred
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#. Run ``bohr repro``
 
-#. Install dvc_ for your OS
-
-#. Install p7zip_ for your OS
-
-#. Setting up datasource. Ironspeed users should create a file ``.dvc/config.local``. Dvc will check this file to know where datasets should be fetched from on the next step. It contains sensitive data, must not be committed, and is gitignored by default. The contents of the file should be the following::
-
-    [core]
-        remote = ironspeed
-    ['remote "ironspeed"']
-        url = ssh://10.10.20.160/home/hbabii/.dvcstorage/bohr
-        user = <username>
-        password = <password>
-
-#. Run ``dvc pull -r ironspeed data/test downloaded-data/b_b.7z``
-
-#. Run ``dvc repro``
-
-.. _dvc: https://dvc.org/doc/install
-.. _p7zip: https://www.7-zip.org
 .. _conda: https://docs.anaconda.com/anaconda/install/
 
-Without DVC
-~~~~~~~~~~~
-TBA
+Contribute:
+===========
+
+To contribute to the framework, take a look at the bohr-framework_ repo
+
+.. _bohr-framework: https://github.com/giganticode/bohr-framework
+
+Setting up datasource:
+~~~~~~~~~~~~~~~~~~~~~~
+
+#. Install dev dependencies: ``pip install -r requirements-dev.txt``
+#. Install pre-commit hooks: ``pre-commit install`` so that all contributions follow uniform formatting conventions.
+
+#. Setting up datasource. ::
+
+Ironspeed users:
+
+setup access with ssh keys https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-2
+
+     dvc remote modify --local ironspeed user <username>
+
+1. Contributing Heuristics:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Heuristics can be found in ``.py`` files in the ``bohr/heuristics`` directory, and are marked with @Heuristic decorator. Example:
+
+.. code-block:: python
+ 
+    @Heuristic(Commit)
+    def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
+        if len(commit.files) > 6:
+            return CommitLabel.NonBugFix
+        else:
+            return None
+            
+Important things to note:
+
+#. Any function becomes a heuristic once it is marked with ``@Heuristic`` decorator
+#. Artifact type is passed to heuristic decorator as a parameter; method accepts an object of artifact type
+#. Method name can be arbitrary as long it is unique and descriptive
+#. Method should return ``label`` if a datapoint should be labeled with ``label``, ``None`` if the labeling function should abstain on the datapoint
+
+Please refer to the documentation (TODO add link) for more information on heuristics and special heuristic types.        
+
+2. Contributing a new task:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to define a new taks, you should add it to the `tasks` dictionary attribute in `bohr.json`:
+
+Example.
+
+.. code-block:: json
+
+   "bugginess": {
+      "top_artifact": "bohr.artifacts.commit.Commit",
+      "label_categories": [
+        "CommitLabel.NonBugFix",
+        "CommitLabel.BugFix"
+      ],
+      "test_datasets": [
+        "datasets.1151-commits",
+        "datasets.berger",
+        "datasets.herzig"
+      ],
+      "train_datasets": [
+        "datasets.bugginess-train"
+      ],
+      "label_column_name": "bug"
+    }
 
 
 
-EDIT TEXT BELOW WITH UPDATED STEPS >>>
+Kwy is the name of the task. The value is an object with the following fields:
 
-Contribute to the project by adding your first heuristic:
-===========================================================
+#. **Top artifact** - the artifact to be classified
+#. **Label hierarchy** patch (optional) 
+#. **Label categories** - categories artifact to be classified as
+#. **Training sets** - datasets used to train label model
+#. **Test sets** - datasets to calculate metrics on
 
-#. Define a function inside the ``bohr/heuristics/templates.py`` file and label it with @labeling_function() decorator. This heuristic can be reused later for different tasks.
+3. Contributing to label hierarchy:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. To use the newly created function to label commits for a specific task, add it to the ``heuristics`` list defined in ``bohr/heuristics/<task>/<label>.py`` (e.g., for the task of classification of bugfix commit for a bugfix commit, the file is ``bohr/heuristics/bugs/bugs.py``)
+Artifacts can be labeled with labeled pre-defined in BOHR. Labels are organized in an hierarchy, the are more general labels e.g. ``Commit.BugFix``, there are more specific ones, e.g. ``Commit.MinorBugFix``. There is a binary relation IS-A defined on the set of label which defines a partial order, e.g. ``IS-A(Commit.MinorBugFix, Commit.BugFix)``
 
-#. Run ``dvc repro`` to recalculate the metrics or (if not using DVC) rerun the scripts in ``bohr/pipeline`` package manually
 
-#. Commit and push the changes together with the changed metric files.
+Labels are defined in text files under ``bohr/labels``. Each row has a format: <parent>: <list of children>
 
-See this commit_ as an example of how a heuristic can be added.
+After the chnages done to the text file with labels, the object hierarchy can be generated by running ``bohr parse-labels``
 
-.. _commit : https://github.com/giganticode/bohr/commit/6928dfd750d304ca4610dbba4216f6e94375e4a7
+See this pill request as an example of adding labels to the hieararcy: link to PR
 
-Credits
-=======
+Note that the object hierarhcy of labels is regenerated and push to the repository automatically, once the pull request is recieved: link to commit
 
-This project is based on the work of `@lalenzos <https://github.com/lalenzos>`_ and partially uses his code.
+4. Contributing a dataset
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to contribute a dataset of artifacts that do not yet exist in bohr, you first need to create an artifact definition. If aritifact type is not yet define proceed with Section 1. Contributing an artifact definition Otherwise you can skip this section. But Make sure that there is a needed DatasetMapper. Dataset mapper define how each datapoint of a dataset is mapped onto an artifact object. If the needed mapper exists, you can skip to Chapter 6 Contributing a dataset, otherwise proceed to chapter 5 Contributing an artifact mapper.
+
+1. Contributing an artifact definition:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
+2. Contributuing an artifact mapper:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+3. Contributing a dataset:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+Defining new heuristic type:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Publications
+===========================================
+
+

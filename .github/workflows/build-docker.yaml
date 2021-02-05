@@ -1,13 +1,13 @@
 name: build-docker
 on: [pull_request, push]
 jobs:
-  update-docker-container:
+  update-docker-image:
     runs-on: [ubuntu-latest]
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
-      - name: build-container
+      - name: build-image
         run: bash bin/update-docker.sh
 

@@ -22,8 +22,8 @@ jobs:
       - name: checkout-pull-request
         run: |
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
-          git fetch origin pull/$PR_NUMBER/head:new-branch
-          git checkout new-branch
+          git fetch origin pull/$PR_NUMBER/head:pr/$PR_NUMBER
+          git checkout pr/$PR_NUMBER
           pip install -r requirements.txt
       - name: build-image
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && bash bin/update-docker.sh "origin/$GITHUB_BASE_REF"

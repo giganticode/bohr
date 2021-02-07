@@ -47,6 +47,10 @@ RUN pyenv install 3.8.0
 
 COPY . .
 
+RUN curl -fsSL https://get.docker.com -o get-docker.sh
+RUN sh get-docker.sh
+RUN docker --version
+
 ENV PYTHONPATH="/usr/src/bohr/:$PYTHONPATH"
 
 RUN echo "$(ls)"

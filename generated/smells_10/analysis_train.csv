@@ -1,4 +1,4 @@
 ,j,Polarity,Coverage,Overlaps,Conflicts
-long_method_0,0,[1],1.0,0.3,0.0
-many_indentation_levels_1,1,[1],0.3,0.3,0.0
-many_indentation_levels2_2,2,[],0.0,0.0,0.0
+long_method,0,[1],1.0,0.3,0.0
+many_indentation_levels,1,[1],0.3,0.3,0.0
+many_indentation_levels2,2,[],0.0,0.0,0.0

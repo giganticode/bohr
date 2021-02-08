@@ -15,10 +15,14 @@ then
     apt-get update && apt-get install -y unzip
 fi
 
-if ! [ -d tools_dir ]; then
+apt-get install -y openjdk-11-jdk
+
+if ! [ -d "$tools_dir" ]; then
     mkdir "$tools_dir"
 fi
 cd "$tools_dir"
+
+rm -rf RefactoringMiner
 git clone https://github.com/tsantalis/RefactoringMiner
 cd RefactoringMiner
 ./gradlew distZip

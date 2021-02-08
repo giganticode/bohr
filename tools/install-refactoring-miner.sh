@@ -15,6 +15,9 @@ then
     apt-get update && apt-get install -y unzip
 fi
 
+apt-get install -y openjdk-11-jdk
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+
 if ! [ -d tools_dir ]; then
     mkdir "$tools_dir"
 fi

@@ -1,4 +1,4 @@
-name: bugginess-short
+name: pull_request
 on: [pull_request]
 jobs:
   bugginess-short:

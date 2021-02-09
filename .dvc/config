@@ -6,3 +6,5 @@
     url = ssh://actarus.inf.unibz.it/home/students/hbabii/public_html/dvc_storage
 ['remote "actarus-http"']
     url = https://www.inf.unibz.it/~hbabii/dvc_storage
+['remote "gdrive"']
+    url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G

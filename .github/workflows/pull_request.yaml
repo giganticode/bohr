@@ -138,6 +138,7 @@ jobs:
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: /usr/src/bohr/
     steps:
       - uses: actions/checkout@v2
         with:

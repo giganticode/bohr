@@ -1,6 +1,10 @@
 [core]
-    remote = ironspeed
-['remote "gdrive"']
-    url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G
+    remote = actarus-http
 ['remote "ironspeed"']
     url = ssh://10.10.20.160/home/hbabii/.dvcstorage/bohr
+['remote "actarus"']
+    url = ssh://actarus.inf.unibz.it/home/students/hbabii/public_html/dvc_storage
+['remote "actarus-http"']
+    url = https://www.inf.unibz.it/~hbabii/dvc_storage
+['remote "gdrive"']
+    url = gdrive://1rYrrNTWANmUjeN9EHBi3jCAHaSJcEo4G

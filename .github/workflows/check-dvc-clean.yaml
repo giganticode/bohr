@@ -11,6 +11,7 @@ jobs:
     runs-on: self-hosted
     container: giganticode/bohr-cml-base:latest
     env:
+      DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
       PYTHONPATH: /usr/src/bohr/
     steps:
@@ -19,7 +20,7 @@ jobs:
         run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
-          dvc remote modify --local ironspeed user hbabii
+          dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
       - name: reproduce-and-check-status
         run: |

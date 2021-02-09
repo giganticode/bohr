@@ -78,26 +78,26 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: install-tools
-        working-directory: /home/runner/work/bohr/bohr
-        run: |
-          sudo bash tools/install-refactoring-miner.sh $SOFTWARE_DIR
       - name: Install python version
         uses: gabrielfalcao/pyenv-action@v7
         with:
           default: "${{ matrix.python }}"
           command: pip install -U pip  # upgrade pip after installing python
-      - name: install-dependencies
-        run: |
-          pip install Cython==0.29.21
-          pip install -r requirements.txt
       - name: install-dvc
         run: |
           pip install "dvc[all]==$(cat DVC_VERSION)"
           dvc --version
-      - name: repro
+      - name: reproduce-transient-stages
         run: |
           dvc pull -r gdrive
+          dvc repro preprocess_bugginess_train
+      - name: install-tools
+        working-directory: /home/runner/work/bohr/bohr
+        run: dvc status -q || sudo bash tools/install-refactoring-miner.sh $SOFTWARE_DIR
+      - name: install-dependencies
+        run: dvc status -q || (pip install Cython==0.29.21 && pip install -r requirements.txt)
+      - name: repro
+        run: |
           dvc repro
       - name: Commit files
         run: |

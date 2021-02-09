@@ -127,3 +127,30 @@ jobs:
           git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md
+  copy-dvc-data-to-ironspeed:
+    needs: reproduce-pipeline
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash -lieo pipefail {0}
+        working-directory: /usr/src/bohr
+    container: giganticode/bohr-cml-base:latest
+    env:
+      GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+      DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
+      DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: /usr/src/bohr/
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: install-dvc
+        run: |
+          pip install "dvc[all]==$(cat DVC_VERSION)"
+          dvc --version
+          dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
+          dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+      - name: dvc-pull-and-push
+        run: |
+          dvc pull -r gdrive
+          dvc push -r ironspeed

@@ -127,7 +127,7 @@ jobs:
           git fetch --prune
           dvc metrics diff --show-md master >> report.md
           cml-send-comment report.md
-  copy-dvc-data-to-ironspeed:
+  copy-dvc-data-to-everywhere:
     needs: reproduce-pipeline
     runs-on: self-hosted
     defaults:
@@ -139,6 +139,8 @@ jobs:
       GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      DVC_ACTARUS_USERNAME: ${{ secrets.DVC_ACTARUS_USERNAME }}
+      DVC_ACTARUS_PASSWORD: ${{ secrets.DVC_ACTARUS_PASSWORD }}
       PYTHONPATH: /usr/src/bohr/
     steps:
       - uses: actions/checkout@v2
@@ -150,7 +152,10 @@ jobs:
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+          dvc remote modify --local actarus user $DVC_ACTARUS_USERNAME
+          dvc remote modify --local actarus password $DVC_ACTARUS_PASSWORD
       - name: dvc-pull-and-push
         run: |
           dvc pull -r gdrive
           dvc push -r ironspeed
+          dvc push -r actarus

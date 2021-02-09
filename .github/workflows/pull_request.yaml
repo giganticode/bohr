@@ -89,7 +89,7 @@ jobs:
           dvc --version
       - name: reproduce-transient-stages
         run: |
-          dvc pull -r gdrive
+          dvc pull -r actarus
           dvc repro preprocess_bugginess_train
       - name: install-tools
         working-directory: /home/runner/work/bohr/bohr
@@ -109,12 +109,12 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc push -r gdrive
+          dvc push -r actarus
       - name: Clean up dvc remote
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
+          dvc gc --cloud -r actarus --workspace --all-tags --all-branches -f
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
@@ -152,5 +152,5 @@ jobs:
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
       - name: dvc-pull-and-push
         run: |
-          dvc pull -r gdrive
+          dvc pull -r actarus
           dvc push -r ironspeed

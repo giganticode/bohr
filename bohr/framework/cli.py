@@ -17,7 +17,3 @@ def bohr():
 def repro():
     add_all_tasks_to_dvc_pipeline()
     subprocess.run(["dvc", "repro"], cwd=PROJECT_DIR)
-
-
-if __name__ == "__main__":
-    bohr()

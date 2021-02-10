@@ -5,9 +5,9 @@ from typing import List
 
 import jsons
 
-from bohr.framework import SOFTWARE_DIR
 from bohr.framework.artifacts.commit import Commit
 from bohr.framework.templates.heuristics.tool import Tool
+from bohr.framework.templates.heuristics.tools import SOFTWARE_DIR
 
 REFACTORING_MINER_PATH = Path(SOFTWARE_DIR) / "RefactoringMiner-2.0.3" / "bin"
 

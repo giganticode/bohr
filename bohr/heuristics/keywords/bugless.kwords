@@ -12,7 +12,6 @@ better
 bump
 chang log
 clean|cleanup
-comment
 complet
 configur chang
 consolid
@@ -20,19 +19,15 @@ convert
 coverag
 create
 deprec
-develop
 doc|document|javadoc
 drop
 enhanc
-exampl
 exclud
-expand
 extendgener
 featur
 forget
 format
 gitignor
-idea
 implement
 improv
 includ
@@ -42,10 +37,8 @@ limit
 log
 migrat
 minim
-modif
 move
 new
-note
 opinion
 optim|optimis
 pass test
@@ -54,11 +47,8 @@ perfom test
 perform
 plugin
 polish
-possibl
 prepar
 propos
-provid
-publish
 readm
 reduc
 refactor
@@ -71,9 +61,6 @@ remov
 renam
 reorgan
 replac
-restrict
-restructur
-review
 rewrit
 rid
 set up
@@ -84,14 +71,9 @@ stage
 stat
 statist
 support
-switch
-test
 test coverag
 test pass
 todo
-tweak
-unit
 unnecessari
-updat
 upgrad
 version

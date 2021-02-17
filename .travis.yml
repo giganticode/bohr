@@ -6,7 +6,7 @@ env:
   - SOFTWARE_DIR='.'
 install:
   - pip install --upgrade pip wheel setuptools
-  - git clone https://github.com/giganticode/bohr ../bohr-framework
+  - git clone https://github.com/giganticode/bohr-framework ../bohr-framework
   - pip install ../bohr-framework
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt

@@ -11,7 +11,7 @@ repos:
     hooks:
       - id: black
         language_version: python3 # Should be a command that runs python3.6+
-        exclude: bohr/labels.py|metrics|generated|labeled-data
+        exclude: labels.py|metrics|generated|labeled-data
 -   repo: https://github.com/timothycrosley/isort
     rev: 5.6.4
     hooks:

@@ -1,4 +1,0 @@
-,j,Polarity,Coverage,Overlaps,Conflicts,Correct,Incorrect,Emp. Acc.
-long_method,0,[1],1.0,0.3,0.0,10,0,1.0
-many_indentation_levels,1,[1],0.3,0.3,0.0,3,0,1.0
-many_indentation_levels2,2,[1],0.1,0.1,0.0,1,0,1.0

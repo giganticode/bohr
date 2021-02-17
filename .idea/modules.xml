@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bohr.iml" filepath="$PROJECT_DIR$/.idea/bohr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../bohr-framework/.idea/bohr-framework.iml" filepath="$PROJECT_DIR$/../bohr-framework/.idea/bohr-framework.iml" />
     </modules>
   </component>
 </project>

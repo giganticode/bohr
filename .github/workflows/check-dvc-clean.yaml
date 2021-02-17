@@ -16,7 +16,7 @@ jobs:
       PYTHONPATH: /usr/src/bohr/
     steps:
       - uses: actions/checkout@v2
-      - name: install-dvc
+      - name: setup-dvc
         run: |
           pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version

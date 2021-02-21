@@ -45,7 +45,7 @@ jobs:
           dvc pull -r gdrive
           dvc repro preprocess_bugginess_train
       - name: install-bohr
-        run: dvc status -q || (pip install Cython==0.29.21 && pip install git+https://github.com/giganticode/bohr-framework@v0.1)
+        run: dvc status -q || (pip install Cython==0.29.21 && pip install git+https://github.com/giganticode/bohr-framework@v0.2)
       - name: install-tools
         working-directory: /home/runner/work/bohr/bohr
         run: dvc status -q || sudo bash tools/install-refactoring-miner.sh $SOFTWARE_DIR

@@ -1,0 +1,43 @@
+{
+    "Conflicts": {
+        "long_method": 0.0,
+        "many_indentation_levels": 0.0,
+        "many_indentation_levels2": 0.0
+    },
+    "Correct": {
+        "long_method": 71,
+        "many_indentation_levels": 19,
+        "many_indentation_levels2": 5
+    },
+    "Coverage": {
+        "long_method": 0.5774647887323944,
+        "many_indentation_levels": 0.14788732394366197,
+        "many_indentation_levels2": 0.035211267605633804
+    },
+    "Emp. Acc.": {
+        "long_method": 0.8658536585365854,
+        "many_indentation_levels": 0.9047619047619048,
+        "many_indentation_levels2": 1.0
+    },
+    "Incorrect": {
+        "long_method": 11,
+        "many_indentation_levels": 2,
+        "many_indentation_levels2": 0
+    },
+    "Overlaps": {
+        "long_method": 0.14788732394366197,
+        "many_indentation_levels": 0.14788732394366197,
+        "many_indentation_levels2": 0.035211267605633804
+    },
+    "Polarity": {
+        "long_method": [
+            1
+        ],
+        "many_indentation_levels": [
+            1
+        ],
+        "many_indentation_levels2": [
+            1
+        ]
+    }
+}

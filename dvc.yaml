@@ -44,110 +44,122 @@ stages:
     - data/bugginess/train/bug_sample.csv
     - data/bugginess/train/bug_sample_files.csv
     - data/bugginess/train/bug_sample_issues.csv
-    - dataloaders/1151-commits.py
-    - dataloaders/berger.py
-    - dataloaders/bugginess-train.py
-    - dataloaders/herzig.py
+    - datasets/1151-commits.py
+    - datasets/berger.py
+    - datasets/bugginess-train.py
+    - datasets/herzig.py
     - heuristics
     - labels.py
-    - tasks/bugginess.py
     outs:
-    - generated/bugginess/analysis_1151-commits.csv:
+    - generated/bugginess/analysis_datasets.1151-commits.csv:
         cache: false
-    - generated/bugginess/analysis_berger.csv:
+    - generated/bugginess/analysis_datasets.berger.csv:
         cache: false
-    - generated/bugginess/analysis_herzig.csv:
+    - generated/bugginess/analysis_datasets.herzig.csv:
         cache: false
     - generated/bugginess/analysis_train.csv:
         cache: false
-    - generated/bugginess/heuristic_matrix_1151-commits.pkl
-    - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_herzig.pkl
+    - generated/bugginess/heuristic_matrix_datasets.1151-commits.pkl
+    - generated/bugginess/heuristic_matrix_datasets.berger.pkl
+    - generated/bugginess/heuristic_matrix_datasets.herzig.pkl
     - generated/bugginess/heuristic_matrix_train.pkl
     metrics:
-    - metrics/bugginess/analysis_1151-commits.json:
+    - metrics/bugginess/analysis_datasets.1151-commits.json:
         cache: false
-    - metrics/bugginess/analysis_berger.json:
+    - metrics/bugginess/analysis_datasets.berger.json:
         cache: false
-    - metrics/bugginess/analysis_herzig.json:
+    - metrics/bugginess/analysis_datasets.herzig.json:
         cache: false
     - metrics/bugginess/analysis_train.json:
         cache: false
     - metrics/bugginess/heuristic_metrics.json:
         cache: false
+    params:
+    - bohr.json:
+      - bohr_framework_version
   bugginess_train_label_model:
     cmd: bohr train-label-model bugginess
     deps:
     - data/bugginess/test/1151-commits.csv
     - data/bugginess/test/berger.csv
     - data/bugginess/test/herzig.csv
-    - dataloaders/1151-commits.py
-    - dataloaders/berger.py
-    - dataloaders/herzig.py
-    - generated/bugginess/heuristic_matrix_1151-commits.pkl
-    - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_herzig.pkl
+    - datasets/1151-commits.py
+    - datasets/berger.py
+    - datasets/herzig.py
+    - generated/bugginess/heuristic_matrix_datasets.1151-commits.pkl
+    - generated/bugginess/heuristic_matrix_datasets.berger.pkl
+    - generated/bugginess/heuristic_matrix_datasets.herzig.pkl
     - generated/bugginess/heuristic_matrix_train.pkl
-    - tasks/bugginess.py
     outs:
     - generated/bugginess/label_model.pkl
     metrics:
     - metrics/bugginess/label_model_metrics.json:
         cache: false
+    params:
+    - bohr.json:
+      - bohr_framework_version
   bugginess_label_dataset:
-    cmd: bohr label-dataset bugginess bugginess-train
+    cmd: bohr label-dataset bugginess datasets.bugginess-train
     deps:
     - data/bugginess/train/bug_sample.csv
     - data/bugginess/train/bug_sample_files.csv
     - data/bugginess/train/bug_sample_issues.csv
-    - dataloaders/bugginess-train.py
+    - datasets/bugginess-train.py
     - generated/bugginess/heuristic_matrix_train.pkl
-    - tasks/bugginess.py
     outs:
     - labeled-data/bugginess.csv
+    params:
+    - bohr.json:
+      - bohr_framework_version
   smells_apply_heuristics:
     cmd: bohr apply-heuristics smells
     deps:
     - data/smells/test.csv
     - data/smells/train.csv
-    - dataloaders/smells-test.py
-    - dataloaders/smells-train.py
+    - datasets/smells-test.py
+    - datasets/smells-train.py
     - heuristics
     - labels.py
-    - tasks/smells.py
     outs:
-    - generated/smells/analysis_smells-test.csv:
+    - generated/smells/analysis_datasets.smells-test.csv:
         cache: false
     - generated/smells/analysis_train.csv:
         cache: false
-    - generated/smells/heuristic_matrix_smells-test.pkl
+    - generated/smells/heuristic_matrix_datasets.smells-test.pkl
     - generated/smells/heuristic_matrix_train.pkl
     metrics:
-    - metrics/smells/analysis_smells-test.json:
+    - metrics/smells/analysis_datasets.smells-test.json:
         cache: false
     - metrics/smells/analysis_train.json:
         cache: false
     - metrics/smells/heuristic_metrics.json:
         cache: false
+    params:
+    - bohr.json:
+      - bohr_framework_version
   smells_train_label_model:
     cmd: bohr train-label-model smells
     deps:
     - data/smells/test.csv
-    - dataloaders/smells-test.py
-    - generated/smells/heuristic_matrix_smells-test.pkl
+    - datasets/smells-test.py
+    - generated/smells/heuristic_matrix_datasets.smells-test.pkl
     - generated/smells/heuristic_matrix_train.pkl
-    - tasks/smells.py
     outs:
     - generated/smells/label_model.pkl
     metrics:
     - metrics/smells/label_model_metrics.json:
         cache: false
+    params:
+    - bohr.json:
+      - bohr_framework_version
   smells_label_dataset:
-    cmd: bohr label-dataset smells smells-train
+    cmd: bohr label-dataset smells datasets.smells-train
     deps:
     - data/smells/train.csv
-    - dataloaders/smells-train.py
+    - datasets/smells-train.py
     - generated/smells/heuristic_matrix_train.pkl
-    - tasks/smells.py
     outs:
     - labeled-data/smells.csv
+    params:
+    - bohr.json:
+      - bohr_framework_version

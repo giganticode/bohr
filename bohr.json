@@ -1,0 +1,34 @@
+{"bohr_framework_version": "0.1",
+  "tasks": {
+    "bugginess": {
+      "top_artifact": "bohr.artifacts.commit.Commit",
+      "label_categories": [
+        "CommitLabel.NonBugFix",
+        "CommitLabel.BugFix"
+      ],
+      "test_datasets": [
+        "datasets.1151-commits",
+        "datasets.berger",
+        "datasets.herzig"
+      ],
+      "train_datasets": [
+        "datasets.bugginess-train"
+      ],
+      "label_column_name": "bug"
+    },
+    "smells": {
+      "top_artifact": "bohr.artifacts.method.Method",
+      "label_categories": [
+        "SnippetLabel.NonSmelly",
+        "SnippetLabel.Smelly"
+      ],
+      "test_datasets": [
+        "datasets.smells-test"
+      ],
+      "train_datasets": [
+        "datasets.smells-train"
+      ],
+      "label_column_name": "smelly"
+    }
+  }
+}

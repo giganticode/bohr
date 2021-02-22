@@ -47,7 +47,7 @@ jobs:
       - name: install-bohr
         run: dvc status -q || (pip install Cython==0.29.21 && git clone https://github.com/giganticode/bohr ../bohr-framework && pip install -e ../bohr-framework)
       - name: install-tools
-        working-directory: /home/runner/work/bohr/bohr
+        working-directory: /home/runner/work/bohr
         run: dvc status -q || sudo bash tools/install-refactoring-miner.sh $SOFTWARE_DIR
       - name: install-dependencies
         run: dvc status -q || pip install -r requirements.txt

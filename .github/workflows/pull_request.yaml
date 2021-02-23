@@ -35,7 +35,7 @@ jobs:
         uses: gabrielfalcao/pyenv-action@v7
         with:
           default: "${{ matrix.python }}"
-          command: pip install -U pip  # upgrade pip after installing python
+          command: pip install --upgrade pip wheel setuptools
       - name: install-dvc
         run: |
           pip install "dvc[all]==$(cat DVC_VERSION)"

@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: setup-dvc
         run: |
+          pip install --upgrade pip wheel setuptools
           pip install "dvc[ssh]==$(cat DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME

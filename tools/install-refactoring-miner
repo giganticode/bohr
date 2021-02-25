@@ -16,8 +16,12 @@ then
     apt-get update && apt-get install -y unzip
 fi
 
-apt-get install -y openjdk-11-jdk
-# Linux spec #TODO support macos
+if ! command -v unzip &> /dev/null
+then
+    echo "java could not be found. Trying to install it ..."
+    apt-get install -y openjdk-11-jdk
+    # Linux spec #TODO support macos
+fi
 
 if ! [ -d "$tools_dir" ]; then
     mkdir "$tools_dir"
@@ -30,6 +34,5 @@ cd RefactoringMiner
 ./gradlew distZip
 ZIP_NAME="$(ls build/distributions)"
 cd ..
-unzip "RefactoringMiner/build/distributions/$ZIP_NAME"
-ls
+unzip -o "RefactoringMiner/build/distributions/$ZIP_NAME"
 rm -rf "RefactoringMiner"

@@ -2,13 +2,8 @@ language: python
 if: 'type = pull_request OR branch = master'
 python:
   - "3.8"
-env:
-  - SOFTWARE_DIR='.'
 install:
-  - pip install --upgrade pip wheel setuptools
-  - pip install Cython==0.29.21 # pre-requisite
-  - pip install git+https://github.com/giganticode/bohr-framework@0.2.4
-  - pip install -r requirements.txt
+  - bash bin/setup-bohr.sh .
   - pip install -r requirements-dev.txt
 script:
   - pytest --doctest-modules

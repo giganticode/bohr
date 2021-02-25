@@ -7,7 +7,7 @@ jobs:
     defaults:
       run:
         shell: bash -lieo pipefail {0}
-        working-directory: /usr/src/bohr
+        working-directory: /usr/src/bohr-framework
     runs-on: self-hosted
     strategy:
       matrix:
@@ -17,9 +17,12 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: /usr/src/bohr/
+      PYTHONPATH: /usr/src/bohr-framework/
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
       - name: setup-dvc
         run: |
           pip install --upgrade pip wheel setuptools

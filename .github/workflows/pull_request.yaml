@@ -37,7 +37,6 @@ jobs:
           dvc pull -r gdrive
           dvc repro preprocess_bugginess_train
       - name: setup-bohr
-        working-directory: /home/runner/work/bohr
         run: dvc status -q || sudo bash bin/setup-bohr.sh $SOFTWARE_DIR
       - name: repro
         run: |

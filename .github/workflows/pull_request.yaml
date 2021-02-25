@@ -28,7 +28,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: install-dvc
         run: |
-          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/0.2.4/DVC_VERSION)"
+          BOHR_VERSION="$(bash bin/bohr-version.sh)"
+          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"
           dvc --version
       - name: reproduce-transient-stages
         run: |
@@ -102,7 +103,8 @@ jobs:
           fetch-depth: 0
       - name: install-dvc
         run: |
-          pip install "dvc[all]==$(cat DVC_VERSION)"
+          BOHR_VERSION="$(bash bin/bohr-version.sh)"
+          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

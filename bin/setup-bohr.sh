@@ -11,12 +11,9 @@ fi
 
 pip install --upgrade pip setuptools wheel
 
-pip install jq==1.1.2
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-BOHR_VERSION=$(python -c "\
-import jq; \
-bohr_config = open(\"$(pwd)/bohr.json\").read(); \
-print(jq.compile('.bohr_framework_version').input(text=bohr_config).first())")
+BOHR_VERSION="$(bash $DIR/bohr-version.sh)"
 
 echo "Instaling  BOHR framework version $BOHR_VERSION..."
 

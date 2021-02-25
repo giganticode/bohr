@@ -28,7 +28,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: install-dvc
         run: |
-          pip install "dvc[all]==$(cat DVC_VERSION)"
+          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/0.2.4/DVC_VERSION)"
           dvc --version
       - name: reproduce-transient-stages
         run: |

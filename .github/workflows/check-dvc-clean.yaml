@@ -9,6 +9,10 @@ jobs:
         shell: bash -lieo pipefail {0}
         working-directory: /usr/src/bohr
     runs-on: self-hosted
+    strategy:
+      matrix:
+        python:
+          - 3.8.0
     container: giganticode/bohr-cml-base:latest
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
@@ -19,7 +23,8 @@ jobs:
       - name: setup-dvc
         run: |
           pip install --upgrade pip wheel setuptools
-          pip install "dvc[ssh]==$(cat DVC_VERSION)"
+          BOHR_VERSION="$(bash bin/bohr-version.sh)"
+          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

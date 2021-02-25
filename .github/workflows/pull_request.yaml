@@ -20,14 +20,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install git -y
           git --version
-      - name: install-cml
-        run: |
-          curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
-          sudo apt-get update
-          sudo apt-get install -y nodejs
-          sudo node -v
-          sudo npm -v
-          sudo npm i -g @dvcorg/cml
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -75,6 +67,14 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref }}
+      - name: install-cml
+        run: |
+          curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
+          sudo apt-get update
+          sudo apt-get install -y nodejs
+          sudo node -v
+          sudo npm -v
+          sudo npm i -g @dvcorg/cml
       - name: post_metrics
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

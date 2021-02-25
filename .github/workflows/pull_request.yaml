@@ -79,6 +79,10 @@ jobs:
   copy-dvc-data-to-everywhere:
     needs: reproduce-pipeline
     runs-on: self-hosted
+    strategy:
+      matrix:
+        python:
+          - 3.8.0
     defaults:
       run:
         shell: bash -lieo pipefail {0}
@@ -101,6 +105,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
       - name: install-dvc
         run: |
           BOHR_VERSION="$(bash bin/bohr-version.sh)"

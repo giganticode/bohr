@@ -2,6 +2,7 @@ import re
 from typing import Optional
 
 from bohr.artifacts.commit import Commit
+from bohr.cli import apply_heuristics
 from bohr.core import Heuristic
 from bohr.labels.labelset import Labels
 from bohr.nlp_utils import NgramSet
@@ -24,16 +25,6 @@ def bugless_keywords_lookup_in_message(
 ) -> Optional[Labels]:
     if commit.message.match_ngrams(keywords):
         return CommitLabel.NonBugFix
-    return None
-
-
-@KeywordHeuristics(Commit, "bogusfix", name_pattern="bogusbugs_message_keyword_%1")
-def bogus_fix_keyword_in_message(commit: Commit, keywords: NgramSet) -> Optional[Label]:
-    if "fix" in commit.message.stemmed_ngrams or "bug" in commit.message.stemmed_ngrams:
-        if commit.message.match_ngrams(keywords):
-            return CommitLabel.NonBugFix
-        else:
-            return CommitLabel.BugFix
     return None
 
 

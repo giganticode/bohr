@@ -1,7 +1,5 @@
 name: check-dvc-clean
-on:
-  push:
-    branches: [ master ]
+on: [pull_request]
 jobs:
   check-dvc-clean:
     defaults:

@@ -56,6 +56,8 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
           dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
+      - name: Check dvc status
+        run: dvc status -r gdrive
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

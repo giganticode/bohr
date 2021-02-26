@@ -1,5 +1,19 @@
 {
     "Conflicts": {
+        "bogusbugs_message_keyword_ad": 0.13119026933101652,
+        "bogusbugs_message_keyword_add": 0.13119026933101652,
+        "bogusbugs_message_keyword_build": 0.13119026933101652,
+        "bogusbugs_message_keyword_chang": 0.13119026933101652,
+        "bogusbugs_message_keyword_doc": 0.13119026933101652,
+        "bogusbugs_message_keyword_document": 0.13119026933101652,
+        "bogusbugs_message_keyword_javadoc": 0.13119026933101652,
+        "bogusbugs_message_keyword_junit": 0.13119026933101652,
+        "bogusbugs_message_keyword_messag": 0.13119026933101652,
+        "bogusbugs_message_keyword_report": 0.13119026933101652,
+        "bogusbugs_message_keyword_test": 0.13119026933101652,
+        "bogusbugs_message_keyword_typo": 0.13119026933101652,
+        "bogusbugs_message_keyword_unit": 0.13119026933101652,
+        "bogusbugs_message_keyword_warn": 0.13119026933101652,
         "bug_issue_body_keyword_bad": 0.0,
         "bug_issue_body_keyword_broken": 0.0,
         "bug_issue_body_keyword_bug": 0.0,
@@ -53,12 +67,12 @@
         "bug_issue_label_keyword_fix": 0.0,
         "bug_issue_label_keyword_fixed": 0.0,
         "bug_message_keyword_bad": 0.0008688097306689834,
-        "bug_message_keyword_broken": 0.004344048653344918,
-        "bug_message_keyword_bug": 0.016507384882710686,
-        "bug_message_keyword_bugfix": 0.1103388357949609,
-        "bug_message_keyword_close": 0.028670721112076455,
+        "bug_message_keyword_broken": 0.005212858384013901,
+        "bug_message_keyword_bug": 0.019113814074717638,
+        "bug_message_keyword_bugfix": 0.12858384013900956,
+        "bug_message_keyword_close": 0.029539530842745437,
         "bug_message_keyword_concurr": 0.005212858384013901,
-        "bug_message_keyword_correct": 0.006081668114682885,
+        "bug_message_keyword_correct": 0.0069504778453518675,
         "bug_message_keyword_corrupt": 0.0008688097306689834,
         "bug_message_keyword_crash": 0.0008688097306689834,
         "bug_message_keyword_deadlock": 0.0017376194613379669,
@@ -66,28 +80,28 @@
         "bug_message_keyword_disabl": 0.006081668114682885,
         "bug_message_keyword_endless": 0.0008688097306689834,
         "bug_message_keyword_ensur": 0.0026064291920069507,
-        "bug_message_keyword_error": 0.013032145960034752,
+        "bug_message_keyword_error": 0.015638575152041704,
         "bug_message_keyword_except": 0.010425716768027803,
-        "bug_message_keyword_fail": 0.02432667245873154,
+        "bug_message_keyword_fail": 0.02693310165073849,
         "bug_message_keyword_garbag": 0.0017376194613379669,
         "bug_message_keyword_handl": 0.015638575152041704,
         "bug_message_keyword_incomplet": 0.0,
         "bug_message_keyword_inconsist": 0.0008688097306689834,
         "bug_message_keyword_incorrect": 0.0,
-        "bug_message_keyword_infinit": 0.0008688097306689834,
+        "bug_message_keyword_infinit": 0.0017376194613379669,
         "bug_message_keyword_invalid": 0.0,
         "bug_message_keyword_issue": 0.0,
         "bug_message_keyword_leak": 0.0008688097306689834,
-        "bug_message_keyword_loop": 0.005212858384013901,
-        "bug_message_keyword_minor": 0.01216333622936577,
+        "bug_message_keyword_loop": 0.0069504778453518675,
+        "bug_message_keyword_minor": 0.013032145960034752,
         "bug_message_keyword_mistak": 0.0008688097306689834,
         "bug_message_keyword_not|return": 0.0,
         "bug_message_keyword_not|work": 0.0,
-        "bug_message_keyword_npe": 0.004344048653344918,
+        "bug_message_keyword_npe": 0.005212858384013901,
         "bug_message_keyword_outofbound": 0.0,
         "bug_message_keyword_patch": 0.007819287576020852,
         "bug_message_keyword_prevent": 0.006081668114682885,
-        "bug_message_keyword_problem": 0.0034752389226759338,
+        "bug_message_keyword_problem": 0.004344048653344918,
         "bug_message_keyword_properli": 0.0034752389226759338,
         "bug_message_keyword_race|condit": 0.0,
         "bug_message_keyword_repair": 0.0017376194613379669,
@@ -99,7 +113,7 @@
         "bug_message_keyword_unexpect": 0.0,
         "bug_message_keyword_unknown": 0.0,
         "bug_message_keyword_unsynchron": 0.0,
-        "bug_message_keyword_wrong": 0.0017376194613379669,
+        "bug_message_keyword_wrong": 0.0026064291920069507,
         "bugless_issue_body_keyword_abil": 0.0,
         "bugless_issue_body_keyword_ad": 0.0,
         "bugless_issue_body_keyword_add": 0.0,
@@ -304,6 +318,20 @@
         "version_in_message": 0.0017376194613379669
     },
     "Correct": {
+        "bogusbugs_message_keyword_ad": 273,
+        "bogusbugs_message_keyword_add": 278,
+        "bogusbugs_message_keyword_build": 282,
+        "bogusbugs_message_keyword_chang": 275,
+        "bogusbugs_message_keyword_doc": 283,
+        "bogusbugs_message_keyword_document": 282,
+        "bogusbugs_message_keyword_javadoc": 288,
+        "bogusbugs_message_keyword_junit": 283,
+        "bogusbugs_message_keyword_messag": 280,
+        "bogusbugs_message_keyword_report": 269,
+        "bogusbugs_message_keyword_test": 234,
+        "bogusbugs_message_keyword_typo": 285,
+        "bogusbugs_message_keyword_unit": 277,
+        "bogusbugs_message_keyword_warn": 286,
         "bug_issue_body_keyword_bad": 0,
         "bug_issue_body_keyword_broken": 0,
         "bug_issue_body_keyword_bug": 0,
@@ -608,6 +636,20 @@
         "version_in_message": 2
     },
     "Coverage": {
+        "bogusbugs_message_keyword_ad": 0.2728062554300608,
+        "bogusbugs_message_keyword_add": 0.2728062554300608,
+        "bogusbugs_message_keyword_build": 0.2728062554300608,
+        "bogusbugs_message_keyword_chang": 0.2728062554300608,
+        "bogusbugs_message_keyword_doc": 0.2728062554300608,
+        "bogusbugs_message_keyword_document": 0.2728062554300608,
+        "bogusbugs_message_keyword_javadoc": 0.2728062554300608,
+        "bogusbugs_message_keyword_junit": 0.2728062554300608,
+        "bogusbugs_message_keyword_messag": 0.2728062554300608,
+        "bogusbugs_message_keyword_report": 0.2728062554300608,
+        "bogusbugs_message_keyword_test": 0.2728062554300608,
+        "bogusbugs_message_keyword_typo": 0.2728062554300608,
+        "bogusbugs_message_keyword_unit": 0.2728062554300608,
+        "bogusbugs_message_keyword_warn": 0.2728062554300608,
         "bug_issue_body_keyword_bad": 0.0,
         "bug_issue_body_keyword_broken": 0.0,
         "bug_issue_body_keyword_bug": 0.0,
@@ -912,6 +954,20 @@
         "version_in_message": 0.0026064291920069507
     },
     "Emp. Acc.": {
+        "bogusbugs_message_keyword_ad": 0.8694267515923566,
+        "bogusbugs_message_keyword_add": 0.8853503184713376,
+        "bogusbugs_message_keyword_build": 0.8980891719745223,
+        "bogusbugs_message_keyword_chang": 0.8757961783439491,
+        "bogusbugs_message_keyword_doc": 0.9012738853503185,
+        "bogusbugs_message_keyword_document": 0.8980891719745223,
+        "bogusbugs_message_keyword_javadoc": 0.9171974522292994,
+        "bogusbugs_message_keyword_junit": 0.9012738853503185,
+        "bogusbugs_message_keyword_messag": 0.89171974522293,
+        "bogusbugs_message_keyword_report": 0.8566878980891719,
+        "bogusbugs_message_keyword_test": 0.7452229299363058,
+        "bogusbugs_message_keyword_typo": 0.9076433121019108,
+        "bogusbugs_message_keyword_unit": 0.8821656050955414,
+        "bogusbugs_message_keyword_warn": 0.910828025477707,
         "bug_issue_body_keyword_bad": 0.0,
         "bug_issue_body_keyword_broken": 0.0,
         "bug_issue_body_keyword_bug": 0.0,
@@ -1216,6 +1272,20 @@
         "version_in_message": 0.6666666666666666
     },
     "Incorrect": {
+        "bogusbugs_message_keyword_ad": 41,
+        "bogusbugs_message_keyword_add": 36,
+        "bogusbugs_message_keyword_build": 32,
+        "bogusbugs_message_keyword_chang": 39,
+        "bogusbugs_message_keyword_doc": 31,
+        "bogusbugs_message_keyword_document": 32,
+        "bogusbugs_message_keyword_javadoc": 26,
+        "bogusbugs_message_keyword_junit": 31,
+        "bogusbugs_message_keyword_messag": 34,
+        "bogusbugs_message_keyword_report": 45,
+        "bogusbugs_message_keyword_test": 80,
+        "bogusbugs_message_keyword_typo": 29,
+        "bogusbugs_message_keyword_unit": 37,
+        "bogusbugs_message_keyword_warn": 28,
         "bug_issue_body_keyword_bad": 0,
         "bug_issue_body_keyword_broken": 0,
         "bug_issue_body_keyword_bug": 0,
@@ -1520,6 +1590,20 @@
         "version_in_message": 1
     },
     "Overlaps": {
+        "bogusbugs_message_keyword_ad": 0.2728062554300608,
+        "bogusbugs_message_keyword_add": 0.2728062554300608,
+        "bogusbugs_message_keyword_build": 0.2728062554300608,
+        "bogusbugs_message_keyword_chang": 0.2728062554300608,
+        "bogusbugs_message_keyword_doc": 0.2728062554300608,
+        "bogusbugs_message_keyword_document": 0.2728062554300608,
+        "bogusbugs_message_keyword_javadoc": 0.2728062554300608,
+        "bogusbugs_message_keyword_junit": 0.2728062554300608,
+        "bogusbugs_message_keyword_messag": 0.2728062554300608,
+        "bogusbugs_message_keyword_report": 0.2728062554300608,
+        "bogusbugs_message_keyword_test": 0.2728062554300608,
+        "bogusbugs_message_keyword_typo": 0.2728062554300608,
+        "bogusbugs_message_keyword_unit": 0.2728062554300608,
+        "bogusbugs_message_keyword_warn": 0.2728062554300608,
         "bug_issue_body_keyword_bad": 0.0,
         "bug_issue_body_keyword_broken": 0.0,
         "bug_issue_body_keyword_bug": 0.0,
@@ -1574,8 +1658,8 @@
         "bug_issue_label_keyword_fixed": 0.0,
         "bug_message_keyword_bad": 0.0034752389226759338,
         "bug_message_keyword_broken": 0.005212858384013901,
-        "bug_message_keyword_bug": 0.02780191138140747,
-        "bug_message_keyword_bugfix": 0.1737619461337967,
+        "bug_message_keyword_bug": 0.028670721112076455,
+        "bug_message_keyword_bugfix": 0.2693310165073849,
         "bug_message_keyword_close": 0.036490008688097306,
         "bug_message_keyword_concurr": 0.006081668114682885,
         "bug_message_keyword_correct": 0.009556907037358819,
@@ -1824,6 +1908,60 @@
         "version_in_message": 0.0026064291920069507
     },
     "Polarity": {
+        "bogusbugs_message_keyword_ad": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_add": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_build": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_chang": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_doc": [
+            1
+        ],
+        "bogusbugs_message_keyword_document": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_javadoc": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_junit": [
+            1
+        ],
+        "bogusbugs_message_keyword_messag": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_report": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_test": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_typo": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_unit": [
+            0,
+            1
+        ],
+        "bogusbugs_message_keyword_warn": [
+            0,
+            1
+        ],
         "bug_issue_body_keyword_bad": [],
         "bug_issue_body_keyword_broken": [],
         "bug_issue_body_keyword_bug": [],

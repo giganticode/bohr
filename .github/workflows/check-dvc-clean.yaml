@@ -5,6 +5,7 @@ jobs:
     defaults:
       run:
         shell: bash -lieo pipefail {0}
+        working-directory: /usr/src
     runs-on: self-hosted
     strategy:
       matrix:
@@ -14,13 +15,11 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: /usr/src/bohr
+      PYTHONPATH: /usr/src/bohr-framework
     steps:
       - uses: actions/checkout@v2
       - name: setup-dvc
         run: |
-          pwd
-          ls /usr/src/
           pip install --upgrade pip wheel setuptools
           BOHR_VERSION="$(bash bin/bohr-version.sh)"
           pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"

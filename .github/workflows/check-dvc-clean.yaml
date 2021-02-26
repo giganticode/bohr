@@ -5,7 +5,7 @@ jobs:
     defaults:
       run:
         shell: bash -lieo pipefail {0}
-        working-directory: /usr/src/bohr-framework
+        working-directory: /usr/src/bohr
     runs-on: self-hosted
     strategy:
       matrix:
@@ -15,7 +15,7 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: /usr/src/bohr-framework/
+      PYTHONPATH: /usr/src/bohr
     steps:
       - uses: actions/checkout@v2
       - name: setup-dvc

@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: setup-dvc
         run: |
+          echo "$PATH"
           pip install --upgrade pip wheel setuptools
           BOHR_VERSION="$(bash bin/bohr-version.sh)"
           pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"

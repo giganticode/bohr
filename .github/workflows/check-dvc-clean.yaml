@@ -1,7 +1,5 @@
 name: check-dvc-clean
-on:
-  push:
-    branches: [ master ]
+on: [pull_request]
 jobs:
   check-dvc-clean:
     defaults:
@@ -17,14 +15,12 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: /usr/src/bohr-framework/
+      PYTHONPATH: /usr/src/bohr-framework
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python }}
       - name: setup-dvc
         run: |
+          echo "$PATH"
           pip install --upgrade pip wheel setuptools
           BOHR_VERSION="$(bash bin/bohr-version.sh)"
           pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"

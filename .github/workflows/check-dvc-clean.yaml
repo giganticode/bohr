@@ -5,7 +5,6 @@ jobs:
     defaults:
       run:
         shell: bash -lieo pipefail {0}
-        working-directory: /usr/src/bohr
     runs-on: self-hosted
     strategy:
       matrix:

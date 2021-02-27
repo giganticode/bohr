@@ -2,24 +2,12 @@ import re
 from typing import Optional
 
 from bohr.artifacts.commit import Commit
+from bohr.cli import apply_heuristics
 from bohr.core import Heuristic
-from bohr.labels.labelset import Label, Labels
+from bohr.labels.labelset import Labels
 from bohr.nlp_utils import NgramSet
 from bohr.templates.heuristics.keywords import KeywordHeuristics
-from bohr.templates.heuristics.tool import ToolOutputHeuristic
-from bohr.templates.heuristics.tools.refactoring_miner import RefactoringMiner
 from labels import *
-
-
-@ToolOutputHeuristic(Commit, tool=RefactoringMiner)
-def refactorings_detected(
-    commit: Commit, refactoring_miner: RefactoringMiner
-) -> Optional[Labels]:
-    if commit.sha.endswith("f"):  # running on 1/16 of commits for now to make it faster
-        refactoring_miner_output = refactoring_miner.run(commit)
-        if len(refactoring_miner_output.commits[0].refactorings) > 0:
-            return CommitLabel.Refactoring
-    return None
 
 
 @KeywordHeuristics(Commit, "bug", name_pattern="bug_message_keyword_%1")
@@ -37,16 +25,6 @@ def bugless_keywords_lookup_in_message(
 ) -> Optional[Labels]:
     if commit.message.match_ngrams(keywords):
         return CommitLabel.NonBugFix
-    return None
-
-
-# @keyword_labeling_functions('bogusbugs', name_pattern='bogusbugs_message_keyword_%1')
-def bogus_fix_keyword_in_message(commit: Commit, keywords: NgramSet) -> Optional[Label]:
-    if "fix" in commit.message.stemmed_ngrams or "bug" in commit.message.stemmed_ngrams:
-        if commit.message.match_ngrams(keywords):
-            return CommitLabel.NonBugFix
-        else:
-            return CommitLabel.BugFix
     return None
 
 
@@ -110,32 +88,3 @@ def bugless_keywords_lookup_in_issue_body(
     if commit.issues_match_ngrams(keywords):
         return CommitLabel.NonBugFix
     return None
-
-
-@Heuristic(Commit)
-def no_files_have_modified_status(commit: Commit) -> Optional[Labels]:
-    for file in commit.files:
-        if file.status == "modified":
-            return None
-    return CommitLabel.NonBugFix
-
-
-@Heuristic(Commit)
-def bug_if_only_changed_lines_in_one_file(commit: Commit) -> Optional[Labels]:
-    if (
-        len(commit.files) == 1
-        and commit.files[0].status == "modified"
-        and commit.files[0].changes
-        and commit.files[0].no_added_lines()
-        and commit.files[0].no_removed_lines()
-    ):
-        return CommitLabel.BugFix
-    return None
-
-
-@Heuristic(Commit)
-def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
-    if len(commit.files) > 6:
-        return CommitLabel.NonBugFix
-    else:
-        return None

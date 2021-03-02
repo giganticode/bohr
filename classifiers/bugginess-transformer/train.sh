@@ -1,4 +1,4 @@
-python /Users/hlib/dev/bohr/classifiers/bugginess-transformer/run.py --model_name_or_path "giganticode/StackOBERTflow-comments-small-v1" \
+python classifiers/bugginess-transformer/run.py --model_name_or_path "giganticode/StackOBERTflow-comments-small-v1" \
               --output_dir bohr_model \
               --do_train \
               --do_eval \
@@ -9,5 +9,5 @@ python /Users/hlib/dev/bohr/classifiers/bugginess-transformer/run.py --model_nam
               --logging_steps 4000 \
               --eval_steps 4000 \
               --evaluation_strategy steps \
-              --data_file /Users/hlib/dev/bohr/labeled-data/bugginess.csv \
+              --data_file labeled-data/bugginess.csv \
 #               --fp16

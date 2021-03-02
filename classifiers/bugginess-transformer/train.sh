@@ -10,4 +10,4 @@ python classifiers/bugginess-transformer/run.py --model_name_or_path "giganticod
               --eval_steps 4000 \
               --evaluation_strategy steps \
               --data_file labeled-data/bugginess.csv \
-#               --fp16
+               --fp16

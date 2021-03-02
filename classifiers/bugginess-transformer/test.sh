@@ -1,4 +1,4 @@
-python run.py --model_name_or_path bohr_model/ \
+python classifiers/bugginess-transformer/run.py --model_name_or_path bohr_model/ \
               --do_eval \
               --evaluation_strategy steps \
               --eval_steps 0 \

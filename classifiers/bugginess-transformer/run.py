@@ -290,7 +290,7 @@ def main():
         trainer.save_model()
         # For convenience, we also re-save the tokenizer to the same directory,
         # so that you can share your model easily on huggingface.co/models =)
-        if trainer.is_world_master():
+        if trainer.is_world_process_zero():
             tokenizer.save_pretrained(training_args.output_dir)
 
     # Evaluation
@@ -308,7 +308,7 @@ def main():
             output_eval_file = os.path.join(
                 training_args.output_dir, f"eval_results.txt"
             )
-            if trainer.is_world_master():
+            if trainer.is_world_process_zero():
                 with open(output_eval_file, "w") as writer:
                     logger.info("***** Eval results *****")
                     for key, value in eval_result.items():
@@ -317,30 +317,30 @@ def main():
 
             eval_results.update(eval_result)
 
-    if training_args.do_predict:
-        logging.info("*** Test ***")
-        test_datasets = [test_dataset]
+    # if training_args.do_predict:
+    #     logging.info("*** Test ***")
+    #     test_datasets = [test_dataset]
+    #
+    #     for test_dataset in test_datasets:
+    #         trainer.compute_metrics = compute_metrics_fn
+    #         predictions = trainer.predict(test_dataset=test_dataset).predictions
 
-        for test_dataset in test_datasets:
-            trainer.compute_metrics = compute_metrics_fn
-            predictions = trainer.predict(test_dataset=test_dataset).predictions
+    # if output_mode == "classification":
+    #     predictions = np.argmax(predictions, axis=1)
 
-            # if output_mode == "classification":
-            #     predictions = np.argmax(predictions, axis=1)
-
-            # output_test_file = os.path.join(
-            #     training_args.output_dir, f"test_results.txt"
-            # )
-            # if trainer.is_world_master():
-            #     with open(output_test_file, "w") as writer:
-            #         logger.info("***** Test results *****")
-            #         writer.write("index\tprediction\n")
-            #         for index, item in enumerate(predictions):
-            #             if output_mode == "regression":
-            #                 writer.write("%d\t%3.3f\n" % (index, item))
-            #             else:
-            #                 item = test_dataset.get_labels()[item]
-            #                 writer.write("%d\t%s\n" % (index, item))
+    # output_test_file = os.path.join(
+    #     training_args.output_dir, f"test_results.txt"
+    # )
+    # if trainer.is_world_master():
+    #     with open(output_test_file, "w") as writer:
+    #         logger.info("***** Test results *****")
+    #         writer.write("index\tprediction\n")
+    #         for index, item in enumerate(predictions):
+    #             if output_mode == "regression":
+    #                 writer.write("%d\t%3.3f\n" % (index, item))
+    #             else:
+    #                 item = test_dataset.get_labels()[item]
+    #                 writer.write("%d\t%s\n" % (index, item))
     return eval_results
 
 

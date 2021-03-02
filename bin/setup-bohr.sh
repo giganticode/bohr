@@ -24,3 +24,5 @@ pip install git+https://github.com/giganticode/bohr-framework@$BOHR_VERSION
 bash tools/install-refactoring-miner $SOFTWARE_DIR
 
 pip install -r requirements.txt
+
+bohr config software_path $SOFTWARE_DIR

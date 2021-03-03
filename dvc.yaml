@@ -174,15 +174,15 @@ stages:
       - model/pytorch_model.bin
       - model/training_args.bin
       - model/config.json:
-          - cache: false
+          cache: false
       - model/merges.txt:
-          - cache: false
+          cache: false
       - model/special_tokens_map.json:
-          - cache: false
+          cache: false
       - model/tokenizer_config.json:
-          - cache: false
+          cache: false
       - model/vocab.json:
-          - cache: false
+          cache: false
   bugginess_transformer_test_1151-commits:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits
     deps:

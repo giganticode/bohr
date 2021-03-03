@@ -21,7 +21,7 @@ echo "Instaling  BOHR framework version $BOHR_VERSION..."
 
 pip install Cython==0.29.21
 export SKLEARN_NO_OPENMP=1
-pip install git+https://github.com/giganticode/bohr-framework@$BOHR_VERSION
+pip install git+https://github.com/giganticode/bohr-framework@v$BOHR_VERSION
 
 bash tools/install-refactoring-miner $SOFTWARE_DIR
 

@@ -33,7 +33,7 @@ jobs:
         run: |
           pip install --upgrade pip wheel setuptools
           BOHR_VERSION="$(bash bin/bohr-version.sh)"
-          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/$BOHR_VERSION/DVC_VERSION)"
+          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/v$BOHR_VERSION/DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

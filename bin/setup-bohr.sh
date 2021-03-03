@@ -2,16 +2,18 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-SOFTWARE_DIR="$1"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-if [ -z "$SOFTWARE_DIR" ]; then
-    echo "Path to the tools dir should be passed"
-    exit 2
+if [ -z "${1-}" ]; then
+    SOFTWARE_DIR="$DIR/../../bohr-software"
+    echo "Path to software_path is not passed. Using the default one."
+else
+    SOFTWARE_DIR="$1"
 fi
 
-pip install --upgrade pip setuptools wheel
+echo "Software needed to run bohr heuristics will be installed to $SOFTWARE_DIR"
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+pip install --upgrade pip setuptools wheel
 
 BOHR_VERSION="$(bash $DIR/bohr-version.sh)"
 

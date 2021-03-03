@@ -7,50 +7,26 @@ Big Old Heuristic Repository
 .. contents:: **Contents**
   :backlinks: none
 
-Getting started
+Getting started with BOHR
 ===========================================
 
-Install Anaconda/Miniconda
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#. Install conda_ [Skip this step if you already have conda installed]
-#. Create a virtual environment ``conda create --name <YOUR ENV NAME> python==3.8.0`` 
-#. Activate virtual environment ``conda activate <YOUR ENV NAME>`` 
+Python >= 3.8 is required, preferably use virtual environment.
 
-Get started with BOHR
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Run ``pip install --upgrade pip setuptools wheel`` (Python 3.8 or higher is required)
-#. Run ``pip install -r requirements.txt`` 
+#. Install BOHR framework library: ``chmod +x bin/setup-bohr.sh && bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`, dependencies and tools to run heursistics.
 
-Running the code and reproducing the models
-===========================================
+Downloading datasets and models
+===============================
 
 #. Run ``bohr repro``
 
-.. _conda: https://docs.anaconda.com/anaconda/install/
+Bohr extensively uses `DVC (Data Version Control) <https://dvc.org/>`_ to ensure of the datasets and models.
 
-Contribute:
-===========
+Contributing to heuristics repository:
+=======================================
 
-To contribute to the framework, take a look at the bohr-framework_ repo
 
-.. _bohr-framework: https://github.com/giganticode/bohr-framework
-
-Setting up datasource:
-~~~~~~~~~~~~~~~~~~~~~~
-
-#. Install dev dependencies: ``pip install -r requirements-dev.txt``
-#. Install pre-commit hooks: ``pre-commit install`` so that all contributions follow uniform formatting conventions.
-
-#. Setting up datasource. ::
-
-Ironspeed users:
-
-setup access with ssh keys https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-2
-
-     dvc remote modify --local ironspeed user <username>
-
-1. Contributing Heuristics:
+1. Heuristics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Heuristics can be found in ``.py`` files in the ``bohr/heuristics`` directory, and are marked with @Heuristic decorator. Example:
@@ -71,14 +47,12 @@ Important things to note:
 #. Method name can be arbitrary as long it is unique and descriptive
 #. Method should return ``label`` if a datapoint should be labeled with ``label``, ``None`` if the labeling function should abstain on the datapoint
 
-Please refer to the documentation (TODO add link) for more information on heuristics and special heuristic types.        
+Please refer to the `documentation <https://giganticode.github.io/bohr/Heuristics.html>`_ for more information on heuristics and special heuristic types.        
 
-2. Contributing a new task:
+2. New tasks:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to define a new taks, you should add it to the `tasks` dictionary attribute in `bohr.json`:
-
-Example.
+Tasks are defined in the `bohr.json` file. Below you can see an example of "bugginess" task.
 
 .. code-block:: json
 
@@ -101,16 +75,15 @@ Example.
 
 
 
-Kwy is the name of the task. The value is an object with the following fields:
+The name of the task is the key in the dictionary. The value is an object with the following fields:
 
-#. **Top artifact** - the artifact to be classified
-#. **Label hierarchy** patch (optional) 
-#. **Label categories** - categories artifact to be classified as
-#. **Training sets** - datasets used to train label model
-#. **Test sets** - datasets to calculate metrics on
+#. **Top artifact** - the artifact to be catigorized. In the case of "bugginess" task, commits are classified, therefore the top artifact is ``bohr.artifacts.commit.Commit``;
+#. **Label categories** - categories artifact to be classified as, for "bugginess" taks these are *CommitLabel.BugFix* and *CommitLabel.NonBugFix*. Values has to be taken from the ``labels.py`` file. See section `3. Contributing to the label hierarchy:`_ on more information about labels in bohr and how to extend the label hierarchy.
+#. **Training sets** - datasets used to train a label model;
+#. **Test sets** - datasets to calculate metrics on.
 
-3. Contributing to label hierarchy:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Contributing to the label hierarchy:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Artifacts can be labeled with labeled pre-defined in BOHR. Labels are organized in an hierarchy, the are more general labels e.g. ``Commit.BugFix``, there are more specific ones, e.g. ``Commit.MinorBugFix``. There is a binary relation IS-A defined on the set of label which defines a partial order, e.g. ``IS-A(Commit.MinorBugFix, Commit.BugFix)``
 
@@ -147,6 +120,14 @@ If you want to contribute a dataset of artifacts that do not yet exist in bohr, 
 
 Defining new heuristic type:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Contribute to the framework:
+=============================
+
+To contribute to the framework, take a look at the bohr-framework_ repo
+
+.. _bohr-framework: https://github.com/giganticode/bohr-framework
+
 
 Publications
 ===========================================

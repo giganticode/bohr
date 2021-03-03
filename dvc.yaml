@@ -170,7 +170,7 @@ stages:
       - classifiers/bugginess-transformer/run.py
       - requirements.txt
       - labeled-data/bugginess.csv
-    outputs:
+    outs:
       - model/pytorch_model.bin
       - model/training_args.bin
       - model/config.json:

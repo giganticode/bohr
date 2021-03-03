@@ -166,71 +166,74 @@ stages:
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
     deps:
-      - classifiers/bugginess-transformer/train.sh
-      - classifiers/bugginess-transformer/run.py
-      - requirements.txt
-      - labeled-data/bugginess.csv
+    - classifiers/bugginess-transformer/train.sh
+    - classifiers/bugginess-transformer/run.py
+    - requirements.txt
+    - labeled-data/bugginess.csv
     outs:
-      - models/pytorch_model.bin
-      - models/training_args.bin
-      - models/config.json:
-          cache: false
-      - models/merges.txt:
-          cache: false
-      - models/special_tokens_map.json:
-          cache: false
-      - models/tokenizer_config.json:
-          cache: false
-      - models/vocab.json:
-          cache: false
+    - models/pytorch_model.bin
+    - models/training_args.bin
+    - models/config.json:
+        cache: false
+    - models/merges.txt:
+        cache: false
+    - models/special_tokens_map.json:
+        cache: false
+    - models/tokenizer_config.json:
+        cache: false
+    - models/vocab.json:
+        cache: false
   bugginess_transformer_test_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv
+      metrics/bugginess/transformer/1151-commits
     deps:
-      - classifiers/bugginess-transformer/test.sh
-      - classifiers/bugginess-transformer/run.py
-      - requirements.txt
-      - data/bugginess/test/1151-commits.csv
-      - models/pytorch_model.bin
-      - models/training_args.bin
-      - models/config.json
-      - models/merges.txt
-      - models/special_tokens_map.json
-      - models/tokenizer_config.json
-      - models/vocab.json
+    - classifiers/bugginess-transformer/test.sh
+    - classifiers/bugginess-transformer/run.py
+    - requirements.txt
+    - data/bugginess/test/1151-commits.csv
+    - models/pytorch_model.bin
+    - models/training_args.bin
+    - models/config.json
+    - models/merges.txt
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/vocab.json
     metrics:
-      - metrics/bugginess/transformer/1151-commits/eval_results.txt:
-          cache: false
+    - metrics/bugginess/transformer/1151-commits/eval_results.txt:
+        cache: false
   bugginess_transformer_test_berger:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/berger.csv metrics/bugginess/transformer/berger
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/berger.csv
+      metrics/bugginess/transformer/berger
     deps:
-      - classifiers/bugginess-transformer/test.sh
-      - classifiers/bugginess-transformer/run.py
-      - requirements.txt
-      - data/bugginess/test/berger.csv
-      - models/pytorch_model.bin
-      - models/training_args.bin
-      - models/config.json
-      - models/merges.txt
-      - models/special_tokens_map.json
-      - models/tokenizer_config.json
-      - models/vocab.json
+    - classifiers/bugginess-transformer/test.sh
+    - classifiers/bugginess-transformer/run.py
+    - requirements.txt
+    - data/bugginess/test/berger.csv
+    - models/pytorch_model.bin
+    - models/training_args.bin
+    - models/config.json
+    - models/merges.txt
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/vocab.json
     metrics:
-      - metrics/bugginess/transformer/berger/eval_results.txt:
-          cache: false
+    - metrics/bugginess/transformer/berger/eval_results.txt:
+        cache: false
   bugginess_transformer_test_herzig:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/herzig.csv metrics/bugginess/transformer/herzig
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/herzig.csv
+      metrics/bugginess/transformer/herzig
     deps:
-      - classifiers/bugginess-transformer/test.sh
-      - classifiers/bugginess-transformer/run.py
-      - requirements.txt
-      - data/bugginess/test/herzig.csv
-      - models/pytorch_model.bin
-      - models/training_args.bin
-      - models/config.json
-      - models/merges.txt
-      - models/special_tokens_map.json
-      - models/tokenizer_config.json
-      - models/vocab.json
+    - classifiers/bugginess-transformer/test.sh
+    - classifiers/bugginess-transformer/run.py
+    - requirements.txt
+    - data/bugginess/test/herzig.csv
+    - models/pytorch_model.bin
+    - models/training_args.bin
+    - models/config.json
+    - models/merges.txt
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/vocab.json
     metrics:
-      - metrics/bugginess/transformer/herzig/eval_results.txt:
-          cache: false
+    - metrics/bugginess/transformer/herzig/eval_results.txt:
+        cache: false

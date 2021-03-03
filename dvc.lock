@@ -92,7 +92,7 @@ smells_train_label_model:
       bohr_framework_version: 0.2.5
   outs:
   - path: generated/smells/label_model.pkl
-    md5: de86a7bea34d443020f961f239d82171
+    md5: 3423d8b34c2e40ea3e07c7093c8f3278
     size: 4874
   - path: metrics/smells/label_model_metrics.json
     md5: 264ff3b7c16a8278b67f6210c6cc194f
@@ -281,7 +281,7 @@ bugginess_train_label_model:
       bohr_framework_version: 0.2.5
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: c0be954d13e002ddc84b9dc45f9c6389
+    md5: 6d629970a33040fa1830b90f975f21a6
     size: 1863212
   - path: metrics/bugginess/label_model_metrics.json
     md5: 27cc9ced923caf7a8d983859a040fe77
@@ -312,11 +312,11 @@ bugginess_transformer_train:
     md5: ebb891042319431dff84efdb3157bc29
     size: 12090
   - path: classifiers/bugginess-transformer/train.sh
-    md5: c74c95d0366c43e3d8f4934094c02ea5
+    md5: 3a19e011c049042bbec7e8315e883c38
     size: 557
   - path: labeled-data/bugginess.csv
-    md5: 1e07ed365fe89cd83c6e78f522acaf38
-    size: 65598851
+    md5: 090b2532fc58b436031963ceb9825f39
+    size: 65600593
   - path: requirements.txt
     md5: 29b4c5d66c523cec0712dbcdcced42bb
     size: 21
@@ -328,7 +328,7 @@ bugginess_transformer_train:
     md5: fb9c1e34b6999f3a062df6ed4a604957
     size: 458459
   - path: models/pytorch_model.bin
-    md5: c7240c5038c49879d4b44eaf7e7bdaf8
+    md5: 40379a0207d19e2a24e116e941d7d675
     size: 333858922
   - path: models/special_tokens_map.json
     md5: 17bb9e090d1d3a775683aba3ba610591
@@ -337,7 +337,7 @@ bugginess_transformer_train:
     md5: e1a3e947aa301aadc524ee29f0dbcc39
     size: 1257
   - path: models/training_args.bin
-    md5: c05c6836efdd51376e3dbd077e1e02ec
+    md5: 408c3f12467908cabb77ded5ce3490ed
     size: 2159
   - path: models/vocab.json
     md5: ca70df26ed267d27a9edde9c5341f17b
@@ -362,7 +362,7 @@ bugginess_transformer_test_1151-commits:
     md5: fb9c1e34b6999f3a062df6ed4a604957
     size: 458459
   - path: models/pytorch_model.bin
-    md5: c7240c5038c49879d4b44eaf7e7bdaf8
+    md5: 40379a0207d19e2a24e116e941d7d675
     size: 333858922
   - path: models/special_tokens_map.json
     md5: 17bb9e090d1d3a775683aba3ba610591
@@ -371,7 +371,7 @@ bugginess_transformer_test_1151-commits:
     md5: e1a3e947aa301aadc524ee29f0dbcc39
     size: 1257
   - path: models/training_args.bin
-    md5: c05c6836efdd51376e3dbd077e1e02ec
+    md5: 408c3f12467908cabb77ded5ce3490ed
     size: 2159
   - path: models/vocab.json
     md5: ca70df26ed267d27a9edde9c5341f17b
@@ -381,7 +381,7 @@ bugginess_transformer_test_1151-commits:
     size: 21
   outs:
   - path: metrics/bugginess/transformer/1151-commits/eval_results.txt
-    md5: 1b70851310a60beccdc99baf1312abd7
+    md5: 52b1b36d2896195e78ca5b7d42de4839
     size: 146
 bugginess_transformer_test_berger:
   cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/berger.csv
@@ -403,7 +403,7 @@ bugginess_transformer_test_berger:
     md5: fb9c1e34b6999f3a062df6ed4a604957
     size: 458459
   - path: models/pytorch_model.bin
-    md5: c7240c5038c49879d4b44eaf7e7bdaf8
+    md5: 40379a0207d19e2a24e116e941d7d675
     size: 333858922
   - path: models/special_tokens_map.json
     md5: 17bb9e090d1d3a775683aba3ba610591
@@ -412,7 +412,7 @@ bugginess_transformer_test_berger:
     md5: e1a3e947aa301aadc524ee29f0dbcc39
     size: 1257
   - path: models/training_args.bin
-    md5: c05c6836efdd51376e3dbd077e1e02ec
+    md5: 408c3f12467908cabb77ded5ce3490ed
     size: 2159
   - path: models/vocab.json
     md5: ca70df26ed267d27a9edde9c5341f17b
@@ -422,8 +422,8 @@ bugginess_transformer_test_berger:
     size: 21
   outs:
   - path: metrics/bugginess/transformer/berger/eval_results.txt
-    md5: 1a528ae9ca60e21a54bd6ebadd5def5c
-    size: 145
+    md5: 30da05826f977ee9b867560731091915
+    size: 144
 bugginess_transformer_test_herzig:
   cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/herzig.csv
     metrics/bugginess/transformer/herzig
@@ -444,7 +444,7 @@ bugginess_transformer_test_herzig:
     md5: fb9c1e34b6999f3a062df6ed4a604957
     size: 458459
   - path: models/pytorch_model.bin
-    md5: c7240c5038c49879d4b44eaf7e7bdaf8
+    md5: 40379a0207d19e2a24e116e941d7d675
     size: 333858922
   - path: models/special_tokens_map.json
     md5: 17bb9e090d1d3a775683aba3ba610591
@@ -453,7 +453,7 @@ bugginess_transformer_test_herzig:
     md5: e1a3e947aa301aadc524ee29f0dbcc39
     size: 1257
   - path: models/training_args.bin
-    md5: c05c6836efdd51376e3dbd077e1e02ec
+    md5: 408c3f12467908cabb77ded5ce3490ed
     size: 2159
   - path: models/vocab.json
     md5: ca70df26ed267d27a9edde9c5341f17b
@@ -463,5 +463,5 @@ bugginess_transformer_test_herzig:
     size: 21
   outs:
   - path: metrics/bugginess/transformer/herzig/eval_results.txt
-    md5: fe339a2e2b734efbe7470f81bb04d0af
-    size: 147
+    md5: bd726240700dac6e926d5532eb76c5c4
+    size: 145

@@ -183,16 +183,6 @@ stages:
           - cache: false
       - model/vocab.json:
           - cache: false
-  bugginess_transformer_test_1151:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits
-    deps:
-      - classifiers/bugginess-transformer/train.sh
-      - classifiers/bugginess-transformer/run.py
-      - requirements.txt
-      - data/bugginess/test/1151-commits.csv
-    metrics:
-      - metrics/bugginess/transformer/1151-commits/eval_results.txt:
-          cache: false
   bugginess_transformer_test_1151-commits:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits
     deps:
@@ -200,6 +190,13 @@ stages:
       - classifiers/bugginess-transformer/run.py
       - requirements.txt
       - data/bugginess/test/1151-commits.csv
+      - model/pytorch_model.bin
+      - model/training_args.bin
+      - model/config.json
+      - model/merges.txt
+      - model/special_tokens_map.json
+      - model/tokenizer_config.json
+      - model/vocab.json
     metrics:
       - metrics/bugginess/transformer/1151-commits/eval_results.txt:
           cache: false
@@ -210,6 +207,13 @@ stages:
       - classifiers/bugginess-transformer/run.py
       - requirements.txt
       - data/bugginess/test/berger.csv
+      - model/pytorch_model.bin
+      - model/training_args.bin
+      - model/config.json
+      - model/merges.txt
+      - model/special_tokens_map.json
+      - model/tokenizer_config.json
+      - model/vocab.json
     metrics:
       - metrics/bugginess/transformer/berger/eval_results.txt:
           cache: false
@@ -220,6 +224,13 @@ stages:
       - classifiers/bugginess-transformer/run.py
       - requirements.txt
       - data/bugginess/test/herzig.csv
+      - model/pytorch_model.bin
+      - model/training_args.bin
+      - model/config.json
+      - model/merges.txt
+      - model/special_tokens_map.json
+      - model/tokenizer_config.json
+      - model/vocab.json
     metrics:
       - metrics/bugginess/transformer/herzig/eval_results.txt:
           cache: false

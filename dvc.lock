@@ -42,14 +42,14 @@ smells_apply_heuristics:
     size: 292
   - path: heuristics
     md5: 5d211ace47541889824b572203481a3c.dir
-    size: 9059
+    size: 4986
     nfiles: 8
   - path: labels.py
     md5: 4ad220b4c289b2d8597bd6431c6565a6
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: generated/smells/analysis_datasets.smells-test.csv
     md5: 0e9a0cb4bca25888a4c21bb79dd903fc
@@ -89,11 +89,11 @@ smells_train_label_model:
     size: 24313
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: generated/smells/label_model.pkl
-    md5: 6e413f429874f7a045ab906285658b9e
-    size: 4890
+    md5: de86a7bea34d443020f961f239d82171
+    size: 4874
   - path: metrics/smells/label_model_metrics.json
     md5: 264ff3b7c16a8278b67f6210c6cc194f
     size: 60
@@ -170,14 +170,14 @@ bugginess_apply_heuristics:
     size: 341
   - path: heuristics
     md5: 5d211ace47541889824b572203481a3c.dir
-    size: 4986
+    size: 9059
     nfiles: 8
   - path: labels.py
     md5: 4ad220b4c289b2d8597bd6431c6565a6
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: generated/bugginess/analysis_datasets.1151-commits.csv
     md5: 6b7c650110d6563e65fa473d1fddf74e
@@ -238,11 +238,11 @@ bugginess_label_dataset:
     size: 997067484
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: labeled-data/bugginess.csv
-    md5: 1e07ed365fe89cd83c6e78f522acaf38
-    size: 65598851
+    md5: 090b2532fc58b436031963ceb9825f39
+    size: 65600593
 bugginess_train_label_model:
   cmd: bohr train-label-model bugginess
   deps:
@@ -278,10 +278,10 @@ bugginess_train_label_model:
     size: 997067484
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 3c2749e5c4caa7ffbaeb295c2ab5811b
+    md5: c0be954d13e002ddc84b9dc45f9c6389
     size: 1863212
   - path: metrics/bugginess/label_model_metrics.json
     md5: 27cc9ced923caf7a8d983859a040fe77
@@ -291,7 +291,7 @@ smells_label_dataset:
   deps:
   - path: data/smells/train.csv
     md5: 7fc9a7617e6f201523fba311317ba48f
-    size: 296970
+    size: 296407
   - path: datasets/smells-train.py
     md5: 5d0c1107da7c0fa3cf9278309d6a1e60
     size: 292
@@ -300,7 +300,7 @@ smells_label_dataset:
     size: 24313
   params:
     bohr.json:
-      bohr_framework_version: 0.2.4
+      bohr_framework_version: 0.2.5
   outs:
   - path: labeled-data/smells.csv
     md5: dbc45d82d67347005c8e967597f86adc

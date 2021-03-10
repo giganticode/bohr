@@ -61,7 +61,7 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run:
-          dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
+          dvc gc --cloud -r gdrive --workspace --all-commits -f
       - name: Check dvc status
         run: dvc status -r gdrive
       - name: Push changes

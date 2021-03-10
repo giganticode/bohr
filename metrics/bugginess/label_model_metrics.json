@@ -1,1 +1,1 @@
-{"label_model_acc_datasets.1151-commits": 0.7966985230234579, "label_model_acc_datasets.berger": 0.7493333333333333, "label_model_acc_datasets.herzig": 0.7220943613348677}
+{"label_model_acc_datasets.1151-commits": 0.8, "label_model_neg_log_loss_datasets.1151-commits": 0.72, "label_model_acc_datasets.berger": 0.75, "label_model_neg_log_loss_datasets.berger": 0.915, "label_model_acc_datasets.herzig": 0.72, "label_model_neg_log_loss_datasets.herzig": 0.889}

@@ -1,0 +1,28 @@
+{
+    "Conflicts": {
+        "long_method": 0.0,
+        "many_indentation_levels": 0.0,
+        "many_indentation_levels2": 0.0
+    },
+    "Coverage": {
+        "long_method": 0.4822064056939502,
+        "many_indentation_levels": 0.11387900355871886,
+        "many_indentation_levels2": 0.042704626334519574
+    },
+    "Overlaps": {
+        "long_method": 0.11387900355871886,
+        "many_indentation_levels": 0.11387900355871886,
+        "many_indentation_levels2": 0.042704626334519574
+    },
+    "Polarity": {
+        "long_method": [
+            1
+        ],
+        "many_indentation_levels": [
+            1
+        ],
+        "many_indentation_levels2": [
+            1
+        ]
+    }
+}

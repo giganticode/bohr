@@ -3,7 +3,7 @@ from typing import Optional
 
 from bohr.artifacts.commit import Commit
 from bohr.cli import apply_heuristics
-from bohr.core import Heuristic
+from bohr.decorators import Heuristic
 from bohr.labels.labelset import Labels
 from bohr.nlp_utils import NgramSet
 from bohr.templates.heuristics.keywords import KeywordHeuristics

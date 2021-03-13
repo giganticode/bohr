@@ -1,7 +1,7 @@
 from typing import Optional
 
 from bohr.artifacts.method import Method
-from bohr.core import Heuristic
+from bohr.decorators import Heuristic
 from bohr.labels.labelset import Label
 from labels import SnippetLabel
 

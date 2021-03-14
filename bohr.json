@@ -12,7 +12,8 @@
         "datasets.herzig"
       ],
       "train_datasets": [
-        "datasets.bugginess-train"
+        "datasets.bugginess-train",
+        "datasets.idans-dataset"
       ],
       "label_column_name": "bug"
     },

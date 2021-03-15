@@ -1,6 +1,6 @@
--n preprocess_bugginess_idan:
+-n preprocess_bugginess_idan
 
 -d downloaded-data/plain_commits_batch1.csv.zip
--o data/bugginess/test/plain_commits_batch1.csv
+-o data/bugginess/train/plain_commits_batch1.csv
 
-unzip downloaded-data/plain_commits_batch1.csv.zip -d data/bugginess/test
+unzip downloaded-data/plain_commits_batch1.csv.zip -d data/bugginess/train && rm -r data/bugginess/train/__MACOSX

@@ -29,7 +29,7 @@ stages:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
       datasets.idans-dataset
     deps:
-    - data/bugginess/test/plain_commits_batch1.csv
+    - data/bugginess/train/plain_commits_batch1.csv
     - datasets/idans-dataset.py
     - heuristics/bugginess.py
     - heuristics/keywords
@@ -179,7 +179,7 @@ stages:
   bugginess_label_dataset_datasets_idans-dataset:
     cmd: bohr label-dataset bugginess datasets.idans-dataset
     deps:
-    - data/bugginess/test/plain_commits_batch1.csv
+    - data/bugginess/train/plain_commits_batch1.csv
     - datasets/idans-dataset.py
     - generated/bugginess/heuristic_matrix_datasets.idans-dataset.pkl
     - generated/bugginess/label_model.pkl
@@ -375,6 +375,13 @@ stages:
     outs:
     - data/smells/test.csv
     - data/smells/train.csv
+  preprocess_bugginess_idan:
+    cmd: unzip downloaded-data/plain_commits_batch1.csv.zip -d data/bugginess/train
+      && rm -r data/bugginess/train/__MACOSX
+    deps:
+    - downloaded-data/plain_commits_batch1.csv.zip
+    outs:
+    - data/bugginess/train/plain_commits_batch1.csv
   preprocess_bugginess_test:
     cmd: cp downloaded-data/{1151-commits.csv,berger.csv,herzig.csv} data/bugginess/test
     deps:

@@ -1,0 +1,11 @@
+-n preprocess_bugginess_test
+
+-d downloaded-data/1151-commits.csv
+-d downloaded-data/berger.csv
+-d downloaded-data/herzig.csv
+
+-o data/bugginess/test/1151-commits.csv
+-o data/bugginess/test/berger.csv
+-o data/bugginess/test/herzig.csv
+
+cp downloaded-data/{1151-commits.csv,berger.csv,herzig.csv} data/bugginess/test

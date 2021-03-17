@@ -1,4 +1,11 @@
 stages:
+  parse_labels:
+    cmd: bohr parse-labels
+    deps:
+    - labels
+    outs:
+    - labels.py:
+        cache: false
   bugginess_apply_heuristics__heuristics_bugginess__datasets_bugginess-train:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
       datasets.bugginess-train
@@ -277,6 +284,16 @@ stages:
       - bohr_framework_version
     outs:
     - labeled-datasets/datasets.smells-test.labeled.csv
+  bugginess_combine_labels_1151-commits:
+    cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/datasets.1151-commits.labeled.csv
+      metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/datasets.1151-commits.labeled.both.csv
+    deps:
+    - classifiers/bugginess-transformer/combine_labels.py
+    - labeled-datasets/datasets.1151-commits.labeled.csv
+    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv
+    outs:
+    - labeled-datasets/datasets.1151-commits.labeled.both.csv:
+        cache: false
   bugginess_transformer_test_herzig:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/herzig.csv
       metrics/bugginess/transformer/herzig

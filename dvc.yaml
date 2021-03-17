@@ -351,6 +351,24 @@ stages:
     - models/training_args.bin
     - models/vocab.json:
         cache: false
+  bugginess_transformer_label_1151-commits:
+    cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/test/1151-commits.csv
+      metrics/bugginess/transformer/1151-commits
+    deps:
+    - classifiers/bugginess-transformer/label.sh
+    - classifiers/bugginess-transformer/run.py
+    - data/bugginess/test/1151-commits.csv
+    - models/config.json
+    - models/merges.txt
+    - models/pytorch_model.bin
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/training_args.bin
+    - models/vocab.json
+    - requirements.txt
+    metrics:
+    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv:
+        cache: false
   preprocess_bugginess_train:
     cmd: 7z x downloaded-data/bugginess_train.7z -odata/bugginess
     deps:

@@ -309,8 +309,8 @@ bugginess_transformer_train:
   cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: ebb891042319431dff84efdb3157bc29
-    size: 12090
+    md5: faf5ebb8f0348b28aa1205e2c56cd41c
+    size: 12023
   - path: classifiers/bugginess-transformer/train.sh
     md5: 3a19e011c049042bbec7e8315e883c38
     size: 557
@@ -347,8 +347,8 @@ bugginess_transformer_test_1151-commits:
     metrics/bugginess/transformer/1151-commits
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: ebb891042319431dff84efdb3157bc29
-    size: 12090
+    md5: faf5ebb8f0348b28aa1205e2c56cd41c
+    size: 12023
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313
@@ -388,8 +388,8 @@ bugginess_transformer_test_berger:
     metrics/bugginess/transformer/berger
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: ebb891042319431dff84efdb3157bc29
-    size: 12090
+    md5: faf5ebb8f0348b28aa1205e2c56cd41c
+    size: 12023
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313
@@ -429,8 +429,8 @@ bugginess_transformer_test_herzig:
     metrics/bugginess/transformer/herzig
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: ebb891042319431dff84efdb3157bc29
-    size: 12090
+    md5: faf5ebb8f0348b28aa1205e2c56cd41c
+    size: 12023
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313

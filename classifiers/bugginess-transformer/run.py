@@ -102,7 +102,7 @@ class SimpleDataset(Dataset):
 
     def __getitem__(self, index):
         return {
-            "label": self.label_ids[index],
+            "label": self.label_ids[index] if self.label_ids else None,
             "input_ids": self.input_ids[index],
             "attention_mask": self.attention_masks[index],
         }
@@ -195,11 +195,13 @@ def main():
 
     def df_to_dataset(df):
         print("Loading dataset...")
-        df = df[df.bug != -1]
+        if "bug" in df:
+            df = df[df.bug != -1]
         df = df[~df.message.isnull()]
 
         text_values = df.message.values
-        label_ids = df.bug.values
+        if "bug" in df:
+            label_ids = df.bug.values
 
         text_values_list = text_values.tolist()
         for elm in text_values_list:
@@ -218,15 +220,17 @@ def main():
 
         input_ids = encoding["input_ids"]
         label_ids_dtype = torch.float32 if num_labels == 1 else torch.int64
-        label_ids_t = torch.tensor(label_ids, dtype=label_ids_dtype)
+        if "bug" in df:
+            label_ids_t = torch.tensor(label_ids, dtype=label_ids_dtype)
 
         print(tokenizer.decode(input_ids[0, :].tolist()))
 
         print("DF shape: ", df.shape)
         print(input_ids.shape)
-        print(label_ids_t.shape)
 
-        dataset = SimpleDataset(input_ids, encoding["attention_mask"], label_ids_t)
+        dataset = SimpleDataset(
+            input_ids, encoding["attention_mask"], label_ids_t if "bug" in df else None
+        )
 
         print("Done")
         return dataset

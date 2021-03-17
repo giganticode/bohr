@@ -1,0 +1,9 @@
+-n bugginess_combine_labels_idans-dataset
+
+-d classifiers/bugginess-transformer/combine_labels.py
+-d labeled-datasets/datasets.idans-dataset.labeled.csv
+-d metrics/bugginess/transformer/idans-dataset/assigned_labels.csv
+
+-O labeled-datasets/datasets.idans-dataset.labeled.both.csv
+
+python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/datasets.idans-dataset.labeled.csv metrics/bugginess/transformer/idans-dataset/assigned_labels.csv labeled-datasets/datasets.idans-dataset.labeled.both.csv

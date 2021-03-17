@@ -1,0 +1,17 @@
+-n bugginess_transformer_label_idans-dataset
+
+-d classifiers/bugginess-transformer/run.py
+-d classifiers/bugginess-transformer/label.sh
+-d data/bugginess/train/plain_commits_batch1.csv
+-d models/config.json
+-d models/merges.txt
+-d models/pytorch_model.bin
+-d models/special_tokens_map.json
+-d models/tokenizer_config.json
+-d models/training_args.bin
+-d models/vocab.json
+-d requirements.txt
+
+-o metrics/bugginess/transformer/idans-dataset/assigned_labels.csv
+
+bash classifiers/bugginess-transformer/label.sh data/bugginess/train/plain_commits_batch1.csv metrics/bugginess/transformer/idans-dataset

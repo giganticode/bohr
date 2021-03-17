@@ -1165,3 +1165,13 @@ bugginess_label_dataset_datasets_idans-dataset:
   - path: labeled-datasets/datasets.idans-dataset.labeled.csv
     md5: f9f281340ec7d7d72eebefc9eb89a5ce
     size: 615900429
+bugginess_zip_idans_labeled_dataset:
+  cmd: zip labeled-datasets/datasets.idans-dataset.labeled.csv.zip labeled-datasets/datasets.idans-dataset.labeled.csv
+  deps:
+  - path: labeled-datasets/datasets.idans-dataset.labeled.csv
+    md5: f9f281340ec7d7d72eebefc9eb89a5ce
+    size: 615900429
+  outs:
+  - path: labeled-datasets/datasets.idans-dataset.labeled.csv.zip
+    md5: e3456b1297e59ca0d6f7251a414923ed
+    size: 133902848

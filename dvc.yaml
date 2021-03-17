@@ -392,6 +392,12 @@ stages:
     - data/bugginess/test/1151-commits.csv
     - data/bugginess/test/berger.csv
     - data/bugginess/test/herzig.csv
+  bugginess_zip_idans_labeled_dataset:
+    cmd: zip labeled-datasets/datasets.idans-dataset.labeled.csv.zip labeled-datasets/datasets.idans-dataset.labeled.csv
+    deps:
+    - labeled-datasets/datasets.idans-dataset.labeled.csv
+    outs:
+    - labeled-datasets/datasets.idans-dataset.labeled.csv.zip
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
     deps:

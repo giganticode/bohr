@@ -1,4 +1,4 @@
-{"bohr_framework_version": "0.3.3",
+{"bohr_framework_version": "0.3.4",
   "tasks": {
     "bugginess": {
       "top_artifact": "bohr.artifacts.commit.Commit",

@@ -89,11 +89,11 @@ smells_train_label_model:
     size: 14312
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/smells/label_model.pkl
-    md5: 78caa8fe8b83d9a706246e939fa076f8
-    size: 4890
+    md5: c79b87e62b0004aa52ddebc1a6d562c7
+    size: 4900
   - path: metrics/smells/label_model_metrics.json
     md5: 709f017913491c39539f9b59fc88fb83
     size: 102
@@ -278,11 +278,11 @@ bugginess_train_label_model:
     size: 12608796
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   - path: metrics/bugginess/label_model_metrics.json
     md5: ba3b00b9b5834671eb30872a63884630
     size: 286
@@ -526,7 +526,7 @@ smells_combine_heuristics:
     size: 14312
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/smells/analysis_datasets.smells-test.csv
     md5: 0e9a0cb4bca25888a4c21bb79dd903fc
@@ -557,7 +557,7 @@ smells_label_dataset_datasets_smells-train:
   deps:
   - path: data/smells/train.csv
     md5: 7fc9a7617e6f201523fba311317ba48f
-    size: 296970
+    size: 296407
   - path: datasets/smells-train.py
     md5: 5d0c1107da7c0fa3cf9278309d6a1e60
     size: 292
@@ -565,11 +565,11 @@ smells_label_dataset_datasets_smells-train:
     md5: d353c8b3bbcec3442b88fa4e64056d68
     size: 14312
   - path: generated/smells/label_model.pkl
-    md5: 78caa8fe8b83d9a706246e939fa076f8
-    size: 4890
+    md5: c79b87e62b0004aa52ddebc1a6d562c7
+    size: 4900
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.smells-train.labeled.csv
     md5: d33b91c10a14f2ee2b784fd882153c5c
@@ -587,11 +587,11 @@ smells_label_dataset_datasets_smells-test:
     md5: 03cfd9383f0463c0be0c15d54690b8ab
     size: 4230
   - path: generated/smells/label_model.pkl
-    md5: 78caa8fe8b83d9a706246e939fa076f8
-    size: 4890
+    md5: c79b87e62b0004aa52ddebc1a6d562c7
+    size: 4900
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.smells-test.labeled.csv
     md5: fc7c76d237aeb7f9900359ab625c27f7
@@ -699,7 +699,7 @@ bugginess_combine_heuristics:
     size: 12608796
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/analysis_datasets.1151-commits.csv
     md5: 6b7c650110d6563e65fa473d1fddf74e
@@ -762,11 +762,11 @@ bugginess_label_dataset_datasets_herzig:
     md5: ac1c03e92d33c156152e5c0fcd965423
     size: 12608796
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.herzig.labeled.csv
     md5: c84027461f11241ec6294d136b5b9eed
@@ -784,11 +784,11 @@ bugginess_label_dataset_datasets_1151-commits:
     md5: 7842af0b57b43d1557796fe07a23cf13
     size: 2792588
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.1151-commits.labeled.csv
     md5: 70250f3b3489aed05065c35a0b859c00
@@ -806,11 +806,11 @@ bugginess_label_dataset_datasets_berger:
     md5: e9396acb35a49d225aadb0c22f1c64f9
     size: 917772
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.berger.labeled.csv
     md5: 1093d51fa04c97caa03f9e46a00f6bd5
@@ -834,11 +834,11 @@ bugginess_label_dataset_datasets_bugginess-train:
     md5: d9141b7bf8b3eb25cf3e90490acbb812
     size: 500879984
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.bugginess-train.labeled.csv
     md5: bfe4ac306c08f7188e094acc20e1ff03
@@ -865,7 +865,7 @@ bugginess_apply_heuristics__heuristics_bugginess__datasets_1151-commits:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.1151-commits.pkl
     md5: cde4712cd3c7d97a01d472a96001655f
@@ -895,7 +895,7 @@ bugginess_apply_heuristics__heuristics_bugginess__datasets_berger:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.berger.pkl
     md5: e0369bc6d68aa85165b5a13925542d15
@@ -931,7 +931,7 @@ bugginess_apply_heuristics__heuristics_bugginess__datasets_bugginess-train:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.bugginess-train.pkl
     md5: 5d1c71dcd36417356cabe2e340ca959d
@@ -961,7 +961,7 @@ bugginess_apply_heuristics__heuristics_bugginess__datasets_herzig:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.herzig.pkl
     md5: 7e673c0cce8687903d67a529058bc0ae
@@ -991,7 +991,7 @@ smells_apply_heuristics__heuristics_smells__datasets_smells-test:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/smells/heuristics.smells/heuristic_matrix_datasets.smells-test.pkl
     md5: 143760b1cdf4c422a3430c583345337c
@@ -1005,7 +1005,7 @@ smells_apply_heuristics__heuristics_smells__datasets_smells-train:
   deps:
   - path: data/smells/train.csv
     md5: 7fc9a7617e6f201523fba311317ba48f
-    size: 296970
+    size: 296407
   - path: datasets/smells-train.py
     md5: 5d0c1107da7c0fa3cf9278309d6a1e60
     size: 292
@@ -1021,7 +1021,7 @@ smells_apply_heuristics__heuristics_smells__datasets_smells-train:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/smells/heuristics.smells/heuristic_matrix_datasets.smells-train.pkl
     md5: 5e0fb0ce062af88c8d2b5360948bb3c9

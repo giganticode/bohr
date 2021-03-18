@@ -1,6 +1,6 @@
 -n bugginess_zip_idans_labeled_dataset
 
--d labeled-datasets/datasets.idans-dataset.labeled.csv
--o labeled-datasets/datasets.idans-dataset.labeled.csv.zip
+-d labeled-datasets/datasets.idans-dataset.labeled.both.csv
+-o labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip
 
-zip labeled-datasets/datasets.idans-dataset.labeled.csv.zip labeled-datasets/datasets.idans-dataset.labeled.csv
+zip labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip labeled-datasets/datasets.idans-dataset.labeled.both.csv

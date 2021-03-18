@@ -1166,15 +1166,15 @@ bugginess_label_dataset_datasets_idans-dataset:
     md5: f9f281340ec7d7d72eebefc9eb89a5ce
     size: 615900429
 bugginess_zip_idans_labeled_dataset:
-  cmd: zip labeled-datasets/datasets.idans-dataset.labeled.csv.zip labeled-datasets/datasets.idans-dataset.labeled.csv
+  cmd: zip labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip labeled-datasets/datasets.idans-dataset.labeled.both.csv
   deps:
-  - path: labeled-datasets/datasets.idans-dataset.labeled.csv
-    md5: f9f281340ec7d7d72eebefc9eb89a5ce
-    size: 615900429
+  - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv
+    md5: 66ea80aa7599f7a64f73e9e5a5b33e57
+    size: 620799242
   outs:
-  - path: labeled-datasets/datasets.idans-dataset.labeled.csv.zip
-    md5: e3456b1297e59ca0d6f7251a414923ed
-    size: 133902848
+  - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip
+    md5: 531a98c43d9868e5cefc97382f193eca
+    size: 135826372
 bugginess_transformer_label_idans-dataset:
   cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/train/plain_commits_batch1.csv
     metrics/bugginess/transformer/idans-dataset

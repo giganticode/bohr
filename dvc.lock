@@ -1135,7 +1135,7 @@ bugginess_apply_heuristics__heuristics_bugginess__datasets_idans-dataset:
     size: 1707
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.idans-dataset.pkl
     md5: 4fac3d735f965fdaf80e586fb82dbdaf
@@ -1156,25 +1156,25 @@ bugginess_label_dataset_datasets_idans-dataset:
     md5: bcf6866cbf8bf08c8c641562625130a4
     size: 1344892672
   - path: generated/bugginess/label_model.pkl
-    md5: 3c357f9be9663aef23e9986c50ddad64
-    size: 1863228
+    md5: c43908471786ab37acf28b4430128d73
+    size: 1863238
   params:
     bohr.json:
-      bohr_framework_version: 0.3.3
+      bohr_framework_version: 0.3.4
   outs:
   - path: labeled-datasets/datasets.idans-dataset.labeled.csv
-    md5: f9f281340ec7d7d72eebefc9eb89a5ce
+    md5: df3186ac1caf4c163250eb86413020da
     size: 615900429
 bugginess_zip_idans_labeled_dataset:
   cmd: zip labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip labeled-datasets/datasets.idans-dataset.labeled.both.csv
   deps:
   - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv
-    md5: 66ea80aa7599f7a64f73e9e5a5b33e57
+    md5: 58e6dd21b6a6000f824be58aa927db62
     size: 620799242
   outs:
   - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip
-    md5: 531a98c43d9868e5cefc97382f193eca
-    size: 135826372
+    md5: fe8494489df9802338c7000a8b041ab1
+    size: 135826365
 bugginess_transformer_label_idans-dataset:
   cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/train/plain_commits_batch1.csv
     metrics/bugginess/transformer/idans-dataset
@@ -1224,12 +1224,12 @@ bugginess_combine_labels_idans-dataset:
     md5: fde465423b5c7ad410a7de6553dd1d2f
     size: 706
   - path: labeled-datasets/datasets.idans-dataset.labeled.csv
-    md5: f9f281340ec7d7d72eebefc9eb89a5ce
+    md5: df3186ac1caf4c163250eb86413020da
     size: 615900429
   - path: metrics/bugginess/transformer/idans-dataset/assigned_labels.csv
     md5: b23ad32421b2fe5d0e1adcbcbe26daff
     size: 4898811
   outs:
   - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv
-    md5: 66ea80aa7599f7a64f73e9e5a5b33e57
+    md5: 58e6dd21b6a6000f824be58aa927db62
     size: 620799242

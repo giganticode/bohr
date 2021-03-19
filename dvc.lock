@@ -318,8 +318,8 @@ bugginess_transformer_train:
   cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: classifiers/bugginess-transformer/train.sh
     md5: 3a19e011c049042bbec7e8315e883c38
     size: 557
@@ -356,8 +356,8 @@ bugginess_transformer_test_1151-commits:
     metrics/bugginess/transformer/1151-commits
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313
@@ -397,8 +397,8 @@ bugginess_transformer_test_berger:
     metrics/bugginess/transformer/berger
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313
@@ -438,8 +438,8 @@ bugginess_transformer_test_herzig:
     metrics/bugginess/transformer/herzig
   deps:
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: classifiers/bugginess-transformer/test.sh
     md5: 92c4020b4c026f9b85fd38ddee1bd528
     size: 313
@@ -1076,8 +1076,8 @@ bugginess_transformer_label_1151-commits:
     md5: ce2646a4233e68991b57bbf2c7404ace
     size: 320
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: data/bugginess/test/1151-commits.csv
     md5: 7b32f404edf5982eb4c5f51b956663c4
     size: 341651
@@ -1207,8 +1207,8 @@ bugginess_transformer_label_idans-dataset:
     md5: ce2646a4233e68991b57bbf2c7404ace
     size: 320
   - path: classifiers/bugginess-transformer/run.py
-    md5: 47f2ccae07dbab37e70d36bd5beaeecf
-    size: 12149
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
   - path: data/bugginess/train/plain_commits_batch1.csv
     md5: 49b026bf10637a1bba1b88831a93b145
     size: 607163993

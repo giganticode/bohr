@@ -93,6 +93,23 @@ stages:
     metrics:
     - metrics/bugginess/heuristics.bugginess/heuristic_metrics_datasets.herzig.json:
         cache: false
+  bugginess_apply_heuristics__heuristics_bugginess__datasets_idans-dataset2:
+    cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
+      datasets.idans-dataset2
+    deps:
+    - data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+    - datasets/idans-dataset2.py
+    - heuristics/bugginess.py
+    - heuristics/keywords
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.idans-dataset2.pkl
+    metrics:
+    - metrics/bugginess/heuristics.bugginess/heuristic_metrics_datasets.idans-dataset2.json:
+        cache: false
   bugginess_combine_heuristics:
     cmd: bohr apply-heuristics bugginess
     deps:
@@ -101,6 +118,7 @@ stages:
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.bugginess-train.pkl
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.herzig.pkl
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.idans-dataset.pkl
+    - generated/bugginess/heuristics.bugginess/heuristic_matrix_datasets.idans-dataset2.pkl
     params:
     - bohr.json:
       - bohr_framework_version
@@ -115,11 +133,14 @@ stages:
         cache: false
     - generated/bugginess/analysis_datasets.idans-dataset.csv:
         cache: false
+    - generated/bugginess/analysis_datasets.idans-dataset2.csv:
+        cache: false
     - generated/bugginess/heuristic_matrix_datasets.1151-commits.pkl
     - generated/bugginess/heuristic_matrix_datasets.berger.pkl
     - generated/bugginess/heuristic_matrix_datasets.bugginess-train.pkl
     - generated/bugginess/heuristic_matrix_datasets.herzig.pkl
     - generated/bugginess/heuristic_matrix_datasets.idans-dataset.pkl
+    - generated/bugginess/heuristic_matrix_datasets.idans-dataset2.pkl
     metrics:
     - metrics/bugginess/analysis_datasets.1151-commits.json:
         cache: false
@@ -131,6 +152,8 @@ stages:
         cache: false
     - metrics/bugginess/analysis_datasets.idans-dataset.json:
         cache: false
+    - metrics/bugginess/analysis_datasets.idans-dataset2.json:
+        cache: false
     - metrics/bugginess/heuristic_metrics_datasets.1151-commits.json:
         cache: false
     - metrics/bugginess/heuristic_metrics_datasets.berger.json:
@@ -141,19 +164,24 @@ stages:
         cache: false
     - metrics/bugginess/heuristic_metrics_datasets.idans-dataset.json:
         cache: false
+    - metrics/bugginess/heuristic_metrics_datasets.idans-dataset2.json:
+        cache: false
   bugginess_train_label_model:
     cmd: bohr train-label-model bugginess datasets.bugginess-train
     deps:
     - data/bugginess/test/1151-commits.csv
     - data/bugginess/test/berger.csv
     - data/bugginess/test/herzig.csv
+    - data/bugginess/test/plain_commits_batch_1m_test_labels.csv
     - datasets/1151-commits.py
     - datasets/berger.py
     - datasets/herzig.py
+    - datasets/idans-dataset2.py
     - generated/bugginess/heuristic_matrix_datasets.1151-commits.pkl
     - generated/bugginess/heuristic_matrix_datasets.berger.pkl
     - generated/bugginess/heuristic_matrix_datasets.bugginess-train.pkl
     - generated/bugginess/heuristic_matrix_datasets.herzig.pkl
+    - generated/bugginess/heuristic_matrix_datasets.idans-dataset2.pkl
     params:
     - bohr.json:
       - bohr_framework_version
@@ -224,6 +252,18 @@ stages:
       - bohr_framework_version
     outs:
     - labeled-datasets/datasets.herzig.labeled.csv
+  bugginess_label_dataset_datasets_idans-dataset2:
+    cmd: bohr label-dataset bugginess datasets.idans-dataset2
+    deps:
+    - data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+    - datasets/idans-dataset2.py
+    - generated/bugginess/heuristic_matrix_datasets.idans-dataset2.pkl
+    - generated/bugginess/label_model.pkl
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - labeled-datasets/datasets.idans-dataset2.labeled.csv
   smells_apply_heuristics__heuristics_smells__datasets_smells-train:
     cmd: bohr apply-heuristics smells --heuristic-group heuristics.smells --dataset
       datasets.smells-train
@@ -474,6 +514,13 @@ stages:
         cache: false
     - data/bugginess/train/bug_sample_issues.csv:
         cache: false
+  preprocess_bugginess_idan2:
+    cmd: unzip downloaded-data/plain_commits_batch_1m_test_labels.csv.zip -d data/bugginess/test
+      && rm -r data/bugginess/test/__MACOSX
+    deps:
+    - downloaded-data/plain_commits_batch_1m_test_labels.csv.zip
+    outs:
+    - data/bugginess/test/plain_commits_batch_1m_test_labels.csv
   bugginess_transformer_test_berger:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/berger.csv
       metrics/bugginess/transformer/berger

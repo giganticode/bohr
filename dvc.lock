@@ -1233,3 +1233,14 @@ bugginess_combine_labels_idans-dataset:
   - path: labeled-datasets/datasets.idans-dataset.labeled.both.csv
     md5: 58e6dd21b6a6000f824be58aa927db62
     size: 620799242
+preprocess_bugginess_idan2:
+  cmd: unzip downloaded-data/plain_commits_batch_1m_test_labels.csv.zip -d data/bugginess/test
+    && rm -r data/bugginess/test/__MACOSX
+  deps:
+  - path: downloaded-data/plain_commits_batch_1m_test_labels.csv.zip
+    md5: 5d4e1a27f8d54c1b45592fe02e3bf1bb
+    size: 25590091
+  outs:
+  - path: data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+    md5: 1c5392ce0812d17a71bd1f7fcad6da93
+    size: 74124785

@@ -9,7 +9,8 @@
       "test_datasets": [
         "datasets.1151-commits",
         "datasets.berger",
-        "datasets.herzig"
+        "datasets.herzig",
+        "datasets.idans-dataset2"
       ],
       "train_datasets": [
         "datasets.bugginess-train",

@@ -1,0 +1,6 @@
+-n preprocess_bugginess_idan2
+
+-d downloaded-data/plain_commits_batch_1m_test_labels.csv.zip
+-o data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+
+unzip downloaded-data/plain_commits_batch_1m_test_labels.csv.zip -d data/bugginess/test && rm -r data/bugginess/test/__MACOSX

@@ -442,6 +442,16 @@ stages:
     outs:
     - labeled-datasets/datasets.idans-dataset.labeled.both.csv:
         cache: false
+  bugginess_combine_labels_idans-dataset2:
+    cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/datasets.idans-dataset2.labeled.csv
+      metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+    deps:
+    - classifiers/bugginess-transformer/combine_labels.py
+    - labeled-datasets/datasets.idans-dataset2.labeled.csv
+    - metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv
+    outs:
+    - labeled-datasets/datasets.idans-dataset2.labeled.both.csv:
+        cache: false
   preprocess_bugginess_idan:
     cmd: unzip downloaded-data/plain_commits_batch1.csv.zip -d data/bugginess/train
       && rm -r data/bugginess/train/__MACOSX
@@ -465,6 +475,12 @@ stages:
     - labeled-datasets/datasets.idans-dataset.labeled.both.csv
     outs:
     - labeled-datasets/datasets.idans-dataset.labeled.both.csv.zip
+  bugginess_zip_idans_labeled_dataset2:
+    cmd: zip labeled-datasets/datasets.idans-dataset2.labeled.both.csv.zip labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+    deps:
+    - labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+    outs:
+    - labeled-datasets/datasets.idans-dataset2.labeled.both.csv.zip
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
     deps:
@@ -503,6 +519,23 @@ stages:
     metrics:
     - metrics/bugginess/transformer/1151-commits/assigned_labels.csv:
         cache: false
+  bugginess_transformer_label_idans-dataset2:
+    cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+      metrics/bugginess/transformer/idans-dataset2
+    deps:
+    - classifiers/bugginess-transformer/label.sh
+    - classifiers/bugginess-transformer/run.py
+    - data/bugginess/train/plain_commits_batch1.csv
+    - models/config.json
+    - models/merges.txt
+    - models/pytorch_model.bin
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/training_args.bin
+    - models/vocab.json
+    - requirements.txt
+    outs:
+    - metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv
   preprocess_bugginess_train:
     cmd: 7z x downloaded-data/bugginess_train.7z -odata/bugginess
     deps:

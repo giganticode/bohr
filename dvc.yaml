@@ -515,9 +515,9 @@ stages:
     - data/bugginess/train/bug_sample_issues.csv:
         cache: false
   preprocess_bugginess_idan2:
-    cmd: unzip downloaded-data/plain_commits_batch_1m_test_labels.csv.zip -d data/bugginess/test
-      && rm -r data/bugginess/test/__MACOSX
+    cmd: bash data-preprocessing/idans-dataset2/preprocess.sh /Users/hlib/dev/bohr/
     deps:
+    - data-preprocessing/idans-dataset2
     - downloaded-data/plain_commits_batch_1m_test_labels.csv.zip
     outs:
     - data/bugginess/test/plain_commits_batch_1m_test_labels.csv

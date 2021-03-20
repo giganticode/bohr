@@ -1,7 +1,13 @@
-BOHR
+BOHR (Big Old Heuristic Repository)
 ----------------------------------
-Big Old Heuristic Repository
 
+BOHR is a repository of heuristics for categorization of software engineering artifacts, such as commits and bug reports. Categorization of the artifacts is often required to create labeled datasets to train machine learning models on. Since manual labeling is expensive, researchers come up with imprecise heuristics that can assign labels to artifacts. The goal of BOHR is to let researchers contribute a large number of heuristics which are "smartly" combined by `snorkel <https://www.snorkel.org/>`_, the state-of-the art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
+
+BOHR is a wrapper around snorkel which:
+
+* Simplifies the process of adding new heuristics and evaluating their effectiveness;
+* Labels the datasets registered with BOHR and automatically updates the labels once heuristics are added;
+* Keeps track of heursitics used for each version of generated dataset, and in general makes sure the datasets are reproducible and easily accessable by using `DVC https://dvc.org>`_.
 
 
 .. contents:: **Contents**
@@ -10,10 +16,10 @@ Big Old Heuristic Repository
 Getting started with BOHR
 ===========================================
 
-Python >= 3.8 is required, preferably use virtual environment.
+Python >= 3.8 is required, use of virtual environment is strongly recommended.
 
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Install BOHR framework library: ``chmod +x bin/setup-bohr.sh && bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`, dependencies and tools to run heursistics.
+#. Install BOHR framework library: ``chmod +x bin/setup-bohr.sh && bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
 
 Downloading datasets and models
 ===============================

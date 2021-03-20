@@ -1323,3 +1323,71 @@ bugginess_label_dataset_datasets_idans-dataset2:
   - path: labeled-datasets/datasets.idans-dataset2.labeled.csv
     md5: 456c1e6efa81f06734608c0bbbb7db90
     size: 77028707
+bugginess_transformer_label_idans-dataset2:
+  cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/test/plain_commits_batch_1m_test_labels.csv
+    metrics/bugginess/transformer/idans-dataset2
+  deps:
+  - path: classifiers/bugginess-transformer/label.sh
+    md5: ce2646a4233e68991b57bbf2c7404ace
+    size: 320
+  - path: classifiers/bugginess-transformer/run.py
+    md5: 7720d6060248f0ae27ed87c7783d4d31
+    size: 12161
+  - path: data/bugginess/train/plain_commits_batch1.csv
+    md5: 49b026bf10637a1bba1b88831a93b145
+    size: 607163993
+  - path: models/config.json
+    md5: 3effd3229ade2ed52eeb90d252790bf5
+    size: 716
+  - path: models/merges.txt
+    md5: fb9c1e34b6999f3a062df6ed4a604957
+    size: 458459
+  - path: models/pytorch_model.bin
+    md5: 40379a0207d19e2a24e116e941d7d675
+    size: 333858922
+  - path: models/special_tokens_map.json
+    md5: 17bb9e090d1d3a775683aba3ba610591
+    size: 239
+  - path: models/tokenizer_config.json
+    md5: e1a3e947aa301aadc524ee29f0dbcc39
+    size: 1257
+  - path: models/training_args.bin
+    md5: 408c3f12467908cabb77ded5ce3490ed
+    size: 2159
+  - path: models/vocab.json
+    md5: ca70df26ed267d27a9edde9c5341f17b
+    size: 813062
+  - path: requirements.txt
+    md5: 29b4c5d66c523cec0712dbcdcced42bb
+    size: 21
+  outs:
+  - path: metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv
+    md5: 95c24ac712c9361c669d6caf5e6443ff
+    size: 987573
+bugginess_combine_labels_idans-dataset2:
+  cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/datasets.idans-dataset2.labeled.csv
+    metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+  deps:
+  - path: classifiers/bugginess-transformer/combine_labels.py
+    md5: fde465423b5c7ad410a7de6553dd1d2f
+    size: 706
+  - path: labeled-datasets/datasets.idans-dataset2.labeled.csv
+    md5: 456c1e6efa81f06734608c0bbbb7db90
+    size: 77028707
+  - path: metrics/bugginess/transformer/idans-dataset2/assigned_labels.csv
+    md5: 95c24ac712c9361c669d6caf5e6443ff
+    size: 987573
+  outs:
+  - path: labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+    md5: e75bd16372330c6f6ac71bad6a926292
+    size: 78016282
+bugginess_zip_idans_labeled_dataset2:
+  cmd: zip labeled-datasets/datasets.idans-dataset2.labeled.both.csv.zip labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+  deps:
+  - path: labeled-datasets/datasets.idans-dataset2.labeled.both.csv
+    md5: e75bd16372330c6f6ac71bad6a926292
+    size: 78016282
+  outs:
+  - path: labeled-datasets/datasets.idans-dataset2.labeled.both.csv.zip
+    md5: ff52b19a3ff06802230fe445634ca858
+    size: 27126933

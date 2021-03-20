@@ -7,7 +7,7 @@ BOHR is a wrapper around snorkel which:
 
 * Simplifies the process of adding new heuristics and evaluating their effectiveness;
 * Labels the datasets registered with BOHR and automatically updates the labels once heuristics are added;
-* Keeps track of heursitics used for each version of generated dataset, and in general makes sure the datasets are reproducible and easily accessable by using `DVC https://dvc.org>`_.
+* Keeps track of heursitics used for each version of generated dataset, and in general makes sure the datasets are reproducible and easily accessable by using `DVC <https://dvc.org>`_.
 
 
 .. contents:: **Contents**

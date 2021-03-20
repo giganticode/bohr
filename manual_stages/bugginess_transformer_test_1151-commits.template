@@ -1,0 +1,17 @@
+-n bugginess_transformer_test_1151-commits
+
+-d classifiers/bugginess-transformer/run.py
+-d classifiers/bugginess-transformer/test.sh
+-d data/bugginess/test/1151-commits.csv
+-d models/config.json
+-d models/merges.txt
+-d models/pytorch_model.bin
+-d models/special_tokens_map.json
+-d models/tokenizer_config.json
+-d models/training_args.bin
+-d models/vocab.json
+-d requirements.txt
+
+-M metrics/bugginess/transformer/1151-commits/eval_results.txt
+
+bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits

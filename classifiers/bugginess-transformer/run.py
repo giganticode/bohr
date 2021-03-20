@@ -317,30 +317,28 @@ def main():
 
             eval_results.update(eval_result)
 
-    # if training_args.do_predict:
-    #     logging.info("*** Test ***")
-    #     test_datasets = [test_dataset]
-    #
-    #     for test_dataset in test_datasets:
-    #         trainer.compute_metrics = compute_metrics_fn
-    #         predictions = trainer.predict(test_dataset=test_dataset).predictions
+    if training_args.do_predict:
+        logging.info("*** Test ***")
+        eval_datasets = [eval_dataset]
 
-    # if output_mode == "classification":
-    #     predictions = np.argmax(predictions, axis=1)
+        for eval_dataset in eval_datasets:
+            trainer.compute_metrics = compute_metrics_fn
+            predictions = trainer.predict(test_dataset=eval_dataset).predictions
 
-    # output_test_file = os.path.join(
-    #     training_args.output_dir, f"test_results.txt"
-    # )
-    # if trainer.is_world_master():
-    #     with open(output_test_file, "w") as writer:
-    #         logger.info("***** Test results *****")
-    #         writer.write("index\tprediction\n")
-    #         for index, item in enumerate(predictions):
-    #             if output_mode == "regression":
-    #                 writer.write("%d\t%3.3f\n" % (index, item))
-    #             else:
-    #                 item = test_dataset.get_labels()[item]
-    #                 writer.write("%d\t%s\n" % (index, item))
+    if output_mode == "classification":
+        predictions = np.argmax(predictions, axis=1)
+
+    output_test_file = os.path.join(training_args.output_dir, f"assigned_labels.csv")
+    if trainer.is_world_process_zero():
+        with open(output_test_file, "w") as writer:
+            logger.info("***** Test results *****")
+            writer.write("index,prediction\n")
+            for index, item in enumerate(predictions):
+                if output_mode == "regression":
+                    writer.write("%d,%3.3f\n" % (index, item))
+                else:
+                    # item = LABEL_NAMES[item]
+                    writer.write("%d,%s\n" % (index, item))
     return eval_results
 
 

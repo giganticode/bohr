@@ -1,5 +1,6 @@
 [core]
     remote = actarus-http
+    check_update = false
 ['remote "ironspeed"']
     url = ssh://10.10.20.160/home/hbabii/.dvcstorage/bohr
 ['remote "actarus"']

@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+tools_dir="$1"
+
+if ! [ -d "$tools_dir" ]; then
+    mkdir "$tools_dir"
+fi
+cd "$tools_dir"
+
+rm -rf commit-classification
+git clone https://github.com/giganticode/commit-classification
+cd commit-classification && git checkout 7e519720c139c1315455483d4d4857669334fcbf && cd -

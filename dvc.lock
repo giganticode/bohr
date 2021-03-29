@@ -1087,3 +1087,41 @@ bugginess_combine_labels_1151-commits:
   - path: labeled-datasets/datasets.1151-commits.labeled.both.csv
     md5: f4d459e7b167fb0197dc49483eb2d2af
     size: 366721
+preprocess_bugginess-train:
+  cmd: 7z x downloaded-data/bugginess_train.7z -odata/bugginess_train && echo "data/bugginess_train"
+    >> .gitignore && git add .gitignore
+  deps:
+  - path: downloaded-data/bugginess_train.7z
+    md5: d4dc26c2b0f0704b1559f2c0ce6320d7
+    size: 255969433
+  outs:
+  - path: data/bugginess_train
+    md5: f7cbfc7a91dfeca3aff7b7d3b6d7ea72.dir
+    size: 2489726547
+    nfiles: 3
+preprocess_smells-train:
+  cmd: data-preprocessing/smells.sh
+  deps:
+  - path: data-preprocessing/smells.sh
+    md5: 1792bc2011c1aba4d51cdca74beee11e
+    size: 2148
+  - path: downloaded-data/smells-madeyski.csv
+    md5: 3d60d277b9fa1306c05ccfdefe22e9d1
+    size: 7513770
+  outs:
+  - path: data/smells/train.csv
+    md5: 7fc9a7617e6f201523fba311317ba48f
+    size: 296970
+preprocess_smells-test:
+  cmd: data-preprocessing/smells.sh
+  deps:
+  - path: data-preprocessing/smells.sh
+    md5: 1792bc2011c1aba4d51cdca74beee11e
+    size: 2148
+  - path: downloaded-data/smells-madeyski.csv
+    md5: 3d60d277b9fa1306c05ccfdefe22e9d1
+    size: 7513770
+  outs:
+  - path: data/smells/test.csv
+    md5: 0200db0eec17554a48a5b3a25719fd03
+    size: 77607

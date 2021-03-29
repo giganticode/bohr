@@ -5,3 +5,9 @@
 /datasets.smells-train.labeled.csv
 /datasets.smells-test.labeled.csv
 /datasets.1151-commits.labeled.both.csv
+/bugginess-train.labeled.csv
+/1151-commits.labeled.csv
+/berger.labeled.csv
+/herzig.labeled.csv
+/smells-train.labeled.csv
+/smells-test.labeled.csv

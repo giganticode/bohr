@@ -1,9 +1,0 @@
--n preprocess_smells
-
--d data-preprocessing/smells.sh
--d downloaded-data/smells-madeyski.csv
-
--o data/smells/test.csv
--o data/smells/train.csv
-
-bash data-preprocessing/smells.sh

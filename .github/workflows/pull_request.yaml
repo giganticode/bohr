@@ -32,20 +32,11 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - name: install-dvc
-        run: |
-          BOHR_VERSION="$(bash bin/bohr-version.sh)"
-          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/v$BOHR_VERSION/DVC_VERSION)"
-          dvc --version
-      - name: reproduce-transient-stages
-        run: |
-          dvc pull -r gdrive
-          dvc repro preprocess_bugginess_train
       - name: setup-bohr
-        run: dvc status -q || bin/setup-bohr.sh $SOFTWARE_DIR
+        run: bin/setup-bohr.sh $SOFTWARE_DIR
       - name: repro
         run: |
-          dvc repro
+          bohr repro
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

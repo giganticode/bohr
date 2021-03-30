@@ -88,11 +88,11 @@
         "heuristics/bugginess.py": "9f9ea19cd5c53bbbd41f94cf7b8f3d14"
     },
     "manual_stages": {
-        "manual_stages/bugginess_combine_labels_1151-commits.template": "36fbee9db0ffc4896a1b9213ea72882c",
-        "manual_stages/bugginess_transformer_test_herzig.template": "8b2802d15693d70c5fb1137b644c24f9",
-        "manual_stages/bugginess_transformer_test_1151-commits.template": "731b4219c8ada99762e5c78cddb77b0f",
+        "manual_stages/bugginess_combine_labels_1151-commits.template": "c3e0d553f344315890b044c0765ec501",
+        "manual_stages/bugginess_transformer_test_herzig.template": "01c27fe30af443dfaf682987221d322d",
+        "manual_stages/bugginess_transformer_test_1151-commits.template": "033bc5c8fc18b483bb12b5393d285679",
         "manual_stages/bugginess_transformer_train.template": "df3c3bf3fd93f41c41cf28fea9d87411",
-        "manual_stages/bugginess_transformer_label_1151-commits.template": "3d8ed3c5b0d8c96fce0f84e4dbd2bd48",
-        "manual_stages/bugginess_transformer_test_berger.template": "46ffab2df2f4f32004592fc56320d19e"
+        "manual_stages/bugginess_transformer_label_1151-commits.template": "8640178899f618efb1c263c6acb88e28",
+        "manual_stages/bugginess_transformer_test_berger.template": "ccb479a47f1834d6c3dfaac420fd502e"
     }
 }

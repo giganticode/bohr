@@ -318,15 +318,15 @@ stages:
     - labeled-datasets/1151-commits.labeled.csv
     - metrics/bugginess/transformer/1151-commits/assigned_labels.csv
     outs:
-    - labeled-datasets/datasets.1151-commits.labeled.both.csv:
+    - labeled-datasets/1151-commits.labeled.both.csv:
         cache: false
   bugginess_transformer_test_herzig:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/herzig.csv
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/herzig.csv
       metrics/bugginess/transformer/herzig
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/test/herzig.csv
+    - data/bugginess/herzig.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -340,12 +340,12 @@ stages:
         cache: false
     frozen: true
   bugginess_transformer_test_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/1151-commits.csv
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/1151-commits.csv
       metrics/bugginess/transformer/1151-commits
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/test/1151-commits.csv
+    - data/bugginess/1151-commits.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -380,12 +380,12 @@ stages:
         cache: false
     frozen: true
   bugginess_transformer_label_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/test/1151-commits.csv
+    cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/1151-commits.csv
       metrics/bugginess/transformer/1151-commits
     deps:
     - classifiers/bugginess-transformer/label.sh
     - classifiers/bugginess-transformer/run.py
-    - data/bugginess/test/1151-commits.csv
+    - data/bugginess/1151-commits.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -399,12 +399,12 @@ stages:
         cache: false
     frozen: true
   bugginess_transformer_test_berger:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/test/berger.csv
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/berger.csv
       metrics/bugginess/transformer/berger
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/test/berger.csv
+    - data/bugginess/berger.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin

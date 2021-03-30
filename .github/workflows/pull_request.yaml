@@ -33,7 +33,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: setup-bohr
-        run: bin/setup-bohr.sh $SOFTWARE_DIR
+        run: |
+          bin/setup-bohr.sh $SOFTWARE_DIR
+          cat .dvc/config
       - name: repro
         run: |
           bohr repro

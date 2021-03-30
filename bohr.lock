@@ -1,0 +1,98 @@
+{
+    "config": {
+        "bohr_framework_version": "0.3.7",
+        "tasks": {
+            "bugginess": {
+                "top_artifact": "bohr.artifacts.commit.Commit",
+                "label_categories": [
+                    "CommitLabel.NonBugFix",
+                    "CommitLabel.BugFix"
+                ],
+                "test_datasets": [
+                    "1151-commits",
+                    "berger",
+                    "herzig"
+                ],
+                "train_datasets": [
+                    "bugginess-train"
+                ],
+                "label_column_name": "bug"
+            },
+            "smells": {
+                "top_artifact": "bohr.artifacts.method.Method",
+                "label_categories": [
+                    "SnippetLabel.NonSmelly",
+                    "SnippetLabel.Smelly"
+                ],
+                "test_datasets": [
+                    "smells-test"
+                ],
+                "train_datasets": [
+                    "smells-train"
+                ],
+                "label_column_name": "smelly"
+            }
+        },
+        "datasets": {
+            "berger": {
+                "path": "berger.csv",
+                "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+                "test_set": "true",
+                "preprocessor": "copy",
+                "loader": "csv"
+            },
+            "herzig": {
+                "path": "herzig.csv",
+                "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+                "test_set": "true",
+                "preprocessor": "copy",
+                "loader": "csv"
+            },
+            "1151-commits": {
+                "path": "1151-commits.csv",
+                "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+                "test_set": "true",
+                "preprocessor": "copy",
+                "loader": "csv"
+            },
+            "bugginess-train": {
+                "path": "bugginess_train.7z",
+                "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+                "test_set": "false",
+                "loader": "csv",
+                "preprocessor": "7z",
+                "main_file": "train/bug_sample.csv"
+            },
+            "smells-train": {
+                "path": "smells-madeyski.csv",
+                "path_preprocessed": "smells/train.csv",
+                "mapper": "bohr.templates.datamappers.method.MethodMapper",
+                "test_set": "false",
+                "loader": "csv",
+                "preprocessor": "data-preprocessing/smells.sh",
+                "sep": ";"
+            },
+            "smells-test": {
+                "path": "smells-madeyski.csv",
+                "path_preprocessed": "smells/test.csv",
+                "mapper": "bohr.templates.datamappers.method.MethodMapper",
+                "test_set": "false",
+                "loader": "csv",
+                "preprocessor": "data-preprocessing/smells.sh",
+                "sep": ";"
+            }
+        }
+    },
+    "heuristics": {
+        "heuristics/smells.py": "3d03392a1e7d0b9bfaab0125dabfd5b6",
+        "heuristics/bugginess.py": "490e014b45c01afc68132c322cf2af78"
+    },
+    "manual_stages": {
+        "manual_stages/bugginess_transformer_train.template": "87efb712149cc5ed53d395e063da688e",
+        "manual_stages/bugginess_transformer_test_herzig.template": "8b2802d15693d70c5fb1137b644c24f9",
+        "manual_stages/bugginess_combine_labels_1151-commits.template": "8e7d3fa6197e30adca1ea4f400e2b7e3",
+        "manual_stages/bugginess_transformer_label_1151-commits.template": "3d8ed3c5b0d8c96fce0f84e4dbd2bd48",
+        "manual_stages/bugginess_transformer_test_berger.template": "46ffab2df2f4f32004592fc56320d19e",
+        "manual_stages/bugginess_transformer_test_1151-commits.template": "731b4219c8ada99762e5c78cddb77b0f"
+    }
+}

@@ -1,0 +1,22 @@
+preprocess_1151-commits:
+  cmd: cp downloaded-data/1151-commits.csv data && echo "data/1151-commits.csv" >>
+    .gitignore && git add .gitignore
+  deps:
+  - path: downloaded-data/1151-commits.csv
+    md5: 7b32f404edf5982eb4c5f51b956663c4
+    size: 341651
+  outs:
+  - path: data/1151-commits.csv
+    md5: 7b32f404edf5982eb4c5f51b956663c4
+    size: 341651
+preprocess_herzig:
+  cmd: cp downloaded-data/herzig.csv data && echo "data/herzig.csv" >> .gitignore
+    && git add .gitignore
+  deps:
+  - path: downloaded-data/herzig.csv
+    md5: 279936268f488e1e613f81a537f29055
+    size: 1458311
+  outs:
+  - path: data/herzig.csv
+    md5: 279936268f488e1e613f81a537f29055
+    size: 1458311

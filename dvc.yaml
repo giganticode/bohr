@@ -313,6 +313,7 @@ stages:
   bugginess_combine_labels_1151-commits:
     cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/1151-commits.labeled.csv
       metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/1151-commits.labeled.both.csv
+      && echo "labeled-datasets/1151-commits.labeled.both.csv" >> .gitignore
     deps:
     - classifiers/bugginess-transformer/combine_labels.py
     - labeled-datasets/1151-commits.labeled.csv
@@ -338,7 +339,6 @@ stages:
     metrics:
     - metrics/bugginess/transformer/herzig/eval_results.txt:
         cache: false
-    frozen: true
   bugginess_transformer_test_1151-commits:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/1151-commits.csv
       metrics/bugginess/transformer/1151-commits
@@ -357,7 +357,6 @@ stages:
     metrics:
     - metrics/bugginess/transformer/1151-commits/eval_results.txt:
         cache: false
-    frozen: true
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
     deps:
@@ -378,7 +377,6 @@ stages:
     - models/training_args.bin
     - models/vocab.json:
         cache: false
-    frozen: true
   bugginess_transformer_label_1151-commits:
     cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/1151-commits.csv
       metrics/bugginess/transformer/1151-commits
@@ -397,7 +395,6 @@ stages:
     metrics:
     - metrics/bugginess/transformer/1151-commits/assigned_labels.csv:
         cache: false
-    frozen: true
   bugginess_transformer_test_berger:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/berger.csv
       metrics/bugginess/transformer/berger
@@ -416,4 +413,3 @@ stages:
     metrics:
     - metrics/bugginess/transformer/berger/eval_results.txt:
         cache: false
-    frozen: true

@@ -1,1 +1,1 @@
-{"label_model_acc_datasets.smells-test": 0.73, "label_model_neg_log_loss_datasets.smells-test": 0.834}
+{"label_model_acc_smells-test": 0.73, "label_model_neg_log_loss_smells-test": 0.834}

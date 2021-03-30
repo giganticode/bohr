@@ -417,8 +417,8 @@ smells_train_label_model:
       bohr_framework_version: 0.3.7
   outs:
   - path: generated/smells/label_model.pkl
-    md5: a2136141fb2864f511ce3f4ab6931450
-    size: 4900
+    md5: a39df10ded0095833672730c79461bbf
+    size: 4916
   - path: metrics/smells/label_model_metrics.json
     md5: 21749d164c1e6c3d590f35465b488bbc
     size: 84
@@ -432,7 +432,7 @@ smells_label_dataset_smells-train:
     md5: d353c8b3bbcec3442b88fa4e64056d68
     size: 14312
   - path: generated/smells/label_model.pkl
-    md5: 67defbbace9954384f5d42e8c94bd38d
+    md5: a39df10ded0095833672730c79461bbf
     size: 4916
   params:
     bohr.json:
@@ -451,7 +451,7 @@ smells_label_dataset_smells-test:
     md5: 03cfd9383f0463c0be0c15d54690b8ab
     size: 4230
   - path: generated/smells/label_model.pkl
-    md5: 67defbbace9954384f5d42e8c94bd38d
+    md5: a39df10ded0095833672730c79461bbf
     size: 4916
   params:
     bohr.json:

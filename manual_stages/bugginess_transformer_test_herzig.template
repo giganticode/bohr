@@ -2,7 +2,7 @@
 
 -d classifiers/bugginess-transformer/run.py
 -d classifiers/bugginess-transformer/test.sh
--d data/bugginess/herzig.csv
+-d data/herzig.csv
 -d models/config.json
 -d models/merges.txt
 -d models/pytorch_model.bin

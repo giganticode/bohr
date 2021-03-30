@@ -326,7 +326,7 @@ stages:
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/herzig.csv
+    - data/herzig.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -345,7 +345,7 @@ stages:
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/1151-commits.csv
+    - data/1151-commits.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -385,7 +385,7 @@ stages:
     deps:
     - classifiers/bugginess-transformer/label.sh
     - classifiers/bugginess-transformer/run.py
-    - data/bugginess/1151-commits.csv
+    - data/1151-commits.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin
@@ -404,7 +404,7 @@ stages:
     deps:
     - classifiers/bugginess-transformer/run.py
     - classifiers/bugginess-transformer/test.sh
-    - data/bugginess/berger.csv
+    - data/berger.csv
     - models/config.json
     - models/merges.txt
     - models/pytorch_model.bin

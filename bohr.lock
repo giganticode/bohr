@@ -89,10 +89,10 @@
     },
     "manual_stages": {
         "manual_stages/bugginess_combine_labels_1151-commits.template": "c3e0d553f344315890b044c0765ec501",
-        "manual_stages/bugginess_transformer_test_herzig.template": "01c27fe30af443dfaf682987221d322d",
-        "manual_stages/bugginess_transformer_test_1151-commits.template": "033bc5c8fc18b483bb12b5393d285679",
+        "manual_stages/bugginess_transformer_test_herzig.template": "cf4cbb83325c85f23958830ef2e8317f",
+        "manual_stages/bugginess_transformer_test_1151-commits.template": "4a903aa99267673e32cc7ab0ab3063a6",
         "manual_stages/bugginess_transformer_train.template": "df3c3bf3fd93f41c41cf28fea9d87411",
-        "manual_stages/bugginess_transformer_label_1151-commits.template": "8640178899f618efb1c263c6acb88e28",
-        "manual_stages/bugginess_transformer_test_berger.template": "ccb479a47f1834d6c3dfaac420fd502e"
+        "manual_stages/bugginess_transformer_label_1151-commits.template": "5140eedc4091a75d50bcb8f23bfc4220",
+        "manual_stages/bugginess_transformer_test_berger.template": "f1749e845643c791e6e38422885b181f"
     }
 }

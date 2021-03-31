@@ -32,14 +32,13 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - name: debugging
-        run: md5sum metrics/smells/heuristics.smells/heuristic_metrics_smells-test.json
       - name: setup-bohr
         run: |
           bin/setup-bohr.sh $SOFTWARE_DIR
           cat .dvc/config
       - name: repro
         run: |
+          dvc pull
           bohr repro
       - name: Commit files
         run: |

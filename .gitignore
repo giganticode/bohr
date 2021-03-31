@@ -9,5 +9,4 @@ data/bugginess_train
 data/1151-commits.csv
 data/herzig.csv
 data/berger.csv
-data/bugginess_train
 labeled-datasets/1151-commits.labeled.both.csv

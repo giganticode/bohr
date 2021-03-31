@@ -38,8 +38,6 @@ jobs:
           cat .dvc/config
       - name: repro
         run: |
-          dvc repro --pull -f preprocess_bugginess-train
-          bohr repro --only-transient
           bohr repro
       - name: Commit files
         run: |

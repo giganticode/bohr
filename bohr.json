@@ -1,4 +1,4 @@
-{"bohr_framework_version": "0.3.4",
+{"bohr_framework_version": "0.3.9",
   "tasks": {
     "bugginess": {
       "top_artifact": "bohr.artifacts.commit.Commit",
@@ -7,12 +7,12 @@
         "CommitLabel.BugFix"
       ],
       "test_datasets": [
-        "datasets.1151-commits",
-        "datasets.berger",
-        "datasets.herzig"
+        "1151-commits",
+        "berger",
+        "herzig"
       ],
       "train_datasets": [
-        "datasets.bugginess-train"
+        "bugginess-train"
       ],
       "label_column_name": "bug"
     },
@@ -23,12 +23,61 @@
         "SnippetLabel.Smelly"
       ],
       "test_datasets": [
-        "datasets.smells-test"
+        "smells-test"
       ],
       "train_datasets": [
-        "datasets.smells-train"
+        "smells-train"
       ],
       "label_column_name": "smelly"
+    }
+  },
+  "datasets": {
+    "berger": {
+      "path": "berger.csv",
+      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+      "test_set": "true",
+      "preprocessor": "copy",
+      "loader": "csv"
+    },
+    "herzig": {
+      "path": "herzig.csv",
+      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+      "test_set": "true",
+      "preprocessor": "copy",
+      "loader": "csv"
+    },
+    "1151-commits": {
+      "path": "1151-commits.csv",
+      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+      "test_set": "true",
+      "preprocessor": "copy",
+      "loader": "csv"
+    },
+    "bugginess-train": {
+      "path": "bugginess_train.7z",
+      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
+      "test_set": "false",
+      "loader": "csv",
+      "preprocessor": "7z",
+      "main_file": "train/bug_sample.csv"
+    },
+    "smells-train": {
+      "path": "smells-madeyski.csv",
+      "path_preprocessed": "smells/train.csv",
+      "mapper": "bohr.templates.datamappers.method.MethodMapper",
+      "test_set": "false",
+      "loader": "csv",
+      "preprocessor": "data-preprocessing/smells.sh",
+      "sep": ";"
+    },
+    "smells-test": {
+      "path": "smells-madeyski.csv",
+      "path_preprocessed": "smells/test.csv",
+      "mapper": "bohr.templates.datamappers.method.MethodMapper",
+      "test_set": "false",
+      "loader": "csv",
+      "preprocessor": "data-preprocessing/smells.sh",
+      "sep": ";"
     }
   }
 }

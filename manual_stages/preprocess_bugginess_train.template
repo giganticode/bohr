@@ -1,8 +1,0 @@
--n preprocess_bugginess_train
-
--d downloaded-data/bugginess_train.7z
--O data/bugginess/train/bug_sample.csv
--O data/bugginess/train/bug_sample_files.csv
--O data/bugginess/train/bug_sample_issues.csv
-
-7z x downloaded-data/bugginess_train.7z -odata/bugginess

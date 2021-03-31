@@ -69,12 +69,12 @@ Tasks are defined in the `bohr.json` file. Below you can see an example of "bugg
         "CommitLabel.BugFix"
       ],
       "test_datasets": [
-        "datasets.1151-commits",
-        "datasets.berger",
-        "datasets.herzig"
+        "1151-commits",
+        "berger",
+        "herzig"
       ],
       "train_datasets": [
-        "datasets.bugginess-train"
+        "bugginess-train"
       ],
       "label_column_name": "bug"
     }

@@ -1,4 +1,4 @@
-/heuristic_matrix_datasets.bugginess-train.pkl
-/heuristic_matrix_datasets.1151-commits.pkl
-/heuristic_matrix_datasets.berger.pkl
-/heuristic_matrix_datasets.herzig.pkl
+/heuristic_matrix_bugginess-train.pkl
+/heuristic_matrix_1151-commits.pkl
+/heuristic_matrix_berger.pkl
+/heuristic_matrix_herzig.pkl

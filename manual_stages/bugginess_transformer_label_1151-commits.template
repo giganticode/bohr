@@ -2,7 +2,7 @@
 
 -d classifiers/bugginess-transformer/run.py
 -d classifiers/bugginess-transformer/label.sh
--d data/bugginess/test/1151-commits.csv
+-d data/1151-commits.csv
 -d models/config.json
 -d models/merges.txt
 -d models/pytorch_model.bin
@@ -14,4 +14,4 @@
 
 -M metrics/bugginess/transformer/1151-commits/assigned_labels.csv
 
-bash classifiers/bugginess-transformer/label.sh data/bugginess/test/1151-commits.csv metrics/bugginess/transformer/1151-commits
+bash classifiers/bugginess-transformer/label.sh data/bugginess/1151-commits.csv metrics/bugginess/transformer/1151-commits

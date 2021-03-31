@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: debugging
-        run: ls metrics/smells/heuristics.smells/heuristic_metrics_smells-test.json
+        run: md5sum metrics/smells/heuristics.smells/heuristic_metrics_smells-test.json
       - name: setup-bohr
         run: |
           bin/setup-bohr.sh $SOFTWARE_DIR

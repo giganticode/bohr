@@ -38,6 +38,7 @@ jobs:
           cat .dvc/config
       - name: repro
         run: |
+          bohr repro --only-transient
           bohr repro
       - name: Commit files
         run: |

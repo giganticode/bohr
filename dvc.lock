@@ -65,7 +65,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/smells/heuristics.smells/heuristic_matrix_smells-test.pkl
       md5: 143760b1cdf4c422a3430c583345337c
@@ -105,7 +105,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/smells/heuristics.smells/heuristic_matrix_smells-train.pkl
       md5: 5e0fb0ce062af88c8d2b5360948bb3c9
@@ -124,7 +124,7 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/smells/analysis_smells-test.csv
       md5: 0e9a0cb4bca25888a4c21bb79dd903fc
@@ -169,7 +169,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_1151-commits.pkl
       md5: cde4712cd3c7d97a01d472a96001655f
@@ -207,7 +207,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_berger.pkl
       md5: e0369bc6d68aa85165b5a13925542d15
@@ -247,7 +247,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_bugginess-train.pkl
       md5: 5d1c71dcd36417356cabe2e340ca959d
@@ -274,7 +274,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_herzig.pkl
       md5: 7e673c0cce8687903d67a529058bc0ae
@@ -299,7 +299,7 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/analysis_1151-commits.csv
       md5: 6b7c650110d6563e65fa473d1fddf74e
@@ -375,14 +375,14 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/bugginess/label_model.pkl
-      md5: a9d28b37f03afd2a6707883d1aef59bb
-      size: 1863254
+      md5: 7f006e11a06666c47122a84d3f5ee028
+      size: 1863228
     - path: metrics/bugginess/label_model_metrics.json
-      md5: 4f2435c38627fe75008dfd443b06c4b8
-      size: 232
+      md5: ce75725f6f751f219e48b1880d2416a8
+      size: 431
   bugginess_label_dataset_herzig:
     cmd: bohr label-dataset bugginess herzig
     deps:
@@ -393,11 +393,11 @@ stages:
       md5: ac1c03e92d33c156152e5c0fcd965423
       size: 12608796
     - path: generated/bugginess/label_model.pkl
-      md5: a9d28b37f03afd2a6707883d1aef59bb
-      size: 1863254
+      md5: 7f006e11a06666c47122a84d3f5ee028
+      size: 1863228
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/herzig.labeled.csv
       md5: c84027461f11241ec6294d136b5b9eed
@@ -416,14 +416,14 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: generated/smells/label_model.pkl
-      md5: a39df10ded0095833672730c79461bbf
-      size: 4916
+      md5: 60fc679de0332e0ef866ff2c31b9a5bb
+      size: 4890
     - path: metrics/smells/label_model_metrics.json
-      md5: 21749d164c1e6c3d590f35465b488bbc
-      size: 84
+      md5: 8982bcbb2ce25ea92593c9e844107f7d
+      size: 155
   smells_label_dataset_smells-train:
     cmd: bohr label-dataset smells smells-train
     deps:
@@ -434,11 +434,11 @@ stages:
       md5: d353c8b3bbcec3442b88fa4e64056d68
       size: 14312
     - path: generated/smells/label_model.pkl
-      md5: a39df10ded0095833672730c79461bbf
-      size: 4916
+      md5: 60fc679de0332e0ef866ff2c31b9a5bb
+      size: 4890
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/smells-train.labeled.csv
       md5: d33b91c10a14f2ee2b784fd882153c5c
@@ -453,11 +453,11 @@ stages:
       md5: 03cfd9383f0463c0be0c15d54690b8ab
       size: 4230
     - path: generated/smells/label_model.pkl
-      md5: a39df10ded0095833672730c79461bbf
-      size: 4916
+      md5: 60fc679de0332e0ef866ff2c31b9a5bb
+      size: 4890
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/smells-test.labeled.csv
       md5: fc7c76d237aeb7f9900359ab625c27f7
@@ -473,11 +473,11 @@ stages:
       md5: d9141b7bf8b3eb25cf3e90490acbb812
       size: 500879984
     - path: generated/bugginess/label_model.pkl
-      md5: a9d28b37f03afd2a6707883d1aef59bb
-      size: 1863254
+      md5: 7f006e11a06666c47122a84d3f5ee028
+      size: 1863228
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/bugginess-train.labeled.csv
       md5: bfe4ac306c08f7188e094acc20e1ff03
@@ -492,11 +492,11 @@ stages:
       md5: 7842af0b57b43d1557796fe07a23cf13
       size: 2792588
     - path: generated/bugginess/label_model.pkl
-      md5: a9d28b37f03afd2a6707883d1aef59bb
-      size: 1863254
+      md5: 7f006e11a06666c47122a84d3f5ee028
+      size: 1863228
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/1151-commits.labeled.csv
       md5: 70250f3b3489aed05065c35a0b859c00
@@ -511,11 +511,11 @@ stages:
       md5: e9396acb35a49d225aadb0c22f1c64f9
       size: 917772
     - path: generated/bugginess/label_model.pkl
-      md5: a9d28b37f03afd2a6707883d1aef59bb
-      size: 1863254
+      md5: 7f006e11a06666c47122a84d3f5ee028
+      size: 1863228
     params:
       bohr.json:
-        bohr_framework_version: 0.3.9
+        bohr_framework_version: 0.4.0
     outs:
     - path: labeled-datasets/berger.labeled.csv
       md5: 1093d51fa04c97caa03f9e46a00f6bd5

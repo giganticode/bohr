@@ -250,11 +250,45 @@ stages:
     metrics:
     - metrics/smells/heuristics.smells/heuristic_metrics_smells-test.json:
         cache: false
+  smells_apply_heuristics__heuristics_test__smells-train:
+    cmd: bohr apply-heuristics smells --heuristic-group heuristics.test --dataset
+      smells-train
+    deps:
+    - data/smells/train.csv
+    - heuristics/keywords
+    - heuristics/test.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/smells/heuristics.test/heuristic_matrix_smells-train.pkl
+    metrics:
+    - metrics/smells/heuristics.test/heuristic_metrics_smells-train.json:
+        cache: false
+  smells_apply_heuristics__heuristics_test__smells-test:
+    cmd: bohr apply-heuristics smells --heuristic-group heuristics.test --dataset
+      smells-test
+    deps:
+    - data/smells/test.csv
+    - heuristics/keywords
+    - heuristics/test.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/smells/heuristics.test/heuristic_matrix_smells-test.pkl
+    metrics:
+    - metrics/smells/heuristics.test/heuristic_metrics_smells-test.json:
+        cache: false
   smells_combine_heuristics:
     cmd: bohr apply-heuristics smells
     deps:
     - generated/smells/heuristics.smells/heuristic_matrix_smells-test.pkl
     - generated/smells/heuristics.smells/heuristic_matrix_smells-train.pkl
+    - generated/smells/heuristics.test/heuristic_matrix_smells-test.pkl
+    - generated/smells/heuristics.test/heuristic_matrix_smells-train.pkl
     params:
     - bohr.json:
       - bohr_framework_version
@@ -310,17 +344,6 @@ stages:
       - bohr_framework_version
     outs:
     - labeled-datasets/smells-test.labeled.csv
-  bugginess_combine_labels_1151-commits:
-    cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/1151-commits.labeled.csv
-      metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/1151-commits.labeled.both.csv
-      && echo "labeled-datasets/1151-commits.labeled.both.csv" >> .gitignore
-    deps:
-    - classifiers/bugginess-transformer/combine_labels.py
-    - labeled-datasets/1151-commits.labeled.csv
-    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv
-    outs:
-    - labeled-datasets/1151-commits.labeled.both.csv:
-        cache: false
   bugginess_transformer_test_herzig:
     cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/herzig.csv
       metrics/bugginess/transformer/herzig
@@ -338,24 +361,6 @@ stages:
     - requirements.txt
     metrics:
     - metrics/bugginess/transformer/herzig/eval_results.txt:
-        cache: false
-  bugginess_transformer_test_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/1151-commits.csv
-      metrics/bugginess/transformer/1151-commits
-    deps:
-    - classifiers/bugginess-transformer/run.py
-    - classifiers/bugginess-transformer/test.sh
-    - data/1151-commits.csv
-    - models/config.json
-    - models/merges.txt
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json
-    - models/tokenizer_config.json
-    - models/training_args.bin
-    - models/vocab.json
-    - requirements.txt
-    metrics:
-    - metrics/bugginess/transformer/1151-commits/eval_results.txt:
         cache: false
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
@@ -412,4 +417,33 @@ stages:
     - requirements.txt
     metrics:
     - metrics/bugginess/transformer/berger/eval_results.txt:
+        cache: false
+  bugginess_combine_labels_1151-commits:
+    cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/1151-commits.labeled.csv
+      metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/1151-commits.labeled.both.csv
+      && echo "labeled-datasets/1151-commits.labeled.both.csv" >> .gitignore
+    deps:
+    - classifiers/bugginess-transformer/combine_labels.py
+    - labeled-datasets/1151-commits.labeled.csv
+    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv
+    outs:
+    - labeled-datasets/1151-commits.labeled.both.csv:
+        cache: false
+  bugginess_transformer_test_1151-commits:
+    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/1151-commits.csv
+      metrics/bugginess/transformer/1151-commits
+    deps:
+    - classifiers/bugginess-transformer/run.py
+    - classifiers/bugginess-transformer/test.sh
+    - data/1151-commits.csv
+    - models/config.json
+    - models/merges.txt
+    - models/pytorch_model.bin
+    - models/special_tokens_map.json
+    - models/tokenizer_config.json
+    - models/training_args.bin
+    - models/vocab.json
+    - requirements.txt
+    metrics:
+    - metrics/bugginess/transformer/1151-commits/eval_results.txt:
         cache: false

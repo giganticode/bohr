@@ -1,21 +1,27 @@
 {
     "Conflicts": {
         "long_method": 0.0,
+        "long_method_test": 0.0,
         "many_indentation_levels": 0.0,
         "many_indentation_levels2": 0.0
     },
     "Coverage": {
         "long_method": 0.4822064056939502,
+        "long_method_test": 0.5854092526690391,
         "many_indentation_levels": 0.11387900355871886,
         "many_indentation_levels2": 0.042704626334519574
     },
     "Overlaps": {
-        "long_method": 0.11387900355871886,
+        "long_method": 0.4822064056939502,
+        "long_method_test": 0.4822064056939502,
         "many_indentation_levels": 0.11387900355871886,
         "many_indentation_levels2": 0.042704626334519574
     },
     "Polarity": {
         "long_method": [
+            1
+        ],
+        "long_method_test": [
             1
         ],
         "many_indentation_levels": [

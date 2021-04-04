@@ -85,7 +85,8 @@
     },
     "heuristics": {
         "heuristics/bugginess.py": "9f9ea19cd5c53bbbd41f94cf7b8f3d14",
-        "heuristics/smells.py": "a2254c51be33d4ede33baab98ba18b09"
+        "heuristics/smells.py": "a2254c51be33d4ede33baab98ba18b09",
+        "heuristics/test.py": "488b04a023eb2e55c094bf9e6320b6e0"
     },
     "manual_stages": {
         "manual_stages/bugginess_combine_labels_1151-commits.template": "e73cfa871a5293629b2a93261e6ef881",

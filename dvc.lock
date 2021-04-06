@@ -375,14 +375,14 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.4.1
+        bohr_framework_version: 0.4.2-rc
     outs:
     - path: generated/bugginess/label_model.pkl
-      md5: 2be3d8ac598f3d00f442e8dbe0799fb7
-      size: 1863254
+      md5: 7c4415756be60b63d9cc18f37467108b
+      size: 1863228
     - path: generated/bugginess/label_model_weights.csv
-      md5: 58312bdb15310c07c785fee1ccfb1542
-      size: 19969
+      md5: 34139795e4e84f4dadcb3f13dedbfd3c
+      size: 19983
     - path: metrics/bugginess/label_model_metrics.json
       md5: ce75725f6f751f219e48b1880d2416a8
       size: 431
@@ -419,14 +419,14 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.4.1
+        bohr_framework_version: 0.4.2-rc
     outs:
     - path: generated/smells/label_model.pkl
-      md5: d32370e6b3e10028887d8166dda150d5
-      size: 4916
+      md5: 4295b166b35325351e6b869c78b91c10
+      size: 4890
     - path: generated/smells/label_model_weights.csv
-      md5: 88687717057b1e3aaa059b5682e15a67
-      size: 165
+      md5: ee5dcfe72e30c40c8ba6a56fd5a6219a
+      size: 179
     - path: metrics/smells/label_model_metrics.json
       md5: 8982bcbb2ce25ea92593c9e844107f7d
       size: 155

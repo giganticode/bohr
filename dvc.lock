@@ -375,14 +375,14 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.4.2-rc
+        bohr_framework_version: 0.4.1
     outs:
     - path: generated/bugginess/label_model.pkl
-      md5: 7c4415756be60b63d9cc18f37467108b
+      md5: a6fab35bb7885599a75794b534b0515e
       size: 1863228
     - path: generated/bugginess/label_model_weights.csv
-      md5: 34139795e4e84f4dadcb3f13dedbfd3c
-      size: 19983
+      md5: 58312bdb15310c07c785fee1ccfb1542
+      size: 19969
     - path: metrics/bugginess/label_model_metrics.json
       md5: ce75725f6f751f219e48b1880d2416a8
       size: 431
@@ -396,8 +396,8 @@ stages:
       md5: ac1c03e92d33c156152e5c0fcd965423
       size: 12608796
     - path: generated/bugginess/label_model.pkl
-      md5: 2be3d8ac598f3d00f442e8dbe0799fb7
-      size: 1863254
+      md5: a6fab35bb7885599a75794b534b0515e
+      size: 1863228
     params:
       bohr.json:
         bohr_framework_version: 0.4.1
@@ -419,14 +419,14 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.4.2-rc
+        bohr_framework_version: 0.4.1
     outs:
     - path: generated/smells/label_model.pkl
-      md5: 4295b166b35325351e6b869c78b91c10
+      md5: 526c45f62c0618876a67817f2c333164
       size: 4890
     - path: generated/smells/label_model_weights.csv
-      md5: ee5dcfe72e30c40c8ba6a56fd5a6219a
-      size: 179
+      md5: 88687717057b1e3aaa059b5682e15a67
+      size: 165
     - path: metrics/smells/label_model_metrics.json
       md5: 8982bcbb2ce25ea92593c9e844107f7d
       size: 155
@@ -440,8 +440,8 @@ stages:
       md5: d353c8b3bbcec3442b88fa4e64056d68
       size: 14312
     - path: generated/smells/label_model.pkl
-      md5: d32370e6b3e10028887d8166dda150d5
-      size: 4916
+      md5: 526c45f62c0618876a67817f2c333164
+      size: 4890
     params:
       bohr.json:
         bohr_framework_version: 0.4.1
@@ -459,8 +459,8 @@ stages:
       md5: 03cfd9383f0463c0be0c15d54690b8ab
       size: 4230
     - path: generated/smells/label_model.pkl
-      md5: d32370e6b3e10028887d8166dda150d5
-      size: 4916
+      md5: 526c45f62c0618876a67817f2c333164
+      size: 4890
     params:
       bohr.json:
         bohr_framework_version: 0.4.1
@@ -479,8 +479,8 @@ stages:
       md5: d9141b7bf8b3eb25cf3e90490acbb812
       size: 500879984
     - path: generated/bugginess/label_model.pkl
-      md5: 2be3d8ac598f3d00f442e8dbe0799fb7
-      size: 1863254
+      md5: a6fab35bb7885599a75794b534b0515e
+      size: 1863228
     params:
       bohr.json:
         bohr_framework_version: 0.4.1
@@ -498,8 +498,8 @@ stages:
       md5: 7842af0b57b43d1557796fe07a23cf13
       size: 2792588
     - path: generated/bugginess/label_model.pkl
-      md5: 2be3d8ac598f3d00f442e8dbe0799fb7
-      size: 1863254
+      md5: a6fab35bb7885599a75794b534b0515e
+      size: 1863228
     params:
       bohr.json:
         bohr_framework_version: 0.4.1
@@ -517,8 +517,8 @@ stages:
       md5: e9396acb35a49d225aadb0c22f1c64f9
       size: 917772
     - path: generated/bugginess/label_model.pkl
-      md5: 2be3d8ac598f3d00f442e8dbe0799fb7
-      size: 1863254
+      md5: a6fab35bb7885599a75794b534b0515e
+      size: 1863228
     params:
       bohr.json:
         bohr_framework_version: 0.4.1

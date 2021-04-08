@@ -1,4 +1,4 @@
-heuristic_name,00,01,10,11
+,00,01,10,11
 github_ref_in_message,1e-06,1e-06,1e-06,0.0013576658
 version_in_message,0.023453902,0.008381513,1e-06,1e-06
 bug_issue_body_keyword_bad,1e-06,1e-06,1e-06,0.010259415

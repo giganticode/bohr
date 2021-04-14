@@ -110,10 +110,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - name: install-dvc
+      - name: setup-dvc
         run: |
-          BOHR_VERSION="$(bash bin/bohr-version.sh)"
-          pip install "dvc[all]==$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/v$BOHR_VERSION/DVC_VERSION)"
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
           dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD

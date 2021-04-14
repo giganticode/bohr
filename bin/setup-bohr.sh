@@ -23,9 +23,6 @@ pip install Cython==0.29.21
 export SKLEARN_NO_OPENMP=1
 pip install git+https://github.com/giganticode/bohr-framework@v$BOHR_VERSION
 
-DVC_VERSION="$(curl -L https://raw.githubusercontent.com/giganticode/bohr-framework/v$BOHR_VERSION/DVC_VERSION)"
-echo "Installing dvc version $DVC_VERSION..."
-pip install "dvc[all]==$DVC_VERSION"
 dvc config core.check_update false
 
 bash tools/install-refactoring-miner $SOFTWARE_DIR

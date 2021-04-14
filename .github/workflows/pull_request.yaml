@@ -49,7 +49,8 @@ jobs:
       - name: Push to dvc
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-        run:
+        run: |
+          pip install 'dvc[gdrive]'
           dvc push -r gdrive
       - name: Clean up dvc remote
         env:

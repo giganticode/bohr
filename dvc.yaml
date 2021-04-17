@@ -72,6 +72,8 @@ stages:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
       200k-commits
     deps:
+    - data/200k-commits-files.csv
+    - data/200k-commits-issues.csv
     - data/200k-commits.csv
     - heuristics/bugginess.py
     - heuristics/keywords

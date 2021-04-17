@@ -169,7 +169,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.2
+        bohr_framework_version: 0.4.3-rc
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_1151-commits.pkl
       md5: cde4712cd3c7d97a01d472a96001655f
@@ -745,3 +745,14 @@ stages:
     - path: labeled-datasets/1151-commits.labeled.both.csv
       md5: f4d459e7b167fb0197dc49483eb2d2af
       size: 366721
+  preprocess_200k-commits:
+    cmd: cp downloaded-data/200k-commits.csv data && echo "data/200k-commits.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - path: downloaded-data/200k-commits.csv
+      md5: 582037a749ed69771b87d7fc86ae04b8
+      size: 58465759
+    outs:
+    - path: data/200k-commits.csv
+      md5: 582037a749ed69771b87d7fc86ae04b8
+      size: 58465759

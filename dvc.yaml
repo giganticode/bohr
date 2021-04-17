@@ -23,13 +23,29 @@ stages:
     outs:
     - data/1151-commits.csv:
         cache: false
-  preprocess_bugginess-train:
-    cmd: 7z x downloaded-data/bugginess_train.7z -odata/bugginess_train && echo "data/bugginess_train"
+  preprocess_200k-commits:
+    cmd: cp downloaded-data/200k-commits.csv data && echo "data/200k-commits.csv"
       >> .gitignore && git add .gitignore
     deps:
-    - downloaded-data/bugginess_train.7z
+    - downloaded-data/200k-commits.csv
     outs:
-    - data/bugginess_train:
+    - data/200k-commits.csv:
+        cache: false
+  preprocess_200k-commits-issues:
+    cmd: cp downloaded-data/200k-commits-issues.csv data && echo "data/200k-commits-issues.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - downloaded-data/200k-commits-issues.csv
+    outs:
+    - data/200k-commits-issues.csv:
+        cache: false
+  preprocess_200k-commits-files:
+    cmd: 7z x downloaded-data/200k-commits-files.csv.7z -odata && echo "data/200k-commits-files.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - downloaded-data/200k-commits-files.csv.7z
+    outs:
+    - data/200k-commits-files.csv:
         cache: false
   preprocess_smells-train:
     cmd: data-preprocessing/smells.sh
@@ -52,11 +68,13 @@ stages:
     outs:
     - labels.py:
         cache: false
-  bugginess_apply_heuristics__heuristics_bugginess__bugginess-train:
+  bugginess_apply_heuristics__heuristics_bugginess__200k-commits:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
-      bugginess-train
+      200k-commits
     deps:
-    - data/bugginess_train
+    - data/200k-commits-files.csv
+    - data/200k-commits-issues.csv
+    - data/200k-commits.csv
     - heuristics/bugginess.py
     - heuristics/keywords
     - labels.py
@@ -64,9 +82,9 @@ stages:
     - bohr.json:
       - bohr_framework_version
     outs:
-    - generated/bugginess/heuristics.bugginess/heuristic_matrix_bugginess-train.pkl
+    - generated/bugginess/heuristics.bugginess/heuristic_matrix_200k-commits.pkl
     metrics:
-    - metrics/bugginess/heuristics.bugginess/heuristic_metrics_bugginess-train.json:
+    - metrics/bugginess/heuristics.bugginess/heuristic_metrics_200k-commits.json:
         cache: false
   bugginess_apply_heuristics__heuristics_bugginess__1151-commits:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
@@ -120,8 +138,8 @@ stages:
     cmd: bohr apply-heuristics bugginess
     deps:
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_1151-commits.pkl
+    - generated/bugginess/heuristics.bugginess/heuristic_matrix_200k-commits.pkl
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristics.bugginess/heuristic_matrix_bugginess-train.pkl
     - generated/bugginess/heuristics.bugginess/heuristic_matrix_herzig.pkl
     params:
     - bohr.json:
@@ -129,42 +147,42 @@ stages:
     outs:
     - generated/bugginess/analysis_1151-commits.csv:
         cache: false
-    - generated/bugginess/analysis_berger.csv:
+    - generated/bugginess/analysis_200k-commits.csv:
         cache: false
-    - generated/bugginess/analysis_bugginess-train.csv:
+    - generated/bugginess/analysis_berger.csv:
         cache: false
     - generated/bugginess/analysis_herzig.csv:
         cache: false
     - generated/bugginess/heuristic_matrix_1151-commits.pkl
+    - generated/bugginess/heuristic_matrix_200k-commits.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_bugginess-train.pkl
     - generated/bugginess/heuristic_matrix_herzig.pkl
     metrics:
     - metrics/bugginess/analysis_1151-commits.json:
         cache: false
-    - metrics/bugginess/analysis_berger.json:
+    - metrics/bugginess/analysis_200k-commits.json:
         cache: false
-    - metrics/bugginess/analysis_bugginess-train.json:
+    - metrics/bugginess/analysis_berger.json:
         cache: false
     - metrics/bugginess/analysis_herzig.json:
         cache: false
     - metrics/bugginess/heuristic_metrics_1151-commits.json:
         cache: false
-    - metrics/bugginess/heuristic_metrics_berger.json:
+    - metrics/bugginess/heuristic_metrics_200k-commits.json:
         cache: false
-    - metrics/bugginess/heuristic_metrics_bugginess-train.json:
+    - metrics/bugginess/heuristic_metrics_berger.json:
         cache: false
     - metrics/bugginess/heuristic_metrics_herzig.json:
         cache: false
   bugginess_train_label_model:
-    cmd: bohr train-label-model bugginess bugginess-train
+    cmd: bohr train-label-model bugginess 200k-commits
     deps:
     - data/1151-commits.csv
     - data/berger.csv
     - data/herzig.csv
     - generated/bugginess/heuristic_matrix_1151-commits.pkl
+    - generated/bugginess/heuristic_matrix_200k-commits.pkl
     - generated/bugginess/heuristic_matrix_berger.pkl
-    - generated/bugginess/heuristic_matrix_bugginess-train.pkl
     - generated/bugginess/heuristic_matrix_herzig.pkl
     params:
     - bohr.json:
@@ -176,17 +194,17 @@ stages:
     metrics:
     - metrics/bugginess/label_model_metrics.json:
         cache: false
-  bugginess_label_dataset_bugginess-train:
-    cmd: bohr label-dataset bugginess bugginess-train
+  bugginess_label_dataset_200k-commits:
+    cmd: bohr label-dataset bugginess 200k-commits
     deps:
-    - data/bugginess_train
-    - generated/bugginess/heuristic_matrix_bugginess-train.pkl
+    - data/200k-commits.csv
+    - generated/bugginess/heuristic_matrix_200k-commits.pkl
     - generated/bugginess/label_model.pkl
     params:
     - bohr.json:
       - bohr_framework_version
     outs:
-    - labeled-datasets/bugginess-train.labeled.csv
+    - labeled-datasets/200k-commits.labeled.csv
   bugginess_label_dataset_1151-commits:
     cmd: bohr label-dataset bugginess 1151-commits
     deps:
@@ -314,106 +332,3 @@ stages:
       - bohr_framework_version
     outs:
     - labeled-datasets/smells-test.labeled.csv
-  bugginess_transformer_test_herzig:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/herzig.csv
-      metrics/bugginess/transformer/herzig
-    deps:
-    - classifiers/bugginess-transformer/run.py
-    - classifiers/bugginess-transformer/test.sh
-    - data/herzig.csv
-    - models/config.json
-    - models/merges.txt
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json
-    - models/tokenizer_config.json
-    - models/training_args.bin
-    - models/vocab.json
-    - requirements.txt
-    metrics:
-    - metrics/bugginess/transformer/herzig/eval_results.txt:
-        cache: false
-  bugginess_transformer_train:
-    cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
-    deps:
-    - classifiers/bugginess-transformer/run.py
-    - classifiers/bugginess-transformer/train.sh
-    - labeled-datasets/bugginess-train.labeled.csv
-    - requirements.txt
-    outs:
-    - models/config.json:
-        cache: false
-    - models/merges.txt:
-        cache: false
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json:
-        cache: false
-    - models/tokenizer_config.json:
-        cache: false
-    - models/training_args.bin
-    - models/vocab.json:
-        cache: false
-  bugginess_transformer_label_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/label.sh data/bugginess/1151-commits.csv
-      metrics/bugginess/transformer/1151-commits
-    deps:
-    - classifiers/bugginess-transformer/label.sh
-    - classifiers/bugginess-transformer/run.py
-    - data/1151-commits.csv
-    - models/config.json
-    - models/merges.txt
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json
-    - models/tokenizer_config.json
-    - models/training_args.bin
-    - models/vocab.json
-    - requirements.txt
-    metrics:
-    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv:
-        cache: false
-  bugginess_transformer_test_berger:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/berger.csv
-      metrics/bugginess/transformer/berger
-    deps:
-    - classifiers/bugginess-transformer/run.py
-    - classifiers/bugginess-transformer/test.sh
-    - data/berger.csv
-    - models/config.json
-    - models/merges.txt
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json
-    - models/tokenizer_config.json
-    - models/training_args.bin
-    - models/vocab.json
-    - requirements.txt
-    metrics:
-    - metrics/bugginess/transformer/berger/eval_results.txt:
-        cache: false
-  bugginess_combine_labels_1151-commits:
-    cmd: python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/1151-commits.labeled.csv
-      metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/1151-commits.labeled.both.csv
-      && echo "labeled-datasets/1151-commits.labeled.both.csv" >> .gitignore
-    deps:
-    - classifiers/bugginess-transformer/combine_labels.py
-    - labeled-datasets/1151-commits.labeled.csv
-    - metrics/bugginess/transformer/1151-commits/assigned_labels.csv
-    outs:
-    - labeled-datasets/1151-commits.labeled.both.csv:
-        cache: false
-  bugginess_transformer_test_1151-commits:
-    cmd: bash classifiers/bugginess-transformer/test.sh data/bugginess/1151-commits.csv
-      metrics/bugginess/transformer/1151-commits
-    deps:
-    - classifiers/bugginess-transformer/run.py
-    - classifiers/bugginess-transformer/test.sh
-    - data/1151-commits.csv
-    - models/config.json
-    - models/merges.txt
-    - models/pytorch_model.bin
-    - models/special_tokens_map.json
-    - models/tokenizer_config.json
-    - models/training_args.bin
-    - models/vocab.json
-    - requirements.txt
-    metrics:
-    - metrics/bugginess/transformer/1151-commits/eval_results.txt:
-        cache: false

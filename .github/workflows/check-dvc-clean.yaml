@@ -16,6 +16,7 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
+      PYTHONPATH: ''
     steps:
       - name: update-git
         run: |
@@ -32,7 +33,6 @@ jobs:
         run: |
           bin/setup-bohr.sh $SOFTWARE_DIR
           which bohr
-          echo "$PYTHONPATH"
           bohr --version
           dvc --version
           dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME

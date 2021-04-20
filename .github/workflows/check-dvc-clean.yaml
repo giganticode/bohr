@@ -16,7 +16,7 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: ''
+      PYTHONPATH: '/usr/src/bohr'
     steps:
       - name: update-git
         run: |

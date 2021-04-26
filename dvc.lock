@@ -5,23 +5,23 @@ stages:
       >> .gitignore && git add .gitignore
     deps:
     - path: downloaded-data/1151-commits.csv
-      md5: 7b32f404edf5982eb4c5f51b956663c4
-      size: 341651
+      md5: dd000fe19ba4aac9efa3a3856e2acc5e
+      size: 346306
     outs:
     - path: data/1151-commits.csv
-      md5: 7b32f404edf5982eb4c5f51b956663c4
-      size: 341651
+      md5: dd000fe19ba4aac9efa3a3856e2acc5e
+      size: 346306
   preprocess_herzig:
     cmd: cp downloaded-data/herzig.csv data && echo "data/herzig.csv" >> .gitignore
       && git add .gitignore
     deps:
     - path: downloaded-data/herzig.csv
-      md5: 279936268f488e1e613f81a537f29055
-      size: 1458311
+      md5: 69a17c08643aed84b874384a2a57c7ed
+      size: 1483281
     outs:
     - path: data/herzig.csv
-      md5: 279936268f488e1e613f81a537f29055
-      size: 1458311
+      md5: 69a17c08643aed84b874384a2a57c7ed
+      size: 1483281
   preprocess_smells-test:
     cmd: data-preprocessing/smells.sh
     deps:
@@ -65,7 +65,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/smells/heuristics.smells/heuristic_matrix_smells-test.pkl
       md5: 143760b1cdf4c422a3430c583345337c
@@ -105,7 +105,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/smells/heuristics.smells/heuristic_matrix_smells-train.pkl
       md5: 5e0fb0ce062af88c8d2b5360948bb3c9
@@ -124,7 +124,7 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/smells/analysis_smells-test.csv
       md5: 0e9a0cb4bca25888a4c21bb79dd903fc
@@ -155,8 +155,8 @@ stages:
       1151-commits
     deps:
     - path: data/1151-commits.csv
-      md5: 7b32f404edf5982eb4c5f51b956663c4
-      size: 341651
+      md5: dd000fe19ba4aac9efa3a3856e2acc5e
+      size: 346306
     - path: heuristics/bugginess.py
       md5: 9f9ea19cd5c53bbbd41f94cf7b8f3d14
       size: 2873
@@ -169,7 +169,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_1151-commits.pkl
       md5: cde4712cd3c7d97a01d472a96001655f
@@ -182,19 +182,19 @@ stages:
       && git add .gitignore
     deps:
     - path: downloaded-data/berger.csv
-      md5: 71b9738db6cb47e3af599da316e3b570
-      size: 60847
+      md5: 126de41c9204a9e807e72406b1f9d631
+      size: 62247
     outs:
     - path: data/berger.csv
-      md5: 71b9738db6cb47e3af599da316e3b570
-      size: 60847
+      md5: 126de41c9204a9e807e72406b1f9d631
+      size: 62247
   bugginess_apply_heuristics__heuristics_bugginess__berger:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
       berger
     deps:
     - path: data/berger.csv
-      md5: 71b9738db6cb47e3af599da316e3b570
-      size: 60847
+      md5: 126de41c9204a9e807e72406b1f9d631
+      size: 62247
     - path: heuristics/bugginess.py
       md5: 9f9ea19cd5c53bbbd41f94cf7b8f3d14
       size: 2873
@@ -207,7 +207,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_berger.pkl
       md5: e0369bc6d68aa85165b5a13925542d15
@@ -260,8 +260,8 @@ stages:
       herzig
     deps:
     - path: data/herzig.csv
-      md5: 279936268f488e1e613f81a537f29055
-      size: 1458311
+      md5: 69a17c08643aed84b874384a2a57c7ed
+      size: 1483281
     - path: heuristics/bugginess.py
       md5: 9f9ea19cd5c53bbbd41f94cf7b8f3d14
       size: 2873
@@ -274,7 +274,7 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_herzig.pkl
       md5: 7e673c0cce8687903d67a529058bc0ae
@@ -289,7 +289,7 @@ stages:
       md5: cde4712cd3c7d97a01d472a96001655f
       size: 2792588
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_200k-commits.pkl
-      md5: a8800b47bbb14ec3d660f0cd61d64597
+      md5: 3b0095ef23128632b37ad4c3fe77a9fa
       size: 498669344
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_berger.pkl
       md5: e0369bc6d68aa85165b5a13925542d15
@@ -299,14 +299,14 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/analysis_1151-commits.csv
       md5: 6b7c650110d6563e65fa473d1fddf74e
       size: 23875
     - path: generated/bugginess/analysis_200k-commits.csv
-      md5: 97b7c2eda05627bc2f33edddd02500c6
-      size: 22039
+      md5: 562d19c1ec7fc8c104a0637964f30fc0
+      size: 29078
     - path: generated/bugginess/analysis_berger.csv
       md5: d1f3ec4548db935ec62e5a17f3dbf618
       size: 21262
@@ -317,7 +317,7 @@ stages:
       md5: 7842af0b57b43d1557796fe07a23cf13
       size: 2792588
     - path: generated/bugginess/heuristic_matrix_200k-commits.pkl
-      md5: 7e9395c955393b57764871c6265462d3
+      md5: 6d901c419b412619a8a823342eab20b5
       size: 498669344
     - path: generated/bugginess/heuristic_matrix_berger.pkl
       md5: e9396acb35a49d225aadb0c22f1c64f9
@@ -329,8 +329,8 @@ stages:
       md5: c72120d3d7a8d250c07180af057a667c
       size: 107877
     - path: metrics/bugginess/analysis_200k-commits.json
-      md5: a13075e77b78223dc45d00bc77df2cd2
-      size: 66938
+      md5: 4d5b836a6c07d1dd1dd545b59096c757
+      size: 76903
     - path: metrics/bugginess/analysis_berger.json
       md5: b447290a7685292b52b053dbbd4f3782
       size: 104758
@@ -341,7 +341,7 @@ stages:
       md5: b96cb136399ae3adae98d63b9f2cfb27
       size: 72
     - path: metrics/bugginess/heuristic_metrics_200k-commits.json
-      md5: 65f1ed90fb829c6883f366312299fce4
+      md5: 922c7e1d372e5398d519eb9afd2fb2ee
       size: 32
     - path: metrics/bugginess/heuristic_metrics_berger.json
       md5: 550545961be81184af6f7287900a4ac2
@@ -353,19 +353,19 @@ stages:
     cmd: bohr train-label-model bugginess 200k-commits
     deps:
     - path: data/1151-commits.csv
-      md5: 7b32f404edf5982eb4c5f51b956663c4
-      size: 341651
+      md5: dd000fe19ba4aac9efa3a3856e2acc5e
+      size: 346306
     - path: data/berger.csv
-      md5: 71b9738db6cb47e3af599da316e3b570
-      size: 60847
+      md5: 126de41c9204a9e807e72406b1f9d631
+      size: 62247
     - path: data/herzig.csv
-      md5: 279936268f488e1e613f81a537f29055
-      size: 1458311
+      md5: 69a17c08643aed84b874384a2a57c7ed
+      size: 1483281
     - path: generated/bugginess/heuristic_matrix_1151-commits.pkl
       md5: 7842af0b57b43d1557796fe07a23cf13
       size: 2792588
     - path: generated/bugginess/heuristic_matrix_200k-commits.pkl
-      md5: 7e9395c955393b57764871c6265462d3
+      md5: 6d901c419b412619a8a823342eab20b5
       size: 498669344
     - path: generated/bugginess/heuristic_matrix_berger.pkl
       md5: e9396acb35a49d225aadb0c22f1c64f9
@@ -375,36 +375,36 @@ stages:
       size: 12608796
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/label_model.pkl
-      md5: 83a795d5f4ff958be50b15fc99181f20
+      md5: 12cdf0b2c364209a5a2ca50bfe911632
       size: 1863238
     - path: generated/bugginess/label_model_weights.csv
-      md5: 2ebd4497f8062b36b675a3be54a2e390
-      size: 18518
+      md5: 9d8592e7e6d6e91d4d6519f253fca20c
+      size: 19981
     - path: metrics/bugginess/label_model_metrics.json
-      md5: d9c57e523cea70ec8501cce56182351e
-      size: 432
+      md5: 307ec13ed66f549a6f7fac93a62ed047
+      size: 431
   bugginess_label_dataset_herzig:
     cmd: bohr label-dataset bugginess herzig
     deps:
     - path: data/herzig.csv
-      md5: 279936268f488e1e613f81a537f29055
-      size: 1458311
+      md5: 69a17c08643aed84b874384a2a57c7ed
+      size: 1483281
     - path: generated/bugginess/heuristic_matrix_herzig.pkl
       md5: ac1c03e92d33c156152e5c0fcd965423
       size: 12608796
     - path: generated/bugginess/label_model.pkl
-      md5: 83a795d5f4ff958be50b15fc99181f20
+      md5: 12cdf0b2c364209a5a2ca50bfe911632
       size: 1863238
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/herzig.labeled.csv
-      md5: 24e4f90855bb60a5b33a0f9e1e89467b
-      size: 1540118
+      md5: 18368340f7546a8d6cb5c0713bc43a32
+      size: 1539714
   smells_train_label_model:
     cmd: bohr train-label-model smells smells-train
     deps:
@@ -419,13 +419,13 @@ stages:
       size: 14312
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/smells/label_model.pkl
-      md5: 0e7dfc8a9b7bfcc831bf4238f9fc098f
+      md5: c5059db480c6ac8f0b8862f1cd5321a2
       size: 4900
     - path: generated/smells/label_model_weights.csv
-      md5: f51dafff9cfdac77b2d963caf31a27a6
+      md5: ee5dcfe72e30c40c8ba6a56fd5a6219a
       size: 179
     - path: metrics/smells/label_model_metrics.json
       md5: 8982bcbb2ce25ea92593c9e844107f7d
@@ -440,15 +440,15 @@ stages:
       md5: d353c8b3bbcec3442b88fa4e64056d68
       size: 14312
     - path: generated/smells/label_model.pkl
-      md5: 0e7dfc8a9b7bfcc831bf4238f9fc098f
+      md5: c5059db480c6ac8f0b8862f1cd5321a2
       size: 4900
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/smells-train.labeled.csv
-      md5: d33b91c10a14f2ee2b784fd882153c5c
-      size: 305190
+      md5: b3433438369f2ca2276c22cff309631e
+      size: 296121
   smells_label_dataset_smells-test:
     cmd: bohr label-dataset smells smells-test
     deps:
@@ -459,15 +459,15 @@ stages:
       md5: 03cfd9383f0463c0be0c15d54690b8ab
       size: 4230
     - path: generated/smells/label_model.pkl
-      md5: 0e7dfc8a9b7bfcc831bf4238f9fc098f
+      md5: c5059db480c6ac8f0b8862f1cd5321a2
       size: 4900
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/smells-test.labeled.csv
-      md5: fc7c76d237aeb7f9900359ab625c27f7
-      size: 79736
+      md5: fe4a97ad13be96db8f076fda178bf984
+      size: 77279
   bugginess_label_dataset_bugginess-train:
     cmd: bohr label-dataset bugginess bugginess-train
     deps:
@@ -492,40 +492,40 @@ stages:
     cmd: bohr label-dataset bugginess 1151-commits
     deps:
     - path: data/1151-commits.csv
-      md5: 7b32f404edf5982eb4c5f51b956663c4
-      size: 341651
+      md5: dd000fe19ba4aac9efa3a3856e2acc5e
+      size: 346306
     - path: generated/bugginess/heuristic_matrix_1151-commits.pkl
       md5: 7842af0b57b43d1557796fe07a23cf13
       size: 2792588
     - path: generated/bugginess/label_model.pkl
-      md5: 83a795d5f4ff958be50b15fc99181f20
+      md5: 12cdf0b2c364209a5a2ca50bfe911632
       size: 1863238
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/1151-commits.labeled.csv
-      md5: bba7fbc46c8af1ed35017f9e62aa29bb
-      size: 359855
+      md5: e03afc2d330fae995e5d1fe69ddea233
+      size: 359765
   bugginess_label_dataset_berger:
     cmd: bohr label-dataset bugginess berger
     deps:
     - path: data/berger.csv
-      md5: 71b9738db6cb47e3af599da316e3b570
-      size: 60847
+      md5: 126de41c9204a9e807e72406b1f9d631
+      size: 62247
     - path: generated/bugginess/heuristic_matrix_berger.pkl
       md5: e9396acb35a49d225aadb0c22f1c64f9
       size: 917772
     - path: generated/bugginess/label_model.pkl
-      md5: 83a795d5f4ff958be50b15fc99181f20
+      md5: 12cdf0b2c364209a5a2ca50bfe911632
       size: 1863238
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/berger.labeled.csv
-      md5: 257ce429ee776f357ee604489bfc51aa
-      size: 66834
+      md5: 9899cbc1cb51cbe1f7a2cf38e27d4bec
+      size: 66784
   bugginess_transformer_train:
     cmd: bash classifiers/bugginess-transformer/train.sh labeled-data/bugginess.csv
     deps:
@@ -772,22 +772,25 @@ stages:
       >> .gitignore && git add .gitignore
     deps:
     - path: downloaded-data/200k-commits-files.csv.7z
-      md5: 8826d733ae3560fcf6a8f63873d8dc62
-      size: 246736136
+      md5: 56697c21cfd7bba5d0f68dcd0fbd86f0
+      size: 240190210
     outs:
     - path: data/200k-commits-files.csv
-      md5: d9021b1525a97a17cc335991dc0b0eb3
-      size: 2342481846
+      md5: bc989c140c305bed62a5a8b161883d3b
+      size: 2284439219
   bugginess_apply_heuristics__heuristics_bugginess__200k-commits:
     cmd: bohr apply-heuristics bugginess --heuristic-group heuristics.bugginess --dataset
       200k-commits
     deps:
     - path: data/200k-commits-files.csv
-      md5: d9021b1525a97a17cc335991dc0b0eb3
-      size: 2342481846
+      md5: bc989c140c305bed62a5a8b161883d3b
+      size: 2284439219
     - path: data/200k-commits-issues.csv
       md5: da4b0d654f7ce1469857b9171a9647aa
       size: 96908075
+    - path: data/200k-commits-manual-labels.csv
+      md5: 1cd6e6c4b4ced4c18cfc70ec8b60dfae
+      size: 787
     - path: data/200k-commits.csv
       md5: 6ce10284e630c44110ffc483a7bb33df
       size: 71402002
@@ -803,13 +806,13 @@ stages:
       size: 1707
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: generated/bugginess/heuristics.bugginess/heuristic_matrix_200k-commits.pkl
-      md5: a8800b47bbb14ec3d660f0cd61d64597
+      md5: 3b0095ef23128632b37ad4c3fe77a9fa
       size: 498669344
     - path: metrics/bugginess/heuristics.bugginess/heuristic_metrics_200k-commits.json
-      md5: 65f1ed90fb829c6883f366312299fce4
+      md5: 922c7e1d372e5398d519eb9afd2fb2ee
       size: 32
   bugginess_label_dataset_200k-commits:
     cmd: bohr label-dataset bugginess 200k-commits
@@ -818,15 +821,37 @@ stages:
       md5: 6ce10284e630c44110ffc483a7bb33df
       size: 71402002
     - path: generated/bugginess/heuristic_matrix_200k-commits.pkl
-      md5: 7e9395c955393b57764871c6265462d3
+      md5: 6d901c419b412619a8a823342eab20b5
       size: 498669344
     - path: generated/bugginess/label_model.pkl
-      md5: 83a795d5f4ff958be50b15fc99181f20
+      md5: 12cdf0b2c364209a5a2ca50bfe911632
       size: 1863238
     params:
       bohr.json:
-        bohr_framework_version: 0.4.3
+        bohr_framework_version: 0.4.4
     outs:
     - path: labeled-datasets/200k-commits.labeled.csv
-      md5: 1280f1a207d4ebcdb22c31b03eec65b2
-      size: 74639201
+      md5: f8978faa944ef6c417009498eafda7bf
+      size: 73208844
+  preprocess_200k-commits-link-issues:
+    cmd: cp downloaded-data/200k-commits-link-issues.csv data && echo "data/200k-commits-link-issues.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - path: downloaded-data/200k-commits-link-issues.csv
+      md5: f75c8b5c7747abc8c2bd1b3b847dac18
+      size: 3005661
+    outs:
+    - path: data/200k-commits-link-issues.csv
+      md5: f75c8b5c7747abc8c2bd1b3b847dac18
+      size: 3005661
+  preprocess_200k-commits-manual-labels:
+    cmd: cp downloaded-data/200k-commits-manual-labels.csv data && echo "data/200k-commits-manual-labels.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - path: downloaded-data/200k-commits-manual-labels.csv
+      md5: 1cd6e6c4b4ced4c18cfc70ec8b60dfae
+      size: 787
+    outs:
+    - path: data/200k-commits-manual-labels.csv
+      md5: 1cd6e6c4b4ced4c18cfc70ec8b60dfae
+      size: 787

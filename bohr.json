@@ -1,4 +1,4 @@
-{"bohr_framework_version": "0.4.3",
+{"bohr_framework_version": "0.4.4-rc",
   "tasks": {
     "bugginess": {
       "top_artifact": "bohr.artifacts.commit.Commit",
@@ -67,7 +67,9 @@
       "mapper": "bohr.templates.datamappers.issue.IssueMapper",
       "test_set": "false",
       "loader": "csv",
-      "preprocessor": "copy"
+      "preprocessor": "copy",
+      "keep_default_na": false,
+      "dtype": {"labels": "str"}
     },
     "200k-commits-files": {
       "description": "desc",
@@ -76,6 +78,21 @@
       "test_set": "false",
       "loader": "csv",
       "preprocessor": "7z"
+    },
+    "200k-commits-link-issues": {
+      "description": "desc",
+      "path": "200k-commits-link-issues.csv",
+      "test_set": "false",
+      "loader": "csv",
+      "preprocessor": "copy"
+    },
+    "200k-commits-manual-labels": {
+      "description": "desc",
+      "path": "200k-commits-manual-labels.csv",
+      "mapper": "bohr.templates.datamappers.manuallabels.ManualLabelMapper",
+      "test_set": "false",
+      "loader": "csv",
+      "preprocessor": "copy"
     },
     "smells-train": {
       "path": "smells-madeyski.csv",
@@ -96,15 +113,17 @@
       "sep": ";"
     }
   },
-  "dataset-linkers": [{
-    "from": "200k-commits",
-    "to": "200k-commits-issues",
-    "link_file": "commit_to_issues.csv",
-    "linker": "bohr.linkers.l.CommitIssueLinker"
-  }, {
-    "from": "200k-commits",
-    "to": "200k-commits-files",
-    "link_file": "commit_to_files.csv",
-    "linker": "bohr.linkers.l.CommitFileLinker"
-  }]
+  "dataset-linkers": [
+    {
+      "from": "200k-commits",
+      "to": "200k-commits-issues",
+      "link": "200k-commits-link-issues"
+    }, {
+      "from": "200k-commits",
+      "to": "200k-commits-files"
+    }, {
+      "from": "200k-commits",
+      "to": "200k-commits-manual-labels"
+    }
+  ]
 }

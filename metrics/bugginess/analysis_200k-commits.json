@@ -301,6 +301,7 @@
         "bugless_message_keyword_upgrad": 0.0026211494297425364,
         "bugless_message_keyword_version": 0.011623174643165146,
         "github_ref_in_message": 0.0003972906714212347,
+        "manual_labels": 2.4225040940319188e-05,
         "version_in_message": 0.005310128974117966
     },
     "Coverage": {
@@ -605,6 +606,7 @@
         "bugless_message_keyword_upgrad": 0.005973895095882712,
         "bugless_message_keyword_version": 0.03908952606129904,
         "github_ref_in_message": 0.0005184158761228307,
+        "manual_labels": 0.00015019525382997898,
         "version_in_message": 0.014074748786325449
     },
     "Overlaps": {
@@ -663,7 +665,7 @@
         "bug_message_keyword_bad": 0.001884708185156833,
         "bug_message_keyword_broken": 0.004404112442950028,
         "bug_message_keyword_bug": 0.030697971879572475,
-        "bug_message_keyword_bugfix": 0.21090805143460692,
+        "bug_message_keyword_bugfix": 0.21091289644279498,
         "bug_message_keyword_close": 0.03696741247492708,
         "bug_message_keyword_concurr": 0.0005038808515586391,
         "bug_message_keyword_correct": 0.013847033401486448,
@@ -812,8 +814,8 @@
         "bugless_issue_label_keyword_renovate": 0.0,
         "bugless_issue_label_keyword_request": 9.690016376127676e-06,
         "bugless_message_keyword_abil": 0.0024903342086648127,
-        "bugless_message_keyword_ad": 0.04452562524830667,
-        "bugless_message_keyword_add": 0.06324673688698534,
+        "bugless_message_keyword_ad": 0.04453047025649473,
+        "bugless_message_keyword_add": 0.06325642690336147,
         "bugless_message_keyword_addit": 0.00404073682884524,
         "bugless_message_keyword_allow": 0.012175505576604425,
         "bugless_message_keyword_analysi": 0.00089632651479181,
@@ -824,7 +826,7 @@
         "bugless_message_keyword_better": 0.00566865958003469,
         "bugless_message_keyword_bump": 0.01071715811199721,
         "bugless_message_keyword_chang|log": 0.0,
-        "bugless_message_keyword_clean": 0.00973362144982025,
+        "bugless_message_keyword_clean": 0.009738466458008315,
         "bugless_message_keyword_comment": 0.00902625025436293,
         "bugless_message_keyword_complet": 0.0038469365013226874,
         "bugless_message_keyword_configur|chang": 0.0,
@@ -872,7 +874,7 @@
         "bugless_message_keyword_propos": 0.0006928361708931288,
         "bugless_message_keyword_provid": 0.005755869727419839,
         "bugless_message_keyword_publish": 0.0020736635044913227,
-        "bugless_message_keyword_readm": 0.01642457775753641,
+        "bugless_message_keyword_readm": 0.016429422765724472,
         "bugless_message_keyword_reduc": 0.001908933226097152,
         "bugless_message_keyword_refactor": 0.009883816703650228,
         "bugless_message_keyword_refin": 0.0006346960726363628,
@@ -881,7 +883,7 @@
         "bugless_message_keyword_reimplement": 0.00024225040940319188,
         "bugless_message_keyword_release": 0.0,
         "bugless_message_keyword_remov": 0.03831432475120883,
-        "bugless_message_keyword_renam": 0.006361495750927819,
+        "bugless_message_keyword_renam": 0.006366340759115883,
         "bugless_message_keyword_reorgan": 0.0003197705404122133,
         "bugless_message_keyword_replac": 0.006671576274963904,
         "bugless_message_keyword_restrict": 0.0009786916539888952,
@@ -905,10 +907,11 @@
         "bugless_message_keyword_tweak": 0.00220932373375711,
         "bugless_message_keyword_unit": 0.005702574637351137,
         "bugless_message_keyword_unnecessari": 0.0031104952567369837,
-        "bugless_message_keyword_updat": 0.06528648533416022,
-        "bugless_message_keyword_upgrad": 0.004278142230060369,
+        "bugless_message_keyword_updat": 0.06531071037510053,
+        "bugless_message_keyword_upgrad": 0.0042829872382484325,
         "bugless_message_keyword_version": 0.03411854766034555,
         "github_ref_in_message": 0.0005135708679347668,
+        "manual_labels": 0.00014535024564191513,
         "version_in_message": 0.010954563513212338
     },
     "Polarity": {
@@ -1731,6 +1734,10 @@
             0
         ],
         "github_ref_in_message": [
+            1
+        ],
+        "manual_labels": [
+            0,
             1
         ],
         "version_in_message": [

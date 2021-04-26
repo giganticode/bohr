@@ -301,6 +301,7 @@
         "bugless_message_keyword_upgrad": 0.0023014959723820483,
         "bugless_message_keyword_version": 0.01304181051016494,
         "github_ref_in_message": 0.0,
+        "manual_labels": 0.0,
         "version_in_message": 0.0003835826620636747
     },
     "Correct": {
@@ -605,6 +606,7 @@
         "bugless_message_keyword_upgrad": 33,
         "bugless_message_keyword_version": 57,
         "github_ref_in_message": 0,
+        "manual_labels": 0,
         "version_in_message": 2
     },
     "Coverage": {
@@ -909,6 +911,7 @@
         "bugless_message_keyword_upgrad": 0.008822401227464518,
         "bugless_message_keyword_version": 0.027234369006520907,
         "github_ref_in_message": 0.0,
+        "manual_labels": 0.0,
         "version_in_message": 0.0005753739930955121
     },
     "Emp. Acc.": {
@@ -1213,6 +1216,7 @@
         "bugless_message_keyword_upgrad": 0.717391304347826,
         "bugless_message_keyword_version": 0.4014084507042254,
         "github_ref_in_message": 0.0,
+        "manual_labels": 0.0,
         "version_in_message": 0.6666666666666666
     },
     "Incorrect": {
@@ -1517,6 +1521,7 @@
         "bugless_message_keyword_upgrad": 13,
         "bugless_message_keyword_version": 85,
         "github_ref_in_message": 0,
+        "manual_labels": 0,
         "version_in_message": 1
     },
     "Overlaps": {
@@ -1821,6 +1826,7 @@
         "bugless_message_keyword_upgrad": 0.004986574606827772,
         "bugless_message_keyword_version": 0.022823168392788647,
         "github_ref_in_message": 0.0,
+        "manual_labels": 0.0,
         "version_in_message": 0.0005753739930955121
     },
     "Polarity": {
@@ -2363,6 +2369,7 @@
             0
         ],
         "github_ref_in_message": [],
+        "manual_labels": [],
         "version_in_message": [
             0
         ]

@@ -47,6 +47,22 @@ stages:
     outs:
     - data/200k-commits-files.csv:
         cache: false
+  preprocess_200k-commits-link-issues:
+    cmd: cp downloaded-data/200k-commits-link-issues.csv data && echo "data/200k-commits-link-issues.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - downloaded-data/200k-commits-link-issues.csv
+    outs:
+    - data/200k-commits-link-issues.csv:
+        cache: false
+  preprocess_200k-commits-manual-labels:
+    cmd: cp downloaded-data/200k-commits-manual-labels.csv data && echo "data/200k-commits-manual-labels.csv"
+      >> .gitignore && git add .gitignore
+    deps:
+    - downloaded-data/200k-commits-manual-labels.csv
+    outs:
+    - data/200k-commits-manual-labels.csv:
+        cache: false
   preprocess_smells-train:
     cmd: data-preprocessing/smells.sh
     deps:
@@ -74,6 +90,7 @@ stages:
     deps:
     - data/200k-commits-files.csv
     - data/200k-commits-issues.csv
+    - data/200k-commits-manual-labels.csv
     - data/200k-commits.csv
     - heuristics/bugginess.py
     - heuristics/keywords

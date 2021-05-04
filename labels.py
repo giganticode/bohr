@@ -11,11 +11,16 @@ class CommitLabel(Label):
     CriticalBugFix = auto()
     OtherSeverityLevelBugFix = auto()
     BugFix = MinorBugFix | MajorBugFix | CriticalBugFix | OtherSeverityLevelBugFix
-    DocFix = auto()
+    DocAdd = auto()
+    DocSpellingFix = auto()
+    DocChange = DocAdd | DocSpellingFix
     TestFix = auto()
-    BogusFix = DocFix | TestFix
     Refactoring = auto()
-    NonBugFix = BogusFix | Refactoring
+    CopyChangeAdd = auto()
+    Feature = auto()
+    InitialCommit = auto()
+    VersionBump = auto()
+    NonBugFix = DocChange | TestFix | Refactoring | CopyChangeAdd | Feature | InitialCommit | VersionBump
     Commit = BugFix | NonBugFix
     Label = Commit
 

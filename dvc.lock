@@ -370,7 +370,7 @@ stages:
         bohr_framework_version: 0.4.5
     outs:
     - path: generated/bugginess/label_model.pkl
-      md5: 8302bc8343eb77fe84b84261a1de0c19
+      md5: f4e48f2b2764f5cdf57c7a57cbe6c041
       size: 1875458
     - path: generated/bugginess/label_model_weights.csv
       md5: 406fd9714cb3ec002c81b28c35a01d89
@@ -388,7 +388,7 @@ stages:
       md5: c604a8886af18d4982a1f3626fa57619
       size: 12650685
     - path: generated/bugginess/label_model.pkl
-      md5: 8302bc8343eb77fe84b84261a1de0c19
+      md5: f4e48f2b2764f5cdf57c7a57cbe6c041
       size: 1875458
     params:
       bohr.json:
@@ -414,7 +414,7 @@ stages:
         bohr_framework_version: 0.4.5
     outs:
     - path: generated/smells/label_model.pkl
-      md5: dd0dc9e2c1e22bd247047ce28ba389cf
+      md5: 594e7b7e139651a2f706eb7f65cbbd7e
       size: 4900
     - path: generated/smells/label_model_weights.csv
       md5: f51dafff9cfdac77b2d963caf31a27a6
@@ -432,7 +432,7 @@ stages:
       md5: d353c8b3bbcec3442b88fa4e64056d68
       size: 14312
     - path: generated/smells/label_model.pkl
-      md5: dd0dc9e2c1e22bd247047ce28ba389cf
+      md5: 594e7b7e139651a2f706eb7f65cbbd7e
       size: 4900
     params:
       bohr.json:
@@ -451,7 +451,7 @@ stages:
       md5: 03cfd9383f0463c0be0c15d54690b8ab
       size: 4230
     - path: generated/smells/label_model.pkl
-      md5: dd0dc9e2c1e22bd247047ce28ba389cf
+      md5: 594e7b7e139651a2f706eb7f65cbbd7e
       size: 4900
     params:
       bohr.json:
@@ -490,7 +490,7 @@ stages:
       md5: a0a1a7fbd7512b6cb31eb06d61c3bf9c
       size: 2801973
     - path: generated/bugginess/label_model.pkl
-      md5: 8302bc8343eb77fe84b84261a1de0c19
+      md5: f4e48f2b2764f5cdf57c7a57cbe6c041
       size: 1875458
     params:
       bohr.json:
@@ -509,7 +509,7 @@ stages:
       md5: 1b5504acb50064f2971a00799380d780
       size: 920949
     - path: generated/bugginess/label_model.pkl
-      md5: 8302bc8343eb77fe84b84261a1de0c19
+      md5: f4e48f2b2764f5cdf57c7a57cbe6c041
       size: 1875458
     params:
       bohr.json:
@@ -812,7 +812,7 @@ stages:
       md5: 96bf235aea2cdfae9f33f00ddb8c8547
       size: 500320716
     - path: generated/bugginess/label_model.pkl
-      md5: 8302bc8343eb77fe84b84261a1de0c19
+      md5: f4e48f2b2764f5cdf57c7a57cbe6c041
       size: 1875458
     params:
       bohr.json:

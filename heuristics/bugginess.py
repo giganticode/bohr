@@ -16,11 +16,9 @@ from bohr.templates.heuristics.keywords import KeywordHeuristics
         "broken",
         ["bug", "bugg"],
         "close",
-        "concurr",
         ["correct", "correctli"],
         "corrupt",
         "crash",
-        ["deadlock", "dead lock"],
         "defect",
         "disabl",
         "endless",
@@ -49,7 +47,6 @@ from bohr.templates.heuristics.keywords import KeywordHeuristics
         "prevent",
         "problem",
         "properli",
-        "race condit",
         "repair",
         ["resolv", "solv"],
         ["threw", "throw"],
@@ -68,6 +65,23 @@ def bug_keywords_lookup_in_message(
 ) -> Optional[Labels]:
     if commit.message.match_ngrams(keywords):
         return l.CommitLabel.BugFix
+    return None
+
+
+@KeywordHeuristics(
+    Commit,
+    keywords=[
+        "concurr",
+        ["deadlock", "dead lock"],
+        "race condit",
+    ],
+    name_pattern="concurrency_bug_keywords_in_message_%1",
+)
+def concurrency_bug_keywords_in_message(
+    commit: Commit, keywords: NgramSet
+) -> Optional[Labels]:
+    if commit.message.match_ngrams(keywords):
+        return l.CommitLabel.ConcurrencyBugFix
     return None
 
 

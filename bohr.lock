@@ -134,9 +134,11 @@
         ]
     },
     "heuristics": {
-        "heuristics/bugginess.py": "9fa2be4c3ad70b831bf06a1c229ff1b6",
+        "heuristics/bugginess.py": "dd1203487cf7fb9586756a261db46884",
+        "heuristics/idans_models.py": "b93f1f3e3b331252226f98010b1a77e3",
         "heuristics/manuallabels.py": "5120f1e19e5bfdaf6f61cfa064782e05",
-        "heuristics/smells.py": "a2254c51be33d4ede33baab98ba18b09"
+        "heuristics/smells.py": "a2254c51be33d4ede33baab98ba18b09",
+        "heuristics/tools/idansmodel.py": "e4204dabaa97bd04c3b1796b4dc951b9"
     },
     "manual_stages": {}
 }

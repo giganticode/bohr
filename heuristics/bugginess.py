@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import List, Optional
 
 import labels as l
 from bohr.artifacts.commit import Commit
@@ -61,13 +61,15 @@ from bohr.templates.heuristics.keywords import KeywordHeuristics
         "unsynchron",
         "wrong",
     ],
-    name_pattern="bug_message_keyword_%1",
+    name_pattern="bug_message_keywords",
+    lf_per_key_word=False,
 )
 def bug_keywords_lookup_in_message(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.message.match_ngrams(keywords):
-        return l.CommitLabel.BugFix
+    for keyword_group in keywords:
+        if commit.message.match_ngrams(keyword_group):
+            return l.CommitLabel.BugFix
     return None
 
 
@@ -172,13 +174,15 @@ def bug_keywords_lookup_in_message(
         "upgrad",
         "version",
     ],
-    name_pattern="bugless_message_keyword_%1",
+    name_pattern="bugless_message_keywords",
+    lf_per_key_word=False,
 )
 def bugless_keywords_lookup_in_message(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.message.match_ngrams(keywords):
-        return l.CommitLabel.NonBugFix
+    for keyword_group in keywords:
+        if commit.message.match_ngrams(keyword_group):
+            return l.CommitLabel.NonBugFix
     return None
 
 
@@ -209,26 +213,30 @@ def version_in_message(commit: Commit) -> Optional[Labels]:
 @KeywordHeuristics(
     Commit,
     keywords=["bug", "fixed", "fix", "error"],
-    name_pattern="bug_issue_label_keyword_%1",
+    name_pattern="bug_issue_label_keywords",
+    lf_per_key_word=False,
 )
 def bug_keywords_lookup_in_issue_label(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.issues_match_label(keywords):
-        return l.CommitLabel.BugFix
+    for keyword_group in keywords:
+        if commit.issues_match_label(keyword_group):
+            return l.CommitLabel.BugFix
     return None
 
 
 @KeywordHeuristics(
     Commit,
     keywords=["enhancement", "feature", "request", "refactor", "renovate", "new"],
-    name_pattern="bugless_issue_label_keyword_%1",
+    name_pattern="bugless_issue_label_keywords",
+    lf_per_key_word=False,
 )
 def bugless_keywords_lookup_in_issue_label(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.issues_match_label(keywords):
-        return l.CommitLabel.NonBugFix
+    for keyword_group in keywords:
+        if commit.issues_match_label(keyword_group):
+            return l.CommitLabel.NonBugFix
     return None
 
 
@@ -284,13 +292,15 @@ def bugless_keywords_lookup_in_issue_label(
         "unsynchron",
         "wrong",
     ],
-    name_pattern="bug_issue_body_keyword_%1",
+    name_pattern="bug_issue_body_keywords",
+    lf_per_key_word=False,
 )
 def bug_keywords_lookup_in_issue_body(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.issues_match_ngrams(keywords):
-        return l.CommitLabel.BugFix
+    for keyword_group in keywords:
+        if commit.issues_match_ngrams(keyword_group):
+            return l.CommitLabel.BugFix
     return None
 
 
@@ -395,11 +405,13 @@ def bug_keywords_lookup_in_issue_body(
         "upgrad",
         "version",
     ],
-    name_pattern="bugless_issue_body_keyword_%1",
+    name_pattern="bugless_issue_body_keywords",
+    lf_per_key_word=False,
 )
 def bugless_keywords_lookup_in_issue_body(
-    commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: List[NgramSet]
 ) -> Optional[Labels]:
-    if commit.issues_match_ngrams(keywords):
-        return l.CommitLabel.NonBugFix
+    for keyword_group in keywords:
+        if commit.issues_match_ngrams(keyword_group):
+            return l.CommitLabel.NonBugFix
     return None

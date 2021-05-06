@@ -301,4 +301,15 @@ bugless_message_keyword_unnecessari,298,[0],0.005333333333333333,0.0053333333333
 bugless_message_keyword_updat,299,[0],0.056,0.048,0.02666666666666667,14,7,0.6666666666666666
 bugless_message_keyword_upgrad,300,[0],0.0026666666666666666,0.0026666666666666666,0.0,1,0,1.0
 bugless_message_keyword_version,301,[0],0.037333333333333336,0.02666666666666667,0.010666666666666666,12,2,0.8571428571428572
-manual_labels,302,[],0.0,0.0,0.0,0,0,0.0
+bug_if_only_changed_lines_in_one_file,302,[],0.0,0.0,0.0,0,0,0.0
+buggless_if_many_lines_changed,303,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_at_least_2_added_files,304,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_at_least_2_removed_files,305,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_many_files_changes,306,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_not_code_files,307,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_one_added_file,308,[],0.0,0.0,0.0,0,0,0.0
+bugless_if_one_removed_file,309,[],0.0,0.0,0.0,0,0,0.0
+no_files_have_modified_status,310,[],0.0,0.0,0.0,0,0,0.0
+refactoring_if_at_least_2_renamed,311,[],0.0,0.0,0.0,0,0,0.0
+refactorings_detected,312,[],0.0,0.0,0.0,0,0,0.0
+manual_labels,313,[],0.0,0.0,0.0,0,0,0.0

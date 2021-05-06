@@ -1,6 +1,6 @@
 {
     "config": {
-        "bohr_framework_version": "0.4.4",
+        "bohr_framework_version": "0.4.5",
         "tasks": {
             "bugginess": {
                 "top_artifact": "bohr.artifacts.commit.Commit",
@@ -134,7 +134,7 @@
         ]
     },
     "heuristics": {
-        "heuristics/bugginess.py": "9f9ea19cd5c53bbbd41f94cf7b8f3d14",
+        "heuristics/bugginess.py": "9fa2be4c3ad70b831bf06a1c229ff1b6",
         "heuristics/manuallabels.py": "5120f1e19e5bfdaf6f61cfa064782e05",
         "heuristics/smells.py": "a2254c51be33d4ede33baab98ba18b09"
     },

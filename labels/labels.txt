@@ -6,3 +6,4 @@ DocChange: DocAdd, DocSpellingFix
 BugFix: ConcurrencyBugFix, OtherBugFix
 BugFix: Severity
 Severity: MinorBugFix, MajorBugFix, CriticalBugFix, OtherSeverityLevelBugFix
+Refactoring: Reformatting, OtherRefactoring

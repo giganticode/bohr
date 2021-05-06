@@ -71,6 +71,25 @@ def bug_keywords_lookup_in_message(
 @KeywordHeuristics(
     Commit,
     keywords=[
+        "bump",
+        "release",
+        "updat",
+        "upgrad",
+        "version",
+    ],
+    name_pattern="version_bump_keywords_in_message_%1",
+)
+def version_bump_keywords_in_message(
+    commit: Commit, keywords: NgramSet
+) -> Optional[Labels]:
+    if commit.message.match_ngrams(keywords):
+        return l.CommitLabel.VersionBump
+    return None
+
+
+@KeywordHeuristics(
+    Commit,
+    keywords=[
         "concurr",
         ["deadlock", "dead lock"],
         "race condit",
@@ -96,10 +115,8 @@ def concurrency_bug_keywords_in_message(
         "analysi",
         "avoid",
         "baselin",
-        "beautification",
         "benchmark",
         "better",
-        "bump",
         "chang log",
         ["clean", "cleanup"],
         "comment",
@@ -120,7 +137,6 @@ def concurrency_bug_keywords_in_message(
         "extendgener",
         "featur",
         "forget",
-        "format",
         "gitignor",
         "idea",
         "implement",
@@ -151,14 +167,10 @@ def concurrency_bug_keywords_in_message(
         "publish",
         "readm",
         "reduc",
-        "refactor",
         "refin",
-        "reformat",
         "regress test",
         "reimplement",
-        "release",
         "remov",
-        "renam",
         "reorgan",
         "replac",
         "restrict",
@@ -182,9 +194,6 @@ def concurrency_bug_keywords_in_message(
         "tweak",
         "unit",
         "unnecessari",
-        "updat",
-        "upgrad",
-        "version",
     ],
     name_pattern="bugless_message_keyword_%1",
 )
@@ -193,6 +202,39 @@ def bugless_keywords_lookup_in_message(
 ) -> Optional[Labels]:
     if commit.message.match_ngrams(keywords):
         return l.CommitLabel.NonBugFix
+    return None
+
+
+@KeywordHeuristics(
+    Commit,
+    keywords=[
+        "renam",
+        "refactor",
+    ],
+    name_pattern="refactoring_keywords_in_message_%1",
+)
+def refactoring_keywords_in_message(
+    commit: Commit, keywords: NgramSet
+) -> Optional[Labels]:
+    if commit.message.match_ngrams(keywords):
+        return l.CommitLabel.Refactoring
+    return None
+
+
+@KeywordHeuristics(
+    Commit,
+    keywords=[
+        "beautification",
+        "format",
+        "reformat",
+    ],
+    name_pattern="reformatting_keywords_in_message_%1",
+)
+def reformatting_keywords_in_message(
+    commit: Commit, keywords: NgramSet
+) -> Optional[Labels]:
+    if commit.message.match_ngrams(keywords):
+        return l.CommitLabel.Reformatting
     return None
 
 

@@ -1,3 +1,4 @@
+from random import random
 from typing import Optional
 
 from bohr.artifacts.commit import Commit
@@ -12,7 +13,7 @@ def is_fix(
     commit: Commit, idans_corrective_model: IdansCorrectiveModel
 ) -> Optional[Labels]:
     result = idans_corrective_model.run(commit)
-    if result:
+    if result and random() > 0.8:
         return CommitLabel.BugFix
     else:
         return CommitLabel.NonBugFix

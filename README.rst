@@ -13,29 +13,39 @@ BOHR is a wrapper around snorkel which:
 .. contents:: **Contents**
   :backlinks: none
 
-Getting started with BOHR
+Installation
 ===========================================
 
 Python >= 3.8 is required, use of virtual environment is strongly recommended.
 
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Install BOHR framework library: ``chmod +x bin/setup-bohr.sh && bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
+#. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
 
-Downloading datasets and models
-===============================
+Scenarios of using BOHR
+===================================
 
-#. Run ``bohr repro``
+.. raw:: html
 
-Bohr extensively uses `DVC (Data Version Control) <https://dvc.org/>`_ to ensure of the datasets and models.
+    <img src="doc/reuse_levels.gif" width="600px">
 
-Contributing to BOHR:
-=====================
-
-
-1. Heuristics:
+1. Using labeled datasets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Heuristics can be found in ``.py`` files in the ``bohr/heuristics`` directory, and are marked with @Heuristic decorator. Example:
+Use ``bohr pull`` command. For example, to download ``200k-commits`` labeled by the ``bugginess`` task, run:
+
+``bohr pull bugginess 200k-commits``
+
+Bohr extensively uses `DVC (Data Version Control) <https://dvc.org/>`_ to ensure the integrity and reproducibility of the datasets and models.
+
+2. Label your own dataset with an existing model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TBD
+
+3. Adding heuristics for existing task
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Heuristics should be defined in ``.py`` files in the ``heuristics`` directory as methods marked with @Heuristic decorator. Below you can see a heuristic which marks a commit as non-bug-fixing if it has contains more than 6 modified files: 
 
 .. code-block:: python
  
@@ -45,39 +55,42 @@ Heuristics can be found in ``.py`` files in the ``bohr/heuristics`` directory, a
             return CommitLabel.NonBugFix
         else:
             return None
-            
+
+
 Important things to note:
 
-#. Any function becomes a heuristic once it is marked with ``@Heuristic`` decorator
-#. Artifact type is passed to heuristic decorator as a parameter; method accepts an object of artifact type
-#. Method name can be arbitrary as long it is unique and descriptive
-#. Method should return ``label`` if a datapoint should be labeled with ``label``, ``None`` if the labeling function should abstain on the datapoint
+#. Artifact type is passed to heuristic decorator as a parameter; an object of the same type is exposed as a parameter to the function;
+#. Method name can be arbitrary as long it is unique and descriptive;
+#. Method should return the label which which the current commit is to be labeled, ``None`` if the labeling function should abstain on the datapoint. The label can be one of the objects defined in ``label.py``. See ... for more details on *label hierarchy*.
 
 Please refer to the `documentation <https://giganticode.github.io/bohr/Heuristics.html>`_ for more information on heuristics and special heuristic types.        
 
-2. New tasks:
+In order to train a new label model and to relabel the datasets with improved labels after adding new heuristics, run ``bohr repro``.
+
+4. Adding a new task
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Tasks are defined in the `bohr.json` file. Below you can see an example of "bugginess" task.
+To add a new taks, run ``bohr task add`` command. For example, for a tasks of classifying commit as tangled or not:
 
-.. code-block:: json
+.. code-block::
 
-   "bugginess": {
-      "top_artifact": "bohr.artifacts.commit.Commit",
-      "label_categories": [
-        "CommitLabel.NonBugFix",
-        "CommitLabel.BugFix"
-      ],
-      "test_datasets": [
-        "1151-commits",
-        "berger",
-        "herzig"
-      ],
-      "train_datasets": [
-        "bugginess-train"
-      ],
-      "label_column_name": "bug"
-    }
+  bohr task add tangled-commits \
+      -d "Task to classify commits into tangled and non-tangled"          # description
+      -t commit                                                           # artifact to be classified
+      -l TangledCommit.NonTangled,TangledCommit.Tangled                   # comma-separated label list for the classifier to choose from
+      -c tangled                                                          # column with ground-truth labels
+      --force                                                             # rewrite if the task with the same name already exists
+      --use-all-datasets                                                  # use all the datasets found in BOHR that contain the artifact being classified
+      --repro                                                             # apply right away compatible heuristics, generate a label model and label the datasets
+
+
+Overview of BOHR abstractions
+====================================
+
+.. raw:: html
+
+    <img src="doc/bohr_abstractions.png" width="600px">
+
 
 
 
@@ -95,61 +108,6 @@ Labels that are used to label artifacts in BOHR are pre-defined and can be reuse
 
 Labels are defined in text files in the ``bohr/labels`` dir. Each row has a format: <parent>: <list of children>. Running ``bohr parse-labels`` will generate `labels.py` file in the root of the repository. Thus to extend the hierarchy of labels it's sufficient to make a change to a text file. The `label.py` will be regenerated, once the PR is received.
 
-4. Datasets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A datasets are added by creating a dataset file in ``datasets`` folder. The name of the file will correspond to the name of the dataset. e.g.:
-
-*datasets/1151-commits.py*:
-
-.. code-block:: python
-
-  from pathlib import Path
-
-  from bohr.templates.dataloaders.from_csv import CsvDatasetLoader
-  from bohr.templates.datamappers.commit import CommitMapper
-
-  dataset_loader = CsvDatasetLoader(
-      path_to_file="data/bugginess/test/1151-commits.csv",
-      mapper=CommitMapper(Path(__file__).parent.parent),
-      test_set=True,
-  )
-
-  __all__ = [dataset_loader]
-  
-In this file, an instance of ``CsvDatasetLoader`` object is created, which is added to the __all__ list (important!)
-
-Dataloader can be an instance of custom ``DatasetLoader`` implementing the following interface:
-
-.. code-block:: python
-
-  @dataclass
-  class DatasetLoader(ABC):
-    test_set: bool
-    mapper: ArtifactMapper
-    
-    @abstractmethod
-    def load(self, project_root: Path) -> DataFrame:
-        pass
-
-    @abstractmethod
-    def get_paths(self, project_root: Path) -> List[Path]:
-        pass
-        
-*ArtifactMapper* object that has to be passed to the ``DatasetLoader`` defines how each datapoint is mapped to an artifact object and has to implement the following interface:
-
-.. code-block:: python
-
-  class ArtifactMapper(BaseMapper, ABC):
-      @abstractmethod
-      def __call__(self, x: DataPoint) -> Artifact:
-          pass
-          
-      @abstractmethod
-      def get_artifact(self) -> Type[Artifact]:
-          pass
-          
-``bohr.templates.datamappers`` in the bohr-framework lib provide some predefined mappers.
 
 5 Artifact definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~

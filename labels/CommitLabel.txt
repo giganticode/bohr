@@ -1,8 +1,17 @@
 CommitLabel: BugFix, NonBugFix
-CommitLabel(CommtiTangling): Tangled, NonTangled
-BugFix: MinorBugFix, MajorBugFix, CriticalBugFix, OtherSeverityLevelBugFix
-NonBugFix: DocChange, TestFix, Refactoring, CopyChangeAdd, Feature, InitialCommit, VersionBump
-DocChange: DocAdd, DocSpellingFix
+CommitLabel(CommitTangling): Tangled, NonTangled
+Commit(CommitSize):Huge,Normal,OneLine,Empty
+BugFix: ApiUpgradeFix,SingleStatementFix,OtherBugFix
+BugFix(BugFixSeverity): MinorBugFix, MajorBugFix, CriticalBugFix, OtherSeverityLevelBugFix, NormalBugFix
+NonBugFix: DocChange, TestChange, Refactoring, CopyChange, Feature, InitialCommit, VersionBump, DependencyChange, CiMaintenance, GitignoreChange, KeybaseChange,TestsAdd, MetadataChange, Merge
+TestChange: TestAdd, TestFix
+VersionBump: ProjectVersionBump, DependencyVersionBump, DependencyRemove
+Refactoring: MinorRefactoring, NormalRefactoring, MajorRefactoring
+MinorRefactoing:RemoveUnused, Formatting, OtherMinorRefactoring
+CopyChange: CopyChangeAdd, CopyChangeRemove
+DocChange: DocAdd, DocSpellingFix, DocRemove, DocFix
+DocAdd: ChangeLogAdd,OtherDocAdd
+Feature: MajorFeature, Enhancement
 BugFix(SStuB): WrongIdentifier, WrongNumericLiteral, WrongModifier,  WrongBooleanLiteral, WrongFunction, WrongOperator, MissingThrowsException
 WrongFunction: WrongFunctionName, TooFewArguments, TooManyArguments
 WrongOperator: WrongBinaryOperator, WrongUnaryOperator

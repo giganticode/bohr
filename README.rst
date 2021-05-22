@@ -86,13 +86,36 @@ To add a new taks, run ``bohr task add`` command. For example, for a tasks of cl
       --use-all-datasets                                                  # use all the datasets found in BOHR that contain the artifact being classified
       --repro                                                             # apply right away compatible heuristics, generate a label model and label the datasets
 
+Quick Start
+============
+
 Installation
-===========================================
+~~~~~~~~~~~~~
 
 Python >= 3.8 is required, use of virtual environment is strongly recommended.
 
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
 #. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
+
+Important commands
+~~~~~~~~~~~~~~~~~~~
+
++-----------------------------------+-------------------------------------------------------------------+
+|                                   | Command                                                           |
++===================================+===================================================================+
+| Pull existing labeled dataset     | | ``$ bohr pull bugginess 200k-commits``                          |
++-----------------------------------+-------------------------------------------------------------------+
+| Label your dataset                | | ``$ bohr dataset add ~/new_commit_dataset.csv -t commit``       |
+|                                   | | ``$ bohr task add-dataset bugginess new_commit_dataset --repro``|      
++-----------------------------------+-------------------------------------------------------------------+
+| Add heuristic(s), re-train        | | ``$ vi heuristics/commit_files.py``                             |
+| label model, and update labels    | | ``$ bohr repro bugginess``                                      |
++-----------------------------------+-------------------------------------------------------------------+
+| Add a new task                    | | ``$ bohr task add tangled-commits \``                           |
+|                                   | | ``...    -l TangledCommit.NonTangled,TangledCommit.Tangled \``  |
+|                                   | | ``...    --repro``                                              |
+|                                   | |                                                                 |
++-----------------------------------+-------------------------------------------------------------------+
 
 Overview of BOHR abstractions
 ====================================

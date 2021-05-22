@@ -1,17 +1,17 @@
 BOHR (Big Old Heuristic Repository)
 ----------------------------------
 
-BOHR is a repository of heuristics for categorization of software engineering artifacts, e.g. commits, bug reports, etc. 
+BOHR is a **repository of heuristics** for categorization of software engineering artifacts, e.g. commits, bug reports, etc. 
 
 Categorization of artifacts is often required to create ground-truth datasets to train machine learning models on. For example, to train a model that classifies commits as "feature", "bugfix", or "refactoring", one needs to have a dataset of commits with these labels assigned. 
 
-Since creating a large dataset manually is expensive, the alternative is to come up with "heuristics", short programs that can assign noisy labels to artifacts automatically. Implementing a large number of such heuristics and combining their outputs "smartly" is the idea behind `snorkel <https://www.snorkel.org/>`_, the state-of-the-art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
+Since creating a large dataset manually is expensive, the alternative is to come up with "heuristics", short programs that can assign noisy labels to artifacts automatically. Implementing **a large number of such heuristics** and **combining their outputs** "smartly" is the idea behind `snorkel <https://www.snorkel.org/>`_, the state-of-the-art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
 
 BOHR is a wrapper around snorkel which:
 
-* Simplifies the process of adding new heuristics and evaluating their effectiveness;
-* Labels the datasets registered with BOHR and automatically updates the labels once heuristics are added;
-* Keeps track of heursitics used for each version of generated dataset, and in general makes sure the datasets are reproducible and easily accessable by using `DVC <https://dvc.org>`_.
+* **Simplifies** the process of **adding new heuristics** and **evaluating their effectiveness**;
+* Labels the datasets registered with BOHR and **automatically updates the labels** once heuristics are added;
+* Keeps track of heursitics used for each version of generated datasets and model, and, in general, makes sure they are **reproducible** and **easily accessable** by using `DVC <https://dvc.org>`_.
 
 
 .. contents:: **Contents**
@@ -85,6 +85,13 @@ To add a new taks, run ``bohr task add`` command. For example, for a tasks of cl
       --force                                                             # rewrite if the task with the same name already exists
       --use-all-datasets                                                  # use all the datasets found in BOHR that contain the artifact being classified
       --repro                                                             # apply right away compatible heuristics, generate a label model and label the datasets
+      
+Overview of BOHR abstractions
+====================================
+
+.. raw:: html
+
+    <img src="doc/bohr_abstractions.png" width="600px">
 
 Quick Start
 ============
@@ -117,34 +124,6 @@ Important commands
 |                                   | |                                                                 |
 +-----------------------------------+-------------------------------------------------------------------+
 
-Overview of BOHR abstractions
-====================================
-
-.. raw:: html
-
-    <img src="doc/bohr_abstractions.png" width="600px">
-
-
-
-
-The name of the task is the key in the dictionary. The value is an object with the following fields:
-
-#. **Top artifact** - the artifact to be catigorized. In the case of "bugginess" task, commits are classified, therefore the top artifact is ``bohr.artifacts.commit.Commit``;
-#. **Label categories** - categories artifact to be classified as, for "bugginess" taks these are *CommitLabel.BugFix* and *CommitLabel.NonBugFix*. Values has to be taken from the ``labels.py`` file. See section `3. Labels:`_ on more information about labels in bohr and how to extend the label hierarchy.
-#. **Training sets** - datasets used to train a label model;
-#. **Test sets** - datasets to calculate metrics on.
-
-3. Labels:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Labels that are used to label artifacts in BOHR are pre-defined and can be reused across multiple tasks. E.g., ``Commit.Refactoring`` label can be used in heuristics for the tasks of detecting refactoring, but also in the task of detecting bug-fixing commits. Moreover, labels are organized in a hierarchy, e.g. ``Commit.FileRenaming`` can be a child of ``Commit.Refactoring``. Formally speaking, there is a binary relation IS-A defined on the set of labels, which defines their partial order, e.g. ``IS-A(Commit.FileRenaming, Commit.Refactoring)``           
-
-Labels are defined in text files in the ``bohr/labels`` dir. Each row has a format: <parent>: <list of children>. Running ``bohr parse-labels`` will generate `labels.py` file in the root of the repository. Thus to extend the hierarchy of labels it's sufficient to make a change to a text file. The `label.py` will be regenerated, once the PR is received.
-
-
-5 Artifact definitions
-~~~~~~~~~~~~~~~~~~~~~~~~
-``bohr.templates.artifacts`` also defines some pre-defined artifacts
 
 
 Contribute to the framework:

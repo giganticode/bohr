@@ -1,7 +1,11 @@
 BOHR (Big Old Heuristic Repository)
 ----------------------------------
 
-BOHR is a repository of heuristics for categorization of software engineering artifacts, such as commits and bug reports. Categorization of the artifacts is often required to create labeled datasets to train machine learning models on. Since manual labeling is expensive, researchers come up with imprecise heuristics that can assign labels to artifacts. The goal of BOHR is to let researchers contribute a large number of heuristics which are "smartly" combined by `snorkel <https://www.snorkel.org/>`_, the state-of-the art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
+BOHR is a repository of heuristics for categorization of software engineering artifacts, e.g. commits, bug reports, etc. 
+
+Categorization of artifacts is often required to create ground-truth datasets to train machine learning models on. For example, to train a model that classifies commits as "feature", "bugfix", or "refactoring", one needs to have a dataset of commits with these labels assigned. 
+
+Since creating a large dataset manually is expensive, the alternative is to come up with "heuristics", short programs that can assign noisy labels to artifacts automatically. Implementing a large number of such heuristics and combining their outputs "smartly" is the idea behind `snorkel <https://www.snorkel.org/>`_, the state-of-the-art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
 
 BOHR is a wrapper around snorkel which:
 
@@ -12,16 +16,32 @@ BOHR is a wrapper around snorkel which:
 
 .. contents:: **Contents**
   :backlinks: none
+  
+How do heuristics look like?
+===================================
+  
+ .. code-block:: python
+ 
+    # other imports
+    ...
+    from bohr.core import Heuristic
+    from bohr.collection.artifacts import Commit
+    from bohr.labels import CommitLabel
+ 
+    @Heuristic(Commit)
+    def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
+        if len(commit.files) > 6:
+            return CommitLabel.NonBugFix
+        else:
+            return None
+            
+Important things to note:
 
-Installation
-===========================================
+#. Heuristics are marked with ``Heuristic`` decorator and the artifact type is passed to it as a parameter; 
+#. An object of the artifact type is exposed as a parameter to the function, and its properties can be used to implement the logic;
+#. An artifact is assigned a label returned from the function; the heuristic must assign one of the labels defined in the BOHR label hierarchy or ``None`` if it abstains on this data point.
 
-Python >= 3.8 is required, use of virtual environment is strongly recommended.
-
-#. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
-
-Scenarios of using BOHR
+BOHR usage scenarios
 ===================================
 
 .. raw:: html
@@ -45,27 +65,10 @@ TBD
 3. Adding heuristics for existing task
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Heuristics should be defined in ``.py`` files in the ``heuristics`` directory as methods marked with @Heuristic decorator. Below you can see a heuristic which marks a commit as non-bug-fixing if it has contains more than 6 modified files: 
-
-.. code-block:: python
- 
-    @Heuristic(Commit)
-    def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
-        if len(commit.files) > 6:
-            return CommitLabel.NonBugFix
-        else:
-            return None
-
-
-Important things to note:
-
-#. Artifact type is passed to heuristic decorator as a parameter; an object of the same type is exposed as a parameter to the function;
-#. Method name can be arbitrary as long it is unique and descriptive;
-#. Method should return the label which which the current commit is to be labeled, ``None`` if the labeling function should abstain on the datapoint. The label can be one of the objects defined in ``label.py``. See ... for more details on *label hierarchy*.
+Heuristics should be defined in ``.py`` files in the ``heuristics`` directory. In order to train a new label model and to re-label the datasets with improved labels after adding new heuristics, run ``bohr repro``.
 
 Please refer to the `documentation <https://giganticode.github.io/bohr/Heuristics.html>`_ for more information on heuristics and special heuristic types.        
 
-In order to train a new label model and to relabel the datasets with improved labels after adding new heuristics, run ``bohr repro``.
 
 4. Adding a new task
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,6 +86,13 @@ To add a new taks, run ``bohr task add`` command. For example, for a tasks of cl
       --use-all-datasets                                                  # use all the datasets found in BOHR that contain the artifact being classified
       --repro                                                             # apply right away compatible heuristics, generate a label model and label the datasets
 
+Installation
+===========================================
+
+Python >= 3.8 is required, use of virtual environment is strongly recommended.
+
+#. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
+#. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
 
 Overview of BOHR abstractions
 ====================================

@@ -21,14 +21,13 @@ class CommitLabel(Label):
     InitialCommit = auto()
     VersionBump = auto()
     NonBugFix = DocChange | TestFix | Refactoring | CopyChangeAdd | Feature | InitialCommit | VersionBump
-    Commit = BugFix | NonBugFix
-    Label = Commit
+    CommitLabel = BugFix | NonBugFix
 
     def parent(self):
         return None
 
 
-class SStuBBugFix(Label):
+class SStuB(Label):
     WrongIdentifier = auto()
     WrongNumericLiteral = auto()
     WrongModifier = auto()
@@ -42,19 +41,18 @@ class SStuBBugFix(Label):
     WrongOperator = WrongBinaryOperator | WrongUnaryOperator
     MissingThrowsException = auto()
     SStuB = WrongIdentifier | WrongNumericLiteral | WrongModifier | WrongBooleanLiteral | WrongFunction | WrongOperator | MissingThrowsException
-    BugFix = SStuB
 
     def parent(self):
         return CommitLabel.BugFix
 
 
-class TangledCommit(Label):
+class CommtiTangling(Label):
     Tangled = auto()
     NonTangled = auto()
-    Commit = Tangled | NonTangled
+    CommtiTangling = Tangled | NonTangled
 
     def parent(self):
-        return CommitLabel.Commit
+        return CommitLabel.CommitLabel
 
 
 class SnippetLabel(Label):
@@ -62,8 +60,7 @@ class SnippetLabel(Label):
     LongParameterList = auto()
     Smelly = LongMethod | LongParameterList
     NonSmelly = auto()
-    Snippet = Smelly | NonSmelly
-    Label = Snippet
+    SnippetLabel = Smelly | NonSmelly
 
     def parent(self):
-        return CommitLabel.Label
+        return None

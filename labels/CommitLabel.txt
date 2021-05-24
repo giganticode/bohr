@@ -1,0 +1,8 @@
+CommitLabel: BugFix, NonBugFix
+CommitLabel(CommtiTangling): Tangled, NonTangled
+BugFix: MinorBugFix, MajorBugFix, CriticalBugFix, OtherSeverityLevelBugFix
+NonBugFix: DocChange, TestFix, Refactoring, CopyChangeAdd, Feature, InitialCommit, VersionBump
+DocChange: DocAdd, DocSpellingFix
+BugFix(SStuB): WrongIdentifier, WrongNumericLiteral, WrongModifier,  WrongBooleanLiteral, WrongFunction, WrongOperator, MissingThrowsException
+WrongFunction: WrongFunctionName, TooFewArguments, TooManyArguments
+WrongOperator: WrongBinaryOperator, WrongUnaryOperator

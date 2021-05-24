@@ -2,7 +2,7 @@
 
 from enum import auto
 
-from bohr.labels.labelset import Label
+from bohr.labeling.labelset import Label
 
 
 class CommitLabel(Label):

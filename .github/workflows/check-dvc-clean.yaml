@@ -16,7 +16,7 @@ jobs:
     env:
       DVC_IRONSPEED_USERNAME: ${{ secrets.DVC_IRONSPEED_USERNAME }}
       DVC_IRONSPEED_PASSWORD: ${{ secrets.DVC_IRONSPEED_PASSWORD }}
-      PYTHONPATH: '/usr/src/bohr'
+      PYTHONPATH: '/__w/bohr/bohr'
     steps:
       - name: update-git
         run: |
@@ -32,11 +32,16 @@ jobs:
       - name: setup-bohr
         run: |
           bin/setup-bohr.sh $SOFTWARE_DIR
+          dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
+          dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+      - name: checking-env-setup
+        run: |
           which bohr
           bohr --version
           dvc --version
-          dvc remote modify --local ironspeed user $DVC_IRONSPEED_USERNAME
-          dvc remote modify --local ironspeed password $DVC_IRONSPEED_PASSWORD
+          pwd
+          ls
+          python -c "import sys; print(sys.path)"
       - name: reproduce-and-check-status
         run: |
           dvc pull -r ironspeed

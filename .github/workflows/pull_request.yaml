@@ -51,11 +51,6 @@ jobs:
         run: |
           pip install 'dvc[gdrive]'
           dvc push -r gdrive # github container only can have access to gdrive remote (others need to be accessed using VPN)
-      - name: Clean up dvc remote
-        env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-        run:
-          dvc gc --cloud -r gdrive --workspace --all-tags --all-branches -f
       - name: Check dvc status
         run: dvc status -r gdrive
       - name: Push changes
@@ -112,7 +107,8 @@ jobs:
           dvc --version
           dvc remote modify --local squirrel user $DVC_SQUIRREL_USERNAME
           dvc remote modify --local squirrel password $DVC_SQUIRREL_PASSWORD
-      - name: dvc-pull-and-push
+      - name: move-from-gdrive-to-squirrel
         run: |
           dvc pull -r gdrive
           dvc push -r squirrel # make it available to the world
+          dvc gc --cloud -r gdrive --workspace -f

@@ -32,8 +32,8 @@ jobs:
       - name: setup-bohr
         run: |
           bin/setup-bohr.sh $SOFTWARE_DIR
-          dvc remote modify --local squirrel user DVC_SQUIRREL_USERNAME
-          dvc remote modify --local squirrel password DVC_SQUIRREL_PASSWORD
+          dvc remote modify --local squirrel user $DVC_SQUIRREL_USERNAME
+          dvc remote modify --local squirrel password $DVC_SQUIRREL_PASSWORD
       - name: checking-env-setup
         run: |
           which bohr

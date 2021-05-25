@@ -1,7 +1,9 @@
-{"bohr_framework_version": "0.4.5",
+{
+  "bohr_framework_version": "0.4.7",
   "tasks": {
     "bugginess": {
-      "top_artifact": "bohr.artifacts.commit.Commit",
+      "description": "",
+      "top_artifact": "bohr.collection.artifacts.commit.Commit",
       "label_categories": [
         "CommitLabel.NonBugFix",
         "CommitLabel.BugFix"
@@ -17,7 +19,8 @@
       "label_column_name": "bug"
     },
     "smells": {
-      "top_artifact": "bohr.artifacts.method.Method",
+      "description": "",
+      "top_artifact": "bohr.collection.artifacts.method.Method",
       "label_categories": [
         "SnippetLabel.NonSmelly",
         "SnippetLabel.Smelly"
@@ -33,95 +36,112 @@
   },
   "datasets": {
     "berger": {
+      "author": null,
+      "description": "",
       "path": "berger.csv",
-      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
-      "test_set": "true",
+      "path_preprocessed": "berger.csv",
       "preprocessor": "copy",
-      "loader": "csv"
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commit.CommitMapper"
     },
     "herzig": {
+      "author": null,
+      "description": "",
       "path": "herzig.csv",
-      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
-      "test_set": "true",
+      "path_preprocessed": "herzig.csv",
       "preprocessor": "copy",
-      "loader": "csv"
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commit.CommitMapper"
     },
     "1151-commits": {
+      "author": null,
+      "description": "",
       "path": "1151-commits.csv",
-      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
-      "test_set": "true",
+      "path_preprocessed": "1151-commits.csv",
+      "preprocessor": "copy",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commit.CommitMapper"
+    },
+    "200k-commits": {
+      "author": null,
+      "description": "desc",
+      "path": "200k-commits.csv",
+      "path_preprocessed": "200k-commits.csv",
+      "preprocessor": "copy",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commit.CommitMapper"
+    },
+    "200k-commits-issues": {
+      "author": null,
+      "description": "desc",
+      "path": "200k-commits-issues.csv",
+      "path_preprocessed": "200k-commits-issues.csv",
+      "preprocessor": "copy",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.issue.IssueMapper",
+      "dtype": {
+        "labels": "str"
+      },
+      "keep_default_na": false
+    },
+    "200k-commits-files": {
+      "author": null,
+      "description": "desc",
+      "path": "200k-commits-files.csv.7z",
+      "path_preprocessed": "200k-commits-files.csv",
+      "preprocessor": "7z",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commitfile.CommitFileMapper"
+    },
+    "200k-commits-link-issues": {
+      "author": null,
+      "description": "desc",
+      "path": "200k-commits-link-issues.csv",
+      "path_preprocessed": "200k-commits-link-issues.csv",
       "preprocessor": "copy",
       "loader": "csv"
     },
-    "200k-commits": {
-      "description": "desc",
-      "path": "200k-commits.csv",
-      "mapper": "bohr.templates.datamappers.commit.CommitMapper",
-      "test_set": "false",
-      "loader": "csv",
-      "preprocessor": "copy"
-    },
-    "200k-commits-issues": {
-      "description": "desc",
-      "path": "200k-commits-issues.csv",
-      "mapper": "bohr.templates.datamappers.issue.IssueMapper",
-      "test_set": "false",
-      "loader": "csv",
-      "preprocessor": "copy",
-      "keep_default_na": false,
-      "dtype": {"labels": "str"}
-    },
-    "200k-commits-files": {
-      "description": "desc",
-      "path": "200k-commits-files.csv.7z",
-      "mapper": "bohr.templates.datamappers.commitfile.CommitFileMapper",
-      "test_set": "false",
-      "loader": "csv",
-      "preprocessor": "7z"
-    },
-    "200k-commits-link-issues": {
-      "description": "desc",
-      "path": "200k-commits-link-issues.csv",
-      "test_set": "false",
-      "loader": "csv",
-      "preprocessor": "copy"
-    },
     "200k-commits-manual-labels": {
+      "author": null,
       "description": "desc",
       "path": "200k-commits-manual-labels.csv",
-      "mapper": "bohr.templates.datamappers.manuallabels.ManualLabelMapper",
-      "test_set": "false",
+      "path_preprocessed": "200k-commits-manual-labels.csv",
+      "preprocessor": "copy",
       "loader": "csv",
-      "preprocessor": "copy"
+      "mapper": "bohr.collection.datamappers.manuallabels.ManualLabelMapper"
     },
     "smells-train": {
+      "author": null,
+      "description": "",
       "path": "smells-madeyski.csv",
       "path_preprocessed": "smells/train.csv",
-      "mapper": "bohr.templates.datamappers.method.MethodMapper",
-      "test_set": "false",
-      "loader": "csv",
       "preprocessor": "data-preprocessing/smells.sh",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.method.MethodMapper",
       "sep": ";"
     },
     "smells-test": {
+      "author": null,
+      "description": "",
       "path": "smells-madeyski.csv",
       "path_preprocessed": "smells/test.csv",
-      "mapper": "bohr.templates.datamappers.method.MethodMapper",
-      "test_set": "false",
-      "loader": "csv",
       "preprocessor": "data-preprocessing/smells.sh",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.method.MethodMapper",
       "sep": ";"
     }
   },
   "dataset-linkers": [
     {
       "from": "200k-commits",
+      "to": "200k-commits-files"
+    },
+    {
+      "from": "200k-commits",
       "to": "200k-commits-issues",
       "link": "200k-commits-link-issues"
-    }, {
-      "from": "200k-commits",
-      "to": "200k-commits-files"
-    }, {
+    },
+    {
       "from": "200k-commits",
       "to": "200k-commits-manual-labels"
     }

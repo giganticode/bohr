@@ -47,15 +47,18 @@ BOHR usage scenarios
 1. Only using existing heuristics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
+Heuristics already implemented in BOHR are used to train label models, which are continuosly improved as more heuristics are added. The label models are used then to label the datasets that been added to BOHR. These datasets can be easily accesed and used as tehy are. Moreover, you can use the label models to label your own datasets.
+ 
 2. Implementing new heuristics for existing tasks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+If you want to work on already defined tasks, you can add more heuristics to improve the label model and the datasets further. Once new heuristics are implemented, they can be submitted as a pull request to BOHR, which will automatically re-run the pipiline - re-train the label model, re-label the datasets, and calculate new metrics. The pull request will be accepted if the metrics are improved.
 
 
 3. Implementing heuristics for new tasks and artifacts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+BOHR is designed to be extensible. You can esily define new artifact classes and tasks, and start implementing heuristics for those tasks. Note that some heuristics already added for other tasks might be reused for a new task. Please refer to the documentation for more details.
 
 Overview of BOHR abstractions
 ================================

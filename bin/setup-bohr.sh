@@ -29,4 +29,4 @@ bash tools/install-refactoring-miner $SOFTWARE_DIR
 
 pip install -r requirements.txt
 
-bohr config software_path $SOFTWARE_DIR
+bohr config paths.software_path $SOFTWARE_DIR

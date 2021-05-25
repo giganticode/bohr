@@ -1,8 +1,8 @@
 from typing import Optional
 
-from bohr.artifacts.commit import Commit
-from bohr.decorators import Heuristic
-from bohr.labels.labelset import Labels
+from bohr.collection.artifacts import Commit
+from bohr.core import Heuristic
+from bohr.labeling.labelset import Labels
 
 
 @Heuristic(Commit)

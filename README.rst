@@ -113,14 +113,14 @@ Pre-prints and publications
 
 .. code-block::
 
-  @misc{babii2021mining,
-        title={Mining Software Repositories with a Collaborative Heuristic Repository}, 
-        author={Hlib Babii and Julian Aron Prenner and Laurin Stricker and Anjan Karmakar and Andrea Janes and Romain Robbes},
-        year={2021},
-        eprint={2103.01722},
-        archivePrefix={arXiv},
-        primaryClass={cs.SE}
-  }
+    @inproceedings{babii2021mining,
+      title={Mining Software Repositories with a Collaborative Heuristic Repository},
+      author={Babii, Hlib and Prenner, Julian Aron and Stricker, Laurin and Karmakar, Anjan and Janes, Andrea and Robbes, Romain},
+      booktitle={2021 IEEE/ACM 43rd International Conference on Software Engineering: New Ideas and Emerging Results (ICSE-NIER)},
+      pages={106--110},
+      year={2021},
+      organization={IEEE}
+    }
 
 
 .. |GitHub license| image:: https://img.shields.io/github/license/giganticode/bohr.svg

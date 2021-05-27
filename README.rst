@@ -1,6 +1,8 @@
 BOHR (Big Old Heuristic Repository)
 ----------------------------------
 
+|GitHub license| |Maintainability| |GitHub make-a-pull-requests|
+
 BOHR is a **repository of heuristics** for categorization of software engineering artifacts, e.g. commits, bug reports, etc. 
 
 Categorization of artifacts is often required to create ground-truth datasets to train machine learning models on. For example, to train a model that classifies commits as "feature", "bugfix", or "refactoring", one needs to have a dataset of commits with these labels assigned. 
@@ -120,4 +122,14 @@ Pre-prints and publications
         primaryClass={cs.SE}
   }
 
+
+.. |GitHub license| image:: https://img.shields.io/github/license/Naereen/StrapDown.js.svg
+   :target: https://github.com/Naereen/StrapDown.js/blob/master/LICENSE
+   
+.. |GitHub make-a-pull-requests| image:: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+   :target: http://makeapullrequest.com
+   
+.. |Maintainability| image:: https://codeclimate.com/github/giganticode/bohr/badges/gpa.svg
+   :target: https://codeclimate.com/github/giganticode/bohr
+   :alt: Code Climate
 

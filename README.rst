@@ -123,8 +123,8 @@ Pre-prints and publications
   }
 
 
-.. |GitHub license| image:: https://img.shields.io/github/license/Naereen/StrapDown.js.svg
-   :target: https://github.com/Naereen/StrapDown.js/blob/master/LICENSE
+.. |GitHub license| image:: https://img.shields.io/github/license/giganticode/bohr.svg
+   :target: https://github.com/giganticode/bohr/blob/master/LICENSE
    
 .. |GitHub make-a-pull-requests| image:: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
    :target: http://makeapullrequest.com

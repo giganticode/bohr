@@ -46,15 +46,15 @@ Important things to note:
 BOHR usage scenarios
 ===================================
 
-1. Only using existing heuristics
+1. Reusing existing heuristics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Heuristics already implemented in BOHR are used to train label models, which are continuosly improved as more heuristics are added. The label models are used then to label the datasets that been added to BOHR. These datasets can be easily accesed and used as tehy are. Moreover, you can use the label models to label your own datasets.
+Heuristics already implemented in BOHR are used to train label models. The label mdoels are continuosly improved as more heuristics are added and are used to label the datasets that been added to BOHR. These datasets can be easily accesed and used as they are. Moreover, you can use the label models to label your own datasets.
  
 2. Implementing new heuristics for existing tasks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to work on already defined tasks, you can add more heuristics to improve the label model and the datasets further. Once new heuristics are implemented, they can be submitted as a pull request to BOHR, which will automatically re-run the pipiline - re-train the label model, re-label the datasets, and calculate new metrics. The pull request will be accepted if the metrics are improved.
+If you want to help working on the tasks already defined in BOHR, you can add more heuristics to improve the label model and the datasets further. Once new heuristics are implemented, they can be submitted as a pull request to BOHR, which will automatically re-run the pipiline (the label model will be re-trained, the datasets will be re-labeled, and the metrics will be recalculated. The pull request will be accepted if the metrics are improved.
 
 
 3. Implementing heuristics for new tasks and artifacts
@@ -105,7 +105,7 @@ Important commands
 Contribute to the framework
 =============================
 
-To contribute to the framework, please refer to the documentation in the  the `bohr-framework <https://github.com/giganticode/bohr-framework>`_ repo.
+To contribute to the BOHR-framework, which is used to manage the BOHR repo, please refer to the `bohr-framework repo <https://github.com/giganticode/bohr-framework>`_.
 
 
 Pre-prints and publications

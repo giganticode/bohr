@@ -1,0 +1,9 @@
+md5: 3cd1bc5c267570c374c5315f7bd22dda
+frozen: true
+deps:
+- etag: W/"939fbfb7cb0e309da46c140e5c8249dabd690df9fb712d4b78f120e07138d0a7"
+  path: https://github.com/flobrosch/msr-data/archive/refs/heads/master.zip
+outs:
+- md5: 691ca4dc06f945d2d3019e20ceb5cd5c
+  size: 898671
+  path: developer-labeled-commits.zip

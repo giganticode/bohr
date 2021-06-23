@@ -8,3 +8,5 @@
 /heuristic_matrix_berger.pkl
 /heuristic_matrix_herzig.pkl
 /heuristic_matrix_200k-commits.pkl
+/heuristic_matrix_fine-grained-refactorings.pkl
+/heuristic_matrix_developer-labeled-commits.pkl

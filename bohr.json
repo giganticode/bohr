@@ -11,7 +11,8 @@
       "test_datasets": [
         "1151-commits",
         "berger",
-        "herzig"
+        "herzig",
+        "developer-labeled-commits"
       ],
       "train_datasets": [
         "200k-commits"
@@ -119,6 +120,15 @@
       "loader": "csv",
       "mapper": "bohr.collection.datamappers.method.MethodMapper",
       "sep": ";"
+    },
+    "developer-labeled-commits": {
+      "author": "Andreas Mauczka, Florian Brosch, Christian Schanes, Thomas Grechenig",
+      "description": "Dataset of Developer-Labeled Commit Messages",
+      "path": "developer-labeled/Commits.csv",
+      "path_preprocessed": "developer-labeled.csv",
+      "preprocessor": "data-preprocessing/developer_labeled.py",
+      "loader": "csv",
+      "mapper": "bohr.collection.datamappers.commit.CommitMapper"
     },
     "smells-test": {
       "author": "Madeyski, Lech, Lewowski, Tomasz",

@@ -1,0 +1,10 @@
+md5: fe83608b93a557325bb091d1475572b3
+frozen: true
+deps:
+- etag: '"md5:15d8fedcdef6f7f75df5c687c78cd791"'
+  size: 119657
+  path: https://zenodo.org/record/3596397/files/manualy_labeled_commits%20%28goldset%29.zip?download=1
+outs:
+- md5: 15d8fedcdef6f7f75df5c687c78cd791
+  size: 119657
+  path: fine-grained-refactorings.zip

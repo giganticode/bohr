@@ -12,10 +12,12 @@
                 "test_datasets": [
                     "1151-commits",
                     "berger",
+                    "developer-labeled-commits",
                     "herzig"
                 ],
                 "train_datasets": [
-                    "200k-commits"
+                    "200k-commits",
+                    "fine-grained-refactorings"
                 ],
                 "label_column_name": "bug"
             },
@@ -120,6 +122,24 @@
                 "loader": "csv",
                 "mapper": "bohr.collection.datamappers.method.MethodMapper",
                 "sep": ";"
+            },
+            "developer-labeled-commits": {
+                "author": "Andreas Mauczka, Florian Brosch, Christian Schanes, Thomas Grechenig",
+                "description": "Dataset of Developer-Labeled Commit Messages",
+                "path": "developer-labeled-commits.zip",
+                "path_preprocessed": "developer-labeled.csv",
+                "preprocessor": "data-preprocessing/developer_labeled.py",
+                "loader": "csv",
+                "mapper": "bohr.collection.datamappers.commit.CommitMapper"
+            },
+            "fine-grained-refactorings": {
+                "author": "Krasniqi, Rrezarta; Cleland-Huang, Jane",
+                "description": "dataset of manually-labeled fine-grained refactoring types from Enhancing Code Refactoring Detection with Explanations from Commit Messages",
+                "path": "fine-grained-refactorings.zip",
+                "path_preprocessed": "fine-grained-refactorings.csv",
+                "preprocessor": "data-preprocessing/fine-grained-refactorings.py",
+                "loader": "csv",
+                "mapper": "bohr.collection.datamappers.commit.CommitMapper"
             },
             "smells-test": {
                 "author": "Madeyski, Lech, Lewowski, Tomasz",

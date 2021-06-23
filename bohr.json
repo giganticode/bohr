@@ -125,7 +125,7 @@
     "developer-labeled-commits": {
       "author": "Andreas Mauczka, Florian Brosch, Christian Schanes, Thomas Grechenig",
       "description": "Dataset of Developer-Labeled Commit Messages",
-      "path": "Commits.csv",
+      "path": "developer-labeled-commits.zip",
       "path_preprocessed": "developer-labeled.csv",
       "preprocessor": "data-preprocessing/developer_labeled.py",
       "loader": "csv",

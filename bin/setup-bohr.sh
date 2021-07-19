@@ -25,8 +25,6 @@ pip install git+https://github.com/giganticode/bohr-framework@v$BOHR_VERSION
 
 dvc config core.check_update false
 
-bash tools/install-refactoring-miner $SOFTWARE_DIR
-
 pip install -r requirements.txt
 
 bohr config paths.software_path $SOFTWARE_DIR

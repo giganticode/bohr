@@ -5,14 +5,14 @@
         "many_indentation_levels2": 0.0
     },
     "Coverage": {
-        "long_method": 0.4822064056939502,
-        "many_indentation_levels": 0.11387900355871886,
-        "many_indentation_levels2": 0.042704626334519574
+        "long_method": 0.4288256227758007,
+        "many_indentation_levels": 0.09074733096085409,
+        "many_indentation_levels2": 0.03558718861209965
     },
     "Overlaps": {
-        "long_method": 0.11387900355871886,
-        "many_indentation_levels": 0.11387900355871886,
-        "many_indentation_levels2": 0.042704626334519574
+        "long_method": 0.09074733096085409,
+        "many_indentation_levels": 0.09074733096085409,
+        "many_indentation_levels2": 0.03558718861209965
     },
     "Polarity": {
         "long_method": [

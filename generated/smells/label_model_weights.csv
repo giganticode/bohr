@@ -1,4 +1,4 @@
 heuristic_name,00,01,10,11
-long_method,0.001,0.001,0.21058777,0.7574804
-many_indentation_levels,0.001,0.001,0.001,0.30417562
-many_indentation_levels2,0.001,0.001,0.001,0.14138712
+long_method,0.001,0.001,0.1839456,0.67875844
+many_indentation_levels,0.001,0.001,0.001,0.26028985
+many_indentation_levels2,0.001,0.001,0.001,0.12484387

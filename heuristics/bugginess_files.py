@@ -2,8 +2,6 @@ import re
 from typing import Optional
 
 from bohr.collection.artifacts import Commit
-from bohr.collection.heuristictypes.tool import ToolOutputHeuristic
-from bohr.collection.heuristictypes.tools.refactoring_miner import RefactoringMiner
 from bohr.core import Heuristic
 from bohr.labeling.labelset import Labels
 from labels import CommitLabel
@@ -199,19 +197,6 @@ def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
         return CommitLabel.NonBugFix
     else:
         return None
-
-
-@ToolOutputHeuristic(Commit, tool=RefactoringMiner)
-def refactorings_detected(
-    commit: Commit, refactoring_miner: RefactoringMiner
-) -> Optional[Labels]:
-    if commit.sha.endswith(
-        "ff"
-    ):  # running on 1/256 of commits for now to make it faster
-        refactoring_miner_output = refactoring_miner.run(commit)
-        if len(refactoring_miner_output.commits[0].refactorings) > 0:
-            return CommitLabel.Refactoring
-    return None
 
 
 @Heuristic(Commit)

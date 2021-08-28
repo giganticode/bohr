@@ -19,8 +19,11 @@ class CommitLabel(Label):
     CopyChangeAdd = auto()
     Feature = auto()
     InitialCommit = auto()
-    VersionBump = auto()
-    NonBugFix = DocChange | TestFix | Refactoring | CopyChangeAdd | Feature | InitialCommit | VersionBump
+    ProjectVersionBump = auto()
+    DependencyVersionBump = auto()
+    VersionBump = ProjectVersionBump | DependencyVersionBump
+    Merge = auto()
+    NonBugFix = DocChange | TestFix | Refactoring | CopyChangeAdd | Feature | InitialCommit | VersionBump | Merge
     CommitLabel = BugFix | NonBugFix
 
     def parent(self):
@@ -46,10 +49,10 @@ class SStuB(Label):
         return CommitLabel.BugFix
 
 
-class CommtiTangling(Label):
+class CommitTangling(Label):
     Tangled = auto()
     NonTangled = auto()
-    CommtiTangling = Tangled | NonTangled
+    CommitTangling = Tangled | NonTangled
 
     def parent(self):
         return CommitLabel.CommitLabel

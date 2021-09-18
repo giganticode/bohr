@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bohr.iml" filepath="$PROJECT_DIR$/.idea/bohr.iml" />
       <module fileurl="file://$PROJECT_DIR$/../bohr-framework/.idea/bohr-framework.iml" filepath="$PROJECT_DIR$/../bohr-framework/.idea/bohr-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../bohr-runtime/.idea/bohr-runtime.iml" filepath="$PROJECT_DIR$/../bohr-runtime/.idea/bohr-runtime.iml" />
     </modules>
   </component>
 </project>

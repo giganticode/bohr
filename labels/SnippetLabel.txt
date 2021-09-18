@@ -1,2 +1,0 @@
-SnippetLabel: Smelly, NonSmelly
-Smelly: LongMethod, LongParameterList

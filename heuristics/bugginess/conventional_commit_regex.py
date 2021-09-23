@@ -1,10 +1,10 @@
 import re
 from typing import Optional
 
-import labels as l
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
 
 example1 = """feat: allow provided config object to extend other configs
 
@@ -65,13 +65,13 @@ def conventional_commit_regex(commit: Commit) -> Optional[Labels]:
         return None
     type = m.groups()[5]
     if type == "fix":
-        return l.CommitLabel.BugFix
+        return CommitLabel.BugFix
     elif type == "feat":
-        return l.CommitLabel.Feature
+        return CommitLabel.Feature
     elif type == "refactor":
-        return l.CommitLabel.Refactoring
+        return CommitLabel.Refactoring
     elif type == "docs":
-        return l.CommitLabel.DocChange
+        return CommitLabel.DocChange
     else:
         return None
     # TODO add more types

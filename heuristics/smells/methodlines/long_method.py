@@ -1,9 +1,9 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Method
+from bohrapi.artifacts import Method
 from bohrapi.core import Heuristic
-from bohrapi.labeling import Label
-from labels import SnippetLabel
+from bohrlabels.core import Label
+from bohrlabels.labels import SnippetLabel
 
 
 @Heuristic(Method)

@@ -1,13 +1,13 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Method
+from bohrapi.artifacts import Method
 from bohrapi.core import Heuristic
-from bohrapi.labeling import Label
-from labels import SnippetLabel
+from bohrlabels.core import Labels
+from bohrlabels.labels import SnippetLabel
 
 
 @Heuristic(Method)
-def many_indentation_levels2(method: Method) -> Optional[Label]:
+def many_indentation_levels2(method: Method) -> Optional[Labels]:
     if method.max_depth > 6:
         return SnippetLabel.LongMethod
     else:

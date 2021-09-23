@@ -1,9 +1,9 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrlabels.core import Labels
-from labels import CommitLabel
+from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)
@@ -14,3 +14,4 @@ def no_files_have_modified_status(commit: Commit) -> Optional[Labels]:
         if file.status == "modified":
             return None
     return CommitLabel.NonBugFix
+

@@ -1,8 +1,8 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrapi.labeling import Labels
+from bohrlabels.core import Labels
 from labels import CommitLabel
 
 

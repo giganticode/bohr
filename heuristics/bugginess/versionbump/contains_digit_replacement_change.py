@@ -1,10 +1,10 @@
 import re
 from typing import Optional
 
-import labels as l
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
 
 VERSION_CHANGE_REGEX = re.compile(r"\.</eq><re>\d+<to>\d+</re>")
 
@@ -17,5 +17,5 @@ def contains_digit_replacement_change(commit: Commit) -> Optional[Labels]:
     """
     for file in commit.commit_files:
         if file.changes is not None and VERSION_CHANGE_REGEX.search(file.changes):
-            return l.CommitLabel.VersionBump
+            return CommitLabel.VersionBump
     return None

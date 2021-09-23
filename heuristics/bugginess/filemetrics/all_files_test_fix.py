@@ -1,10 +1,10 @@
 import re
 from typing import Optional
 
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrlabels.core import Labels
-from labels import CommitLabel
+from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)

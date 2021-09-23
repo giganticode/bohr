@@ -1,12 +1,12 @@
+from typing import Optional
+
+from bohrapi.artifacts import Commit
+from bohrapi.core import Heuristic
+from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
+
+
 @Heuristic(Commit)
 def commit_explorer_output_sstubs(commit: Commit) -> Optional[Labels]:
-    try:
-        if commit.commit_explorer_data is None:
-            return None
-
-        data = commit.commit_explorer_data
-        if "mine_sstubs/head" in data and data["mine_sstubs/head"]:
-            print("Contains bug")
-            return l.CommitLabel.BugFix
-    except (CommitExplorerClientException, CommitNotFoundException) as ex:
-        return None
+    if "mine_sstubs/head" in commit.raw_data and commit.raw_data["mine_sstubs/head"]:
+        return CommitLabel.BugFix

@@ -1,10 +1,10 @@
 from typing import Optional
 
-import labels as l
-from bohrapi.collection.artifacts import Commit
-from bohrapi.collection.heuristictypes.keywords import KeywordHeuristics
+from bohrapi.artifacts import Commit
+from bohrapi.heuristictypes import KeywordHeuristics
 from bohrapi.util.misc import NgramSet
 from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
 
 
 @KeywordHeuristics(
@@ -20,5 +20,5 @@ def init_commit_message_keywords(
     commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
     if commit.message.match_ngrams(keywords):
-        return l.CommitLabel.InitialCommit
+        return CommitLabel.InitialCommit
     return None

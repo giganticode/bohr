@@ -1,10 +1,10 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Commit
+from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrapi.util.extensiontypes import code_extensions, passive_code_extensions
 from bohrlabels.core import Labels
-from labels import CommitLabel
+from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)

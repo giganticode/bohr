@@ -1,10 +1,10 @@
 from typing import Optional
 
-from bohrapi.collection.artifacts import Commit
-from bohrapi.collection.heuristictypes.keywords import KeywordHeuristics
-from bohrapi.labeling import Labels
+from bohrapi.artifacts import Commit
+from bohrapi.heuristictypes import KeywordHeuristics
 from bohrapi.util.misc import NgramSet
-from labels import CommitLabel
+from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
 
 
 @KeywordHeuristics(

@@ -284,6 +284,99 @@ stages:
     metrics:
     - metrics/bugginess/heuristics.manuallabels/heuristic_metrics_herzig.json:
         cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__200k-commits:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset 200k-commits
+    deps:
+    - data/200k-commits-files.csv
+    - data/200k-commits-issues.csv
+    - data/200k-commits-manual-labels.csv
+    - data/200k-commits.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_200k-commits.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_200k-commits.json:
+        cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__fine-grained-refactorings:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset fine-grained-refactorings
+    deps:
+    - data/fine-grained-refactorings.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_fine-grained-refactorings.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_fine-grained-refactorings.json:
+        cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__1151-commits:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset 1151-commits
+    deps:
+    - data/1151-commits.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_1151-commits.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_1151-commits.json:
+        cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__berger:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset berger
+    deps:
+    - data/berger.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_berger.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_berger.json:
+        cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__developer-labeled-commits:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset developer-labeled-commits
+    deps:
+    - data/developer-labeled.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_developer-labeled-commits.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_developer-labeled-commits.json:
+        cache: false
+  bugginess_apply_heuristics__heuristics_spacy_bugginess__herzig:
+    cmd: bohr porcelain apply-heuristics bugginess --heuristic-group heuristics.spacy_bugginess
+      --dataset herzig
+    deps:
+    - data/herzig.csv
+    - heuristics/spacy_bugginess.py
+    - labels.py
+    params:
+    - bohr.json:
+      - bohr_framework_version
+    outs:
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_herzig.pkl
+    metrics:
+    - metrics/bugginess/heuristics.spacy_bugginess/heuristic_metrics_herzig.json:
+        cache: false
   bugginess_combine_heuristics:
     cmd: bohr porcelain apply-heuristics bugginess
     deps:
@@ -299,6 +392,12 @@ stages:
     - generated/bugginess/heuristics.manuallabels/heuristic_matrix_developer-labeled-commits.pkl
     - generated/bugginess/heuristics.manuallabels/heuristic_matrix_fine-grained-refactorings.pkl
     - generated/bugginess/heuristics.manuallabels/heuristic_matrix_herzig.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_1151-commits.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_200k-commits.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_berger.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_developer-labeled-commits.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_fine-grained-refactorings.pkl
+    - generated/bugginess/heuristics.spacy_bugginess/heuristic_matrix_herzig.pkl
     params:
     - bohr.json:
       - bohr_framework_version

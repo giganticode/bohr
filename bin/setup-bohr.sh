@@ -26,5 +26,6 @@ pip install git+https://github.com/giganticode/bohr-framework@v$BOHR_VERSION
 dvc config core.check_update false
 
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 
 bohr config paths.software_path $SOFTWARE_DIR

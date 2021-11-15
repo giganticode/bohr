@@ -171,7 +171,8 @@
     "heuristics": {
         "heuristics/bugginess.py": "a55520b99cbaad572a26886b52e74652",
         "heuristics/manuallabels.py": "f338b2a285d76da97b3f53e9b167368a",
-        "heuristics/smells.py": "b1a5ed3a14eb9eae8924b8a43e3bc452"
+        "heuristics/smells.py": "b1a5ed3a14eb9eae8924b8a43e3bc452",
+        "heuristics/spacy_bugginess.py": "53c7ba0d4d416a0e55a4a883bb07b780"
     },
     "manual_stages": {}
 }

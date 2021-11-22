@@ -4,6 +4,7 @@ from typing import Optional
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
 from bohrlabels.core import Labels
+from bohrlabels.labels import CommitLabel
 
 GITHUB_REF_RE = re.compile(r"gh(-|\s)\d+", flags=re.I)
 
@@ -20,4 +21,4 @@ def github_ref_in_message(commit: Commit) -> Optional[Labels]:
     >>> github_ref_in_message(Commit("x", "y", "12afbc4564ba", "GH123: wrong issue reference")) is None
     True
     """
-    return l.CommitLabel.BugFix if GITHUB_REF_RE.search(commit.message.raw) else None
+    return CommitLabel.BugFix if GITHUB_REF_RE.search(commit.message.raw) else None

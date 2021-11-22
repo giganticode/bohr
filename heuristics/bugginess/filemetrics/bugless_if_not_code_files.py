@@ -12,7 +12,7 @@ def bugless_if_not_code_files(commit: Commit) -> Optional[Labels]:
     file_found = False
     for file in commit.commit_files:
         if isinstance(file.filename, float):
-            continue  # TODO filename is NaN if it's not given <- needs to be fixed
+            continue  # TODO filename is NaN if it's not given <- needs to be fixed!
         if file.filename.split(".")[-1] in [*code_extensions, *passive_code_extensions]:
             # TODO move filetype logic to CommitFile artifact?
             return None

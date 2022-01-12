@@ -12,4 +12,4 @@ def buggless_if_many_lines_changed(commit: Commit) -> Optional[Labels]:
     for file in commit.commit_files:
         if file.changes:
             sum += len(file.changes)
-    return CommitLabel.NonBugFix if sum > 5000 else None
+    return CommitLabel.NonBugFix if sum > 16000 else None

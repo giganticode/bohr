@@ -22,7 +22,6 @@ label_map = {
 @Heuristic(Commit)
 def fine_grained_changes_transformer_80(commit: Commit) -> Optional[Labels]:
     if "bohr" in commit.raw_data and "change_transformer_label/0_1" in commit.raw_data["bohr"]:
-        print(commit.raw_data)
         val = float(commit.raw_data["bohr"]["change_transformer_label/0_1"]['probability'])
         if 0.8 < val <= 0.9:
             return label_map[commit.raw_data["bohr"]["change_transformer_label/0_1"]['label']]

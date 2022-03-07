@@ -29,7 +29,7 @@ jobs:
           git fetch origin pull/$PR_NUMBER/head:pr/$PR_NUMBER
           git checkout pr/$PR_NUMBER
           echo "HEAD is $(git rev-parse --short HEAD)"
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
       - name: setup-bohr
@@ -99,7 +99,7 @@ jobs:
           git fetch origin pull/$PR_NUMBER/head:pr/$PR_NUMBER
           git checkout pr/$PR_NUMBER
           echo "HEAD is $(git rev-parse --short HEAD)"
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
       - name: setup-dvc

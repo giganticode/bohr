@@ -20,7 +20,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install git -y
           git --version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: pull auto-commited dvc output
@@ -90,7 +90,7 @@ jobs:
           apt-get update
           apt-get install git -y
           git --version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: pull auto-commited dvc output

@@ -24,27 +24,31 @@ How do heuristics look like?
   
  .. code-block:: python
  
-    # other imports
-    ...
-    from bohr.core import Heuristic
-    from bohr.collection.artifacts import Commit
-    from bohr.labels import CommitLabel
- 
-    @Heuristic(Commit)
-    def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
-        if len(commit.files) > 6:
-            return CommitLabel.NonBugFix
-        else:
-            return None
+  # ... other imports
+  
+  from bohrapi.core import Heuristic
+  from bohrlabels.core import Labels
+
+  from bohrapi.artifacts import Commit
+  from bohrlabels.labels import CommitLabel
+
+
+  @Heuristic(Commit)
+  def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
+      if len(commit.commit_files) > 15:
+          return CommitLabel.NonBugFix
+      else:
+          return None
             
 Important things to note:
 
 #. A heuristics is marked with the ``Heuristic`` decorator, and the artifact type to which it is applied is passed to it as a parameter; 
 #. The artifact instance is exposed to the heuristic as a function parameter; the properties of the artifact object can be used to implement the logic;
-#. For the label to be assigned to the artifact, it has to be returned from the function; the heuristic must assign one of the labels defined in the BOHR label hierarchy or ``None`` if it abstains on the data point.
+#. The label assigned to the artifact by the heuristic is the result of the execution on the passed artifact object; the heuristic must assign one of the labels defined in the BOHR label hierarchy or ``None`` if it abstains on the data point.
 
 BOHR usage scenarios
 ===================================
+
 
 1. Reusing existing heuristics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

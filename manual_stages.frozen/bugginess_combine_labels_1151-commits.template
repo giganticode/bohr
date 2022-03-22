@@ -1,9 +1,0 @@
--n bugginess_combine_labels_1151-commits
-
--d classifiers/bugginess-transformer/combine_labels.py
--d labeled-datasets/1151-commits.labeled.csv
--d metrics/bugginess/transformer/1151-commits/assigned_labels.csv
-
--O labeled-datasets/1151-commits.labeled.both.csv
-
-python classifiers/bugginess-transformer/combine_labels.py labeled-datasets/1151-commits.labeled.csv metrics/bugginess/transformer/1151-commits/assigned_labels.csv labeled-datasets/1151-commits.labeled.both.csv && echo "labeled-datasets/1151-commits.labeled.both.csv" >> .gitignore

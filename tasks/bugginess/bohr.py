@@ -77,5 +77,8 @@ bugginess = Task(
 )
 
 default_exp = Experiment(
-    "bugginess_default_exp", bugginess, train_dataset=commits_200k_files
+    "bugginess_default_exp",
+    bugginess,
+    train_dataset=commits_200k_files,
+    heuristics_classifier="bugginess@0a56f59c95ca87ee324c365bf2eb71b212a6045e",
 )

@@ -46,64 +46,88 @@ Important things to note:
 #. The artifact instance is exposed to the heuristic as a function parameter; the properties of the artifact object can be used to implement the logic;
 #. The label assigned to the artifact by the heuristic is the result of the execution on the passed artifact object; the heuristic must assign one of the labels defined in the BOHR label hierarchy or ``None`` if it abstains on the data point.
 
-BOHR usage scenarios
+Main Concepts
+====================================
+
+Apart from heuristics, main concepts of BOHR are **artifacts**, **datasets**, **labels**, **label assigners**, and **tasks**.
+
+**Artifact** is a central concept. It is a result of software engineering activity, e.g., code, commit, software project, software repository, issue report. 
+
+A collection of artifacts of the same type forms a **dataset**, which is often produced by MSR activities. The central use-case of BOHR is to assign labels to a dataset according to the given **task**. The purpose of assigning labels is to prepare datasets to be used in empirical studies or for training machine learning models. 
+
+**Labels** can be attached to artifacts and generally speaking can contain arbitrary information. Based on labels artifacts can be filtered or categorized.
+
+Labels to artifacts are assigned by **assigners**. There are **single-artifact** and **bulk** assigners. Single-artifact assigners assign labels directly to specific artifacts. These are normally human assigners that assign label to artifacts one by one (possibly as part of actively learning approach to be implement as part of BOHR). Bulk assigners are programs that infer the label to be assigned from the given input artifact. Examples of bulk assigners are heuristics themselves, their combinations (majority vote and label models), and deep learning models. 
+
+W.r.t. the presence of labels for the given task, datasets can be classified as **labeled** or **unlabeled**. Labeled datasets can be labeled with single-artifact assigners or with bulk-assigners. Even though, we consider datasets labeled by single-artifact assigners to be ground truth datasets, the border between ground-truth labels and not are blurry, see agree-to-disagree section.
+
+By working on a **task**, researchers aim to assign labels to datasets according to the rules defined by the task. E.g. there can be a task according to which an artifact can be assigned "bug-fixing" xor "non-bug-fixing" labels. The approach of assigning labels (mostly by using a trained bulk-assinger) is evaluated on a stand-alone test set(s), which has labels assigned according to strictly-defined rules.  
+
+
+BOHR workflow
 ===================================
 
+1. Get the list of pre-defined tasks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Reusing existing heuristics
+``bohr tasks``
+
+2. For the given task, pull existing heuristics developed by community
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``bohr clone bugginess ~/bugginess-work-dir``
+
+This will clone the so called BOHR working directory that corresponds to the <task> to <path>
+
+3 Check whether the existing labeled datasets are suitable for your purposes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every task comes with a trained classifier and a default dataset labeled by this classifier. Check whether the default datasets suits your purposes.
+
+``cd bugginess-work-dir && bohr pull default``
+
+The path where dataset is load will be displayed.
+
+4. Label your own dataset with the default classifier.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``$ bohr dataset add ~/new_commit_dataset.csv``
+``$ bohr task add-dataset bugginess new_commit_dataset --repro``
+
+5. Develop a new heuristic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Heuristics already implemented in BOHR are used to train label models. The label mdoels are continuosly improved as more heuristics are added and are used to label the datasets that been added to BOHR. These datasets can be easily accesed and used as they are. Moreover, you can use the label models to label your own datasets.
- 
-2. Implementing new heuristics for existing tasks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to help working on the tasks already defined in BOHR, you can add more heuristics to improve the label model and the datasets further. Once new heuristics are implemented, they can be submitted as a pull request to BOHR, which will automatically re-run the pipiline (the label model will be re-trained, the datasets will be re-labeled, and the metrics will be recalculated. The pull request will be accepted if the metrics are improved.
+``$ vi heuristics/commit_files.py``
 
 
-3. Implementing heuristics for new tasks and artifacts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6. Debug and tune the heuristic by checking its coverage and accuracy on a stand-alone test-set
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-BOHR is designed to be extensible. You can esily define new artifact classes and tasks, and start implementing heuristics for those tasks. Note that some heuristics already added for other tasks might be reused for a new task. Please refer to the documentation for more details.
+``$ bohr repro``
 
-Overview of BOHR abstractions
-================================
+7. Submit a pull request with the new heuristic to remote BOHR repository 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: html
+``$ bohr upload``
 
-    <img src="doc/bohr_abstractions.png" width="600px">
 
-Quick Start
-============
+Label model is trained and metrics are calculated on stand-alone test set as a part of a CI-pipeline. If metrics has been improved, the new heuristic is added to BOHR, and is available for other researchers.
+
+8. Add a new task
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``$ bohr task add tangled-commits \``
+``...    -l TangledCommit.NonTangled,TangledCommit.Tangled \``
+``...    --repro``
+
+
 
 Installation
-~~~~~~~~~~~~~
+==============
 
 Python >= 3.8 is required, use of virtual environment is strongly recommended.
 
 #. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
 #. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
-
-Important commands
-~~~~~~~~~~~~~~~~~~~
-
-+-----------------------------------+-------------------------------------------------------------------+
-|                                   | Command                                                           |
-+===================================+===================================================================+
-| Pull existing labeled dataset     | | ``$ bohr pull bugginess 200k-commits``                          |
-+-----------------------------------+-------------------------------------------------------------------+
-| Label your dataset                | | ``$ bohr dataset add ~/new_commit_dataset.csv -t commit``       |
-|                                   | | ``$ bohr task add-dataset bugginess new_commit_dataset --repro``|      
-+-----------------------------------+-------------------------------------------------------------------+
-| Add heuristic(s), re-train        | | ``$ vi heuristics/commit_files.py``                             |
-| label model, and update labels    | | ``$ bohr repro bugginess``                                      |
-+-----------------------------------+-------------------------------------------------------------------+
-| Add a new task                    | | ``$ bohr task add tangled-commits \``                           |
-|                                   | | ``...    -l TangledCommit.NonTangled,TangledCommit.Tangled \``  |
-|                                   | | ``...    --repro``                                              |
-|                                   | |                                                                 |
-+-----------------------------------+-------------------------------------------------------------------+
-
 
 
 Contribute to the framework

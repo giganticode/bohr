@@ -47,17 +47,17 @@ REGEX = re.compile(
 @Heuristic(Commit)
 def conventional_commit_regex(commit: Commit) -> Optional[Labels]:
     """
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example1))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example1}))
     CommitLabel.Feature
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example2))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example2}))
     CommitLabel.Refactoring
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example3))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example3}))
     CommitLabel.Refactoring
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example4))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example4}))
     CommitLabel.DocChange
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example5))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example5}))
     CommitLabel.Feature
-    >>> conventional_commit_regex(Commit('a', 'a', '1df23', example6))
+    >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example6}))
     CommitLabel.BugFix
     """
     m = REGEX.match(commit.message.raw)

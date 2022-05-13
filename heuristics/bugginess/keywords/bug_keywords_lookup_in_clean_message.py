@@ -14,11 +14,9 @@ from bohrlabels.labels import CommitLabel
         "broken",
         ["bug", "bugg"],
         "close",
-        "concurr",
         ["correct", "correctli"],
         "corrupt",
         "crash",
-        ["deadlock", "dead lock"],
         "defect",
         "disabl",
         "endless",
@@ -47,7 +45,6 @@ from bohrlabels.labels import CommitLabel
         "prevent",
         "problem",
         "properli",
-        "race condit",
         "repair",
         ["resolv", "solv"],
         ["threw", "throw"],
@@ -62,7 +59,7 @@ from bohrlabels.labels import CommitLabel
     name_pattern="bug_clean_message_keyword_%1",
 )
 def bug_keywords_lookup_in_clean_message(
-        commit: Commit, keywords: NgramSet
+    commit: Commit, keywords: NgramSet
 ) -> Optional[Labels]:
     """
     >>> from types import SimpleNamespace

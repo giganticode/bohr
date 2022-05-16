@@ -13,10 +13,12 @@ def not_same_if_only_first_names_match(
     """
     >>> not_same_if_only_first_names_match((Identity({"names": ["Hlib Babii"]}), Identity({"names": ["Hlib Shevchuk"]})))
     MatchLabel.NoMatch
+    >>> not_same_if_only_first_names_match((Identity({}), Identity({}))) is None
+    True
     """
-    if (
-        len(spl1 := identities[0].name.split(" ")) == 2
-        and len(spl2 := identities[1].name.split(" ")) == 2
-    ):
-        if spl1[0] == spl2[0] and spl1[1] != spl2[1]:
-            return MatchLabel.NoMatch
+    name1 = identities[0].name
+    name2 = identities[1].name
+    if name1 is not None and name2 is not None:
+        if len(spl1 := name1.split(" ")) == 2 and len(spl2 := name2.split(" ")) == 2:
+            if spl1[0] == spl2[0] and spl1[1] != spl2[1]:
+                return MatchLabel.NoMatch

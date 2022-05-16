@@ -11,6 +11,10 @@ def same_if_same_names(identities: Tuple[Identity, Identity]) -> Optional[Labels
     """
     >>> same_if_same_names((Identity({"names": ["Hlib Babii"]}), Identity({"names": ["Hlib Babii"]})))
     MatchLabel.Match
+    >>> same_if_same_names((Identity({}), Identity({}))) is None
+    True
     """
-    if identities[0].name == identities[1].name:
+    name1 = identities[0].name
+    name2 = identities[1].name
+    if name1 is not None and name2 is not None and name1 == name2:
         return MatchLabel.Match

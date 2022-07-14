@@ -3,14 +3,14 @@ from typing import Optional, Tuple
 import Levenshtein
 from bohrapi.artifacts.identity import Identity
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import MatchLabel
 
 
 @Heuristic(Identity, Identity)
 def same_if_short_relative_edit_distance(
     identities: Tuple[Identity, Identity]
-) -> Optional[Labels]:
+) -> Optional[OneOrManyLabels]:
     """
     >>> same_if_same_names((Identity({"names": ["Hlib Babii"]}), Identity({"names": ["Hlib Babiy"]})))
     MatchLabel.Match

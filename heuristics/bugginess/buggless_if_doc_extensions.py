@@ -2,13 +2,17 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrapi.util.extensiontypes import code_extensions, passive_code_extensions, doc_text_extensions
-from bohrlabels.core import Labels
+from bohrapi.util.extensiontypes import (
+    code_extensions,
+    doc_text_extensions,
+    passive_code_extensions,
+)
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)
-def buggless_if_doc_extensions(commit: Commit) -> Optional[Labels]:
+def buggless_if_doc_extensions(commit: Commit) -> Optional[OneOrManyLabels]:
     file_found = False
     for file in commit.commit_files:
         if isinstance(file.filename, float):

@@ -3,7 +3,7 @@ from typing import Optional
 from bohrapi.artifacts import Commit
 from bohrapi.heuristictypes import KeywordHeuristics
 from bohrapi.util.misc import NgramSet
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 
@@ -104,7 +104,7 @@ from bohrlabels.labels import CommitLabel
 )
 def bugless_keywords_lookup_in_clean_message(
     commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
+) -> Optional[OneOrManyLabels]:
     """
     >>> from types import SimpleNamespace
     >>> res = bugless_keywords_lookup_in_clean_message((Commit({"message": "MaxCount not working correctly in user/group query when"})), {"clean"})

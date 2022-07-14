@@ -2,12 +2,14 @@ from typing import Optional, Tuple
 
 from bohrapi.artifacts.identity import Identity
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import MatchLabel
 
 
 @Heuristic(Identity, Identity)
-def same_if_same_name_ends(identities: Tuple[Identity, Identity]) -> Optional[Labels]:
+def same_if_same_name_ends(
+    identities: Tuple[Identity, Identity]
+) -> Optional[OneOrManyLabels]:
     """
     >>> not_same_if_only_first_names_match((Identity({"names": ["Hlib Mr Babii"]}), Identity({"names": ["Hlib Babii"]})))
     MatchLabel.Match

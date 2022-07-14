@@ -3,7 +3,7 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 example1 = """feat: allow provided config object to extend other configs
@@ -45,7 +45,7 @@ REGEX = re.compile(
 
 
 @Heuristic(Commit)
-def conventional_commit_regex(commit: Commit) -> Optional[Labels]:
+def conventional_commit_regex(commit: Commit) -> Optional[OneOrManyLabels]:
     """
     >>> conventional_commit_regex(Commit({"author": 'a', "repository": 'a', "_id": '1df23', "message": example1}))
     CommitLabel.Feature

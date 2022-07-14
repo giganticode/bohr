@@ -2,12 +2,12 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)
-def removed_todo(commit: Commit) -> Optional[Labels]:
+def removed_todo(commit: Commit) -> Optional[OneOrManyLabels]:
     for file in commit.commit_files:
         for change in file.parsed_changes:
             if change[0] == "del" and "TODO" in change[1]:

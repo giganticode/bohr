@@ -3,12 +3,12 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)
-def all_files_test_fix(commit: Commit) -> Optional[Labels]:
+def all_files_test_fix(commit: Commit) -> Optional[OneOrManyLabels]:
     TEST_FILE_REGEX = re.compile(r"test", flags=re.I)
     if len(commit.commit_files) == 0:
         return None

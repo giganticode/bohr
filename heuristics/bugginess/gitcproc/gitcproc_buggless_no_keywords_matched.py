@@ -2,14 +2,12 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 
 @Heuristic(Commit)
-def gitcproc_buggless_no_keywords_matched(
-        commit: Commit
-) -> Optional[Labels]:
+def gitcproc_buggless_no_keywords_matched(commit: Commit) -> Optional[OneOrManyLabels]:
     for ngram in [
         "bug",
         "fix",

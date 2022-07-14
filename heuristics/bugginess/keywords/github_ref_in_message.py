@@ -3,14 +3,14 @@ from typing import Optional
 
 from bohrapi.artifacts import Commit
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import CommitLabel
 
 GITHUB_REF_RE = re.compile(r"gh(-|\s)\d+", flags=re.I)
 
 
 @Heuristic(Commit)
-def github_ref_in_message(commit: Commit) -> Optional[Labels]:
+def github_ref_in_message(commit: Commit) -> Optional[OneOrManyLabels]:
     """
     >>> github_ref_in_message(Commit({"owner": "x", "repository": "y", "_id": "12afbc4564ba", "message": "gh-123: bug"}))
     CommitLabel.BugFix

@@ -2,14 +2,14 @@ from typing import Optional, Tuple
 
 from bohrapi.artifacts.identity import Identity
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import MatchLabel
 
 
 @Heuristic(Identity, Identity)
 def same_if_first_and_last_names_in_email(
     identities: Tuple[Identity, Identity]
-) -> Optional[Labels]:
+) -> Optional[OneOrManyLabels]:
     """
     >>> same_if_first_and_last_names_in_email((Identity({"emails": ["hlibbabii@gmail.com"]}), Identity({"names": ["hlib babii"]})))
     MatchLabel.Match

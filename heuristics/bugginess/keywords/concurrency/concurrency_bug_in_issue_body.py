@@ -4,7 +4,7 @@ import bohrlabels.labels as l
 from bohrapi.artifacts import Commit
 from bohrapi.heuristictypes import KeywordHeuristics
 from bohrapi.util.misc import NgramSet
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 
 
 @KeywordHeuristics(
@@ -18,7 +18,7 @@ from bohrlabels.core import Labels
 )
 def concurrency_bug_keywords_in_message(
     commit: Commit, keywords: NgramSet
-) -> Optional[Labels]:
+) -> Optional[OneOrManyLabels]:
     if commit.issues_match_ngrams(keywords):
         return l.CommitLabel.ConcurrencyBugFix
     return None

@@ -2,14 +2,14 @@ from typing import Optional, Tuple
 
 from bohrapi.artifacts.identity import Identity
 from bohrapi.core import Heuristic
-from bohrlabels.core import Labels
+from bohrlabels.core import OneOrManyLabels
 from bohrlabels.labels import MatchLabel
 
 
 @Heuristic(Identity, Identity)
 def same_if_contains_large_two_part_name(
     identities: Tuple[Identity, Identity]
-) -> Optional[Labels]:
+) -> Optional[OneOrManyLabels]:
     """
     >>> same_if_contains_large_two_part_name((Identity({"names": ["Hlib Babii"]}), Identity({"names": ["Hlib Babii, the programmer"]})))
     MatchLabel.Match

@@ -3,7 +3,17 @@ BOHR (Big Old Heuristic Repository)
 
 |GitHub license| |Maintainability| |GitHub make-a-pull-requests|
 
-BOHR is a **repository of heuristics** for categorization of software engineering artifacts, e.g. commits, bug reports, etc. 
+BOHR is a **repository of heuristics** for preparation (filtering, labeling, grouping, filtering) of software engineering (SE) artifacts, e.g. commits, bug reports, code snippets, etc. SE artifact preparation is often required by researchers in the field of Software Engineering and Mining Software Repositories (MSR) to convert artifacts mined from software repositories into datasets that can be used to conduct empirical experiments and to train machine learning models. 
+
+Preparing each artifact manually is expensive and does not scale well. Therefore BOHR offers an approach to define heuristics to do the job automatically. Even though heuristic outputs can be noisy by their definition, using a large number of them and "smartly" combining them compensates for the quality of outputs. 
+
+
+
+TBD:
+
+
+Examples
+=====================
 
 Categorization of artifacts is often required to create ground-truth datasets to train machine learning models on. For example, to train a model that classifies commits as "feature", "bugfix", or "refactoring", one needs to have a dataset of commits with these labels assigned. 
 
@@ -27,14 +37,14 @@ How do heuristics look like?
   # ... other imports
   
   from bohrapi.core import Heuristic
-  from bohrlabels.core import Labels
+  from bohrlabels.core import OneOrManyLabels
 
   from bohrapi.artifacts import Commit
   from bohrlabels.labels import CommitLabel
 
 
   @Heuristic(Commit)
-  def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
+  def bugless_if_many_files_changes(commit: Commit) -> OneOrManyLabels:
       if len(commit.commit_files) > 15:
           return CommitLabel.NonBugFix
       else:
@@ -49,33 +59,23 @@ Important things to note:
 Main Concepts
 ====================================
 
-Apart from heuristics, main concepts of BOHR are **artifacts**, **datasets**, **labels**, **label assigners**, and **tasks**.
+BOHR is a repository of *heuristics*, hence, a heuristic is a primary concept in BOHR. Sub-program (python function) that accepts an artifact or multiple artifacts of the same or different types. 
 
-**Artifact** is a central concept. It is a result of software engineering activity, e.g., code, commit, software project, software repository, issue report. 
+Artifact is BOHR's abstraction that represents a software engineering artifact - a product of SE activities, e,g. code, commit, software project, software repository, issue report. *Dataset* is a collection of artifacts of the same type. 
 
-A collection of artifacts of the same type forms a **dataset**, which is often produced by MSR activities. The central use-case of BOHR is to assign labels to a dataset according to the given **task**. The purpose of assigning labels is to prepare datasets to be used in empirical studies or for training machine learning models. 
+*Task* is an abstraction that describes the problem that a researcher is working on in terms of BOHR. The input and the output of the tasks are datasets. Task types are labeling, grouping, linking, filtering. The task is defined by specifying artifact type(s) heuristics are applied to, possible outputs of heuristics, strategy how heuristics aree combined, test datasets and metrics to use to evaluate the effectiveness of heuristics.
 
-**Labels** can be attached to artifacts and generally speaking can contain arbitrary information. Based on labels artifacts can be filtered or categorized.
-
-Labels to artifacts are assigned by **assigners**. There are **single-artifact** and **bulk** assigners. Single-artifact assigners assign labels directly to specific artifacts. These are normally human assigners that assign label to artifacts one by one (possibly as part of actively learning approach to be implement as part of BOHR). Bulk assigners are programs that infer the label to be assigned from the given input artifact. Examples of bulk assigners are heuristics themselves, their combinations (majority vote and label models), and deep learning models. 
-
-W.r.t. the presence of labels for the given task, datasets can be classified as **labeled** or **unlabeled**. Labeled datasets can be labeled with single-artifact assigners or with bulk-assigners. Even though, we consider datasets labeled by single-artifact assigners to be ground truth datasets, the border between ground-truth labels and not are blurry, see agree-to-disagree section.
-
-By working on a **task**, researchers aim to assign labels to datasets according to the rules defined by the task. E.g. there can be a task according to which an artifact can be assigned "bug-fixing" xor "non-bug-fixing" labels. The approach of assigning labels (mostly by using a trained bulk-assinger) is evaluated on a stand-alone test set(s), which has labels assigned according to strictly-defined rules.  
+*Experiment* is an attempt to solve a task using a specific set of heuristics (and training data if needed).
 
 
 BOHR workflow
 ===================================
 
-1. Get the list of pre-defined tasks
+
+1a. For the given task, pull existing heuristics developed by community
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``bohr tasks``
-
-2. For the given task, pull existing heuristics developed by community
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-``bohr clone bugginess ~/bugginess-work-dir``
+``bohr clone https://github.com/giganticode/bohr-workdir-bugginess``
 
 This will clone the so called BOHR working directory that corresponds to the <task> to <path>
 
@@ -120,21 +120,10 @@ Label model is trained and metrics are calculated on stand-alone test set as a p
 ``...    --repro``
 
 
-
 Installation
 ==============
 
-Python >= 3.8 is required, use of virtual environment is strongly recommended.
-
-#. Run ``git clone https://github.com/giganticode/bohr && cd bohr``
-#. Install BOHR framework library: ``bin/setup-bohr.sh``. This will install `bohr-framework <https://github.com/giganticode/bohr-framework>`_, dependencies and tools to run heursistics.
-
-
-Contribute to the framework
-=============================
-
-To contribute to the BOHR-framework, which is used to manage the BOHR repo, please refer to the `bohr-framework repo <https://github.com/giganticode/bohr-framework>`_.
-
+TODO: add links to other repos
 
 Pre-prints and publications
 =============================

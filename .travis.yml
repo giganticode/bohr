@@ -1,9 +1,0 @@
-language: python
-if: 'type = pull_request OR branch = master'
-python:
-  - "3.8"
-install:
-  - bash bin/setup-bohr.sh .
-  - pip install -r requirements-dev.txt
-script:
-  - pytest --doctest-modules

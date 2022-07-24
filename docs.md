@@ -15,8 +15,17 @@ API (python library) to define *datasets*, *tasks*, and *experiments*, and to de
 BOHR is a repository of *heuristics*, hence, a heuristic is a primary concept in BOHR. Sub-program (python function) that accepts an artifact or multiple artifacts of the same or different types. Artifact is BOHR's abstraction that represents a software engineering artifact - a product of SE activities, e,g. code, commit, software project, software repository, issue report.
 
 ```python
+# ... other imports
+
+from bohrapi.core import Heuristic
+from bohrlabels.core import OneOrManyLabels
+
+from bohrapi.artifacts import Commit
+from bohrlabels.labels import CommitLabel
+
+
 @Heuristic(Commit)
-def bugless_if_many_files_changes(commit: Commit) -> Optional[Labels]:
+def bugless_if_many_files_changes(commit: Commit) -> OneOrManyLabels:
     if len(commit.commit_files) > 15:
         return CommitLabel.NonBugFix
     else:
@@ -180,7 +189,7 @@ The user can make changes and add new heuristics to the local BOHR repo. Then th
 
 ### Sharing tasks and experiments
 
-Apart from sharing heuristics, the whole task and task runs (experiments can be shared). We find the link Git+DVC useful for sharing tasks and experiments. The BOHR config for the task + metrics can be stored in Git, all large intermediate artifacts can be stored in DVC.
+Apart from sharing heuristics, the entire task and task runs (experiments) can be shared. We find the link Git+DVC useful for sharing tasks and experiments. The BOHR config for the task + metrics can be stored in Git, all large intermediate artifacts can be stored in DVC.
 
 *bohr clone https://github.com/giganticode/bohr-workdir-bugginess* -> pulls from git, pulls from dvc, makes sure everything is up-to-date, otherwise reproduces.
 
@@ -213,14 +222,6 @@ You can try, fir example, accessing the following commit: http://squirrel.inf.un
 
 
 
-TO check the status/restart the http-server, run on the squirrel box: 
-
-*sudo systemctl status/restart bohr-http*
-
-Running the service executes the following command: 
-
-*/home/students/hbabii/.pyenv/versions/miniconda-3.7.0/bin/python -u /usr/local/web/bohr/run_bohr_server.py*
-
 
 
 #### Crawler
@@ -244,6 +245,34 @@ Source code https://github.com/giganticode/commit-explorer
 Two core ideas of BOHR for labeling tasks are 1) reusing heuristics developed for more specific tasks for more general tasks  2) Reusing heuristics accross different label definitions.
 
 The source code of can be found at https://github.com/giganticode/bohr-labels
+
+
+
+![image-20220708233442302](/Users/hlib/Library/Application Support/typora-user-images/image-20220708233442302.png)
+
+#### Concept of *label* in BOHR.
+
+Labels are used in labeling tasks and heuristics compatible with these task.1) Labeling task heuristics assign BOHR labels to artifacts. 2) When a labeling task is defined, BOHR labels are used to define categories to which artifacts can be categorized.
+
+Labels are organized in a hierarchy in BOHR (see the graph).  To be more precise, we define it as a multi-hierarchy, in which two labels can either be 1) in a relationship "ancestor-descendent" (or "more generic - more specific", e.g. BugFix and MajorBugFix or 2) be mutually exclusive, e,g, NonBugFix and UIBugFix or 3) be not mutually exclusive, e.g. MinorBugFix and UIBugFix. 
+
+A group of labels belongs to the same hierarchy if and only if 
+
+
+
+Heuristic can assign multiple labels, each pair of which are from different hierarchies, e.g. ConcurrencyBugFix and MajorBugFix.
+
+ When the task is e.g. MinorBugFix vs MajorBugFix, only the label MajorBugFix label is considered. 
+
+Labels defined in the task have to be mutually exclusive, i.e. have to be from the same hierarchy.
+
+
+
+#### Labels implementation
+
+
+
+https://stackoverflow.com/questions/70145416/collapsible-subset-of-partially-ordered-set
 
 
 
@@ -300,13 +329,282 @@ BOHR-API should allow heuristic developers quickly implement their heuristic ide
 - Reuse of datasets. 
 - artifacts explorer
 
-## TODO for the next meeting
+## BOHR demo (to be converted to one of tutorials)
 
-Example of commit classification - show how bohr is working
+First we create a separate virtual environment to make sure that the libraries used by BOHR do not clash with already installed libraries
 
-Check what things are working and not working
+```shell
+pyenv virtualenv 3.8 bohr-demo
+pyenv activate bohr-demo
+pyenv which python
+pip list
+```
 
-Add comments to top of the files
+
+
+Now we install bohr-runtime. This will allow us to run BOHR commands. Besides, BOHR-API will be installed which will allow us to define a BOHR config
+
+```
+pip install bohr-runtime
+```
+
+Next, we clone a BOHR work-dir for the bugginess task, whose configuration is stored on Github
+
+```
+bohr clone https://github.com/giganticode/bohr-workdir-bugginess
+```
+
+If we try to reproduce the experiments, all the experiments will be up-to-date
+
+```
+cd bohr-workdir-bugginess
+
+bohr repro
+```
+
+We can make changes to some heuristics and reproduce the experiments again
+
+```
+bohr repro
+```
+
+
+
+## Getting started with BOHR development
+
+### BOHR repository
+
+Source code: https://github.com/giganticode/bohr
+
+This Github repo contains only the heuristics themselves (`heuristics` dir). For the BOHR engine, see BOHR-Runtime.
+
+Heuristics are organized in a directory tree. Each file contains only one heuristic (exception is keyword heuristics marked with annotation `@KeywordHeuristics`). The name of the heuristic is the same as the name of the file. Heuristic files cannot depend on each other. Such organization allows to detect changes to which heuristics were made and need to be re-run.
+
+If a file does not contain a function marked with `@Heuristic` decorator, such file will be ignored.  The type(s) of artifact(s) that heuristic can be applied to is passed as a parameter to the decorator. This allows the framework to know which artifact(s) the heuristic can be applied to.
+
+ 
+
+### BOHR-runtime
+
+Source code: https://github.com/giganticode/bohr-framework
+
+#### Tests:
+
+Most of the tests are implementing as doctests inside python docs strings for each method. This approach allows to keep the tests close to the code and to see how the code can be used. To run the doc test run:
+
+```cd bohr-runtime && poetry run pytest --doctest-modules --ignore=test-b2b```
+
+#### Project structure
+
+............
+
+├── Dockerfile    <- *creating a docker container with bohr installed to be deployed on CI server (github actions) - might be outdated*
+├── bohrruntime <- *source code*
+├── poetry.lock <- *file automatically generated by poetry (build and dependency management system for python)*
+├── pyproject.toml <- *project config used by poetry*
+├── renovate.json <- *renovate config (tool that automatically send PRs with updated dependencies)*
+├── test <- *usual unit tests would go here (nothing here yet because we are using doctests all the time so far)*
+└── test-b2b <- *b2b tests 2 simple scenarios to test the whole bohr workflow for labeling and grouping tasks*
+
+#### Source code structure (bohrruntime directory)
+
+bohrruntime
+.................
+├── appconfig.py <- *handling saving and loading values to/from BOHR config*
+├── bohrconfig.py <- *code for parsing BOHR config*
+├── cli 
+│   ├── cli.py <- *implementation of cli commands like "bohr repro"*
+│   ├── porcelain <- *implementation of internal cli commands used by pipeline manager (dvc) to execute stages*
+│   └── remote
+├── commands.py <- *implementation of CLI commands*
+├── datamodel <- *implementation of main BOHR concepts*
+│   ├── dataset.py
+│   ├── experiment.py
+│   ├── model.py
+│   ├── task.py
+│   └── bohrconfig.py
+├── datasource.py <- *code related to loading datasets from Artifact Explorer* 
+├── dvcwrapper.py <- *wrapper over dvc tool*
+├── heuristics.py <- *code related to locating and loading heuristics*
+├── pipeline.py <- *implements classes for each stage of pipeline and their convertion to pipeline manager config*
+├── stages.py <- *implementation of stages of BOHR lifecycle without task-specific details*
+├── storageengine.py <- *handles saving and loading of input and outputs of all stages to a (possibly virtual) file system*
+├── tasktypes <- package containing task-specific logic
+│   ├── filtering
+│   ├── grouping
+│   └── labeling
+├── testtools.py <- *stub datamodel objects for testing*
+
+
+
+### BOHR-labels
+
+This is a dependency of BOHR-runtime
+
+Source code: https://github.com/giganticode/bohr-labels
+
+The label hierarchy can be extended by modifying text files under `labels`
+
+In order for the hierarchy of objects that are used by heuristics to be updated according to the changes made to files in `labels`, `build/build.py` file has to be executed.
+
+The file `bohrlabels/labels.py` will be updated.
+
+### BOHR-API
+
+This is another dependency of bohr-runtime.
+
+Source code: https://github.com/giganticode/bohr-api
+
+
+
+TODO ! different object hierarchies in Bohr-api and bohr-runtime
+
+
+
+### Artifact Explorer
+
+Source code can be found here: https://github.com/giganticode/commit-explorer
+
+Commit explorer is the old name before we had a though to generalize the idea to all kinds of artifacts - not only commits. 
+
+#### Mongo db 
+
+Running on the ironspeed box (`10.10.20.160:27017`)
+
+Connection string for read-only user: `mongodb://read-only-user:123@10.10.20.160:27017`
+
+Username and password with write permissions please request from Hlib Babii
+
+#### Http server
+
+Artifact explorer is running an http server on the squirrel box (`squirrel.inf.unibz.it`)
+
+TO check the status/restart the http-server, run on the squirrel box: 
+
+`sudo systemctl status bohr-http`   /
+
+`sudo systemctl restart bohr-http`
+
+Running the service executes the following command: 
+
+`/home/students/hbabii/.pyenv/versions/miniconda-3.7.0/bin/python -u /usr/local/web/bohr/run_bohr_server.py`
+
+ `/usr/local/web/bohr/run_bohr_server.py` is a sim-link to `/home/students/hbabii/commit-explorer/server/server.py`
+
+If some changes need to be made to the server code, push it to Github from your local machine then on the squirrel box:
+
+`cd /home/students/hbabii/commit-explorer && git pull` then restart the service: `sudo systemctl restart bohr-http`
+
+TODO example to access some commit
+
+#### Crawler code overview
+
+...
+
+
+
+###  Bohr-workdir-bugginess:  bugginess task BOHR working directory
+
+Github URL: https://github.com/giganticode/bohr-workdir-bugginess
+
+#### Directory structure
+
+
+├── bohr.lock
+├── bohr.py  <- *bohr configuration*
+├── cached-datasets <- *cached datasets, if dataset is absent in cache, it's reloaded from artifact explorer or from local path* 
+│   ├── berger_files.jsonl
+│   ├── berger_files.jsonl.metadata.json
+│   ├── levin_files.jsonl
+│   ├── levin_files.jsonl.metadata.json
+│   ├── manual_labels.herzig.jsonl
+│   ├── manual_labels.herzig.jsonl.metadata.json
+│   ├── mauczka_files.jsonl
+│   └── mauczka_files.jsonl.metadata.json
+├── cloned-bohr <- *cloned bohr reprository of heuristics*
+├── dvc.lock <- *dvc-managed file (for piprlinr management)*
+├── dvc.yaml <-*dvc-managed file (for piprlinr management)*
+└── runs <- *experiment results and files produced by intermediate stages*
+    ├── \__heuristics
+    │   ├── berger_files
+    │   │   ├── bugginess. <- *results of heuristics applied to a dataset (berger_files) as part of the task (bugginess task)*
+    .......
+    ├── __single_heuristic_metrics
+    │   ├── bugginess
+    │   │   ├── berger_files  <- *metrics calculated for individual heuristics for the given task (bugginess) and the dataset (berger_files)*
+	........
+    ├── bugginess <- *experiment results for the bugginess task*
+    │   ├── all_heuristics_with_issues <- *all_heuristics_with_issues experiment results*
+    │   │   ├── berger_files <- *contains metrics of the given model for this dataset*
+    │   │   ├── label_model.pkl <- *model file: this file is specific to the labeling task*
+    │   │   ├── label_model_weights.csv <- *this file is specific to the labeling task*
+    │   ├── random_model <- *baseline 1*
+    │   │   ├── berger_files
+    │   │   ├── manual_labels.herzig
+    │   │   └── mauczka_files
+    │   └── zero_model <- *baseline 2*
+    │       ├── berger_files
+    │       ├── manual_labels.herzig
+    │       └── mauczka_files
+	...
+
+
+
+#### Default remote dataset and model storage
+
+By default, when performing `bohr clone` , data will be pulled by http from http://squirrel.inf.unibz.it:8180 (the same server is shared with the artifact explorer, see #Artifact explorer - http server section)
+
+When performing `bohr push` after the reproduction of the experiments, data will be pushed by ssh to ssh://squirrel.inf.unibz.it/data/bohr_dvc_storage. In order to perform the first push the credentials to the squirrel server has to be provided (unibz credentials) It can be done by running `bohr remote set-write-credentials <username> <password>`
+
+This will add the username to `.dvc/config` and the password to `.dvc/config.local` files. The later one will be automatically gitignored so that it's not commited accidentally.
+
+
+
+### BOHR-UI
+
+Source code: https://github.com/giganticode/bohr-ui
+
+Deployed app: https://giganticode-bohr-ui-main-nh18iq.streamlitapp.com/. (Streamlit server)
+
+The app loads the data from 
+
+- https://github.com/giganticode/bohr-workdir-bugginess
+- https://github.com/giganticode/diff-classifier
+- In the future, BOHR-UI could pull information from more data sources (from more BOHR working directories), and in different tabs, there can be visualizations of models for all the tasks that people are working on.
+
+Data is updated automatically once updates are pushed to the repositories.
+
+
+
+
+
+## TODOs, potential features, and ideas
+
+- aggregate data from all experiments of the task
+
+
+
+
+
+## TODO for these docs
+
+Making sense of data - should be in bohr or UI
+
+Tutorial - running experiments + makinf sense of data
+
+Tutorial how to define a new task, how to add a new heuristics
+
+Docs for each file
+
+make things work when easily doable, if something doesn't mention in docs
+
+
+
+
+
+
+
+
 
 
 

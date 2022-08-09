@@ -3,35 +3,22 @@ BOHR (Big Old Heuristic Repository)
 
 |GitHub license| |Maintainability| |GitHub make-a-pull-requests|
 
-BOHR is a **repository of heuristics** for preparation (filtering, labeling, grouping, filtering) of software engineering (SE) artifacts, e.g. commits, bug reports, code snippets, etc. SE artifact preparation is often required by researchers in the field of Software Engineering and Mining Software Repositories (MSR) to convert artifacts mined from software repositories into datasets that can be used to conduct empirical experiments and to train machine learning models. 
+BOHR is a **repository of heuristics** for preparation (labeling, grouping, linking, filtering) of software engineering artifacts, e.g. commits, bug reports, code snippets, etc. Preparation of these artifacts is often required by researchers in the field of Software Engineering (SE) and Mining Software Repositories (MSR) to convert artifacts mined from software repositories such as GitHub, StackOverflow into datasets that can be used for empirical experiments and for training machine learning models. An example could be classifying commits mined from GitHub into bug-fixing and others in order to create a training dataset to train a machine-learning model on. 
 
-Preparing each artifact manually is expensive and does not scale well. Therefore BOHR offers an approach to define heuristics to do the job automatically. Even though heuristic outputs can be noisy by their definition, using a large number of them and "smartly" combining them compensates for the quality of outputs. 
-
-
-
-TBD:
-
-
-Examples
-=====================
-
-Categorization of artifacts is often required to create ground-truth datasets to train machine learning models on. For example, to train a model that classifies commits as "feature", "bugfix", or "refactoring", one needs to have a dataset of commits with these labels assigned. 
-
-Since creating a large dataset manually is expensive, the alternative is to come up with "heuristics", short programs that can assign noisy labels to artifacts automatically. Implementing **a large number of such heuristics** and **combining their outputs** "smartly" is the idea behind `snorkel <https://www.snorkel.org/>`_, the state-of-the-art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.
-
-BOHR is a wrapper around snorkel which:
-
-* **Simplifies** the process of **adding new heuristics** and **evaluating their effectiveness**;
-* **Labels the datasets** registered with BOHR and **automatically updates the labels** once heuristics are added;
-* Keeps track of heursitics used for each version of generated datasets and models, and, in general, makes sure they are **reproducible** and **easily accessable** by using `DVC <https://dvc.org>`_.
-
+Preparing each artifact manually is expensive and does not scale well. Therefore BOHR offers an approach to define heuristics (short functions) to do the job automatically. Even though using heuristics is usually less accurate than letting experts analyse each artifacts, we claim that using a large number of diverse heuristics and combining them "smartly" can significantly reduce the noise compared to for example using one heuistic. The way heuristics are combined depends on the type of the task, but one of the most common way is to use the algorithm used by the `snorkel <https://www.snorkel.org/>`_, the state-of-the-art `weak supervision <http://ai.stanford.edu/blog/weak-supervision/>`_ tool.   
 
 .. contents:: **Contents**
   :backlinks: none
-  
-How do heuristics look like?
-===================================
-  
+
+
+Examples of tasks and heuristics
+=======================================
+
+Commit classification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One example is classifying commits mined from GitHub into "bugfix" and "non-bugfix", in order to create a training dataset to train a machine-learning model on. 
+
  .. code-block:: python
  
   # ... other imports
@@ -49,14 +36,29 @@ How do heuristics look like?
           return CommitLabel.NonBugFix
       else:
           return None
-            
+
+Grouping online identities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 Important things to note:
 
 #. A heuristics is marked with the ``Heuristic`` decorator, and the artifact type to which it is applied is passed to it as a parameter; 
 #. The artifact instance is exposed to the heuristic as a function parameter; the properties of the artifact object can be used to implement the logic;
 #. The label assigned to the artifact by the heuristic is the result of the execution on the passed artifact object; the heuristic must assign one of the labels defined in the BOHR label hierarchy or ``None`` if it abstains on the data point.
 
-Main Concepts
+
+
+
+TBD: Insert somewhere later?
+
+* **Simplifies** the process of **adding new heuristics** and **evaluating their effectiveness**;
+* **Labels the datasets** registered with BOHR and **automatically updates the labels** once heuristics are added;
+* Keeps track of heursitics used for each version of generated datasets and models, and, in general, makes sure they are **reproducible** and **easily accessable** by using `DVC <https://dvc.org>`_.
+
+ 
+
+Main Concepts (maybe this is not needed in README, rather in the docs)
 ====================================
 
 BOHR is a repository of *heuristics*, hence, a heuristic is a primary concept in BOHR. Sub-program (python function) that accepts an artifact or multiple artifacts of the same or different types. 
@@ -127,6 +129,8 @@ TODO: add links to other repos
 
 Pre-prints and publications
 =============================
+
+If you use BOHR in your research, please cite us:
 
 .. code-block::
 

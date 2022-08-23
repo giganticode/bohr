@@ -512,43 +512,43 @@ Github URL: https://github.com/giganticode/bohr-workdir-bugginess
 #### Directory structure
 
 
-├── bohr.lock
-├── bohr.py  <- *bohr configuration*
-├── cached-datasets <- *cached datasets, if dataset is absent in cache, it's reloaded from artifact explorer or from local path* 
-│   ├── berger_files.jsonl
-│   ├── berger_files.jsonl.metadata.json
-│   ├── levin_files.jsonl
-│   ├── levin_files.jsonl.metadata.json
-│   ├── manual_labels.herzig.jsonl
-│   ├── manual_labels.herzig.jsonl.metadata.json
-│   ├── mauczka_files.jsonl
-│   └── mauczka_files.jsonl.metadata.json
-├── cloned-bohr <- *cloned bohr reprository of heuristics*
-├── dvc.lock <- *dvc-managed file (for piprlinr management)*
-├── dvc.yaml <-*dvc-managed file (for piprlinr management)*
-└── runs <- *experiment results and files produced by intermediate stages*
-    ├── \__heuristics
-    │   ├── berger_files
-    │   │   ├── bugginess. <- *results of heuristics applied to a dataset (berger_files) as part of the task (bugginess task)*
-    .......
-    ├── __single_heuristic_metrics
-    │   ├── bugginess
-    │   │   ├── berger_files  <- *metrics calculated for individual heuristics for the given task (bugginess) and the dataset (berger_files)*
-	........
-    ├── bugginess <- *experiment results for the bugginess task*
-    │   ├── all_heuristics_with_issues <- *all_heuristics_with_issues experiment results*
-    │   │   ├── berger_files <- *contains metrics of the given model for this dataset*
-    │   │   ├── label_model.pkl <- *model file: this file is specific to the labeling task*
-    │   │   ├── label_model_weights.csv <- *this file is specific to the labeling task*
-    │   ├── random_model <- *baseline 1*
-    │   │   ├── berger_files
-    │   │   ├── manual_labels.herzig
-    │   │   └── mauczka_files
-    │   └── zero_model <- *baseline 2*
-    │       ├── berger_files
-    │       ├── manual_labels.herzig
-    │       └── mauczka_files
-	...
+├── bohr.lock <br />
+├── bohr.py  <- *bohr configuration* <br />
+├── cached-datasets <- *cached datasets, if dataset is absent in cache, it's reloaded from artifact explorer or from local path* <br />
+│   ├── berger_files.jsonl <br />
+│   ├── berger_files.jsonl.metadata.json <br />
+│   ├── levin_files.jsonl <br />
+│   ├── levin_files.jsonl.metadata.json <br />
+│   ├── manual_labels.herzig.jsonl <br />
+│   ├── manual_labels.herzig.jsonl.metadata.json <br />
+│   ├── mauczka_files.jsonl<br />
+│   └── mauczka_files.jsonl.metadata.json <br />
+├── cloned-bohr <- *cloned bohr reprository of heuristics* <br />
+├── dvc.lock <- *dvc-managed file (for piprlinr management)* <br />
+├── dvc.yaml <-*dvc-managed file (for piprlinr management)* <br />
+└── runs <- *experiment results and files produced by intermediate stages* <br />
+    ├── \__heuristics <br />
+    │   ├── berger_files <br />
+    │   │   ├── bugginess. <- *results of heuristics applied to a dataset (berger_files) as part of the task (bugginess task)* <br />
+    ....... <br />
+    ├── __single_heuristic_metrics <br />
+    │   ├── bugginess <br />
+    │   │   ├── berger_files  <- *metrics calculated for individual heuristics for the given task (bugginess) and the dataset (berger_files)* <br />
+	........ <br />
+    ├── bugginess <- *experiment results for the bugginess task* <br />
+    │   ├── all_heuristics_with_issues <- *all_heuristics_with_issues experiment results* <br />
+    │   │   ├── berger_files <- *contains metrics of the given model for this dataset* <br />
+    │   │   ├── label_model.pkl <- *model file: this file is specific to the labeling task* <br />
+    │   │   ├── label_model_weights.csv <- *this file is specific to the labeling task* <br />
+    │   ├── random_model <- *baseline 1* <br />
+    │   │   ├── berger_files <br />
+    │   │   ├── manual_labels.herzig <br />
+    │   │   └── mauczka_files <br />
+    │   └── zero_model <- *baseline 2* <br />
+    │       ├── berger_files <br />
+    │       ├── manual_labels.herzig <br />
+    │       └── mauczka_files <br />
+	... <br />
 
 
 

@@ -199,42 +199,35 @@ See an example https://github.com/giganticode/bohr-workdir-bugginess
 
 ## Artifact Explorer
 
-BOHR provides two ways to work with datasets. First, BOHR allows to add datasets to the working directory and lets the BOHR engine load datasets from there (NOT IMPLEMENTED yet). In this case, if the user decides to share their task and experiments, they would have to share their dataset along with them. The second way, which works especially well for well-known datasets that are used by multiple studies, is to load datasets from Artifact Explorer by specifying a query. When the experiments are made public, only the dataset id or the query needs to be shared (part of the dataset configuration in the BOHR config file). Then the user that wants to reproduce the study will use the dataset's metadata to pull the dataset from Artifact Explorer.
+BOHR provides two ways to work with datasets. 
+
+First, it allows to add datasets locally to the working directory and lets the BOHR engine load them from there. In this case, if the user decides to share their task and experiments, they would have to share their dataset sepaartely. This might be necessary when the data cannot be shared due to privacy reasons. 
+
+The other, preferable way, which works especially well for well-known datasets used by many studies, is to load datasets from *Artifact Explorer* (previiously known as Commit Explorer). This can be done by specifying the query or the dataset id when defining the dataset to be used in the BOHR configuration. When the experiments are made public, the user that wants to reproduce the study will have the dataset's metadata as part of the BOHR configuration. This metadata will be used to pull the dataset from Artifact Explorer automatically.
 
 To give as much power to heuristic developers as possible, we want them to be able to access a wide range of information about artifacts. First, these is properties of artifacts extracted when mining them (e.g. files that commit contains). Second, information is extracted from artifacts using specific tools (e.g. refactoring that commit contains detected by the RefactoringMiner tool). The problem with the former is that running tools can be costly and getting it on demand might not be feasible. The solution is to cache the runs of the tools and reuse them between different heuristic runs. Here comes another advantage of loading datasets from Artifact Explorer. Artifact explorer contains rich information about artifacts and contains the outputs of different tools run on them. 
 
-Two important parts of Artifact Explorer are the database + client and the crawler.
+### Components of Artifact Explorer
 
-#### Database + HTTPServer + Client
+#### Database
 
-Artifact explorer stores information at mongo db: mongodb://read-only-user:123@10.10.20.160:27017 (ironspeed)
+Artifact explorer stores information at mongo db: mongodb://read-only-user:123@10.10.20.160:27017 (ironspeed server - for now accessible only from the university network).
 
-A few request examples:
+BOHR-Runtime connects to this database when it encounters a dataset definition in the BOHR config, and pulls the dataset from there.
 
-- {"manual_labels.berger": {"$exists": true}}
-- {"_id": "30b9871ceef52cd43b830c058a3a3d34c36eb742"}
-
-
-
-HTTP client is running at: http://squirrel.inf.unibz.it:8180/art-exp/ (for now accessible only from the university network)
-
-You can try, fir example, accessing the following commit: http://squirrel.inf.unibz.it:8180/art-exp/commit/5959170e460d5cfa11b9f32a84ad91487151df0b
-
-
-
+Previously BOHR-Runtime would get datasets using HTTP protocol (using artifact-explorer-client https://github.com/giganticode/commit-explorer-client)_
+from the following endpoint http://squirrel.inf.unibz.it:8180/art-exp/. You can try, fir example, accessing the following commit: http://squirrel.inf.unibz.it:8180/art-exp/commit/5959170e460d5cfa11b9f32a84ad91487151df0b
 
 
 #### Crawler
 
-The crawler continuously adds new artifacts to the database and runs the tools on them, so that as much information as possible were availbale to the researchers. The tool is normally run on the ironspeed server.
+The crawler continuously adds new artifacts to the database and runs the tools on them, so that as much information as possible were availbale to the researchers.
 
 One could feed the jobs in the following format to the Artifact Explorer crawler:
 
 ```json
 {"tools": ["gumtree/3.0.0-beta2"], "projects": ["0x43/DesignPatternsPHP", "AlexMeliq/less.js", "Arcank/nimbus", "AutoMapper/AutoMapper", "Chenkaiang/XVim", "GeertJohan/gorp", "K2InformaticsGmBH/proper", "MerlinDMC/gocode", "MythTV/mythtv", "alibaba/tengine", "clojure/core.logic", "docpad/docpad", "faylang/fay", "lfe/lfe", "magicalpanda/MagicalRecord", "mpeltonen/sbt-idea", "plumatic/plumbing", "sinclairzx81/typescript.api", "yu19930123/ngrok", "apache/httpcomponents-client", "apache/jackrabbit", "apache/lucene-solr", "apache/tomcat", "mozilla/rhino", "JetBrains/intellij-community", "JetBrains/kotlin", "ReactiveX/RxJava", "apache/camel", "apache/hadoop", "apache/hbase", "elastic/elasticsearch", "kiegroup/drools", "orientechnologies/orientdb", "restlet/restlet-framework-java", "spring-projects/spring-framework"]}
 ```
-
-
 
 Source code https://github.com/giganticode/commit-explorer
 
@@ -476,6 +469,10 @@ Running on the ironspeed box (`10.10.20.160:27017`)
 Connection string for read-only user: `mongodb://read-only-user:123@10.10.20.160:27017`
 
 Username and password with write permissions please request from Hlib Babii
+
+A mongodb request examples:
+- {"manual_labels.berger": {"$exists": true}}
+- {"_id": "30b9871ceef52cd43b830c058a3a3d34c36eb742"}
 
 #### Http server
 

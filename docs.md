@@ -408,8 +408,8 @@ bohrruntime
 ├── appconfig.py <- *handling saving and loading values to/from BOHR config* <br />
 ├── bohrconfig.py <- *code for parsing BOHR config* <br />
 ├── cli <br />
-│   ├── cli.py <- *implementation of cli commands like "bohr repro"* <br />
-│   ├── porcelain <- *implementation of internal cli commands used by pipeline manager (dvc) to execute stages* <br />
+│   ├── bohr.py <- *definition of cli commands like "bohr repro"* <br />
+│   ├── bohr_internal <- *implementation of internal cli commands used by the pipeline manager to execute stages* <br />
 │   └── remote <br />
 ├── commands.py <- *implementation of CLI commands* <br />
 ├── datamodel <- *implementation of main BOHR concepts* <br />
@@ -418,8 +418,8 @@ bohrruntime
 │   ├── model.py <br />
 │   ├── task.py <br />
 │   └── bohrconfig.py <br />
-├── datasource.py <- *code related to loading datasets from Artifact Explorer* <br />
-├── dvcwrapper.py <- *wrapper over dvc tool* <br />
+├── datasource.py <- *code related to loading datasets from Artifact Explorer or from local file system* <br />
+├── dvcwrapper.py <- *this class encapsulates usage of DVC as a pipeline manager; if you want to use another pipeline manager, for example, a self-implemented one, you need to re-implement methods in this file. <br />
 ├── heuristics.py <- *code related to locating and loading heuristics* <br />
 ├── pipeline.py <- *implements classes for each stage of pipeline and their convertion to pipeline manager config* <br />
 ├── stages.py <- *implementation of stages of BOHR lifecycle without task-specific details* <br />

@@ -4,13 +4,13 @@ BOHR, apart from being a storage of heuristics, is also an infrastructure and a 
 
 ## BOHR API 
 
-#### Overview
+### Overview
 
-API (python library) to define *datasets*, *tasks*, and *experiments*, and to develop *heuristics* to be applied to *artifacts*.
+API (python library) to define *datasets*, *tasks*, and *experiments*, and to develop *heuristics* to be applied to *artifacts*. Source code can be found here: https://github.com/giganticode/bohr-api
 
-#### Main Concepts
+### Main Concepts
 
-##### Heuristic
+#### Heuristic
 
 BOHR is a repository of *heuristics*, hence, a heuristic is a primary concept in BOHR. Sub-program (python function) that accepts an artifact or multiple artifacts of the same or different types. Artifact is BOHR's abstraction that represents a software engineering artifact - a product of SE activities, e,g. code, commit, software project, software repository, issue report.
 
@@ -34,55 +34,81 @@ def bugless_if_many_files_changes(commit: Commit) -> OneOrManyLabels:
 
 
 
-##### Dataset
+#### Dataset
 
 Collection of artifacts of the same type (*See Artifact Explorer*)
 
-##### Task
+#### Task
 
-An abstraction that describes the problem that a researcher is working on in terms of BOHR. The input and the output of the tasks are datasets. Task types are 
-
-- labeling, 
-- grouping, 
-- linking, 
-- filtering
+Task is an abstraction that describes the problem that a researcher is working on in terms of BOHR. The input and the output of the tasks are datasets.
 
 To define a task, the BOHR user needs to specify:
 
-- Artifact type(s) heuristics are applied to 
+- Artifact type(s) heuristics are applied to;
 
-- - Single artifact for labeling and filtering, 
-  - pairs of artifacts of the same type for grouping, 
-  - pairs of artifacts (most likely of different types) for linking, e.g. Commit and Issue
+- Possible outputs of heuristics;
 
-- Possible outputs of heuristics; 
-
-- - Label for labeling, 
-  - True/False for filtering; 
-  - probabilistic True/False for grouping and linking
-
-- Heuristic combination strategy (model) 
-
-- - trivial strategy (using only one heuristic), 
-  - applying and filtering one by one, 
-  - majority vote model, 
-  - weighted vote model (snorkel) - for labeling 
-  - weighted vote model + clustering using output probabilities as similarity indices - for grouping.
+- Heuristic combination strategy (model);
 
 - Metrics;
 
 - Test dataset;
 
-##### Experiment
+Depending on the input and output of heuristics and how heuristics are combined, we differenciate between the following tasks:
 
-Attempt to solve a task using a specific set of heuristics and a training set. To define an experiment, the user specifies:
+<details>
+  <summary>Labeling</summary>
+  
+  **Heuristics applied to:** - single artifact type (e.g. commit) 
+	
+  **Heuristic output** - label
+	
+  **Combination strategy** - usually weighted vote model (snorkel)
+	
+</details>
+
+<details>
+  <summary>Grouping</summary>
+  
+  **Heuristics applied to:** - pairs of artifacts of the same type (e.g. online identities)
+	
+  **Heuristic output** - probabilistic True/False
+	
+  **Combination strategy** - weighted vote model + clustering using output probabilities as similarity indices
+	
+</details>
+
+<details>
+  <summary>Linking</summary>
+  
+  **Heuristics applied to:** - pairs of artifacts (most likely of different types), e.g. Commit and Issue
+	
+  **Heuristic output** - probabilistic True/False
+	
+</details>
+
+<details>
+  <summary>Filtering</summary>
+  
+  **Heuristics applied to:** - Single artifact (e.g. code snippet)
+	
+  **Heuristic output** - True/False
+	
+  **Combination strategy** - applying and filtering one by one or trivial strategy (using only one heuristic)
+	
+</details>
+
+#### Experiment
+
+Experiment is using a specific set of heuristics and a training set to solve a task. To define an experiment, the user specifies:
 
 - the target task
 - heuristic classifier - heuristics to be used to tackle the task
 - train dataset (if required)
 
-The user defines a BOHR configuration to specify which heuristics and datasets should be used to solve a task within an experiment. Configuration is described with code and can look like the code below.
+### BOHR Configuration
 
+The user defines a BOHR configuration to specify which heuristics and datasets should be used to solve a task within an experiment. Configuration is described with code and can look like follows.
 
 
 ```python
@@ -120,10 +146,7 @@ keywords_in_message_exp = Experiment(
 ```
 
 
-
-Source code: https://github.com/giganticode/bohr-api
-
-#### BOHR API and Heuristic development
+### BOHR API and Heuristic development
 
 The role of BOHR-API for heuristic development is twofold. First, it provides a skeleton of heuristics for developers, with which they can ensure the heuristics are found and correctly run by the BOHR engine, e.g. @Heuristic annotation, enforcing the input and output of heuristics, etc. Second BOHR-API allows to access properties of artifacts in an easy and representation- and language-independent way (*See Future direction: working on SE heuristic API (aka BOHR API)*).
 
@@ -133,9 +156,9 @@ The role of BOHR-API for heuristic development is twofold. First, it provides a 
 
 Experiments defined in the BOHR configuration can be run by exectuing CLI commands exposed by BOHR engine.
 
-*bohr run    keywords_in_message_exp*
+``bohr run    keywords_in_message_exp``
 
-*bohr run --no-cache     keywords_in_message_exp*
+``bohr run --no-cache     keywords_in_message_exp``
 
 
 
@@ -159,7 +182,7 @@ The source code of bohr-runtime can be found at https://github.com/giganticode/b
 
 
 
-#### Heuristic Debugging 
+### Heuristic Debugging 
 
 **! This section to be updated accoring with the new vision of BOHR !**
 
@@ -243,7 +266,7 @@ The source code of can be found at https://github.com/giganticode/bohr-labels
 
 ![image-20220708233442302](/Users/hlib/Library/Application Support/typora-user-images/image-20220708233442302.png)
 
-#### Concept of *label* in BOHR.
+### Concept of *label* in BOHR.
 
 Labels are used in labeling tasks and heuristics compatible with these task.1) Labeling task heuristics assign BOHR labels to artifacts. 2) When a labeling task is defined, BOHR labels are used to define categories to which artifacts can be categorized.
 
@@ -261,7 +284,7 @@ Labels defined in the task have to be mutually exclusive, i.e. have to be from t
 
 
 
-#### Labels implementation
+### Labels implementation
 
 
 
@@ -271,15 +294,15 @@ https://stackoverflow.com/questions/70145416/collapsible-subset-of-partially-ord
 
 ## Applications
 
-#### Commit classification
+### Commit classification
 
 https://github.com/giganticode/bohr-workdir-bugginess
 
-#### Classifying commits with transformers based on diffs
+### Classifying commits with transformers based on diffs
 
 https://github.com/giganticode/diff-classifier
 
-#### Identity merging
+### Identity merging
 
 ...
 

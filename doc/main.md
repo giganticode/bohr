@@ -181,27 +181,6 @@ Each of these commands executed from the directory with the configuration file (
 The source code of bohr-runtime can be found at https://github.com/giganticode/bohr-runtime
 
 
-
-### Heuristic Debugging 
-
-**! This section to be updated accoring with the new vision of BOHR !**
-
-BOHR engine provides utilities to debug the application and combining of heuristics 
-
-*bohr debug  \<exp-name\> \<dataset-name\>*
-
-![image](https://user-images.githubusercontent.com/2955794/114852200-d95f4000-9de2-11eb-9476-2dd23ac09bc9.png)
-
-*bohr debug  \<exp-name\> \<dataset-name\> \<datapoint-id\>*
-
-![image](https://user-images.githubusercontent.com/2955794/114852453-14fa0a00-9de3-11eb-8d90-858bf625060b.png)
-
-
-
-Alternatively, BOHR-UI can be used to perform debugging (*see BOHR-UI*) 
-
-
-
 ## Architecture of BOHR
 
 BOHR (The repository of heuristics itself) can be accessed at https://github.com/giganticode/bohr  (we will be calling it *the remote BOHR repository*). This is where BOHR-runtime (engine) fetches the heuristics from after reading user's BOHR config. The remote BOHR repo is cloned to the local machine next to the BOHR config. Since the heuristics require the BOHR-API to run them, Bohr-runtime installs the needed version of the BOHR-API. BOHR-Runtime runs the pipeline and generates locally all the intermediate artifacts (results of heuristic runs, trained models, calculated metrics). The directory with the BOHR config, cloned heuristics, intermediate artifacts is called BOHR working directory.
@@ -344,47 +323,6 @@ BOHR-API should allow heuristic developers quickly implement their heuristic ide
 - Reuse of label models: since heuristics cannot be reused for some projects -> label models cannot be reused easier; no need to reuse the model if there is a tool to quickly train it having implemented heuristics quickly.
 - Reuse of datasets. 
 - artifacts explorer
-
-## BOHR demo (to be converted to one of tutorials)
-
-First we create a separate virtual environment to make sure that the libraries used by BOHR do not clash with already installed libraries
-
-```shell
-pyenv virtualenv 3.8 bohr-demo
-pyenv activate bohr-demo
-pyenv which python
-pip list
-```
-
-
-
-Now we install bohr-runtime. This will allow us to run BOHR commands. Besides, BOHR-API will be installed which will allow us to define a BOHR config
-
-```
-pip install bohr-runtime
-```
-
-Next, we clone a BOHR work-dir for the bugginess task, whose configuration is stored on Github
-
-```
-bohr clone https://github.com/giganticode/bohr-workdir-bugginess
-```
-
-If we try to reproduce the experiments, all the experiments will be up-to-date
-
-```
-cd bohr-workdir-bugginess
-
-bohr repro
-```
-
-We can make changes to some heuristics and reproduce the experiments again
-
-```
-bohr repro
-```
-
-
 
 ## Getting started with BOHR development
 
